@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DVC simulator</title>
+
+    <style>
+        * {
+            font-family: tahoma;
+            font-size: 15px;
+        }
+
+        .stat-field {
+            width: 3em;
+        }
+
+        table {
+            border: solid 1px;
+            padding: 7px;
+        }
+
+        td {
+            padding: 3px;
+            text-align: end;
+        }
+    </style>
+
+    <script>
+        const dragonList = [
+            { name: "thunder", traits: ["hasty", "bold"], hasty: [30, 10, 10, 0], bold: [0, 30, 5, 0] },
+            { name: "lunera", traits: ["nice", "cute"], nice: [88, 88, 88, 88], cute: [7, 7, 7, 7] },
+            { name: "nebula", traits: ["eccentric", "sad"], eccentric: [102, 0, 102, 102], sad: [1, 2, 3, 4] }
+        ];
+
+        const traitsList = [
+            { called: "perfectionist", stats: [20, 20, 20, 20] },
+            { called: "capable", stats: [33, 33, 33, 33] },
+            { called: "immersed", stats: [0, 0, 0, 0] },
+            { called: "dull", stats: [25, 25, 25, 25] },
+            { called: "arrogant", stats: [25, 25, 25, 25] },
+        ]
+    </script>
+</head>
+
+<body>
+    <!--training point: 
+        1/2 upon finding egg
+        from there, counter stars: 1 point every 6 hours-->
+
+    <div>
+        <!--dragon type-->
+        <select name="dragon-selector" class="dragon-selector" onchange="dragonSelect()">
+            <option selected disabled>드래곤</option>
+            <option value="lunera">루네라</option>
+            <option value="thunder">화이트썬더</option>
+            <option value="nebula">네뷸라</option>
+        </select>
+
+        <select name="trait-selector" class="trait-selector" onchange="startTraitSelect()">
+            <option selected disabled>성격</option>
+            <option value="" id="init1">per1</option>
+            <option value="" id="init2">per2</option>
+        </select>
+        <br>
+
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Traits</th>
+                    <th scope="col">Base</th>
+                    <th></th>
+                    <th scope="col">Goal</th>
+                    <th></th>
+                    <th scope="col">Changes</th>
+                    <th scope="col">Req. Training</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td width="70">
+                        순발력:
+                    </td>
+                    <td>
+                        <input type="number" min="0" max="30" value="0" id="start-agility" class="stat-field agility">
+                    </td>
+                    <td>
+                        →
+                    </td>
+                    <td>
+                        <input type="number" min="0" max="999" maxlength="3" value="0" id="end-agility"
+                            class="stat-field agility">
+                    </td>
+                    <td width="90">
+                        순발력:
+                    </td>
+                    <td>
+                        <span class="result-agility"></span>
+                    </td>
+                    <td width="130" style="text-align: center;">
+                        content here
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        근력:
+                    </td>
+                    <td>
+                        <input type="number" min="0" max="30" value="0" id="start-strength" class="stat-field strength">
+                    </td>
+                    <td>
+                        →
+                    </td>
+                    <td>
+                        <input type="number" min="0" max="999" maxlength="3" value="0" id="end-strength"
+                            class="stat-field strength">
+                    </td>
+                    <td>
+                        근력:
+                    </td>
+                    <td>
+                        <span class="result-strength"></span>
+                    </td>
+                    <td style="text-align: center;">
+                        content here
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        집중력:
+                    </td>
+                    <td>
+                        <input type="number" min="0" max="30" value="0" id="start-focus" class="stat-field focus">
+                    </td>
+                    <td>
+                        →
+                    </td>
+                    <td>
+                        <input type="number" min="0" max="999" maxlength="3" value="0" id="end-focus"
+                            class="stat-field focus">
+                    </td>
+                    <td>
+                        집중력:
+                    </td>
+                    <td>
+                        <span class="result-focus"></span>
+                    </td>
+                    <td style="text-align: center;">
+                        content here
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        지력:
+                    </td>
+                    <td>
+                        <input type="number" min="0" max="30" value="0" id="start-intellect"
+                            class="stat-field intellect">
+                    </td>
+                    <td>
+                        →
+                    </td>
+                    <td>
+                        <input type="number" min="0" max="999" maxlength="3" value="0" id="end-intellect"
+                            class="stat-field intellect">
+                    </td>
+                    <td>
+                        지력:
+                    </td>
+                    <td>
+                        <span class="result-intellect"></span>
+                    </td>
+                    <td style="text-align: center;">
+                        content here
+                    </td>
+                </tr>
+            </tbody>
+
+
+        </table>
+        <hr>
+        <!---->
+        <!--starting stats-->
+        순발력:
+        <input type="number" min="0" max="30" value="0" id="start-agility" class="stat-field agility">
+        →
+        <br>
+        근력:
+        <input type="number" min="0" max="30" value="0" id="start-strength" class="stat-field strength">
+        →
+        <br>
+        집중력:
+        <input type="number" min="0" max="30" value="0" id="start-focus" class="stat-field focus">
+        →
+        <br>
+        지력:
+        <input type="number" min="0" max="30" value="0" id="start-intellect" class="stat-field intellect">
+        →
+        <br>
+        <hr>
+
+        <select name="trait-selector" class="trait-selector2" onchange="endTraitSelect()">
+            <option selected disabled>성격</option>
+            <option value="capable">유능한</option>
+            <option value="perfectionist">완벽주의자</option>
+            <option value="immersed">몰입하는</option>
+            <option value="dull">평범한</option>
+            <option value="arrogant">오만한</option>
+        </select>
+        <br>
+        <!--ending stats-->
+        순발력:
+        <input type="number" min="0" max="999" maxlength="3" value="0" id="end-agility" class="stat-field agility">
+        <br>
+        근력:
+        <input type="number" min="0" max="999" value="0" id="end-strength" class="stat-field strength">
+        <br>
+        집중력:
+        <input type="number" min="0" max="999" value="0" id="end-focus" class="stat-field focus">
+        <br>
+        지력:
+        <input type="number" min="0" max="999" value="0" id="end-intellect" class="stat-field intellect">
+        <br>
+        <hr>
+        <br>
+
+        <!--calculated stats-->
+        순발력:
+        <span class="result-agility"></span>
+        <br>
+        근력:
+        <span class="result-strength"></span>
+        <br>
+        집중력:
+        <span class="result-focus"></span>
+        <br>
+        지력:
+        <span class="result-intellect"></span>
+        <br>
+        <br>
+        <button onclick="calculator()">test</button>
+
+    </div>
+
+
+    <script>
+        let dragonName;
+        let dragonIndex;
+
+        function dragonSelect() {
+            let arr = ["#start-agility", "#start-strength", "#start-focus", "#start-intellect"];
+            dragonName = document.querySelector(".dragon-selector").value;
+            dragonIndex = dragonList.findIndex((dragons) => { return dragons.name == dragonName; });
+            document.querySelector(".trait-selector").selectedIndex = 0;
+            for (let i = 0; i < 4; i++) {
+                document.querySelector(arr[i]).value = 0;
+            }
+            document.querySelector("#init1").textContent = dragonList[dragonIndex].traits[0];
+            document.querySelector("#init1").value = dragonList[dragonIndex].traits[0];
+            document.querySelector("#init2").textContent = dragonList[dragonIndex].traits[1];
+            document.querySelector("#init2").value = dragonList[dragonIndex].traits[1];
+        }
+
+        function startTraitSelect() {
+            dragonName = document.querySelector(".dragon-selector").value;
+            let trait = event.target.value;
+            dragonIndex = dragonList.findIndex((dragons) => { return dragons.name == dragonName; });
+            let arr = ["#start-agility", "#start-strength", "#start-focus", "#start-intellect"];
+            for (let i = 0; i < 4; i++) {
+                document.querySelector(arr[i]).value = dragonList[dragonIndex][trait][i];
+            }
+        }
+
+        function endTraitSelect() {
+            let traitCalled = event.target.value;
+            traitIndex = traitsList.findIndex((traits) => { return traits.called == traitCalled; });
+            let arr2 = ["#end-agility", "#end-strength", "#end-focus", "#end-intellect"];
+            for (let i = 0; i < 4; i++) {
+                document.querySelector(arr2[i]).value = traitsList[traitIndex].stats[i];
+            }
+        }
+
+        function calculator() {
+            let rAgility = document.querySelector("#end-agility").value - document.querySelector("#start-agility").value;
+            let rStrength = document.querySelector("#end-strength").value - document.querySelector("#start-strength").value;
+            let rFocus = document.querySelector("#end-focus").value - document.querySelector("#start-focus").value;
+            let rIntellect = document.querySelector("#end-intellect").value - document.querySelector("#start-intellect").value;
+
+            rAgility < 0 ? document.querySelector(".result-agility").textContent = "+0" : document.querySelector(".result-agility").textContent = "+" + rAgility;
+            rStrength < 0 ? document.querySelector(".result-strength").textContent = "+0" : document.querySelector(".result-strength").textContent = "+" + rStrength;
+            rFocus < 0 ? document.querySelector(".result-focus").textContent = "+0" : document.querySelector(".result-focus").textContent = "+" + rFocus;
+            rIntellect < 0 ? document.querySelector(".result-intellect").textContent = "+0" : document.querySelector(".result-intellect").textContent = "+" + rIntellect;
+        }
+    </script>
+
+</body>
+
+</html>
