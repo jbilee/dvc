@@ -180,25 +180,6 @@
 
         </table>
         <hr>
-        <!---->
-        <!--starting stats-->
-        순발력:
-        <input type="number" min="0" max="30" value="0" id="start-agility" class="stat-field agility">
-        →
-        <br>
-        근력:
-        <input type="number" min="0" max="30" value="0" id="start-strength" class="stat-field strength">
-        →
-        <br>
-        집중력:
-        <input type="number" min="0" max="30" value="0" id="start-focus" class="stat-field focus">
-        →
-        <br>
-        지력:
-        <input type="number" min="0" max="30" value="0" id="start-intellect" class="stat-field intellect">
-        →
-        <br>
-        <hr>
 
         <select name="trait-selector" class="trait-selector2" onchange="endTraitSelect()">
             <option selected disabled>성격</option>
@@ -209,37 +190,7 @@
             <option value="arrogant">오만한</option>
         </select>
         <br>
-        <!--ending stats-->
-        순발력:
-        <input type="number" min="0" max="999" maxlength="3" value="0" id="end-agility" class="stat-field agility">
-        <br>
-        근력:
-        <input type="number" min="0" max="999" value="0" id="end-strength" class="stat-field strength">
-        <br>
-        집중력:
-        <input type="number" min="0" max="999" value="0" id="end-focus" class="stat-field focus">
-        <br>
-        지력:
-        <input type="number" min="0" max="999" value="0" id="end-intellect" class="stat-field intellect">
-        <br>
-        <hr>
-        <br>
-
-        <!--calculated stats-->
-        순발력:
-        <span class="result-agility"></span>
-        <br>
-        근력:
-        <span class="result-strength"></span>
-        <br>
-        집중력:
-        <span class="result-focus"></span>
-        <br>
-        지력:
-        <span class="result-intellect"></span>
-        <br>
-        <br>
-        <button onclick="calculator()">test</button>
+        <button onclick="calculator()">계산하기</button>
 
     </div>
 
