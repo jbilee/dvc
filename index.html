@@ -64,12 +64,16 @@
             { name: ["devared", "데바레드"], traitsEn: ["brave", "smart"], traitsKo: ["용감한", "똑똑한"], brave: [0, 20, 5, 5], smart: [10, 0, 0, 20] },
             { name: ["dimension", "디멘션"], traitsEn: ["smart", "bold"], traitsKo: ["똑똑한", "대담한"], smart: [10, 0, 0, 30], bold: [0, 30, 0, 0] },
             { name: ["dianu", "디아누"], traitsEn: ["quiet", "adamant"], traitsKo: ["냉정한", "고집있는"], quiet: [0, 10, 30, 10], adamant: [10, 25, 10, 0] },
+            { name: ["lava", "라바"], traitsEn: ["quirky", "lax"], traitsKo: ["변덕쟁이", "촐랑대는"], quirky: [10, 25, 0, 10], lax: [10, 10, 0, 20] },
             { name: ["lavasalt", "라바솔트"], traitsEn: ["calm", "adamant"], traitsKo: ["차분한", "고집있는"], calm: [10, 0, 20, 10], adamant: [15, 30, 15, 0] },
             { name: ["lightspicy", "라이트스파이시"], traitsEn: ["calm", "docile"], traitsKo: ["차분한", "온순한"], calm: [5, 0, 20, 5], docile: [0, 10, 10, 30] },
+            { name: ["rakion", "라키온"], traitsEn: ["careful", "quirky"], traitsKo: ["신중한", "변덕쟁이"], careful: [10, 10, 20, 0], quirky: [10, 25, 0, 10] },
             { name: ["raphael", "라파엘"], traitsEn: ["docile", "hardy"], traitsKo: ["온순한", "노력하는"], docile: [0, 10, 10, 30], hardy: [0, 0, 20, 0] },
+            { name: ["lakshasa", "락샤사"], traitsEn: ["quickWitted", "careful"], traitsKo: ["눈치빠른", "신중한"], quickWitted: [25, 0, 0, 5], careful: [10, 10, 20, 0] },
             { name: ["leglien", "레그리언"], traitsEn: ["hardy", "careful"], traitsKo: ["노력하는", "신중한"], hardy: [10, 0, 30, 0], careful: [10, 10, 25, 0] },
             { name: ["redbull", "레드불"], traitsEn: ["adamant", "quiet"], traitsKo: ["고집있는", "냉정한"], adamant: [10, 25, 10, 0], quiet: [0, 5, 20, 5] },
             { name: ["redwyvern", "레드와이번"], traitsEn: ["hasty", "quirky"], traitsKo: ["성급한", "변덕쟁이"], hasty: [20, 10, 10, 0], quirky: [5, 20, 0, 5] },
+            { name: ["redtaavire", "레드타아비레"], traitsEn: ["hasty", "quirky"], traitsKo: ["성급한", "변덕쟁이"], hasty: [30, 15, 15, 0], quirky: [10, 25, 0, 10] },
             { name: ["leopard", "레오파드"], traitsEn: ["careful", "brave"], traitsKo: ["신중한", "용감한"], careful: [15, 15, 30, 0], brave: [0, 30, 15, 15] },
             { name: ["lady", "레이디"], traitsEn: ["quickWitted", "quirky"], traitsKo: ["눈치빠른", "변덕쟁이"], quickWitted: [20, 0, 0, 10], quirky: [5, 20, 0, 5] },
             { name: ["lololli", "로롤리"], traitsEn: ["quickWitted", "smart"], traitsKo: ["눈치빠른", "똑똑한"], quickWitted: [30, 0, 0, 10], smart: [0, 0, 0, 25] },
@@ -78,10 +82,6 @@
             { name: ["ludeore", "루드오어"], traitsEn: ["calm", "quiet"], traitsKo: ["차분한", "냉정한"], calm: [15, 0, 30, 15], quiet: [0, 15, 30, 15] },
             { name: ["lupo", "루포"], traitsEn: ["quiet", "bold"], traitsKo: ["냉정한", "대담한"], quiet: [0, 10, 20, 10], bold: [0, 30, 10, 0] },
             { name: ["lufia", "루피아"], traitsEn: ["docile", "smart"], traitsKo: ["온순한", "똑똑한"], docile: [0, 10, 10, 30], smart: [10, 0, 0, 30] },
-            { name: ["lava", "라바"], traitsEn: ["quirky", "lax"], traitsKo: ["변덕쟁이", "촐랑대는"], quirky: [10, 25, 0, 10], lax: [10, 10, 0, 20] },
-            { name: ["rakion", "라키온"], traitsEn: ["careful", "quirky"], traitsKo: ["신중한", "변덕쟁이"], careful: [10, 10, 20, 0], quirky: [10, 25, 0, 10] },
-            { name: ["lakshasa", "락샤사"], traitsEn: ["quickWitted", "careful"], traitsKo: ["눈치빠른", "신중한"], quickWitted: [25, 0, 0, 5], careful: [10, 10, 20, 0] },
-            { name: ["redtaavire", "레드타아비레"], traitsEn: ["hasty", "quirky"], traitsKo: ["성급한", "변덕쟁이"], hasty: [30, 15, 15, 0], quirky: [10, 25, 0, 10] },
             { name: ["libera", "리베라"], traitsEn: ["adamant", "careful"], traitsKo: ["고집있는", "신중한"], adamant: [5, 20, 5, 0], careful: [5, 5, 20, 0] },
             { name: ["libety", "리베티"], traitsEn: ["calm", "hardy"], traitsKo: ["차분한", "노력하는"], calm: [5, 0, 20, 5], hardy: [0, 0, 20, 0] },
             { name: ["leaf", "리프"], traitsEn: ["naive", "rash"], traitsKo: ["천진난만한", "덜렁대는"], naive: [25, 0, 10, 10], rash: [20, 10, 0, 10] },
@@ -207,13 +207,32 @@
         ];
 
         const specialTraits = [
-            { called: "perfectionist", stats: [20, 20, 20, 20] },
-            { called: "capable", stats: [26, 26, 26, 26] },
-            { called: "immersedIn", stats: [0, 0, 0, 0] },
-            { called: "dull", stats: [25, 25, 25, 25] },
-            { called: "arrogant", stats: [25, 25, 25, 25] },
-            { called: "classy", stats: [20, 20, 20, 20] },
-            { called: "noble", stats: [20, 20, 20, 20] }
+            { traitName: "perfectionist", stats: [20, 20, 20, 20] },
+            { traitName: "capable", stats: [26, 26, 26, 26] },
+            { traitName: "immersedIn", stats: [0, 0, 0, 0] },
+            { traitName: "dull", stats: [25, 25, 25, 25] },
+            { traitName: "arrogant", stats: [25, 25, 25, 25] },
+            { traitName: "classy", stats: [20, 20, 20, 20] },
+            { traitName: "noble", stats: [20, 20, 20, 20] }
+        ];
+
+        const normalTraits = [
+            { traitName: "smart", highest: "intellect", lowest: null },
+            { traitName: "lax", highest: "intellect", lowest: "focus" },
+            { traitName: "bashful", highest: "intellect", lowest: "strength" },
+            { traitName: "docile", highest: "intellect", lowest: "agility" },
+            { traitName: "careful", highest: "focus", lowest: "intellect" },
+            { traitName: "hardy", highest: "focus", lowest: null },
+            { traitName: "calm", highest: "focus", lowest: "strength" },
+            { traitName: "quiet", highest: "focus", lowest: "agility" },
+            { traitName: "adamant", highest: "strength", lowest: "intellect" },
+            { traitName: "quirky", highest: "strength", lowest: "focus" },
+            { traitName: "bold", highest: "strength", lowest: null },
+            { traitName: "brave", highest: "strength", lowest: "agility" },
+            { traitName: "hasty", highest: "agility", lowest: "intellect" },
+            { traitName: "rash", highest: "agility", lowest: "focus" },
+            { traitName: "naive", highest: "agility", lowest: "strength" },
+            { traitName: "quickWitted", highest: "agility", lowest: null }
         ];
 
         const highestAgility = ["naive", "rash", "hasty", "quickWitted"];
@@ -225,11 +244,11 @@
 
 <body>
     <div>
-        <select name="dragon-selector" class="dragon-selector" onchange="dragonSelect()">
+        <select name="dragon-selector" id="dragon-selector" onchange="dragonSelect()">
             <option selected disabled>드래곤</option>
         </select>
 
-        <select name="trait-selector" class="trait-selector" onchange="startTraitSelect(), unavailabilityChecker()">
+        <select name="trait-selector" id="trait-selector" onchange="startTraitSelect(), unavailabilityChecker()">
             <option selected disabled>성격</option>
             <option value="" id="init1">-</option>
             <option value="" id="init2">-</option>
@@ -351,23 +370,26 @@
         </table>
         <div style="height: 15px;"></div>
         목표치 자동입력:<br>
-        <select name="trait-selector" class="trait-selector2" onchange="endTraitSelect()">
+        <label id="exact-match"><input type="radio" name="train-style">필요치에 맞춤</label>
+        <label id="fastest"><input type="radio" name="train-style">최단시간</label><br>
+        <select name="trait-selector" id="trait-selector2" onchange="endTraitSelect()">
             <option selected disabled>성격</option>
-            <option value="capable">유능한</option>
-            <option value="perfectionist">완벽주의자</option>
-            <option value="immersedIn" hidden>몰입하는(특수조건있음)</option>
-            <option value="dull" id="#dull">평범한</option>
-            <option value="arrogant">오만한</option>
-            <option value="classy">품위있는</option>
             <option value="noble">고귀한</option>
+            <option value="immersedIn" id="#immersed">몰입하는</option>
+            <option value="arrogant">오만한</option>
+            <option value="perfectionist">완벽주의자</option>
+            <option value="capable">유능한</option>
+            <option value="dull" id="#dull">평범한</option>
+            <option value="classy">품위있는</option>
+
         </select>
         <button onclick="calculator()">계산하기</button>
         <div style="height: 30px;"></div>
         <p>
             <strong>참고:</strong> <br>
-            몰입하는: 한가지 능력치가 최종 150 이상 (함수 짜는중..) <br>
-            품위있는: 모든 능력치 20 이상 <br>
-            고귀한: 모든 능력치 20 이상 <br>
+            몰입하는: 한가지 능력치가 최종 150 이상 <br>
+            품위있는: 모든 능력치 20 이상 (순혈 3세대) <br>
+            고귀한: 모든 능력치 20 이상 (순혈 5세대) <br>
             완벽주의자: 모든 능력치 20 이상 <br>
             오만한: 모든 능력치 25 이상 <br>
             유능한: 능력치 모두 같은 수치로 각각 26이상 <br>
@@ -383,15 +405,15 @@
         </p>
         <p>
             데이터 출처:<br>
-            <a href="https://community.withhive.com/dvc/ko/board/22/9761"
-                target="_blank">https://community.withhive.com/dvc/ko/board/22/9761
-                (전체도감 by 앙그라님)</a><br>
             <a href="https://community.withhive.com/dvc/ko/board/22/2929"
                 target="_blank">https://community.withhive.com/dvc/ko/board/22/2929
-                (일반성격 계산법 by 앙그라님)</a><br>
+                (전체도감 by 앙그라님)</a><br>
             <a href="https://community.withhive.com/dvc/ko/board/22/7999"
                 target="_blank">https://community.withhive.com/dvc/ko/board/22/7999
                 (전체도감 by 한국님)</a><br>
+            <a href="https://community.withhive.com/dvc/ko/board/22/9761"
+                target="_blank">https://community.withhive.com/dvc/ko/board/22/9761
+                (일반성격 계산법 by 앙그라님)</a><br>
             <a href="https://community.withhive.com/dvc/ko/board/22/17875"
                 target="_blank">https://community.withhive.com/dvc/ko/board/22/17875
                 (특수성격 조건 by 나린님)</a><br>
@@ -407,7 +429,7 @@
                 let newOption = document.createElement("option");
                 newOption.setAttribute("value", dragonList[i].name[0]);
                 newOption.textContent = dragonList[i].name[1];
-                document.querySelector(".dragon-selector").append(newOption);
+                document.querySelector("#dragon-selector").append(newOption);
             }
         });
 
@@ -425,9 +447,9 @@
 
         function dragonSelect() {
             let arr = ["#start-agility", "#start-strength", "#start-focus", "#start-intellect"];
-            dragonName = document.querySelector(".dragon-selector").value;
+            dragonName = document.querySelector("#dragon-selector").value;
             dragonIndex = dragonList.findIndex((dragons) => { return dragons.name[0] == dragonName; });
-            document.querySelector(".trait-selector").selectedIndex = 0;
+            document.querySelector("#trait-selector").selectedIndex = 0;
             for (let i = 0; i < 4; i++) {
                 document.querySelector(arr[i]).value = 0;
             }
@@ -438,7 +460,7 @@
         }
 
         function startTraitSelect() {
-            dragonName = document.querySelector(".dragon-selector").value;
+            dragonName = document.querySelector("#dragon-selector").value;
             let trait = event.target.value;
             dragonIndex = dragonList.findIndex((dragons) => { return dragons.name[0] == dragonName; });
             let arr = ["#start-agility", "#start-strength", "#start-focus", "#start-intellect"];
@@ -447,13 +469,43 @@
             }
         }
 
-        function endTraitSelect() {
-            let traitCalled = event.target.value;
-            traitIndex = specialTraits.findIndex((traits) => { return traits.called == traitCalled; });
-            let arr2 = ["#end-agility", "#end-strength", "#end-focus", "#end-intellect"];
-            for (let i = 0; i < 4; i++) {
-                document.querySelector(arr2[i]).value = specialTraits[traitIndex].stats[i];
+        function findHighestStat(dragonName, dragonTrait) {
+            let searchIndex = dragonList.findIndex((dragons) => { return dragons.name[0] == dragonName; });
+            let indexHighest = dragonList[searchIndex][dragonTrait].indexOf(Math.max(...dragonList[searchIndex][dragonTrait]));
+            switch (indexHighest) {
+                case 0:
+                    return "agility";
+                case 1:
+                    return "strength";
+                case 2:
+                    return "focus";
+                case 3:
+                    return "intellect";
+                default:
+                    return -1;
             }
+        }
+
+        function endTraitSelect() {
+            let endTraitSelected = event.target.value;
+            let dragonSelected = document.querySelector("#dragon-selector").value;
+            let dragonTrait = document.querySelector("#trait-selector").value;
+            traitIndex = specialTraits.findIndex((traits) => { return traits.traitName == endTraitSelected; });
+            let arr2 = ["#end-agility", "#end-strength", "#end-focus", "#end-intellect"];
+            if (specialTraits[traitIndex].traitName == "immersedIn") {
+                for (let i = 0; i < 4; i++) {
+                    document.querySelector(arr2[i]).value = specialTraits[traitIndex].stats[i];
+                }
+                
+                let highestEnd = "#end-".concat(findHighestStat(dragonSelected, dragonTrait));
+                document.querySelector(highestEnd).value = 150;
+            }
+            else {
+                for (let i = 0; i < 4; i++) {
+                    document.querySelector(arr2[i]).value = specialTraits[traitIndex].stats[i];
+                }
+            }
+
         }
 
         function calculator() {
@@ -664,7 +716,7 @@
         }
 
         function unavailabilityChecker() {
-            dragonName = document.querySelector(".dragon-selector").value;
+            dragonName = document.querySelector("#dragon-selector").value;
             let trait = event.target.value;
             let endTrait = document.getElementById("#dull");
 
@@ -678,7 +730,7 @@
 
             for (let i = 0; i < 4; i++) {
                 if (dragonList[dragonIndex][trait][i] > 25) {
-                    document.querySelector(".trait-selector2").selectedIndex = 0;
+                    document.querySelector("#trait-selector2").selectedIndex = 0;
                     endTrait.setAttribute("disabled", "");
                     endTrait.textContent = "평범한 (조건초과)";
                 }
