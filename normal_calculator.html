@@ -6,7 +6,65 @@
     
 </head>
 <body>
-    <!-- Calculator for normal traits -->
-    <!-- Merge with index.html after testing core features -->
+    <script>
+        function findLowestStat(baseArray) {
+            let searchIndex = dragonList.findIndex((dragons) => { return dragons.name[0] == dragonName; });
+            let baseStats = dragonList[searchIndex][dragonTrait];
+            let lowestBase = 30;
+            let lowestArray = [];
+
+            baseArray.forEach(stat => stat < lowestBase ? lowestBase = stat : lowestBase += 0);
+
+            for (let i = 0; i < 4; i++) {
+                if (baseStats[i] == lowestBase) {
+                    switch (i) {
+                        case 0:
+                            lowestArray.push("agility");
+                            break;
+                        case 1:
+                            lowestArray.push("strength");
+                            break;
+                        case 2:
+                            lowestArray.push("focus");
+                            break;
+                        case 3:
+                            lowestArray.push("intellect");
+                    }
+                }
+            }
+            return lowestArray;
+        }
+
+        function normalTraitSelect() {
+            let baseStats = [];
+            let arr2 = ["#end-agility", "#end-strength", "#end-focus", "#end-intellect"];
+
+            for (let i = 0; i < 4; i++) {
+                baseStats[i] = document.querySelector(arr2[i]).value;
+            }
+            
+            let traitSelected = event.target.value;
+            let dragonSelected = document.querySelector("#dragon-selector").value;
+            let dragonTrait = document.querySelector("#trait-selector").value;
+            traitIndex = normalTraits.findIndex((traits) => { return traits.traitName == traitSelected; });
+            let highestBase = findHighestStat(dragonSelected, dragonTrait);
+            let lowestBaseArray = findLowestStat(baseStats);
+            let highestReq = normalTraits[traitIndex].highest;
+            let lowestReq = normalTraits[traitIndex].lowest;
+            let reqArray = new Array(4).fill(0);
+
+            if (highestBase == highestReq) {
+                reqArray[statList.indexOf(highestReq)] = baseStats[statList.indexOf(highestReq)]; // index of highest required stat
+            }
+            else {
+                reqArray[statList.indexOf(highestReq)] = baseStats[statList.indexOf(highestBase)] + 1;
+            }
+
+            for (let i = 0; i < 4; i++) {
+                document.querySelector(arr2[i]).value = reqArray[i];
+            }
+
+        }
+    </script>
 </body>
 </html>
