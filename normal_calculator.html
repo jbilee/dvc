@@ -7,51 +7,118 @@
 </head>
 <body>
     <script>
-        function findLowestStat(baseArray) {
-            let searchIndex = dragonList.findIndex((dragons) => { return dragons.name[0] == dragonName; });
-            let baseStats = dragonList[searchIndex][dragonTrait];
-            let lowestBase = 30;
-            let lowestArray = [];
 
-            baseArray.forEach(stat => stat < lowestBase ? lowestBase = stat : lowestBase += 0);
+    function findLowestStat(baseArray) {
+        let lowestBase = Math.min(...baseArray);
+        let lowestArray = [];
 
-            for (let i = 0; i < 4; i++) {
-                if (baseStats[i] == lowestBase) {
-                    switch (i) {
-                        case 0:
-                            lowestArray.push("agility");
-                            break;
-                        case 1:
-                            lowestArray.push("strength");
-                            break;
-                        case 2:
-                            lowestArray.push("focus");
-                            break;
-                        case 3:
-                            lowestArray.push("intellect");
-                    }
+        for (let i = 0; i < 4; i++) {
+            if (baseArray[i] == lowestBase) {
+                switch (i) {
+                    case 0:
+                        lowestArray.push("agility");
+                        break;
+                    case 1:
+                        lowestArray.push("strength");
+                        break;
+                    case 2:
+                        lowestArray.push("focus");
+                        break;
+                    case 3:
+                        lowestArray.push("intellect");
                 }
             }
+        }
+
+            console.log(`[Checkpoint] lowestArray: ${lowestArray}`);
             return lowestArray;
         }
 
-        function normalTraitSelect() {
+        function findHighestStat(baseArray) {
+            let indexHighest = baseArray.indexOf(Math.max(...baseArray));
+
+            switch (indexHighest) {
+                case 0:
+                    return "agility";
+                case 1:
+                    return "strength";
+                case 2:
+                    return "focus";
+                case 3:
+                    return "intellect";
+                default:
+                    return -1;
+            }
+        }
+
+        function specialTraitSelect() {
+            let traitSelected = event.target.value;
+            traitIndex = specialTraits.findIndex((traits) => { return traits.traitName == traitSelected; });
             let baseStats = [];
             let arr2 = ["#end-agility", "#end-strength", "#end-focus", "#end-intellect"];
 
             for (let i = 0; i < 4; i++) {
                 baseStats[i] = document.querySelector(arr2[i]).value;
             }
-            
+
+            if (specialTraits[traitIndex].traitName == "immersedIn") {
+                for (let i = 0; i < 4; i++) {
+                    document.querySelector(arr2[i]).value = specialTraits[traitIndex].stats[i];
+                }
+
+                let highestEnd = "#end-".concat(findHighestStat(baseStats));
+                document.querySelector(highestEnd).value = 150;
+            }
+            else {
+                for (let i = 0; i < 4; i++) {
+                    document.querySelector(arr2[i]).value = specialTraits[traitIndex].stats[i];
+                }
+            }
+        }
+
+        function normalTraitSelect() {
+            let baseStats = [];
+            let arr2 = ["#start-agility", "#start-strength", "#start-focus", "#start-intellect"];
+            let arr3 = ["#end-agility", "#end-strength", "#end-focus", "#end-intellect"];
+
+            for (let i = 0; i < 4; i++) {
+                baseStats[i] = Number(document.querySelector(arr2[i]).value);
+            }
+
+
+            console.log(baseStats);
+
             let traitSelected = event.target.value;
-            let dragonSelected = document.querySelector("#dragon-selector").value;
-            let dragonTrait = document.querySelector("#trait-selector").value;
             traitIndex = normalTraits.findIndex((traits) => { return traits.traitName == traitSelected; });
-            let highestBase = findHighestStat(dragonSelected, dragonTrait);
+
             let lowestBaseArray = findLowestStat(baseStats);
             let highestReq = normalTraits[traitIndex].highest;
             let lowestReq = normalTraits[traitIndex].lowest;
             let reqArray = new Array(4).fill(0);
+
+            console.log(`[Checkpoint] lowestReq: ${lowestReq}`);
+
+            // if (lowestBaseArray.length != 1) {
+
+            // }
+            // else {
+            if (lowestBaseArray.indexOf(lowestReq) < 0) {
+                let iLowestReq = statList.indexOf(lowestReq);
+                for (let i = 0; i < 4; i++) {
+                    if (baseStats[iLowestReq] > baseStats[i]) {
+                        reqArray[i] = baseStats[iLowestReq] + 1;
+
+                    }
+                    // else {
+                    //     reqArray[iLowestReq] = baseStats[iLowestReq];
+                    // }
+                }
+            }
+
+            console.log(`[Checkpoint] reqArray: ${reqArray}`);
+
+            
+            let highestBase = statList[reqArray.indexOf(Math.max(...reqArray))];
 
             if (highestBase == highestReq) {
                 reqArray[statList.indexOf(highestReq)] = baseStats[statList.indexOf(highestReq)]; // index of highest required stat
@@ -60,11 +127,21 @@
                 reqArray[statList.indexOf(highestReq)] = baseStats[statList.indexOf(highestBase)] + 1;
             }
 
-            for (let i = 0; i < 4; i++) {
-                document.querySelector(arr2[i]).value = reqArray[i];
-            }
+            console.log(`[Checkpoint] reqArray: ${reqArray}`);
 
+            // ***handle null exception later***
+            // if (lowestReq == null) {
+            //     if ()
+            // }
+
+            // for (stat of lowestBaseArray) {
+            //     stat == lowestReq ? 
+            // }
+            for (let i = 0; i < 4; i++) {
+                document.querySelector(arr3[i]).value = reqArray[i];
+            }
         }
+
     </script>
 </body>
 </html>
