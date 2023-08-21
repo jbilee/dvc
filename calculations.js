@@ -10,7 +10,7 @@ let nineCount;
 let fiveCount;
 let threeCount;
 
-
+let exactCalc;
 
 function dragonSelect() {
     let arr = ["#start-agility", "#start-strength", "#start-focus", "#start-intellect"];
@@ -58,7 +58,6 @@ function findLowestStat(baseArray) {
         }
     }
 
-    console.log(`[Checkpoint] lowestArray: ${lowestArray}`);
     return lowestArray;
 }
 
@@ -79,7 +78,7 @@ function findHighestStat(baseArray) {
     }
 }
 
-function specialTraitSelect() {
+function selectSpecialTrait() {
     let traitSelected = event.target.value;
     traitIndex = specialTraits.findIndex((traits) => { return traits.traitName == traitSelected; });
     let baseStats = [];
@@ -96,7 +95,6 @@ function specialTraitSelect() {
         }
 
         let highestEnd = "#end-".concat(findHighestStat(baseStats));
-        console.log(`[Checkpoint] baseStats: ${baseStats}`);
         document.querySelector(highestEnd).value = 150;
     }
     else {
@@ -106,7 +104,7 @@ function specialTraitSelect() {
     }
 }
 
-function normalTraitSelect() {
+function selectNormalTrait() {
     let baseStats = [];
     let arr2 = ["#start-agility", "#start-strength", "#start-focus", "#start-intellect"];
     let arr3 = ["#end-agility", "#end-strength", "#end-focus", "#end-intellect"];
@@ -115,66 +113,59 @@ function normalTraitSelect() {
         baseStats[i] = Number(document.querySelector(arr2[i]).value);
     }
 
-
-    console.log(baseStats);
-
     let traitSelected = event.target.value;
     traitIndex = normalTraits.findIndex((traits) => { return traits.traitName == traitSelected; });
-    console.log(traitSelected);
-    console.log(traitIndex);
-    // highestBase moved, see down below
+
     let lowestBaseArray = findLowestStat(baseStats);
     let highestReq = normalTraits[traitIndex].highest;
     let lowestReq = normalTraits[traitIndex].lowest;
     let reqArray = new Array(4).fill(0);
 
-    console.log(`[Checkpoint] lowestReq: ${lowestReq}`);
+    // Handles null trait values
+    if (lowestReq == null) {
+        let highestBase = statList[baseStats.indexOf(Math.max(...baseStats))];
+        if (highestBase == highestReq) {
+            let baseCopy = baseStats.slice();
+            baseCopy.sort((a, b) => { return b - a; });
+            baseStats.forEach((e, i) => { if (e < baseCopy[1]) reqArray[i] = baseCopy[1]; });
+            reqArray[statList.indexOf(highestReq)] = baseStats[statList.indexOf(highestReq)];
+        }
+        else {
+            for (let i = 0; i < 4; i++) {
+                reqArray[i] = Math.max(...baseStats);
+            }
+            reqArray[statList.indexOf(highestReq)] = Math.max(...reqArray) + 1;
+        }
+    }
+    else {
+        if (lowestBaseArray.length > 1) { // For when base lowest is more than one
+            for (let i = 0; i < lowestBaseArray.length; i++) {
+                if (lowestBaseArray[i] != lowestReq) reqArray[statList.indexOf(lowestBaseArray[i])] = 1;
+            }
+        }
+        else if (lowestBaseArray.indexOf(lowestReq) < 0) { // if required lowest is not in current lowest array (meaning current lowest has to change)
+            let iLowestReq = statList.indexOf(lowestReq); // find index of lowest required (identify which stat it is)
+            for (let i = 0; i < 4; i++) { // go through each stat and if current stat is smaller than required lowest, then make its goal stat be 1 higher than required lowest
+                if (baseStats[iLowestReq] > baseStats[i]) {
+                    reqArray[i] = baseStats[iLowestReq] + 1;
+                }
+            }
+        }
 
-    if (lowestBaseArray.indexOf(lowestReq) < 0) { // if required lowest is not in current lowest array (meaning current lowest has to change)
-        let iLowestReq = statList.indexOf(lowestReq); // find index of lowest required (identify which stat it is)
-        for (let i = 0; i < 4; i++) { // go through each stat and if current stat is smaller than required lowest, then make its goal stat be 1 higher than required lowest
-            if (baseStats[iLowestReq] > baseStats[i]) {
-                reqArray[i] = baseStats[iLowestReq] + 1;
-
+        // Determines highest stat needed
+        let highestBase = statList[baseStats.indexOf(Math.max(...baseStats))];
+        if (highestBase == highestReq) {
+            reqArray[statList.indexOf(highestReq)] = baseStats[statList.indexOf(highestReq)];
+        }
+        else {
+            if (highestBase == lowestReq) {
+                reqArray[statList.indexOf(highestReq)] = Math.max(...reqArray) + 1;
+            }
+            else {
+                reqArray[statList.indexOf(highestReq)] = Math.max(...baseStats) + 1;
             }
         }
     }
-
-    console.log(`[Checkpoint] reqArray: ${reqArray}`);
-
-
-    let highestBase = statList[baseStats.indexOf(Math.max(...baseStats))];
-    console.log(`[Checkpoint] highestBase: ${highestBase}`);
-
-
-    if (highestBase == highestReq) {
-        reqArray[statList.indexOf(highestReq)] = baseStats[statList.indexOf(highestReq)]; // index of highest required stat
-    }
-    else {
-        if (highestBase == lowestReq) {
-            reqArray[statList.indexOf(highestReq)] = Math.max(...reqArray) + 1;
-        }
-        else {
-            reqArray[statList.indexOf(highestReq)] = Math.max(...baseStats) + 1;
-        }
-
-    }
-
-    console.log(`[Checkpoint] reqArray: ${reqArray}`);
-
-    // Handling null exception
-
-
-    // if (lowestReq == null) {
-    //     if ()
-    // }
-
-
-
-    // for (stat of lowestBaseArray) {
-    //     stat == lowestReq ? 
-    // }
-
 
     // Print goal stats on page
     for (let i = 0; i < 4; i++) {
@@ -224,7 +215,11 @@ function calculator() {
     }
     else {
         if (nineCount > 0) {
-            document.querySelector(".recommended-agility").textContent = `9점(${nineCount}회)`;
+            let tester = document.createElement("span");
+            tester.setAttribute("class", "nine");
+            tester.textContent = "dfhalwijeljfg";
+            document.querySelector(".recommended-agility").textContent = `<u>9점(${nineCount}회)</u>`;
+            document.querySelector(".recommended-agility").textContent = tester;
         }
         if (fiveCount > 0) {
             if (nineCount > 0) {
@@ -383,16 +378,20 @@ function calculator() {
     }
 }
 
+function calculateMatch() {
+    console.log(":)");
+}
+
 function resetCounter() {
     nineCount = 0;
     fiveCount = 0;
     threeCount = 0;
 }
 
-function unavailabilityChecker() {
+function unavailabilityCheck() {
     dragonName = document.querySelector("#dragon-selector").value;
     let trait = event.target.value;
-    let endTrait = document.getElementById("#dull");
+    let endTrait = document.getElementById("dull");
 
     dragonIndex = dragonList.findIndex((dragons) => { return dragons.name[0] == dragonName; });
 
@@ -417,4 +416,7 @@ function reset() {
     for (let i = 0; i < 4; i++) {
         document.querySelector(arr2[i]).value = 0;
     }
+
+    document.querySelector("#trait-selector2").selectedIndex = 0;
+    document.querySelector("#normal-trait-selector2").selectedIndex = 0;
 }
