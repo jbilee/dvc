@@ -20,6 +20,7 @@ function dragonSelect() {
     for (let i = 0; i < 4; i++) {
         document.querySelector(arr[i]).value = 0;
     }
+    document.querySelector("#trait-selector").removeAttribute("disabled");
     document.querySelector("#init1").textContent = dragonList[dragonIndex].traitsKo[0];
     document.querySelector("#init1").value = dragonList[dragonIndex].traitsEn[0];
     document.querySelector("#init2").textContent = dragonList[dragonIndex].traitsKo[1];
@@ -216,10 +217,7 @@ function calculator() {
     else {
         if (nineCount > 0) {
             let tester = document.createElement("span");
-            tester.setAttribute("class", "nine");
-            tester.textContent = "dfhalwijeljfg";
-            document.querySelector(".recommended-agility").textContent = `<u>9점(${nineCount}회)</u>`;
-            document.querySelector(".recommended-agility").textContent = tester;
+            document.querySelector(".recommended-agility").textContent = `9점(${nineCount}회)`;
         }
         if (fiveCount > 0) {
             if (nineCount > 0) {
@@ -378,8 +376,8 @@ function calculator() {
     }
 }
 
-function calculateMatch() {
-    console.log(":)");
+function calculateMatch(target) {
+    if (target === 0) ;
 }
 
 function resetCounter() {
