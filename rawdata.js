@@ -210,4 +210,13 @@ document.addEventListener("DOMContentLoaded", function () {
         newOption.textContent = normalTraits[i].nameKo;
         document.querySelector("#normal-trait-selector2").append(newOption);
     }
+
+    for (let i = 0; i < specialTraits.length; i++) {
+        let newOption = document.createElement("option");
+        newOption.setAttribute("value", specialTraits[i].traitName);
+        if (newOption.value == "dull") newOption.setAttribute("id", specialTraits[i].traitName);
+        console.log(newOption.value);
+        newOption.textContent = specialTraits[i].nameKo;
+        document.querySelector("#trait-selector2").append(newOption);
+    }
 });
