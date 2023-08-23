@@ -172,7 +172,13 @@ function calculator() {
 
 function printCount(traitType) {
     let reqStat = document.querySelector(`#end-${traitType}`).value - document.querySelector(`#start-${traitType}`).value;
-    reqStat < 0 ? document.querySelector(`#required-${traitType}`).textContent = "+0" : document.querySelector(`#required-${traitType}`).textContent = "+" + reqStat;
+    if (reqStat < 0) {
+        reqStat = 0;
+        document.querySelector(`#required-${traitType}`).textContent = "+0";
+    }
+    else {
+        document.querySelector(`#required-${traitType}`).textContent = "+" + reqStat;
+    }
 
     let trainCount = calculateTrainCount(reqStat, trainValues);
     let trainText = trainCount.map((e) => {
