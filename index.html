@@ -6,130 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DVC 노력치 계산기</title>
 
-    <style>
-        * {
-            font-family: tahoma;
-            font-size: 15px;
-        }
-
-        h1 {
-            font-size: 28px;
-        }
-
-        #toggle {
-            display: none;
-        }
-
-        #main-box {
-            display: flex;
-            justify-content: center;
-        }
-
-        #main-content {
-            display: flex;
-            flex-direction: column;
-            max-width: 900px;
-        }
-
-        #calculator-body {
-            display: flex;
-            flex-flow: column wrap;
-            align-self: center;
-        }
-
-        #controls {
-            display: flex;
-            flex-flow: row wrap;
-            align-self: center;
-            max-width: 600px;
-            justify-content: center;
-        }
-
-        #controls > div {
-            margin: 13px;
-        }
-
-        #calculator-body > table {
-            width: 600px;
-            align-self: center;
-        }
-
-        #header {
-            text-align: center;
-            padding: 50px 0px;
-        }
-
-        #trait-selector {
-            width: 100px;
-        }
-
-        #normal-trait-select {
-            display: inline-block;
-            margin: 20px;
-        }
-
-        #normal-trait-selector2 {
-            width: 135px;
-        }
-
-        #trait-selector2 {
-            width: 135px;
-        }
-
-        #special-trait-select {
-            display: inline-block;
-            margin: 20px;
-        }
-
-        .stat-field {
-            width: 3em;
-        }
-
-        table {
-            border: solid 1px;
-            padding: 7px;
-        }
-
-        td {
-            padding: 3px;
-            text-align: end;
-        }
-
-        .version * {
-            font-size: 11px;
-            text-align: end;
-        }
-
-        h2 {
-            margin-bottom: -5px;
-        }
-
-        div.agility,
-        div.strength,
-        div.focus,
-        div.intellect {
-            border-radius: 6px;
-            padding: 3px;
-            font-weight: bold;
-        }
-
-        div.agility {
-            background-color: rgb(170, 222, 255);
-        }
-
-        div.strength {
-            background-color: rgb(255, 176, 176);
-        }
-
-        div.focus {
-            background-color: rgb(217, 171, 255);
-        }
-
-        div.intellect {
-            background-color: rgb(199, 255, 110);
-        }
-    </style>
-
+    <link rel="stylesheet" href="dvccalculator.css">
     <script src="rawdata.js"></script>
 </head>
 
@@ -147,7 +24,7 @@
                 <table>
                     <thead>
                         <tr>
-                            <th scope="col"></th>
+                            <th></th>
                             <th scope="col">기본치</th>
                             <th></th>
                             <th scope="col">목표치</th>
@@ -172,10 +49,10 @@
                                     class="stat-field agility">
                             </td>
                             <td width="70" style="text-align: center;">
-                                <span class="result-agility"></span>
+                                <span id="required-agility"></span>
                             </td>
                             <td width="250" style="text-align: center;">
-                                <span class="recommended-agility"></span>
+                                <span id="train-count-agility"></span>
                             </td>
                         </tr>
                         <tr>
@@ -194,10 +71,10 @@
                                     class="stat-field strength">
                             </td>
                             <td style="text-align: center;">
-                                <span class="result-strength"></span>
+                                <span id="required-strength"></span>
                             </td>
                             <td style="text-align: center;">
-                                <span class="recommended-strength"></span>
+                                <span id="train-count-strength"></span>
                             </td>
                         </tr>
                         <tr>
@@ -216,10 +93,10 @@
                                     class="stat-field focus">
                             </td>
                             <td style="text-align: center;">
-                                <span class="result-focus"></span>
+                                <span id="required-focus"></span>
                             </td>
                             <td style="text-align: center;">
-                                <span class="recommended-focus"></span>
+                                <span id="train-count-focus"></span>
                             </td>
                         </tr>
                         <tr>
@@ -238,10 +115,10 @@
                                     class="stat-field intellect">
                             </td>
                             <td style="text-align: center;">
-                                <span class="result-intellect"></span>
+                                <span id="required-intellect"></span>
                             </td>
                             <td style="text-align: center;">
-                                <span class="recommended-intellect"></span>
+                                <span id="train-count-intellect"></span>
                             </td>
                         </tr>
                     </tbody>
@@ -250,32 +127,28 @@
                 <div id="controls">
                     <div>
                         <h3>드래곤 정보 자동입력:</h3>
-                        <select name="dragon-selector" id="dragon-selector" onchange="dragonSelect()">
+                        <select name="dragon-selector" id="dragon-selector" onchange="selectDragon()">
                             <option selected disabled>드래곤</option>
                         </select>
-                        <select name="trait-selector" id="trait-selector"
-                            onchange="startTraitSelect(), unavailabilityCheck()" disabled>
+                        <select name="trait-selector" id="start-trait-selector" onchange="selectStartTrait()" disabled>
                             <option selected disabled>성격</option>
-                            <option value="" id="init1">-</option>
-                            <option value="" id="init2">-</option>
+                            <option value="" id="trait1">-</option>
+                            <option value="" id="trait2">-</option>
                         </select>
                     </div>
 
                     <div>
                         <h3>목표치 자동입력:</h3>
-                        <select name="trait-selector" id="normal-trait-selector2" onchange="selectNormalTrait()">
+                        <select name="trait-selector" id="normal-trait-selector" onchange="selectNormalTrait()">
                             <option selected disabled>일반성격 선택</option>
                         </select>
-                        <select name="trait-selector" id="trait-selector2" onchange="selectSpecialTrait()">
+                        <select name="trait-selector" id="special-trait-selector" onchange="selectSpecialTrait()">
                             <option selected disabled>특수성격 선택</option>
                         </select>
                     </div>
                     <div>
-                        <button onclick="calculator()">계산하기</button>
+                        <button onclick="calculator2()">계산하기</button>
                         <button onclick="reset()">목표치 초기화</button> <br>
-                        <label id="exact-match"><input type="checkbox" name="train-style"
-                                onchange="calculateMatch()">필요치에
-                            맞춤</label><br>
                     </div>
                 </div>
                 <div style="height: 30px;"></div>
@@ -286,18 +159,7 @@
                     <li>최종 목표치를 입력하거나 원하는 성격을 [목표치 자동입력] 드롭다운 메뉴에서 선택합니다.</li>
                     <li>계산하기를 클릭하면 도달하기까지 필요한 훈련치와 그에 따른 훈련 횟수가 출력됩니다.</li>
                 </ol>
-                목표치 자동입력을 통해 설정되는 목표치는 기본적으로 <br>
-                다음 성격들은 [맞춤] 옵션이 자동으로 활성화됩니다: 똑똑한, 노력하는, 대담한, 눈치빠른, 유능한, 평범한
-                <br>
-                <br>
-                <strong>참고:</strong> <br>
-                몰입하는: 한가지 능력치가 최종 150 이상 <br>
-                품위있는: 모든 능력치 20 이상 (순혈 3세대) <br>
-                고귀한: 모든 능력치 20 이상 (순혈 5세대) <br>
-                완벽주의자: 모든 능력치 20 이상 <br>
-                오만한: 모든 능력치 25 이상 <br>
-                유능한: 능력치 모두 같은 수치로 각각 26이상 <br>
-                평범한: 능력치 모두 같은 수치로 각각 25이하
+                자동으로 입력되는 목표치는 해당 성격을 발현시키기 위해 필요한 최소의 값으로 설정됩니다.
                 </p>
 
             </div>
