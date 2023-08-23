@@ -72,26 +72,12 @@ span.three {
     padding: 50px 0px;
 }
 
-#trait-selector {
+#start-trait-selector {
     width: 100px;
 }
 
-#normal-trait-select {
-    display: inline-block;
-    margin: 20px;
-}
-
-#normal-trait-selector2 {
+#normal-trait-selector, #special-trait-selector {
     width: 135px;
-}
-
-#trait-selector2 {
-    width: 135px;
-}
-
-#special-trait-select {
-    display: inline-block;
-    margin: 20px;
 }
 
 .stat-field {
