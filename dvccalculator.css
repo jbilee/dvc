@@ -127,3 +127,8 @@ div.focus {
 div.intellect {
     background-color: rgb(199, 255, 110);
 }
+
+sub {
+    font-size: 12px;
+    font-weight: bold;
+}
