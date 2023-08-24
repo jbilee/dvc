@@ -5,15 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DVC 노력치 계산기</title>
-
+    <link rel="icon" href="/favicon.png">
     <link rel="stylesheet" href="dvccalculator.css">
     <script src="rawdata.js"></script>
 </head>
 
 <body>
-    <div>
-        <button id="toggle" onclick="hideColor()">hide color</button>
-    </div>
     <div id="main-box">
         <div id="main-content">
             <div id="header">
@@ -156,10 +153,15 @@
                 <h2>[툴 이용가이드]</h2>
                 <ol>
                     <li>나의 드래곤과 드래곤의 초기 성격을 선택합니다. (또는 원하는 기본치를 직접 입력합니다.)</li>
-                    <li>최종 목표치를 입력하거나 원하는 성격을 [목표치 자동입력] 드롭다운 메뉴에서 선택합니다.</li>
+                    <li>최종 목표치를 입력하거나 원하는 성격을 <strong>목표치 자동입력</strong> 드롭다운 메뉴에서 선택합니다.</li>
                     <li>계산하기를 클릭하면 도달하기까지 필요한 훈련치와 그에 따른 훈련 횟수가 출력됩니다.</li>
                 </ol>
-                자동으로 입력되는 목표치는 해당 성격을 발현시키기 위해 필요한 최소의 값으로 설정됩니다.
+                <ul>
+                    <li>자동으로 입력되는 목표치는 해당 성격을 발현시키기 위해 필요한 최소의 값으로 설정됩니다.</li>
+                    <li>목표치의 비율만 유지된다면 출력되는 필요치나 필요 훈련 횟수대로 훈련할 필요가 없습니다. (평범한, 유능한 성격은 하한선 또는 상한선이 있기 때문에 예외)</li>
+                    <li>동일한 훈련의 횟수가 6회 이상이 되면 괄호로 출력됩니다. (예: <span class="nine">9</span><sub>(x13)</sub>일 경우 9점짜리 훈련을 13회 진행)</li>
+                    <li>특수성격은 노력치 조건이 붙는 성격만 목록에 포함되어 있습니다.</li>
+                </ul>
                 </p>
 
             </div>
@@ -168,7 +170,8 @@
 
     <div class="version">
         <p>
-            23-08-08. version 0.0<br>
+            23-08-08. version 0.0.0<br>
+            23-08-24. version 0.1.0<br>
             DVC Calculator by dydk1215@GitHub
         </p>
         <p>
@@ -187,28 +190,11 @@
                 (특수성격 조건 by 나린님)</a><br>
         </p>
         <p>
-            버그 제보: <a href="https://open.kakao.com/o/stYLmUCf">오픈카톡</a>
+            버그/데이터 오류 제보: <a href="https://open.kakao.com/o/stYLmUCf">오픈카톡</a>
         </p>
     </div>
 
     <script src="calculations.js"></script>
-    <script>
-        function hideColor() {
-            let target = document.getElementById("main-box");
-            let target2 = document.getElementById("main-content");
-            if (event.target.innerText == "unhide color") {
-                target.style.backgroundColor = "blue";
-                target2.style.backgroundColor = "greenyellow";
-                event.target.innerText = "hide color";
-            }
-            else {
-                target.style.backgroundColor = "white";
-                target2.style.backgroundColor = "white";
-                event.target.innerText = "unhide color";
-            }
-        }
-    </script>
-
 </body>
 
 </html>
