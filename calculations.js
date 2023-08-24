@@ -181,9 +181,20 @@ function printCount(traitType) {
     }
 
     let trainCount = calculateTrainCount(reqStat, trainValues);
-    let trainText = trainCount.map((e) => {
-        return e === 9 ? `<span class="nine">${e}</span>` : e === 5 ? `<span class="five">${e}</span>` : `<span class="three">${e}</span>`;
-    }).join(" ");
+    let trainText;
+
+    if (trainCount[5] == 9) {
+        let nineCount = trainCount.lastIndexOf(9) + 1;
+        trainCountCondensed = trainCount.slice(nineCount);
+        trainText = `<span class="nine">9</span><sub>(x${nineCount})</sub> ` + trainCountCondensed.map((e) => {
+            return e === 5 ? `<span class="five">${e}</span>` : `<span class="three">${e}</span>`;
+        }).join(" ");
+    }
+    else {
+        trainText = trainCount.map((e) => {
+            return e === 9 ? `<span class="nine">${e}</span>` : e === 5 ? `<span class="five">${e}</span>` : `<span class="three">${e}</span>`;
+        }).join(" ");
+    }
 
     if (trainCount.length === 0) {
         document.querySelector(`#train-count-${traitType}`).textContent = "-";
