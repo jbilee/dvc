@@ -35,6 +35,7 @@
                 <h1>DVC 노력치 계산기</h1>
                 <span id="tooltip"><a href="#tips"><img src="question.jpg" width="30"></a></span>
             </div>
+            
             <div id="calculations">
                 <div class="grid-container">
                     <div></div>
@@ -140,7 +141,7 @@
             </div>
 
                 <div id="controls">
-                    <div>
+                    <div class="sel1">
                         <h3>드래곤 정보 자동입력:</h3>
                         <select name="dragon-selector" id="dragon-selector" onchange="selectDragon()">
                             <option selected disabled>드래곤</option>
@@ -152,7 +153,7 @@
                         </select>
                     </div>
 
-                    <div>
+                    <div class="sel2">
                         <h3>목표치 자동입력:</h3>
                         <select name="trait-selector" id="normal-trait-selector" onchange="selectNormalTrait()">
                             <option selected disabled>일반성격 선택</option>
@@ -161,13 +162,14 @@
                             <option selected disabled>특수성격 선택</option>
                         </select>
                     </div>
-                    <div>
+                    
+                    <div class="buttons">
                         <button onclick="calculator()">계산하기</button>
                         <button onclick="reset()">목표치 초기화</button> <br>
                     </div>
                 </div>
-                <div style="height: 30px;"></div>
-                <p>
+
+                <div id="tips">
                 <h2>[툴 이용가이드]</h2>
                 <ol>
                     <li>나의 드래곤과 드래곤의 초기 성격을 선택합니다. (또는 원하는 기본치를 직접 입력합니다.)</li>
@@ -179,7 +181,7 @@
                     <li>동일한 훈련의 횟수가 5회를 초과하면 괄호 형식으로 축소됩니다. (예: <span class="nine">9</span><sub>(x13)</sub>일 경우 9점짜리 훈련을 13회 진행)</li>
                     <li>특수성격은 노력치 조건이 붙는 성격만 목록에 포함되어 있습니다. (기품있는 성격은 9-5-3 각각 1회씩 고정이기에 예외)</li>
                 </ul>
-                </p>
+                </div>
 
             </div>
         </div>
@@ -189,7 +191,7 @@
         <p>
             23-08-08. version 0.0.0<br>
             23-08-24. version 0.1.0<br>
-            23-08-26. version 0.1.1<br>
+            23-08-26. version 0.1.2<br>
             DVC Calculator by dydk1215@GitHub
         </p>
         <p>
