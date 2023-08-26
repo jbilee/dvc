@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="DVC 드래곤 육성에 필요한 훈련치를 계산해주는 툴입니다.">
+    
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://dydk1215.github.io/dvc/">
     <meta property="og:title" content="DVC 노력치 계산기">
@@ -12,6 +13,7 @@
     <meta property="og:description" content="DVC 드래곤 육성에 필요한 훈련치를 계산해주는 툴입니다.">
     <meta property="og:site_name" content="DVC 노력치 계산기">
     <meta property="og:locale" content="ko_KR">
+    
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="DVC 노력치 계산기">
     <meta name="twitter:description" content="DVC 드래곤 육성에 필요한 훈련치를 계산해주는 툴입니다.">
@@ -31,110 +33,111 @@
         <div id="main-content">
             <div id="header">
                 <h1>DVC 노력치 계산기</h1>
+                <span id="tooltip"><a href="#tips"><img src="question.jpg" width="30"></a></span>
             </div>
-            <div id="calculator-body">
-                <table>
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th scope="col">기본치</th>
-                            <th></th>
-                            <th scope="col">목표치</th>
-                            <th scole="col">필요치</th>
-                            <th scope="col">필요 훈련 횟수</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td width="70" style="text-align: center;">
-                                <div class="agility">순발력</div>
-                            </td>
-                            <td>
-                                <input type="number" min="0" max="30" value="0" id="start-agility"
-                                    class="stat-field agility">
-                            </td>
-                            <td>
-                                →
-                            </td>
-                            <td>
-                                <input type="number" min="0" max="999" maxlength="3" value="0" id="end-agility"
-                                    class="stat-field agility">
-                            </td>
-                            <td width="70" style="text-align: center;">
-                                <span id="required-agility"></span>
-                            </td>
-                            <td width="250" style="text-align: center;">
-                                <span id="train-count-agility"></span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: center;">
-                                <div class="strength">근력</div>
-                            </td>
-                            <td>
-                                <input type="number" min="0" max="30" value="0" id="start-strength"
-                                    class="stat-field strength">
-                            </td>
-                            <td>
-                                →
-                            </td>
-                            <td>
-                                <input type="number" min="0" max="999" maxlength="3" value="0" id="end-strength"
-                                    class="stat-field strength">
-                            </td>
-                            <td style="text-align: center;">
-                                <span id="required-strength"></span>
-                            </td>
-                            <td style="text-align: center;">
-                                <span id="train-count-strength"></span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: center;">
-                                <div class="focus">집중력</div>
-                            </td>
-                            <td>
-                                <input type="number" min="0" max="30" value="0" id="start-focus"
-                                    class="stat-field focus">
-                            </td>
-                            <td>
-                                →
-                            </td>
-                            <td>
-                                <input type="number" min="0" max="999" maxlength="3" value="0" id="end-focus"
-                                    class="stat-field focus">
-                            </td>
-                            <td style="text-align: center;">
-                                <span id="required-focus"></span>
-                            </td>
-                            <td style="text-align: center;">
-                                <span id="train-count-focus"></span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: center;">
-                                <div class="intellect">지력</div>
-                            </td>
-                            <td>
-                                <input type="number" min="0" max="30" value="0" id="start-intellect"
-                                    class="stat-field intellect">
-                            </td>
-                            <td>
-                                →
-                            </td>
-                            <td>
-                                <input type="number" min="0" max="999" maxlength="3" value="0" id="end-intellect"
-                                    class="stat-field intellect">
-                            </td>
-                            <td style="text-align: center;">
-                                <span id="required-intellect"></span>
-                            </td>
-                            <td style="text-align: center;">
-                                <span id="train-count-intellect"></span>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div id="calculations">
+                <div class="grid-container">
+                    <div></div>
+                    <div>
+                        <h3>기본치</h3>
+                    </div>
+                    <div></div>
+                    <div class="grid-item">
+                        <h3>목표치</h3>
+                    </div>
+                    <div>
+                        <div class="agility">순발력</div>
+                    </div>
+                    <div>
+                        <input type="number" min="0" max="30" value="0" id="start-agility" class="stat-field agility">
+                    </div>
+                    <div>
+                        →
+                    </div>
+                    <div>
+                        <input type="number" min="0" max="999" maxlength="3" value="0" id="end-agility"
+                            class="stat-field agility">
+                    </div>
+                    <div>
+                        <div class="strength">근력</div>
+                    </div>
+                    <div>
+                        <input type="number" min="0" max="30" value="0" id="start-strength" class="stat-field strength">
+                    </div>
+                    <div>
+                        →
+                    </div>
+                    <div>
+                        <input type="number" min="0" max="999" maxlength="3" value="0" id="end-strength"
+                            class="stat-field strength">
+                    </div>
+                    <div>
+                        <div class="focus">집중력</div>
+                    </div>
+                    <div>
+                        <input type="number" min="0" max="30" value="0" id="start-focus" class="stat-field focus">
+                    </div>
+                    <div>
+                        →
+                    </div>
+                    <div>
+                        <input type="number" min="0" max="999" maxlength="3" value="0" id="end-focus"
+                            class="stat-field focus">
+                    </div>
+                    <div>
+                        <div class="intellect">지력</div>
+                    </div>
+                    <div>
+                        <input type="number" min="0" max="30" value="0" id="start-intellect"
+                            class="stat-field intellect">
+                    </div>
+                    <div>
+                        →
+                    </div>
+                    <div>
+                        <input type="number" min="0" max="999" maxlength="3" value="0" id="end-intellect"
+                            class="stat-field intellect">
+                    </div>
+                </div>
+
+                <div class="grid-container2">
+                    <div class="grid-item">
+                        <h3>필요치</h3>
+                    </div>
+                    <div class="grid-item">
+                        <h3>필요 훈련 횟수</h3>
+                    </div>
+
+                    <div class="grid-item">
+                        <span id="required-agility"></span>
+                        <span class="stat-mobile-view">순발력</span>
+                    </div>
+                    <div>
+                        <span id="train-count-agility"></span>
+                    </div>
+                    <div>
+                        <span id="required-strength"></span>
+                        <span class="stat-mobile-view">근력</span>
+                    </div>
+                    <div>
+                        <span id="train-count-strength"></span>
+                    </div>
+                    <div>
+                        <span id="required-focus"></span>
+                        <span class="stat-mobile-view">집중력</span>
+                    </div>
+                    <div>
+                        <span id="train-count-focus"></span>
+                    </div>
+                    <div>
+                        <span id="required-intellect"></span>
+                        <span class="stat-mobile-view">지력</span>
+                    </div>
+                    <div>
+                        <span id="train-count-intellect"></span>
+                    </div>
+                </div>
+            </div>
 
                 <div id="controls">
                     <div>
