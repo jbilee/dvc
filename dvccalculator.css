@@ -26,7 +26,6 @@ span#tooltip {
     right: 7px;
 }
 
-
 .grid-container {
     box-sizing: border-box;
     display: grid;
@@ -155,11 +154,6 @@ span.three {
 
     span#tooltip,
     .stat-mobile-view {
-        display: none;
-    }
-
-
-    .tester {
         display: none;
     }
 
