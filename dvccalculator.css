@@ -1,14 +1,20 @@
 * {
     font-family: 'Noto Sans KR', sans-serif;
-    font-size: 12px;
+    font-size: 16px;
 }
 
 body {
     width: 100vw;
+    padding: 2%;
 }
 
 h1 {
     font-size: 20px;
+}
+
+#header {
+    text-align: left;
+    padding: 0px 0px;
 }
 
 span.nine,
@@ -54,7 +60,7 @@ span.three {
     display: flex;
     flex-flow: row wrap;
     align-self: center;
-    max-width: 85vw;
+    max-width: 95vw;
     justify-content: center;
 }
 
@@ -63,13 +69,8 @@ span.three {
 }
 
 #calculator-body>table {
-    width: 85vw;
+    width: 100%;
     align-self: center;
-}
-
-#header {
-    text-align: center;
-    padding: 50px 0px;
 }
 
 #start-trait-selector {
@@ -129,7 +130,7 @@ div.intellect {
 }
 
 sub {
-    font-size: 12px;
+    font-size: 13px;
     font-weight: bold;
 }
 
@@ -140,5 +141,10 @@ sub {
     
     h1 {
             font-size: 28px;
+    }
+
+    #header {
+    text-align: center;
+    padding: 50px 0px;
     }
 }
