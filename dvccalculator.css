@@ -23,27 +23,28 @@ sub {
 
 span#tooltip {
     position: absolute;
-    right: 7px;
+    right: 10px;
 }
 
 .grid-container {
     box-sizing: border-box;
     display: grid;
-    grid-template-columns: 90px auto 50px auto;
-    grid-template-rows: auto 30px 30px 30px 30px;
+    grid-template-columns: 90px 150px auto 150px;
+    grid-template-rows: auto 27px 27px 27px 27px;
     width: 100%;
-    gap: 10px 5px;
+    gap: 8px 5px;
     padding: 8px;
     text-align: center;
+    align-items: center;
 }
 
 .grid-container2 {
     box-sizing: border-box;
     display: grid;
     grid-template-columns: 200px auto;
-    grid-template-rows: auto 30px 30px 30px 30px;
+    grid-template-rows: auto 27px 27px 27px 27px;
     width: 100%;
-    gap: 10px 5px;
+    gap: 8px 5px;
     padding: 8px;
     text-align: center;
 }
