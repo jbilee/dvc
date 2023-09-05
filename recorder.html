@@ -19,6 +19,10 @@
             flex-direction: row;
         }
 
+        .display-entries {
+            height: 300px;
+        }
+
         .entry>div {
             width: 120px;
         }
@@ -40,10 +44,28 @@
             background-color: black;
             border-radius: 4px;
         }
+
+        .nav-button {
+            background-color: antiquewhite;
+            margin: 10px;
+            padding: 5px;
+            cursor: pointer;
+        }
+
+        .page-cur {
+            background-color: red;
+        }
     </style>
 </head>
 
 <body>
+    <!-- Need:
+        1. 새 뇽뇽 등록 기능 - 선택창: 이름, 종, 성별, 성격, 세대 (using <form>) -- 구현완료
+        2. Statistics Calculator:
+            1. 보유한 용 총 개체수 & 종별 수(bar graph 형태로 보여주기)
+            2. 총 성격 수
+            3. 총 성별 수
+    -->
     <h2>데이터 기록툴</h2>
 
     <div class="new-entry">
@@ -63,6 +85,10 @@
         </form>
     </div>
 
+    <div>
+        <button onclick="clearLocalStorage()">Clear Cache</button>
+    </div>
+
     <div style="height:60px"></div>
 
     <div class="display-header">
@@ -77,22 +103,28 @@
     </div>
     <div class="display-entries"></div>
 
+    <div id="display-nav" style="margin-top: 30px;"></div>
+
+    <!-- <div style="height:40px; background-color: aqua;"></div>
+    <div style="height:40px; background-color: orange;"></div> -->
+
 
     <!-- All JavaScript codes below -->
     <script>
         let dragons = [];
         let counterData, nameCount, totalDragonCount, idCount;
+        const entriesPerPage = 10;
+        let pageIndex = 0;
 
+        // else 컨디션만 체크하게끔(카운터 데이터 없으면 신규생성만 하는걸로) 리펙토링 필요
+        // in the middle of converting all totaldragoncount to length of dragons array
+        // rename "counters" to "indices"
         if (localStorage.getItem("counters")) {
-            const getCounterData = localStorage.getItem("counters");
-            counterData = JSON.parse(getCounterData);
+            refreshData();
 
             nameCount = counterData["name-count"];
-            totalDragonCount = counterData["total-owned"];
             idCount = counterData["id-count"];
-
-            const getDragonData = localStorage.getItem("mydragons");
-            dragons = JSON.parse(getDragonData);
+            totalDragonCount = dragons.length;
         }
         else {
             let counters = { "name-count": 1, "total-owned": 0, "id-count": 0 }
@@ -111,33 +143,35 @@
             dragons = JSON.parse(getDragonData);
 
             // call dataprint function here
-            printLoadedData(dragons);
+            printPage(pageIndex);
         }
 
-        // refactor later
+        // Get latest dragon data and counter data
         function refreshData() {
-            // get latest counter data and dragon data
-
-        }
-
-        function deleteData() {
-            // first get latest localstorage data
             const getDragonData = localStorage.getItem("mydragons");
             dragons = JSON.parse(getDragonData);
 
-            // which dragon data to delete? (need to assign an id for each entry)
-            // get this row's id
+            const getCounterData = localStorage.getItem("counters");
+            counterData = JSON.parse(getCounterData);
+        }
+
+        function deleteData() {
+            // Get latest local storage data
+            refreshData();
+
+            // Identify this row's id
             const getId = event.target.parentNode.previousElementSibling.id;
             const dragonsUpdated = dragons.filter(x => x["id"] != getId);
             const updatedList = JSON.stringify(dragonsUpdated);
             localStorage.setItem("mydragons", updatedList);
 
             //subtract total dragon count
-            const getCounterData = localStorage.getItem("counters");
-            counterData = JSON.parse(getCounterData);
+            totalDragonCount--;
 
+            /* old code for calculating new total dragon count
             counterData["total-owned"]--;
             totalDragonCount = counterData["total-owned"];
+            */
 
             //update dragon count
             const newCount = JSON.stringify(counterData);
@@ -146,11 +180,9 @@
             // Remove row element from table
             const thisRow = event.target.parentNode.parentNode;
             thisRow.remove();
-        }
 
-        // when new dragon is added:
-        // add eventlistener for when div table's number of child elements are over 10 entries (10 entries per page)
-        // if goes over the 10 limit, then create next page
+            printPage(pageIndex);
+        }
 
         function addDragonData(e) {
             e.preventDefault();
@@ -163,12 +195,10 @@
 
             let entryData = Object.fromEntries(new FormData(e.target));
 
-            // Print out new table row
-            addTableData(entryData, idCount);
-
             // add auto-generated dragon name to entryData
             if (entryData["dragon-name"] == '') {
-                const defaultName = document.querySelector(".display-entries").lastChild.children[0].innerText;
+                const defaultName = `드래곤 #${nameCount}`;
+                nameCount++;
                 entryData["dragon-name"] = defaultName;
             }
 
@@ -192,13 +222,45 @@
             // document.querySelector("form").reset();
             document.querySelector("#field-name").value = "";
             document.querySelector("#field-memo").value = "";
+
+            // This goes through the process of re-printing entire current page even when the added data appears in another page; refactor later if possible
+            // But do I really need to refactor this? It's still helpful if newly added content appears on the same page as current
+            printPage(pageIndex);
         }
 
-        function printLoadedData(dragonData) {
-            //create new elements and draw out the table using localstorage data
+        function printNavBar() {
+            // printing number of pages
+            const navArea = document.querySelector("#display-nav");
+            navArea.innerHTML = "";
+
+            // take dragons array and divide by entries per page
+            // create span number with onclick event to show proper set of entries accordingly 
+            const pages = Math.ceil(dragons.length / entriesPerPage);
+            for (let i = 0; i < pages; i++) {
+                let pageNumber = document.createElement("span");
+                pageNumber.textContent = i + 1;
+                pageNumber.addEventListener("click", (e) => {
+                    pageIndex = pageNumber.textContent - 1;
+                    printPage(pageIndex);
+                });
+                pageNumber.setAttribute("class", "nav-button");
+                if (pageIndex === i) pageNumber.setAttribute("class", "nav-button page-cur");
+                navArea.append(pageNumber);
+            }
+        }
+
+        function printPage(index) {
+            refreshData();
+
+            // printing first page of dragons
+            // print first 10 (entriesPerPage)
+            let startIndex = index * entriesPerPage;
+            const dataToPrint = dragons.slice(startIndex, startIndex + entriesPerPage);
             const tableArea = document.querySelector(".display-entries");
 
-            for (const data of dragonData) {
+            tableArea.innerHTML = "";
+
+            for (const data of dataToPrint) {
                 let newRow = document.createElement("div");
                 newRow.setAttribute("class", "entry");
 
@@ -222,8 +284,29 @@
 
                 tableArea.append(newRow);
             }
+
+            printNavBar();
+
+            // Automatically move to previous page if deleted everything on this page
+            if (tableArea.innerHTML == "") {
+                pageIndex--;
+                printPage(pageIndex);
+            }
         }
 
+        function clearLocalStorage() {
+            let key = prompt("전체 데이터를 삭제합니다. 삭제를 원하시면 단어 [삭제]를 입력해주세요.");
+
+            if (key === "삭제" || key === "[삭제]") {
+                localStorage.clear();
+                dragons = [];
+            }
+
+        }
+
+
+        /*
+        //  Old code to delete
         function addTableData(entryData, idNum) {
             const tableArea = document.querySelector(".display-entries");
             const newRow = document.createElement("div");
@@ -256,11 +339,40 @@
             tableArea.append(newRow);
         }
 
-        function clearLocalStorage() {
-            localStorage.clear();
-            dragons = [];
+        function printLoadedData(dragonData) {
+            //create new elements and draw out the table using localstorage data
+            const tableArea = document.querySelector(".display-entries");
+
+            for (const data of dragonData) {
+                let newRow = document.createElement("div");
+                newRow.setAttribute("class", "entry");
+
+                for (const prop in data) {
+                    let entryText = document.createElement("div");
+
+                    if (prop == "id") {
+                        entryText.setAttribute("id", data["id"]);
+                        entryText.setAttribute("class", "id");
+                    }
+                    else {
+                        entryText.innerText = `${data[prop]}`;
+                    }
+
+                    newRow.appendChild(entryText);
+                }
+
+                let deleteBtn = document.createElement("div");
+                deleteBtn.innerHTML = '<button class="delete-button" onclick="deleteData()">Delete</button>';
+                newRow.appendChild(deleteBtn);
+
+                tableArea.append(newRow);
+            }
         }
 
+        Old code in addDragonData:
+        // Print out new table row
+        addTableData(entryData, idCount);
+        */
     </script>
 </body>
 
