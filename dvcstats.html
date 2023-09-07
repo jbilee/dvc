@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        .top {
+            background-color: white;
+            height: 200px;
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            z-index: 1;
+        }
+
+        .stat-text {
+            text-align: right;
+            font-size: x-small;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .graphbg {
+            border-radius: 10px;
+            background-color: rgb(231, 231, 231);
+            width: 200px;
+            height: 10px;
+            position: relative;
+            z-index: 0;
+            overflow: hidden;
+            margin: 5px 0px 1px;
+        }
+
+        .genderbg {
+            border-radius: 10px;
+            background-color: rgb(255, 156, 156);
+            width: 200px;
+            height: 10px;
+            position: relative;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .gender {
+            position: absolute;
+            z-index: 1;
+            border-radius: 0px;
+            height: 10px;
+        }
+
+        .stat {
+            position: absolute;
+            z-index: 1;
+            border-radius: 10px;
+            height: 10px;
+        }
+
+        .container {
+            position: relative;
+            top: 200px;
+            /* background-color: antiquewhite; */
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+        }
+
+        .overview {
+            width: 50%;
+        }
+
+        .analytics {
+            /* background-color: yellow; */
+            flex-grow: 1;
+            display: flex;
+            flex-direction: row;
+            justify-content: left;
+        }
+
+        body {
+            margin: 0px;
+        }
+
+        .analytics>div {
+            margin: 20px;
+        }
+
+        .overview-fixed {
+            /* background-color: lightsalmon; */
+            position: fixed;
+            left: 25%;
+        }
+
+        .overview-total {
+            font-size: 72px;
+            font-weight: bold;
+        }
+
+        .total-owned {
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="top">
+        <h2>데이터 기록툴</h2>
+    </div>
+
+    <div class="container">
+        <div class="overview">
+            <div class="overview-fixed">
+                <div class="total-owned">
+                </div>
+                <div class="most-dragon">
+                    [ㅇ] <strong>제일 많이 보유한 개체종</strong><br>
+                    &nbsp;&nbsp;[ㅇㅇㅇ] (마리)
+                </div>
+                <div class="most-trait">
+                    [ㅇ] <strong>제일 많이 보유한 성격</strong><br>
+                    &nbsp;&nbsp;[ㅇㅇㅇ] (마리)
+                </div>
+                <div class="a-gender">
+                </div>
+
+            </div>
+        </div>
+
+        <div class="analytics">
+            <div class="a-species">
+                <div>개체종 비율</div>
+            </div>
+
+            <div class="a-trait">
+                <div>성격 비율</div>
+            </div>
+        </div>
+    </div>
+
+    <div style="height:1000px"></div>
+
+    <script>
+        let dragons = [];
+        const getDragonData = localStorage.getItem("mydragons");
+        dragons = JSON.parse(getDragonData);
+
+        const totalOwnedArea = document.querySelector(".total-owned");
+        const TOTALOWNED = dragons.length;
+        totalOwnedArea.innerHTML = `<div>보유한 용 총 개체수<br><span class="overview-total">${TOTALOWNED}</span></div>`;
+
+
+        let speciesCount = dragons.reduce((total, cur) => {
+            const { species } = cur;
+
+            if (total[species]) {
+                total[species] += 1;
+            }
+            else {
+                total[species] = 1;
+            }
+            return total;
+        }, {});
+
+        let colors = ["#91C8E4", "#749BC2", "#4682A9", "#A0BFE0", "#99DBF5", "#5A96E3", "#62CDFF", "#5BC0F8"];
+
+        for (const data in speciesCount) {
+            const speciesStat = document.querySelector(".a-species");
+            const container = document.createElement("div");
+            const percentage = Math.round(speciesCount[data] / TOTALOWNED * 100);
+            const graphWidth = (200 * percentage) / 100; // 200 is the width of the full graph
+            const rand = Math.floor(Math.random() * 8);
+            container.innerHTML = `<strong>${data}</strong><div class="graphbg"><div class="stat" style="background-color: ${colors[rand]}; width: ${graphWidth}px;">&nbsp;</div></div><div class="stat-text">[ ${speciesCount[data]} / ${TOTALOWNED} ]</div>`;
+            speciesStat.append(container);
+        }
+
+        const genderStat = document.querySelector(".a-gender");
+        let genderCount = dragons.reduce((total, cur) => {
+            const { gender } = cur;
+
+            if (total[gender]) {
+                total[gender] += 1;
+            }
+            else {
+                total[gender] = 1;
+            }
+            return total;
+        }, {});
+
+        const genderContainer = document.createElement("div");
+        genderContainer.classList.add("genderbg");
+        const newGenderGraph = document.createElement("div");
+        newGenderGraph.innerHTML = "성별 비율<br>";
+        const genderPercentage = Math.round(genderCount["수컷"] / TOTALOWNED * 100);
+        const genderGraphWidth = (200 * genderPercentage) / 100;
+        genderContainer.innerHTML = `<div class="gender" style="background-color: green; width: ${genderGraphWidth}px;">&nbsp;</div><br>`;
+        genderStat.append(newGenderGraph);
+        genderStat.append(genderContainer);
+
+        const traitStat = document.querySelector(".a-trait");
+        let traitCount = dragons.reduce((total, cur) => {
+            const { trait } = cur;
+
+            if (total[trait]) {
+                total[trait] += 1;
+            }
+            else {
+                total[trait] = 1;
+            }
+            return total;
+        }, {});
+
+        for (const data in traitCount) {
+            const traitStat = document.querySelector(".a-trait");
+            const container = document.createElement("div");
+            const percentage = Math.round(traitCount[data] / TOTALOWNED * 100);
+            const graphWidth = (200 * percentage) / 100;
+            container.innerHTML = `<strong>${data}</strong><div class="graphbg"><div class="stat" style="background-color: blue; width: ${graphWidth}px;">&nbsp;</div></div><div class="stat-text">[ ${traitCount[data]} / ${TOTALOWNED} ]</div>`;
+            traitStat.append(container);
+        }
+    </script>
+</body>
+
+</html>
