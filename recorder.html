@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DVC 내 용 기록</title>
+    <title>DVC툴</title>
     <!-- <link rel="icon" href="favicon.png"> -->
     <script src="recorder_data.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,10 +16,24 @@
             font-family: 'Noto Sans KR', sans-serif;
         }
 
+        body {
+            margin: 0px;
+        }
+
+
+        hr {
+            border: 1px solid pink;
+            width: 100%;
+            margin: 0px;
+            align-self: center;
+        }
+
         #content {
             display: flex;
             flex-direction: column;
             align-items: center;
+            height: 100%;
+            margin-top: 100px;
         }
 
         .display-table {
@@ -27,15 +41,17 @@
             flex-direction: column;
             /* align-items: center; */
             width: 70vw;
+            cursor: default;
+
         }
 
         .entry,
         .table-header {
             display: grid;
-            grid-template-columns: 215px 180px 80px 150px 80px 450px 30px;
+            grid-template-columns: 215px 180px 80px 150px 80px 450px 20px 20px;
 
-            margin: 5px;
-            border-radius: 8px;
+            margin: 3px;
+            /* border-radius: 8px; */
             padding: 5px;
             justify-content: center;
             text-align: center;
@@ -45,19 +61,36 @@
             display: flex;
             flex-direction: row;
             justify-content: center;
+            ::selection {
+                background-color: transparent;
+            }
         }
 
         .table-header {
             text-align: center;
+            color: rgb(241, 46, 111);
+        }
+
+        .neutral {
+            opacity: 0.3;
+        }
+
+        .table-header img {
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .table-header img:active {
+            transform: translateY(2px);
         }
 
         .entry {
             font-size: 0.9rem;
             grid-template-rows: 30px;
             align-items: center;
-            background-color: #fff5f5;
+            /*
             border: 1px solid rgb(237, 150, 179);
-            box-shadow: 1px 1px 2px rgb(231, 223, 223);
+            box-shadow: 1px 1px 2px rgb(231, 223, 223); */
 
             animation-name: del;
             animation-duration: 0.4s;
@@ -65,18 +98,31 @@
             animation-play-state: paused;
         }
 
-        .display-entries {
-            height: 500px;
+        .entry:nth-child(even) {
+            background-color: #fff5f5;
         }
 
-        #field-gen {
+        .display-entries {
+            height: 470px;
+        }
+
+        .field-gen {
             width: 50px;
+        }
+
+        .no-dragons {
+            position: relative;
+            top: 230px;
+            display: flex;
+            justify-content: center;
+            color: rgb(150, 150, 150);
         }
 
         .id {
             display: none;
         }
 
+        .edit-button,
         .delete-button {
             cursor: pointer;
         }
@@ -113,14 +159,14 @@
             0% {
                 opacity: 1;
                 height: auto;
-                margin: 5px;
+                margin: 3px;
                 padding: 5px;
             }
 
             90% {
                 opacity: 0;
                 height: auto;
-                margin: 5px;
+                margin: 3px;
                 padding: 5px;
             }
 
@@ -138,28 +184,51 @@
                 padding: 0px;
             }
         }
+
+        .top {
+            background-color: white;
+            height: 100px;
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            z-index: 1;
+        }
+
+        .filters {
+            position: fixed;
+            top: 150px;
+            left: 10px;
+            background-color: yellow;
+            z-index: 1;
+        }
     </style>
 </head>
 
 <body>
-    <h2>데이터 기록툴</h2>
+    <div class="top">
+        <h2>데이터 기록툴</h2>
+    </div>
 
     <div id="content">
         <div class="new-entry">
             <form id="my-form" onsubmit="addDragonData(event)">
-                <input id="field-name" type="text" name="dragon-name" placeholder="이름" maxlength="14">
-                <select id="dragon-selector" name="species">
+                <input class="field-name" type="text" name="dragon-name" placeholder="이름" maxlength="14">
+                <select class="field-dragon" name="species">
                 </select>
-                <select name="gender">
+                <select class="field-gender" name="gender">
                     <option>수컷</option>
                     <option>암컷</option>
                 </select>
-                <select id="trait-selector" name="trait">
+                <select class="field-trait" name="trait">
                 </select>
-                <input id="field-gen" type="number" inputmode="numeric" name="generation" value="1" min="1">
-                <input id="field-memo" type="text" name="memo" placeholder="메모" maxlength="25">
+                <input class="field-gen" type="number" inputmode="numeric" name="generation" value="1" min="1"
+                    onchange="validate(event)">
+                <input class="field-memo" type="text" name="memo" placeholder="메모" maxlength="25">
                 <input type="submit" value="추가">
             </form>
+            <button onclick="download()">데이터 다운로드</button>
+            <input type="file" id="upload" accept="text/*" style="display:none" onchange="load()"><button id="uploadBtn" onclick="callFile()">불러오기</button>
             <button onclick="clearLocalStorage()">캐시 삭제</button>
         </div>
 
@@ -168,15 +237,18 @@
         <div class="display-table">
             <div class="display-header">
                 <div class="table-header">
-                    <div><strong>이름</strong></div>
+                    <div><strong>이름</strong> <span class="neutral"><img src="neutral.png"
+                                onclick="sortChange(event)"></span></div>
                     <div><strong>종</strong></div>
                     <div><strong>성별</strong></div>
                     <div><strong>성격</strong></div>
                     <div><strong>세대</strong></div>
                     <div><strong>메모</strong></div>
                     <div></div>
+                    <div></div>
                 </div>
             </div>
+            <hr>
             <div class="display-entries"></div>
 
             <div id="display-nav"></div>
@@ -186,18 +258,13 @@
     <!-- All JavaScript codes below -->
     <script>
         let dragons = [];
-        let counterData, nameCount, totalDragonCount, idCount;
+        let counterData, nameCount, idCount, sortedList;
         const entriesPerPage = 10;
         let pageIndex = 0;
+        let sortOn = false;
 
-        // Get rid of duplicate methods later
-        if (localStorage.getItem("counters")) {
-            refreshData();
-
-            nameCount = counterData["name-count"];
-            idCount = counterData["id-count"];
-        }
-        else {
+        // Refactored version
+        if (!localStorage.getItem("mydragons")) {
             let counters = { "name-count": 1, "id-count": 0 }
 
             const startCounters = JSON.stringify(counters);
@@ -206,14 +273,65 @@
             counterData = counters;
             nameCount = counterData["name-count"];
             idCount = counterData["id-count"];
+
+            printPage();
+        }
+        else {
+            refreshData();
+
+            nameCount = counterData["name-count"];
+            idCount = counterData["id-count"];
+            printPage();
         }
 
-        if (localStorage.getItem("mydragons")) {
-            const getDragonData = localStorage.getItem("mydragons");
-            dragons = JSON.parse(getDragonData);
+        function orderAscending(e) {
+            sortOn = true;
+            const size = dragons.length;
+            const baseArray = Array(size);
+            sortedList = Array(size);
 
-            // Call dataprint function here
-            printPage(pageIndex);
+            // Extract names only from localStorage data
+            for (let i = 0; i < size; i++) {
+                baseArray[i] = dragons[i]["dragon-name"];
+            }
+
+            // Sort names in A-to-Z order
+            baseArray.sort((a, b) => a.localeCompare(b));
+
+            // Create new array of reordered data objects (temporary order, will not be reflected in localStorage)
+            for (let i = 0; i < size; i++) {
+                const objIndex = dragons.findIndex((x) => {
+                    return x["dragon-name"] == baseArray[i];
+                });
+                sortedList[i] = dragons[objIndex];
+            }
+
+            printPage();
+        }
+
+        function orderDescending(e) {
+            sortOn = true;
+            const size = dragons.length;
+            const baseArray = Array(size);
+            sortedList = Array(size);
+
+            // Extract names only from localStorage data
+            for (let i = 0; i < size; i++) {
+                baseArray[i] = dragons[i]["dragon-name"];
+            }
+
+            // Sort names in A-to-Z order
+            baseArray.sort((a, b) => b.localeCompare(a));
+
+            // Create new array of reordered data objects (temporary order, will not be reflected in localStorage)
+            for (let i = 0; i < size; i++) {
+                const objIndex = dragons.findIndex((x) => {
+                    return x["dragon-name"] == baseArray[i];
+                });
+                sortedList[i] = dragons[objIndex];
+            }
+
+            printPage();
         }
 
         // Get latest dragon data and counter data
@@ -225,69 +343,33 @@
             counterData = JSON.parse(getCounterData);
         }
 
-        function deleteData() {
-            // Get latest local storage data
-            refreshData();
-
-            // Identify this row's id
-            const getId = event.target.parentNode.previousElementSibling.id;
-            const dragonsUpdated = dragons.filter(x => x["id"] != getId);
-            const updatedList = JSON.stringify(dragonsUpdated);
-            localStorage.setItem("mydragons", updatedList);
-
-            //update dragon count
-            const newCount = JSON.stringify(counterData);
-            localStorage.setItem("counters", newCount);
-
-            // Remove row element from table
-            const thisRow = event.target.parentNode.parentNode;
-            thisRow.style.animationPlayState = "running";
-            thisRow.addEventListener("animationend", () => {
-                thisRow.remove();
-                printPage(pageIndex);
-            });
+        function validate(e) {
+            if (e.target.value === "" || e.target.value <= 0) {
+                e.target.value = 1;
+            }
         }
 
-        function addDragonData(e) {
-            e.preventDefault();
+        function sortChange(e) {
+            const targetNode = e.target.parentNode;
+            const state = targetNode.classList[0];
 
-            // Get fresh dragon data
-            if (localStorage.getItem("mydragons")) {
-                const getDragonData = localStorage.getItem("mydragons");
-                dragons = JSON.parse(getDragonData);
+            switch (state) {
+                case "neutral":
+                    targetNode.classList.replace("neutral", "ascending");
+                    e.target.src = "ascending.png";
+                    orderAscending(event);
+                    break;
+                case "ascending":
+                    targetNode.classList.replace("ascending", "descending");
+                    e.target.src = "descending.png";
+                    orderDescending(event);
+                    break;
+                case "descending":
+                    targetNode.classList.replace("descending", "neutral");
+                    e.target.src = "neutral.png";
+                    sortOn = false;
+                    printPage();
             }
-
-            let entryData = Object.fromEntries(new FormData(e.target));
-
-            // add auto-generated dragon name to entryData
-            if (entryData["dragon-name"] == '') {
-                const defaultName = `드래곤 #${nameCount}`;
-                nameCount++;
-                entryData["dragon-name"] = defaultName;
-            }
-
-            // assign id to entryData
-            entryData.id = idCount;
-            dragons.push(entryData);
-
-            idCount++;
-
-            // Save newly added dragon data to localStorage and update counter data
-            const newData = JSON.stringify(dragons);
-            localStorage.setItem("mydragons", newData);
-
-            counterData["name-count"] = nameCount;
-            counterData["id-count"] = idCount;
-            const newCount = JSON.stringify(counterData);
-            localStorage.setItem("counters", newCount);
-
-            // document.querySelector("form").reset();
-            document.querySelector("#field-name").value = "";
-            document.querySelector("#field-memo").value = "";
-
-            // This goes through the process of re-printing entire current page even when the added data appears in another page; refactor later if possible
-            // But do I really need to refactor this? It's still helpful if newly added content appears on the same page as current
-            printPage(pageIndex);
         }
 
         function printNavBar() {
@@ -307,12 +389,12 @@
             navArea.append(leftArrow);
 
             for (let i = startPage; i < startPage + 5; i++) {
-                if (i === pages) break;
+                if (i === pages || pages === 0) break;
                 let pageNumber = document.createElement("div");
                 pageNumber.textContent = i + 1;
                 pageNumber.addEventListener("click", (e) => {
                     pageIndex = pageNumber.textContent - 1;
-                    printPage(pageIndex);
+                    printPage();
                 });
                 pageNumber.setAttribute("class", "nav-button");
                 if (pageIndex === i) pageNumber.setAttribute("class", "nav-button page-cur");
@@ -331,40 +413,48 @@
             let firstPage = navArea.firstChild.nextSibling.innerHTML;
             let lastPage = navArea.lastChild.previousSibling.innerHTML;
 
-            if (firstPage <= 1) {
+            if (firstPage <= 1 || dragons.length === 0) {
                 leftArrow.setAttribute("class", "nav-button arrow-inactive");
             }
             else if (firstPage >= 6) {
                 leftArrow.addEventListener("click", (e) => {
                     pageIndex = parseInt(firstPage) - 6;
-                    printPage(pageIndex);
+                    printPage();
                 });
             }
 
-            // the conditional that didn't work: lastPage % 5 !== 0
             if (pages <= 5 || lastPage % 5 !== 0 || pages <= parseInt(lastPage)) {
                 rightArrow.setAttribute("class", "nav-button arrow-inactive");
             }
             else {
                 rightArrow.addEventListener("click", (e) => {
                     pageIndex = parseInt(lastPage);
-                    printPage(pageIndex);
+                    printPage();
                 });
             }
         }
 
-        function printPage(index) {
-            refreshData();
-
+        function printPage() {
             if (dragons.length <= 0) {
+                const tableArea = document.querySelector(".display-entries");
+                tableArea.innerHTML = `<div class="no-dragons">용용이가 없네용 ㅠ0ㅠ</div>`;
                 printNavBar();
                 return;
             }
 
-            let startIndex = index * entriesPerPage;
-            const dataToPrint = dragons.slice(startIndex, startIndex + entriesPerPage);
-            const tableArea = document.querySelector(".display-entries");
+            refreshData();
 
+            let startIndex = pageIndex * entriesPerPage;
+            let dataToPrint;
+
+            if (sortOn) {
+                dataToPrint = sortedList.slice(startIndex, startIndex + entriesPerPage);
+            }
+            else {
+                dataToPrint = dragons.slice(startIndex, startIndex + entriesPerPage);
+            }
+
+            const tableArea = document.querySelector(".display-entries");
             tableArea.innerHTML = "";
 
             for (const data of dataToPrint) {
@@ -383,22 +473,150 @@
                     }
 
                     newRow.appendChild(entryText);
+
                 }
 
+                let editBtn = document.createElement("div");
+                editBtn.innerHTML = '<img src="edit.png" width="18" alt="Edit button" class="edit-button" onclick="editMemo()">';
+                newRow.appendChild(editBtn);
+
                 let deleteBtn = document.createElement("div");
-                deleteBtn.innerHTML = '<img src="trash.png" width="15" alt="Delete button" class="delete-button" onclick="deleteData()">';
+                deleteBtn.innerHTML = '<img src="delete.png" width="18" alt="Delete button" class="delete-button" onclick="deleteData()">';
                 newRow.appendChild(deleteBtn);
 
                 tableArea.append(newRow);
+
             }
 
             printNavBar();
-
             // Automatically move to previous page if deleted everything on this page
             if (tableArea.innerHTML == "") {
                 pageIndex--;
-                printPage(pageIndex);
+                printPage();
             }
+        }
+
+        function addDragonData(e) {
+            e.preventDefault();
+
+            // Get fresh dragon data
+            if (localStorage.getItem("mydragons")) {
+                const getDragonData = localStorage.getItem("mydragons");
+                dragons = JSON.parse(getDragonData);
+            }
+
+            let entryData = Object.fromEntries(new FormData(e.target));
+
+            // Add auto-generated dragon name to entryData
+            if (entryData["dragon-name"] == '') {
+                const defaultName = `드래곤 #${nameCount}`;
+                nameCount++;
+                entryData["dragon-name"] = defaultName;
+            }
+
+            // Assign id to entryData
+            entryData.id = idCount;
+            dragons.push(entryData);
+
+            idCount++;
+
+            // Save newly added dragon data to localStorage and update counter data
+            const newData = JSON.stringify(dragons);
+            localStorage.setItem("mydragons", newData);
+
+            counterData["name-count"] = nameCount;
+            counterData["id-count"] = idCount;
+            const newCount = JSON.stringify(counterData);
+            localStorage.setItem("counters", newCount);
+
+            // Reset text input fields only
+            document.querySelector(".field-name").value = "";
+            document.querySelector(".field-memo").value = "";
+
+            // This goes through the process of re-printing entire current page even when the added data appears in another page; refactor later if possible
+            printPage();
+        }
+
+        function deleteData() {
+            // Get latest local storage data
+            refreshData();
+
+            // Identify this row's id
+            const getId = event.target.parentNode.previousElementSibling.previousElementSibling.id;
+            const dragonsUpdated = dragons.filter(x => x["id"] != getId);
+            const updatedList = JSON.stringify(dragonsUpdated);
+            localStorage.setItem("mydragons", updatedList);
+
+            // Update counter data
+            const newCount = JSON.stringify(counterData);
+            localStorage.setItem("counters", newCount);
+
+            // Remove row element from table
+            const thisRow = event.target.parentNode.parentNode;
+            thisRow.style.animationPlayState = "running";
+            thisRow.addEventListener("animationend", () => {
+                thisRow.remove();
+                printPage();
+            });
+        }
+
+        function editMemo() {
+            const parentDiv = event.target.parentNode.parentNode;
+            const getId = event.target.parentNode.previousElementSibling.id;
+            const editField = parentDiv.children[5];
+
+            // Save old memo text
+            const oldData = editField.textContent;
+
+            // Draw out edit field
+            editField.innerHTML = `<form id="edit-form"><input class="field-memo edit-input" type="text" name="memo" value="${oldData}" maxlength="25"> <input type="submit" value="수정"></form>`;
+            document.querySelector(".edit-input").focus();
+
+            const editForm = document.getElementById("edit-form");
+            editForm.onsubmit = (e) => {
+                e.preventDefault();
+                submitMemo(e, `"${oldData}"`, getId);
+            };
+
+            // Change icon image
+            parentDiv.children[7].innerHTML = `<img src="cancelb.png" width="18" alt="Edit button" class="edit-button" onclick="cancelMemo('${oldData}')">`;
+        }
+
+        function submitMemo(e, value, id) {
+            let newEntry = Object.fromEntries(new FormData(e.target));
+            const newMemo = newEntry.memo;
+
+            // Get current dragon data
+            const getDragonData = localStorage.getItem("mydragons");
+            dragons = JSON.parse(getDragonData);
+
+            // Edit memo value in existing dragons object
+            dataIndex = dragons.findIndex((x) => {
+                return x["id"] == id;
+            });
+            dragons[dataIndex].memo = newMemo;
+
+            // Update localStorage data
+            const newData = JSON.stringify(dragons);
+            localStorage.setItem("mydragons", newData);
+
+            // Get rid of input field and reflect new memo
+            const parentDiv = event.target.parentNode.parentNode;
+            const editField = parentDiv.children[5];
+            editField.innerHTML = `${newMemo}`;
+
+            // Revert edit icon back to edit
+            parentDiv.children[7].innerHTML = '<img src="edit.png" width="18" alt="Edit button" class="edit-button" onclick="editMemo()">';
+        }
+
+        function cancelMemo(value) {
+            // Fill memo div with original value
+            const parentDiv = event.target.parentNode.parentNode;
+            const editField = parentDiv.children[5];
+            editField.innerHTML = `${value}`;
+
+            // Revert edit icon back to edit
+            parentDiv.children[7].innerHTML = '<img src="edit.png" width="18" alt="Edit button" class="edit-button" onclick="editMemo()">';
         }
 
         function clearLocalStorage() {
@@ -407,6 +625,56 @@
             if (key === "삭제" || key === "[삭제]") {
                 localStorage.clear();
                 location.reload();
+            }
+        }
+
+        function download() {
+            if (dragons.length <= 0) {
+                alert("저장할 데이터가 없습니다. 정보를 먼저 입력해주세요.")
+                return;
+            }
+
+            const curDate = new Date();
+            let yr = curDate.getFullYear();
+            let mth = curDate.getMonth() + 1;
+            let d = curDate.getDate();
+            const fileName = "dvctd" + yr + "_" + mth + "_" + d;
+            const saveData = "data:text/json;charset=utf-8," + encodeURIComponent(localStorage.getItem("counters")) + "@dvcdata@" + encodeURIComponent(localStorage.getItem("mydragons"));
+            const downloadPrompt = document.createElement("a");
+            downloadPrompt.setAttribute("href", saveData);
+            downloadPrompt.setAttribute("download", fileName + ".txt");
+            downloadPrompt.click();
+            downloadPrompt.remove();
+        }
+
+        function callFile() {
+            let loadOld = true;
+
+            if (localStorage.getItem("mydragons")) {
+                loadOld = confirm("이미 내 용용이에 대한 데이터가 있습니다. 다른 데이터를 불러올까요?\n기존 데이터는 전부 삭제됩니다.");
+            }
+            if (loadOld == false) return;
+
+            document.getElementById("upload").click();
+        }
+
+        function load() {
+            const reader = new FileReader();
+            const [fileContent] = document.getElementById("upload").files;
+
+            reader.addEventListener("load", () => {
+                const retrieved = reader.result;
+                if (retrieved.indexOf("@dvcdata@") < 0) return alert("올바른 데이터 형식이 아닙니다. DVC툴과 호환되는 파일을 열어주세요.");
+                const rvdArray = retrieved.split("@dvcdata@");
+                dragons = JSON.parse(rvdArray[1]);
+                console.log(dragons);
+                localStorage.setItem("counters", rvdArray[0]);
+                localStorage.setItem("mydragons", rvdArray[1]);
+                location.reload();
+            });
+
+            if (fileContent) {
+                reader.readAsText(fileContent);
             }
         }
     </script>
