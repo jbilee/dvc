@@ -507,18 +507,19 @@
 
             let entryData = Object.fromEntries(new FormData(e.target));
 
-            // Add auto-generated dragon name to entryData
+            // Add auto-generated dragon name to entryData if user did not specify
             if (entryData["dragon-name"] == '') {
                 const defaultName = `드래곤 #${nameCount}`;
                 nameCount++;
                 entryData["dragon-name"] = defaultName;
             }
 
-            // Assign id to entryData
-            entryData.id = idCount;
+            // Assign id to entryData (increase id index for next data)
+            entryData.id = idCount++;
             dragons.push(entryData);
 
-            idCount++;
+            // If sortOn, then also push new entry data to currently sorted list (in order to reflect the change even if user is using sorted view)
+            if (sortOn) sortedList.push(entryData);
 
             // Save newly added dragon data to localStorage and update counter data
             const newData = JSON.stringify(dragons);
