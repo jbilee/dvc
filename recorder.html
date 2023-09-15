@@ -18,8 +18,20 @@
 
         body {
             margin: 0px;
-        }
 
+            ::-webkit-scrollbar {
+                width: 8px;
+            }
+
+            ::-webkit-scrollbar-track {
+                background: #ffffff;
+            }
+
+            ::-webkit-scrollbar-thumb {
+                background: pink;
+                border-radius: 30px;
+            }
+        }
 
         hr {
             border: 1px solid pink;
@@ -28,21 +40,45 @@
             align-self: center;
         }
 
-        #content {
+        .filters hr {
+            margin: 5px 0px;
+        }
+
+        .content {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            flex-wrap: nowrap;
+            align-items: auto;
+        }
+
+        .main {
+            box-sizing: border-box;
             display: flex;
             flex-direction: column;
             align-items: center;
-            height: 100%;
-            margin-top: 100px;
+            flex-wrap: wrap;
+            box-shadow: 3px 3px 3px rgb(231, 223, 223);
+            border: 1px solid rgb(231, 223, 223);
+            border-radius: 20px;
+            margin: 8px;
+            padding: 15px 20px;
+        }
+
+        .filters {
+            box-sizing: border-box;
+            box-shadow: 3px 3px 3px rgb(231, 223, 223);
+            border: 1px solid rgb(231, 223, 223);
+            width: 350px;
+            border-radius: 20px;
+            margin: 8px;
+            padding: 15px 20px;
         }
 
         .display-table {
             display: flex;
             flex-direction: column;
-            /* align-items: center; */
-            width: 70vw;
             cursor: default;
-
         }
 
         .entry,
@@ -51,23 +87,24 @@
             grid-template-columns: 215px 180px 80px 150px 80px 450px 20px 20px;
 
             margin: 3px;
-            /* border-radius: 8px; */
             padding: 5px;
-            justify-content: center;
             text-align: center;
         }
+
+
 
         #display-nav {
             display: flex;
             flex-direction: row;
             justify-content: center;
+            margin-bottom: 10px;
+
             ::selection {
                 background-color: transparent;
             }
         }
 
         .table-header {
-            text-align: center;
             color: rgb(241, 46, 111);
         }
 
@@ -88,9 +125,6 @@
             font-size: 0.9rem;
             grid-template-rows: 30px;
             align-items: center;
-            /*
-            border: 1px solid rgb(237, 150, 179);
-            box-shadow: 1px 1px 2px rgb(231, 223, 223); */
 
             animation-name: del;
             animation-duration: 0.4s;
@@ -103,7 +137,7 @@
         }
 
         .display-entries {
-            height: 470px;
+            height: 450px;
         }
 
         .field-gen {
@@ -122,9 +156,12 @@
             display: none;
         }
 
-        .edit-button,
-        .delete-button {
+        .btn-img {
             cursor: pointer;
+        }
+
+        #edit-name {
+            display: inline-block;
         }
 
         .nav-button {
@@ -185,85 +222,211 @@
             }
         }
 
-        .top {
-            background-color: white;
-            height: 100px;
-            position: fixed;
-            top: 0px;
-            left: 0px;
-            width: 100%;
-            z-index: 1;
+        .name:hover {
+            cursor: pointer;
+            font-weight: 600;
         }
 
-        .filters {
-            position: fixed;
-            top: 150px;
-            left: 10px;
-            background-color: yellow;
-            z-index: 1;
+        button,
+        #btn {
+            font-size: 16px;
+            padding: 5px 15px;
+            border: none;
+            border-radius: 8px;
+            background-color: #373737;
+            color: white;
+        }
+
+        .desc,
+        .new-entry {
+            box-sizing: border-box;
+            width: 100%;
+        }
+
+        .desc {
+            text-align: left;
+            padding-bottom: 15px;
+        }
+
+        .new-entry {
+            text-align: right;
+            padding-right: 15px;
+        }
+
+        h3 {
+            margin: 5px 0px 15px;
+        }
+
+        .filter-gender,
+        .filter-species,
+        .filter-trait {
+            display: grid;
+            grid-template-columns: 154px 154px;
+            justify-content: left;
+            row-gap: 5px;
+            font-size: 0.9rem;
+        }
+
+        .filter-species {
+            max-height: 220px;
+            overflow: hidden auto;
+        }
+
+        .filter-trait {
+            max-height: 220px;
+            overflow: hidden auto;
+        }
+
+        .filter-title {
+            margin-top: 20px;
+            overflow: hidden;
+        }
+
+        .filter-checkbox {
+            position: relative;
+            top: 3.5px;
+            float: left;
+            margin-right: 8px;
+        }
+
+        h2 {
+            padding-left: 30px;
+        }
+
+        .entry img {
+            position: relative;
+            top: 2px;
+        }
+
+
+
+        @media (max-width: 1650px) {
+            .filters {
+                box-sizing: border-box;
+                box-shadow: 3px 3px 3px rgb(231, 223, 223);
+                border: 1px solid rgb(231, 223, 223);
+                min-width: 190px;
+                border-radius: 20px;
+                margin: 8px;
+                padding: 15px 15px;
+            }
+
+            .filter-gender,
+            .filter-species,
+            .filter-trait {
+                display: grid;
+                grid-template-columns: auto;
+                justify-content: left;
+                row-gap: 5px;
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
 
 <body>
     <div class="top">
-        <h2>데이터 기록툴</h2>
+        <h2>DVC툴</h2>
     </div>
 
-    <div id="content">
-        <div class="new-entry">
-            <form id="my-form" onsubmit="addDragonData(event)">
-                <input class="field-name" type="text" name="dragon-name" placeholder="이름" maxlength="14">
-                <select class="field-dragon" name="species">
-                </select>
-                <select class="field-gender" name="gender">
-                    <option>수컷</option>
-                    <option>암컷</option>
-                </select>
-                <select class="field-trait" name="trait">
-                </select>
-                <input class="field-gen" type="number" inputmode="numeric" name="generation" value="1" min="1"
-                    onchange="validate(event)">
-                <input class="field-memo" type="text" name="memo" placeholder="메모" maxlength="25">
-                <input type="submit" value="추가">
-            </form>
-            <button onclick="download()">데이터 다운로드</button>
-            <input type="file" id="upload" accept="text/*" style="display:none" onchange="load()"><button id="uploadBtn" onclick="callFile()">불러오기</button>
-            <button onclick="clearLocalStorage()">캐시 삭제</button>
-        </div>
+    <div class="content">
+        <div class="filters">
+            <h3>필터 선택</h3>
+            <div class="filter-title">
+                <strong>성별</strong>
+                <hr>
+                <div class="filter-gender">
+                    <label>수컷<input type="checkbox" class="filter-checkbox" id="수컷" name="gender"
+                            onchange="filterChange(event, name, id)" style="float:left"></label>
+                    <label>암컷<input type="checkbox" class="filter-checkbox" id="암컷" name="gender"
+                            onchange="filterChange(event, name, id)"></label>
 
-        <div style="height:60px"></div>
-
-        <div class="display-table">
-            <div class="display-header">
-                <div class="table-header">
-                    <div><strong>이름</strong> <span class="neutral"><img src="neutral.png"
-                                onclick="sortChange(event)"></span></div>
-                    <div><strong>종</strong></div>
-                    <div><strong>성별</strong></div>
-                    <div><strong>성격</strong></div>
-                    <div><strong>세대</strong></div>
-                    <div><strong>메모</strong></div>
-                    <div></div>
-                    <div></div>
                 </div>
             </div>
-            <hr>
-            <div class="display-entries"></div>
+            <div class="filter-title">
+                <strong>종</strong>
+                <hr>
+                <div class="filter-species">
 
-            <div id="display-nav"></div>
+                </div>
+            </div>
+            <div class="filter-title">
+                <strong>성격</strong>
+                <hr>
+                <div class="filter-trait">
+
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="dvcstats.html"><button type="button" disabled>통계 대시보드</button></a>
+            </div>
+        </div>
+        <div class="main">
+            <div class="desc">
+                <h3>데이터 추가</h3>
+                이용법: 데이터를 추가합니다. 왼쪽 필터 설정을 통해 원하는 드래곤을 모아서 볼 수 있습니다.
+            </div>
+
+            <div class="new-entry">
+                <form id="my-form" onsubmit="addDragonData(event)">
+                    <input class="field-name" type="text" name="dragon-name" placeholder="이름" maxlength="14">
+                    <select class="field-dragon" name="species">
+                    </select>
+                    <select class="field-gender" name="gender">
+                        <option>수컷</option>
+                        <option>암컷</option>
+                    </select>
+                    <select class="field-trait" name="trait">
+                    </select>
+                    <input class="field-gen" type="number" inputmode="numeric" name="generation" value="1" min="1"
+                        onchange="validate(event)">
+                    <input class="field-memo" type="text" name="memo" placeholder="메모" maxlength="25">
+                    <input id="btn" type="submit" value="+ 추가">
+                </form>
+
+            </div>
+
+            <div class="pref">
+                <button onclick="download()">데이터 다운로드</button>
+                <input type="file" id="upload" accept="text/*" style="display:none" onchange="load()"><button
+                    id="uploadBtn" onclick="callFile()">불러오기</button>
+                <button onclick="clearLocalStorage()">캐시 삭제</button>
+            </div>
+
+            <div style="height:30px"></div>
+
+            <div class="display-table">
+                <div class="display-header">
+                    <div class="table-header">
+                        <div><strong>이름</strong> <span class="neutral"><img src="neutral.png"
+                                    onclick="sortChange(event)"></span></div>
+                        <div><strong>종</strong></div>
+                        <div><strong>성별</strong></div>
+                        <div><strong>성격</strong></div>
+                        <div><strong>세대</strong></div>
+                        <div><strong>메모</strong></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                </div>
+                <hr>
+                <div class="display-entries"></div>
+
+                <div id="display-nav"></div>
+            </div>
         </div>
     </div>
 
     <!-- All JavaScript codes below -->
     <script>
         let dragons = [];
-        let counterData, nameCount, idCount, sortedList;
+        let counterData, nameCount, idCount, sortedList, filteredList;
         const entriesPerPage = 10;
         let pageIndex = 0;
         let sortOn = false;
+        let filterOn = false;
+        let filtersChecked = { gender: [], species: [], trait: [] };
 
-        // Refactored version
         if (!localStorage.getItem("mydragons")) {
             let counters = { "name-count": 1, "id-count": 0 }
 
@@ -284,26 +447,130 @@
             printPage();
         }
 
+        printSpeciesFilters();
+        printTraitFilters();
+
+        function printSpeciesFilters() {
+            const speciesArea = document.querySelector(".filter-species");
+
+            // Get species from current dragon list
+            let speciesSet = new Set();
+            dragons.forEach((x) => {
+                speciesSet.add(x.species);
+            }, 0);
+            const speciesKeys = speciesSet.keys();
+
+            for (const species of speciesKeys) {
+                const newLabel = document.createElement("label");
+                newLabel.innerHTML = `${species}<input type="checkbox" class="filter-checkbox" id="${species}" name="species" onchange="filterChange(event, name, id)">`;
+                speciesArea.append(newLabel);
+            }
+        }
+
+        function printTraitFilters() {
+            const traitsArea = document.querySelector(".filter-trait");
+
+            // Get traits from current dragon list
+            let traitsSet = new Set();
+            dragons.forEach((x) => {
+                traitsSet.add(x.trait);
+            }, 0);
+            const traitsKeys = traitsSet.keys();
+
+            for (const trait of traitsKeys) {
+                const newLabel = document.createElement("label");
+                newLabel.innerHTML = `${trait}<input type="checkbox" class="filter-checkbox" id="${trait}" name="trait" onchange="filterChange(event, name, id)">`;
+                traitsArea.append(newLabel);
+            }
+        }
+
+        function resetSort() {
+            sortOn = false;
+            const target = document.querySelector(".table-header").firstElementChild.children[1];
+            target.setAttribute("class", "neutral");
+            target.firstElementChild.setAttribute("src", "neutral.png");
+        }
+
+        function filterChange(e, filterType, filterName) {
+            // Reset current sort setting and turn filter off
+            if (sortOn) resetSort();
+            filterOn = false;
+
+            // If target's checkbox is checked, then add to filters list; if checked false, then remove from filters list
+            if (e.target.checked) filtersChecked[filterType].push(filterName);
+            if (!e.target.checked) filtersChecked[filterType] = filtersChecked[filterType].filter((x) => x !== filterName);
+
+            // Indicate whether at least one of the filters is on
+            for (const filter in filtersChecked) {
+                if (filtersChecked[filter].length > 0) {
+                    filterOn = true;
+                    break;
+                }
+            }
+            if (!filterOn) {
+                refreshData();
+                printPage();
+                return;
+            }
+
+            // For each dragon, if it matches any of the filters, add the dragon to the filteredList
+            filteredList = [];
+            for (const dragon of dragons) {
+                for (const prop in dragon) {
+                    // Skip check for dragon-name, generation, memo, and id
+                    if (prop === "dragon-name" || prop === "generation" || prop === "memo" || prop === "id") continue;
+                    let searchValue = dragon[prop];
+                    if (filtersChecked[prop].indexOf(searchValue) >= 0) {
+                        filteredList.push(dragon)
+                        break;
+                    }
+                }
+            }
+
+            printPage();
+        }
+
         function orderAscending(e) {
             sortOn = true;
-            const size = dragons.length;
+            let size;
+
+            if (filterOn) size = filteredList.length;
+            else size = dragons.length;
+
             const baseArray = Array(size);
             sortedList = Array(size);
 
-            // Extract names only from localStorage data
-            for (let i = 0; i < size; i++) {
-                baseArray[i] = dragons[i]["dragon-name"];
+            // Extract names only from dragon list
+            if (filterOn) {
+                for (let i = 0; i < size; i++) {
+                    baseArray[i] = filteredList[i]["dragon-name"];
+                }
+            }
+            else {
+                for (let i = 0; i < size; i++) {
+                    baseArray[i] = dragons[i]["dragon-name"];
+                }
             }
 
             // Sort names in A-to-Z order
             baseArray.sort((a, b) => a.localeCompare(b));
 
             // Create new array of reordered data objects (temporary order, will not be reflected in localStorage)
-            for (let i = 0; i < size; i++) {
-                const objIndex = dragons.findIndex((x) => {
-                    return x["dragon-name"] == baseArray[i];
-                });
-                sortedList[i] = dragons[objIndex];
+            if (filterOn) {
+                for (let i = 0; i < size; i++) {
+                    const objIndex = filteredList.findIndex((x) => {
+                        return x["dragon-name"] == baseArray[i];
+                    });
+                    sortedList[i] = filteredList[objIndex];
+                }
+            }
+            else {
+                for (let i = 0; i < size; i++) {
+                    const objIndex = dragons.findIndex((x) => {
+                        return x["dragon-name"] == baseArray[i];
+                    });
+                    sortedList[i] = dragons[objIndex];
+                }
             }
 
             printPage();
@@ -311,27 +578,66 @@
 
         function orderDescending(e) {
             sortOn = true;
-            const size = dragons.length;
+            let size;
+
+            if (filterOn) size = filteredList.length;
+            else size = dragons.length;
+
             const baseArray = Array(size);
             sortedList = Array(size);
 
-            // Extract names only from localStorage data
-            for (let i = 0; i < size; i++) {
-                baseArray[i] = dragons[i]["dragon-name"];
+            // Extract names only from dragon list
+            if (filterOn) {
+                for (let i = 0; i < size; i++) {
+                    baseArray[i] = filteredList[i]["dragon-name"];
+                }
+            }
+            else {
+                for (let i = 0; i < size; i++) {
+                    baseArray[i] = dragons[i]["dragon-name"];
+                }
             }
 
-            // Sort names in A-to-Z order
+            // Sort names in Z-to-A order
             baseArray.sort((a, b) => b.localeCompare(a));
 
             // Create new array of reordered data objects (temporary order, will not be reflected in localStorage)
-            for (let i = 0; i < size; i++) {
-                const objIndex = dragons.findIndex((x) => {
-                    return x["dragon-name"] == baseArray[i];
-                });
-                sortedList[i] = dragons[objIndex];
+            if (filterOn) {
+                for (let i = 0; i < size; i++) {
+                    const objIndex = filteredList.findIndex((x) => {
+                        return x["dragon-name"] == baseArray[i];
+                    });
+                    sortedList[i] = filteredList[objIndex];
+                }
+            }
+            else {
+                for (let i = 0; i < size; i++) {
+                    const objIndex = dragons.findIndex((x) => {
+                        return x["dragon-name"] == baseArray[i];
+                    });
+                    sortedList[i] = dragons[objIndex];
+                }
             }
 
             printPage();
+        }
+
+        function checkFilterMatch(newEntry) {
+            // Iterate through filtered species for any match
+            for (const filtered of filtersChecked.species) {
+                if (newEntry.species === filtered) {
+                    return true;
+                }
+            }
+
+            // Iterate through filtered traits for any match
+            for (const filtered of filtersChecked.trait) {
+                if (newEntry.trait === filtered) {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         // Get latest dragon data and counter data
@@ -378,7 +684,9 @@
             navArea.innerHTML = "";
 
             // Calculate number of pages
-            const pages = Math.ceil(dragons.length / entriesPerPage);
+            let pages;
+            if (filterOn) pages = Math.ceil(filteredList.length / entriesPerPage);
+            else pages = Math.ceil(dragons.length / entriesPerPage);
             const startPage = Math.floor(pageIndex / 5) * 5;
 
             // Print left arrow
@@ -409,18 +717,31 @@
             navArea.append(rightArrow);
 
             // Activate/deactivate left arrow
-            // get first child element of page numbers, if it's 1 then inactive, if > 1 then change pageIndex accordingly
-            let firstPage = navArea.firstChild.nextSibling.innerHTML;
-            let lastPage = navArea.lastChild.previousSibling.innerHTML;
+            // Get first child element of page numbers, if it's 1 then inactive, if > 1 then change pageIndex accordingly
+            let firstPage = navArea.firstChild.nextElementSibling.innerHTML;
+            let lastPage = navArea.lastChild.previousElementSibling.innerHTML;
 
-            if (firstPage <= 1 || dragons.length === 0) {
-                leftArrow.setAttribute("class", "nav-button arrow-inactive");
+            if (filterOn) {
+                if (firstPage <= 1 || filteredList.length === 0) {
+                    leftArrow.setAttribute("class", "nav-button arrow-inactive");
+                }
+                else if (firstPage >= 6) {
+                    leftArrow.addEventListener("click", (e) => {
+                        pageIndex = parseInt(firstPage) - 6;
+                        printPage();
+                    });
+                }
             }
-            else if (firstPage >= 6) {
-                leftArrow.addEventListener("click", (e) => {
-                    pageIndex = parseInt(firstPage) - 6;
-                    printPage();
-                });
+            else {
+                if (firstPage <= 1 || dragons.length === 0) {
+                    leftArrow.setAttribute("class", "nav-button arrow-inactive");
+                }
+                else if (firstPage >= 6) {
+                    leftArrow.addEventListener("click", (e) => {
+                        pageIndex = parseInt(firstPage) - 6;
+                        printPage();
+                    });
+                }
             }
 
             if (pages <= 5 || lastPage % 5 !== 0 || pages <= parseInt(lastPage)) {
@@ -442,16 +763,16 @@
                 return;
             }
 
-            refreshData();
-
             let startIndex = pageIndex * entriesPerPage;
             let dataToPrint;
 
-            if (sortOn) {
-                dataToPrint = sortedList.slice(startIndex, startIndex + entriesPerPage);
+            if (filterOn) {
+                if (sortOn) dataToPrint = sortedList.slice(startIndex, startIndex + entriesPerPage);
+                else dataToPrint = filteredList.slice(startIndex, startIndex + entriesPerPage);
             }
             else {
-                dataToPrint = dragons.slice(startIndex, startIndex + entriesPerPage);
+                if (sortOn) dataToPrint = sortedList.slice(startIndex, startIndex + entriesPerPage);
+                else dataToPrint = dragons.slice(startIndex, startIndex + entriesPerPage);
             }
 
             const tableArea = document.querySelector(".display-entries");
@@ -461,34 +782,39 @@
                 let newRow = document.createElement("div");
                 newRow.setAttribute("class", "entry");
 
+                // Print object property for each row of entry (name, species, trait, etc.)
                 for (const prop in data) {
                     let entryText = document.createElement("div");
 
+                    // If prop is id, do not print any visible data (only attach attributes)
                     if (prop == "id") {
                         entryText.setAttribute("id", data["id"]);
                         entryText.setAttribute("class", "id");
                     }
                     else {
+                        if (prop == "dragon-name") {
+                            entryText.setAttribute("class", "name");
+                            entryText.addEventListener("click", editName);
+                        }
                         entryText.innerText = `${data[prop]}`;
                     }
 
                     newRow.appendChild(entryText);
-
                 }
 
                 let editBtn = document.createElement("div");
-                editBtn.innerHTML = '<img src="edit.png" width="18" alt="Edit button" class="edit-button" onclick="editMemo()">';
+                editBtn.innerHTML = '<img src="edit.png" width="18" alt="Edit button" class="btn-img" onclick="editMemo()">';
                 newRow.appendChild(editBtn);
 
                 let deleteBtn = document.createElement("div");
-                deleteBtn.innerHTML = '<img src="delete.png" width="18" alt="Delete button" class="delete-button" onclick="deleteData()">';
+                deleteBtn.innerHTML = '<img src="delete.png" width="18" alt="Delete button" class="btn-img" onclick="deleteData()">';
                 newRow.appendChild(deleteBtn);
 
                 tableArea.append(newRow);
-
             }
 
             printNavBar();
+
             // Automatically move to previous page if deleted everything on this page
             if (tableArea.innerHTML == "") {
                 pageIndex--;
@@ -507,6 +833,14 @@
 
             let entryData = Object.fromEntries(new FormData(e.target));
 
+            // Before adding entry data, check if it already exists in the dragons list -- if not, must create new filter button
+            const indexSpecies = dragons.findIndex((entry) => {
+                return entry["species"] === entryData["species"];
+            });
+            const indexTrait = dragons.findIndex((entry) => {
+                return entry["trait"] === entryData["trait"];
+            });
+
             // Add auto-generated dragon name to entryData if user did not specify
             if (entryData["dragon-name"] == '') {
                 const defaultName = `드래곤 #${nameCount}`;
@@ -518,8 +852,20 @@
             entryData.id = idCount++;
             dragons.push(entryData);
 
-            // If sortOn, then also push new entry data to currently sorted list (in order to reflect the change even if user is using sorted view)
-            if (sortOn) sortedList.push(entryData);
+            // If sortOn with no filters, then also push new entry data to currently sorted list (in order to reflect the change even if user is using sorted view)
+            if (sortOn && !filterOn) sortedList.push(entryData);
+
+            // If sortOn with filters, then only push to sortedList if new entry matches the filter
+            if (sortOn && filterOn) {
+                if (checkFilterMatch(entryData) === true) sortedList.push(entryData);
+            }
+
+            // If only filtersOn, then check whether to push new data to current filteredList
+            if (!sortOn && filterOn) {
+                if (checkFilterMatch(entryData) === true) {
+                    filteredList.push(entryData);
+                }
+            }
 
             // Save newly added dragon data to localStorage and update counter data
             const newData = JSON.stringify(dragons);
@@ -535,18 +881,36 @@
             document.querySelector(".field-memo").value = "";
 
             // This goes through the process of re-printing entire current page even when the added data appears in another page; refactor later if possible
+            // refactor: if current page index is not the same as the (dragons.length / entriesperpage) - 1, then no need to printpage()
             printPage();
+
+            // Update filters if added new species or trait
+            if (indexSpecies < 0) addFilter("species", entryData["species"]);
+            if (indexTrait < 0) addFilter("trait", entryData["trait"]);
         }
 
         function deleteData() {
             // Get latest local storage data
             refreshData();
 
-            // Identify this row's id
+            // Identify this row's id, species, and trait
             const getId = event.target.parentNode.previousElementSibling.previousElementSibling.id;
+            const getSpecies = event.target.parentNode.parentNode.children[1].textContent;
+            const getTrait = event.target.parentNode.parentNode.children[3].textContent;
+
+            // Update dragon list
             const dragonsUpdated = dragons.filter(x => x["id"] != getId);
             const updatedList = JSON.stringify(dragonsUpdated);
             localStorage.setItem("mydragons", updatedList);
+            dragons = dragonsUpdated.slice();
+
+            // Also update sorted list/filtered list if sortOn/filterOn
+            if (sortOn) {
+                sortedList = sortedList.filter(x => x["id"] != getId);
+            }
+            if (filterOn) {
+                filteredList = filteredList.filter(x => x["id"] != getId);
+            }
 
             // Update counter data
             const newCount = JSON.stringify(counterData);
@@ -559,6 +923,36 @@
                 thisRow.remove();
                 printPage();
             });
+
+            // Update filters if needed
+            const indexSpecies = dragons.findIndex((entry) => {
+                return entry["species"] === getSpecies;
+            });
+            const indexTrait = dragons.findIndex((entry) => {
+                return entry["trait"] === getTrait;
+            });
+
+            if (indexSpecies < 0) deleteFilter("species", getSpecies);
+            if (indexTrait < 0) deleteFilter("trait", getTrait);
+        }
+
+        function deleteFilter(category, value) {
+            const nodes = document.querySelector(`.filter-${category}`).children;
+
+            for (const elem of nodes) {
+                if (elem.textContent === value) {
+                    elem.firstElementChild.click();
+                    elem.remove();
+                    break;
+                }
+            }
+        }
+
+        function addFilter(category, value) {
+            const parentNode = document.querySelector(`.filter-${category}`);
+            const newLabel = document.createElement("label");
+            newLabel.innerHTML = `${value}<input type="checkbox" class="filter-checkbox" id="${value}" name="${category}" onchange="filterChange(event, name, id)">`;
+            parentNode.append(newLabel);
         }
 
         function editMemo() {
@@ -570,20 +964,20 @@
             const oldData = editField.textContent;
 
             // Draw out edit field
-            editField.innerHTML = `<form id="edit-form"><input class="field-memo edit-input" type="text" name="memo" value="${oldData}" maxlength="25"> <input type="submit" value="수정"></form>`;
-            document.querySelector(".edit-input").focus();
+            editField.innerHTML = `<form id="edit-memo"><input class="field-memo memo-change" type="text" name="memo" value="${oldData}" maxlength="25"> <input type="submit" value="수정"></form>`;
+            document.querySelector(".memo-change").focus();
 
-            const editForm = document.getElementById("edit-form");
+            const editForm = document.getElementById("edit-memo");
             editForm.onsubmit = (e) => {
                 e.preventDefault();
-                submitMemo(e, `"${oldData}"`, getId);
+                submitMemo(e, getId);
             };
 
             // Change icon image
-            parentDiv.children[7].innerHTML = `<img src="cancelb.png" width="18" alt="Edit button" class="edit-button" onclick="cancelMemo('${oldData}')">`;
+            parentDiv.children[7].innerHTML = `<img src="cancelb.png" width="18" alt="Edit button" class="btn-img" onclick="cancelMemo('${oldData}')">`;
         }
 
-        function submitMemo(e, value, id) {
+        function submitMemo(e, id) {
             let newEntry = Object.fromEntries(new FormData(e.target));
             const newMemo = newEntry.memo;
 
@@ -607,7 +1001,7 @@
             editField.innerHTML = `${newMemo}`;
 
             // Revert edit icon back to edit
-            parentDiv.children[7].innerHTML = '<img src="edit.png" width="18" alt="Edit button" class="edit-button" onclick="editMemo()">';
+            parentDiv.children[7].innerHTML = '<img src="edit.png" width="18" alt="Edit button" class="btn-img" onclick="editMemo()">';
         }
 
         function cancelMemo(value) {
@@ -617,7 +1011,73 @@
             editField.innerHTML = `${value}`;
 
             // Revert edit icon back to edit
-            parentDiv.children[7].innerHTML = '<img src="edit.png" width="18" alt="Edit button" class="edit-button" onclick="editMemo()">';
+            parentDiv.children[7].innerHTML = '<img src="edit.png" width="18" alt="Edit button" class="btn-img" onclick="editMemo()">';
+        }
+
+        function editName() {
+            const parentDiv = event.target.parentNode;
+            const getId = event.target.parentNode.children[6].id;
+            const editField = event.target;
+
+            editField.removeEventListener("click", editName);
+            editField.classList.remove("name");
+
+            // Save old name
+            const oldData = editField.textContent;
+
+            // Draw out edit field
+            editField.innerHTML = `<form id="edit-name"><input class="field-name change-name" type="text" name="dragon-name" value="${oldData}" maxlength="12" size="10"> <input type="image" src="check.png"></form> <img src="cancel.png" class="btn-img" alt="Cancel name change" onclick="cancelName(event, '${oldData}')">`;
+            document.querySelector(".change-name").focus();
+
+            const editForm = document.getElementById("edit-name");
+            editForm.onsubmit = (e) => {
+                e.preventDefault();
+                submitName(e, getId);
+            };
+        }
+
+        function submitName(e, id) {
+            let newEntry = Object.fromEntries(new FormData(e.target));
+            const newName = newEntry["dragon-name"];
+
+            // Get current dragon data
+            const getDragonData = localStorage.getItem("mydragons");
+            dragons = JSON.parse(getDragonData);
+
+            // Edit name value in existing dragons object
+            dataIndex = dragons.findIndex((x) => {
+                return x["id"] == id;
+            });
+            dragons[dataIndex]["dragon-name"] = newName;
+
+            // Update localStorage data
+            const newData = JSON.stringify(dragons);
+            localStorage.setItem("mydragons", newData);
+
+            // Get rid of input field and reflect new name
+            const parentDiv = event.target.parentNode.parentNode;
+            const editField = event.target.parentNode;
+            editField.innerHTML = `${newName}`;
+
+            // Add back event listener and class
+            editField.addEventListener("click", editName);
+            editField.classList.add("name");
+
+            // Prevent event bubbling
+            e.stopPropagation();
+        }
+
+        function cancelName(e, value) {
+            // Fill name div with original value
+            const editField = event.target.parentNode;
+            editField.innerHTML = `${value}`;
+
+            // Add back event listener and class
+            editField.addEventListener("click", editName);
+            editField.classList.add("name");
+
+            // Prevent event bubbling
+            e.stopPropagation();
         }
 
         function clearLocalStorage() {
@@ -668,7 +1128,6 @@
                 if (retrieved.indexOf("@dvcdata@") < 0) return alert("올바른 데이터 형식이 아닙니다. DVC툴과 호환되는 파일을 열어주세요.");
                 const rvdArray = retrieved.split("@dvcdata@");
                 dragons = JSON.parse(rvdArray[1]);
-                console.log(dragons);
                 localStorage.setItem("counters", rvdArray[0]);
                 localStorage.setItem("mydragons", rvdArray[1]);
                 location.reload();
