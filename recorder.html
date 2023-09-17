@@ -936,12 +936,12 @@
             if (indexTrait < 0) deleteFilter("trait", getTrait);
         }
 
-        function deleteFilter(category, value) {
+        function deleteFilter(category, property) {
             const nodes = document.querySelector(`.filter-${category}`).children;
 
             for (const elem of nodes) {
-                if (elem.textContent === value) {
-                    elem.firstElementChild.click();
+                if (elem.textContent === property) {
+                    if (elem.firstElementChild === true) elem.firstElementChild.click();
                     elem.remove();
                     break;
                 }
