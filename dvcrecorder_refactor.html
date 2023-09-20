@@ -11,242 +11,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
 
-    <style>
-        * {
-            font-family: 'Noto Sans KR', sans-serif;
-        }
-
-        body {
-            margin: 0px;
-        }
-
-        hr {
-            border: 1px solid pink;
-            width: 100%;
-            margin: 0px;
-            align-self: center;
-        }
-
-        .content {
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            flex-wrap: wrap;
-            align-items: auto;
-            height: 100%;
-            /* background-color: plum; */
-        }
-
-        .main {
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            flex-wrap: wrap;
-            box-shadow: 3px 3px 3px rgb(231, 223, 223);
-            border: 1px solid rgb(231, 223, 223);
-            border-radius: 20px;
-            /* background-color: aquamarine; */
-            margin: 8px;
-            padding: 15px 20px;
-        }
-
-        .filters {
-            box-sizing: border-box;
-            box-shadow: 3px 3px 3px rgb(231, 223, 223);
-            border: 1px solid rgb(231, 223, 223);
-            /* background-color: yellow; */
-            width: 250px;
-            border-radius: 20px;
-            margin: 8px;
-            padding: 15px 20px;
-        }
-
-        .display-table {
-            display: flex;
-            flex-direction: column;
-            width: 70vw;
-            cursor: default;
-            /* background-color: aliceblue; */
-        }
-
-        .entry,
-        .table-header {
-            display: grid;
-            grid-template-columns: 215px 180px 80px 150px 80px 450px 20px 20px;
-
-            margin: 3px;
-            padding: 5px;
-            justify-content: center;
-            text-align: center;
-        }
-
-        #display-nav {
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            margin-bottom: 10px;
-
-            ::selection {
-                background-color: transparent;
-            }
-        }
-
-        .table-header {
-            color: rgb(241, 46, 111);
-        }
-
-        .neutral {
-            opacity: 0.3;
-        }
-
-        .table-header img {
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        .table-header img:active {
-            transform: translateY(2px);
-        }
-
-        .entry {
-            font-size: 0.9rem;
-            grid-template-rows: 30px;
-            align-items: center;
-
-            animation-name: del;
-            animation-duration: 0.4s;
-            animation-fill-mode: forwards;
-            animation-play-state: paused;
-        }
-
-        .entry:nth-child(even) {
-            background-color: #fff5f5;
-        }
-
-        .display-entries {
-            height: 450px;
-        }
-
-        .field-gen {
-            width: 50px;
-        }
-
-        .no-dragons {
-            position: relative;
-            top: 230px;
-            display: flex;
-            justify-content: center;
-            color: rgb(150, 150, 150);
-        }
-
-        .id {
-            display: none;
-        }
-
-        .btn-img {
-            cursor: pointer;
-        }
-
-        #edit-name {
-            display: inline-block;
-        }
-
-        .nav-button {
-            box-shadow: 3px 3px 3px rgb(231, 223, 223);
-            text-align: center;
-            margin: 7px;
-            padding: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            border-radius: 5px;
-            width: 20px;
-        }
-
-        .arrow-inactive {
-            color: rgb(214, 214, 214);
-            cursor: default;
-        }
-
-        .page-cur {
-            background-color: rgb(247, 152, 204);
-        }
-
-        .entry:hover {
-            background-color: rgb(255, 225, 243);
-        }
-
-        #my-form {
-            display: inline-block;
-        }
-
-        @keyframes del {
-            0% {
-                opacity: 1;
-                height: auto;
-                margin: 3px;
-                padding: 5px;
-            }
-
-            90% {
-                opacity: 0;
-                height: auto;
-                margin: 3px;
-                padding: 5px;
-            }
-
-            95% {
-                opacity: 0;
-                height: 0px;
-                margin: 0px;
-                padding: 0px;
-            }
-
-            100% {
-                opacity: 0;
-                height: 0px;
-                margin: 0px;
-                padding: 0px;
-            }
-        }
-
-        .name:hover {
-            cursor: pointer;
-            font-weight: 600;
-        }
-
-        button,
-        #btn {
-            font-size: 16px;
-            padding: 5px 15px;
-            border: none;
-            border-radius: 8px;
-            background-color: #373737;
-            color: white;
-        }
-
-        .desc,
-        .new-entry {
-            box-sizing: border-box;
-            width: 100%;
-        }
-
-        .desc {
-            text-align: left;
-            padding-top: 15px;
-            padding-left: 20px;
-            padding-bottom: 15px;
-        }
-
-        .new-entry {
-            text-align: right;
-            padding-right: 15px;
-        }
-
-        h3 {
-            margin: 0px 0px 15px;
-        }
-    </style>
+    <link rel="stylesheet" href="dvcrecorder.css">
 </head>
 
 <body>
@@ -254,76 +19,126 @@
         <h2>DVC툴</h2>
     </div>
 
+    <!-- <div class="support">
+        1250px 이하의 환경에서 호환되는 페이지는 아직 없어요 ㅠㅠ<br>
+        PC에서 사용해주세요!
+    </div> -->
+
     <div class="content">
         <div class="filters">
-            <h3>필터 선택</h3>
-            <div>
-                성별
+            <h3>데이터 조회 필터</h3>
+            <div class="filter-title">
+                <strong>성별</strong>
                 <hr>
-                <div class="filter-gender">
-                    <label for="수컷">수컷</label><input type="checkbox" id="수컷" name="gender"
-                        onchange="tester(event, name, id)">
-                    <label for="암컷">암컷</label><input type="checkbox" id="암컷" name="gender"
-                        onchange="tester(event, name, id)">
-
-                </div>
+                <div class="filter-gender"></div>
             </div>
-            <div>
-                종
+            <div class="filter-title">
+                <strong>종</strong>
                 <hr>
-                <div class="filter-species">
-
-                </div>
+                <div class="filter-species"></div>
             </div>
-            <div>
-                성격
+            <div class="filter-title">
+                <strong>성격</strong>
                 <hr>
-                <div class="filter-trait">
-
-                </div>
+                <div class="filter-trait"></div>
             </div>
-            <div>
-                <a href="dvcstats.html"><button type="button">통계 대시보드</button></a>
+            <div class="filter-settings">
+                <button type="button" class="mode-button button-small" onclick="toggleStrictFilter()"
+                    style="background-color: rgb(105, 86, 90)">필터 옵션 전체해당 OFF</button>
+                <button type="button" class="reset-button button-small" onclick="resetFilters()"
+                    style="background-color: rgb(241, 82, 119)">필터 전체해제</button>
             </div>
         </div>
+
         <div class="main">
+            <div class="desc-header">
+                <h3>용용이 목록</h3>
+                <div class="menu">
+                    <div class="tip-box">
+                        <a href="dvcstats.html" target="_blank"><img src="./images/stats.png" class="menu-btn"
+                                alt="Analytics"></a>
+                        <span class="tip-text">준비하고 있어요!</span>
+                    </div>
+                    <div class="dropdown" data-dropdown>
+                        <img src="./images/folder.png" class="menu-btn" alt="File menus" data-dropdown-button>
+                        <div class="dropdown-menu">
+                            <button onclick="download()">데이터 다운로드</button>
+                            <input type="file" id="upload" accept="text/*" style="display:none"
+                                onchange="load()"><button id="uploadBtn" onclick="callFile()">데이터 가져오기</button>
+                        </div>
+                    </div>
+                    <div class="dropdown" data-dropdown>
+                        <img src="./images/settings.png" class="menu-btn" alt="Settings" data-dropdown-button>
+                        <div class="dropdown-menu">
+                            <button onclick="clearLocalStorage()">캐시 삭제</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="desc">
-                <h3>데이터 추가</h3>
-                이용법: 데이터를 추가합니다. 왼쪽 필터 설정을 통해 원하는 드래곤을 모아서 볼 수 있습니다.
+                <div class="flex-container">
+                    <div class="instructions">
+                        <strong>나의 용용이 데이터를 요약해주는 툴입니다. 🐲</strong><br>
+                        본 툴의 데이터는 별도 서버가 아닌 브라우저 캐시에 저장됩니다. <u>캐시를 삭제하면 용용이 데이터도 함께 삭제됩니다.</u> 우측 상단의 폴더 아이콘을 클릭해 데이터를
+                        백업하거나
+                        복원할 수 있습니다.
+                    </div>
+                    <div class="form">
+                        <strong>용용 추가</strong>
+                        <hr>
+                        <div class="new-entry">
+
+                            <div class="entry-item">
+                                <span class="field-label">이름:</span>
+                                <br>
+                                <input class="field-name" type="text" name="dragon-name" placeholder="이름" maxlength="14"
+                                    size="14">
+                            </div>
+                            <div class="entry-item">
+                                <span class="field-label">드래곤:</span>
+                                <br>
+                                <select class="field-dragon" name="species">
+                                </select>
+                            </div>
+                            <div class="entry-item">
+                                <span class="field-label">성별:</span>
+                                <br>
+                                <select class="field-gender" name="gender">
+                                    <option>수컷</option>
+                                    <option>암컷</option>
+                                    <option>중성</option>
+                                </select>
+                            </div>
+                            <div class="entry-item">
+                                <span class="field-label">성격:</span>
+                                <br>
+                                <select class="field-trait" name="trait">
+                                </select>
+                            </div>
+                            <div class="entry-item">
+                                <span class="field-label">세대:</span>
+                                <br>
+                                <input class="field-gen" type="number" inputmode="numeric" name="generation" value="1"
+                                    min="1" onchange="validate(event)">
+                            </div>
+                            <div class="entry-item">
+                                <span class="field-label">메모:</span>
+                                <br>
+                                <input class="field-memo" type="text" name="memo" placeholder="메모" maxlength="25">
+                            </div>
+                            <div class="entry-item">
+                                <br>
+                                <button id="btn" onclick="addDragonData(event)">추가</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            <div class="new-entry">
-                <form id="my-form" onsubmit="addDragonData(event)">
-                    <input class="field-name" type="text" name="dragon-name" placeholder="이름" maxlength="14">
-                    <select class="field-dragon" name="species">
-                    </select>
-                    <select class="field-gender" name="gender">
-                        <option>수컷</option>
-                        <option>암컷</option>
-                    </select>
-                    <select class="field-trait" name="trait">
-                    </select>
-                    <input class="field-gen" type="number" inputmode="numeric" name="generation" value="1" min="1"
-                        onchange="validate(event)">
-                    <input class="field-memo" type="text" name="memo" placeholder="메모" maxlength="25">
-                    <input id="btn" type="submit" value="+ 추가">
-                </form>
-
-            </div>
-
-            <div class="pref">
-                <button onclick="download()">데이터 다운로드</button>
-                <input type="file" id="upload" accept="text/*" style="display:none" onchange="load()"><button
-                    id="uploadBtn" onclick="callFile()">불러오기</button>
-                <button onclick="clearLocalStorage()">캐시 삭제</button>
-            </div>
-
-            <div style="height:30px"></div>
 
             <div class="display-table">
                 <div class="display-header">
                     <div class="table-header">
-                        <div><strong>이름</strong> <span class="neutral"><img src="neutral.png"
+                        <div><strong>이름</strong> <span class="neutral"><img src="./images/neutral.png"
                                     onclick="sortChange(event)"></span></div>
                         <div><strong>종</strong></div>
                         <div><strong>성별</strong></div>
@@ -336,637 +151,13 @@
                 </div>
                 <hr>
                 <div class="display-entries"></div>
-
                 <div id="display-nav"></div>
+                <div class="version">v1.0.0</div>
             </div>
         </div>
     </div>
 
-    <!-- All JavaScript codes below -->
-    <script>
-        let dragons = [];
-        let counterData, nameCount, idCount, sortedList, filteredList;
-        const entriesPerPage = 10;
-        let pageIndex = 0;
-        let sortOn = false;
-        let filterOn = false;
-        let filtersChecked = { gender: [], species: [], trait: [] };
-
-        if (!localStorage.getItem("mydragons")) {
-            let counters = { "name-count": 1, "id-count": 0 }
-
-            const startCounters = JSON.stringify(counters);
-            localStorage.setItem("counters", startCounters);
-
-            counterData = counters;
-            nameCount = counterData["name-count"];
-            idCount = counterData["id-count"];
-
-            printPage();
-        }
-        else {
-            refreshData();
-
-            nameCount = counterData["name-count"];
-            idCount = counterData["id-count"];
-            printPage();
-        }
-
-        function resetSort() {
-            sortOn = false;
-            const target = document.querySelector(".table-header").firstElementChild.children[1];
-            target.classList.replace()
-        }
-
-        function tester(e, filterType, filterName) {
-            // Reset current sort setting
-            if (sortOn) resetSort();
-
-            // If target's checkbox is checked, then add to filters list; if checked false, then remove from filters list
-            if (e.target.checked) filtersChecked[filterType].push(filterName);
-            if (!e.target.checked) filtersChecked[filterType] = filtersChecked[filterType].filter((x) => x !== filterName);
-
-            // Indicate whether at least one of the filters is on
-            let fIndicator = 0;
-            for (const filter in filtersChecked) {
-                if (filtersChecked[filter].length > 0) {
-                    filterOn = true;
-                    fIndicator++;
-                    break;
-                }
-                else fIndicator--;
-            }
-            if (fIndicator < 0) {
-                filterOn = false;
-                refreshData();
-                printPage();
-                return;
-            }
-
-            // For each dragon, if it matches any of the filters, add the dragon to the filteredList
-            filteredList = [];
-            for (const dragon of dragons) {
-                for (const prop in dragon) {
-                    // Skip check for dragon-name, generation, memo, and id
-                    if (prop === "dragon-name" || prop === "generation" || prop === "memo" || prop === "id") continue;
-                    let searchValue = dragon[prop];
-                    if (filtersChecked[prop].indexOf(searchValue) >= 0) {
-                        filteredList.push(dragon)
-                    }
-                }
-            }
-
-            printPage();
-        }
-
-
-
-        function orderAscending(e) {
-            sortOn = true;
-            let size;
-
-            if (filterOn) size = filteredList.length;
-            else size = dragons.length;
-
-            const baseArray = Array(size);
-            sortedList = Array(size);
-
-            // Extract names only from dragon list
-            if (filterOn) {
-                for (let i = 0; i < size; i++) {
-                    baseArray[i] = filteredList[i]["dragon-name"];
-                }
-            }
-            else {
-                for (let i = 0; i < size; i++) {
-                    baseArray[i] = dragons[i]["dragon-name"];
-                }
-            }
-
-            // Sort names in A-to-Z order
-            baseArray.sort((a, b) => a.localeCompare(b));
-
-            // Create new array of reordered data objects (temporary order, will not be reflected in localStorage)
-            if (filterOn) {
-                for (let i = 0; i < size; i++) {
-                    const objIndex = filteredList.findIndex((x) => {
-                        return x["dragon-name"] == baseArray[i];
-                    });
-                    sortedList[i] = filteredList[objIndex];
-                }
-            }
-            else {
-                for (let i = 0; i < size; i++) {
-                    const objIndex = dragons.findIndex((x) => {
-                        return x["dragon-name"] == baseArray[i];
-                    });
-                    sortedList[i] = dragons[objIndex];
-                }
-            }
-
-            printPage();
-        }
-
-        function orderDescending(e) {
-            sortOn = true;
-            let size;
-
-            if (filterOn) size = filteredList.length;
-            else size = dragons.length;
-
-            const baseArray = Array(size);
-            sortedList = Array(size);
-
-            // Extract names only from dragon list
-            if (filterOn) {
-                for (let i = 0; i < size; i++) {
-                    baseArray[i] = filteredList[i]["dragon-name"];
-                }
-            }
-            else {
-                for (let i = 0; i < size; i++) {
-                    baseArray[i] = dragons[i]["dragon-name"];
-                }
-            }
-
-            // Sort names in Z-to-A order
-            baseArray.sort((a, b) => b.localeCompare(a));
-
-            // Create new array of reordered data objects (temporary order, will not be reflected in localStorage)
-            if (filterOn) {
-                for (let i = 0; i < size; i++) {
-                    const objIndex = filteredList.findIndex((x) => {
-                        return x["dragon-name"] == baseArray[i];
-                    });
-                    sortedList[i] = filteredList[objIndex];
-                }
-            }
-            else {
-                for (let i = 0; i < size; i++) {
-                    const objIndex = dragons.findIndex((x) => {
-                        return x["dragon-name"] == baseArray[i];
-                    });
-                    sortedList[i] = dragons[objIndex];
-                }
-            }
-
-            printPage();
-        }
-
-        function checkFilterMatch(newEntry) {
-            return true;
-            return false;
-        }
-
-        // Get latest dragon data and counter data
-        function refreshData() {
-            const getDragonData = localStorage.getItem("mydragons");
-            dragons = JSON.parse(getDragonData);
-
-            const getCounterData = localStorage.getItem("counters");
-            counterData = JSON.parse(getCounterData);
-        }
-
-        function validate(e) {
-            if (e.target.value === "" || e.target.value <= 0) {
-                e.target.value = 1;
-            }
-        }
-
-        function sortChange(e) {
-            const targetNode = e.target.parentNode;
-            const state = targetNode.classList[0];
-
-            switch (state) {
-                case "neutral":
-                    targetNode.classList.replace("neutral", "ascending");
-                    e.target.src = "ascending.png";
-                    orderAscending(event);
-                    break;
-                case "ascending":
-                    targetNode.classList.replace("ascending", "descending");
-                    e.target.src = "descending.png";
-                    orderDescending(event);
-                    break;
-                case "descending":
-                    targetNode.classList.replace("descending", "neutral");
-                    e.target.src = "neutral.png";
-                    sortOn = false;
-                    printPage();
-            }
-        }
-
-        function printNavBar() {
-            // Clear out pagination
-            const navArea = document.querySelector("#display-nav");
-            navArea.innerHTML = "";
-
-            // Calculate number of pages
-            let pages;
-            if (filterOn) pages = Math.ceil(filteredList.length / entriesPerPage);
-            else pages = Math.ceil(dragons.length / entriesPerPage);
-            const startPage = Math.floor(pageIndex / 5) * 5;
-
-            // Print left arrow
-            let leftArrow = document.createElement("div");
-            leftArrow.innerHTML = "&lt;";
-            leftArrow.setAttribute("class", "nav-button");
-            leftArrow.removeEventListener;
-            navArea.append(leftArrow);
-
-            for (let i = startPage; i < startPage + 5; i++) {
-                if (i === pages || pages === 0) break;
-                let pageNumber = document.createElement("div");
-                pageNumber.textContent = i + 1;
-                pageNumber.addEventListener("click", (e) => {
-                    pageIndex = pageNumber.textContent - 1;
-                    printPage();
-                });
-                pageNumber.setAttribute("class", "nav-button");
-                if (pageIndex === i) pageNumber.setAttribute("class", "nav-button page-cur");
-                navArea.append(pageNumber);
-            }
-
-            // Print right arrow
-            let rightArrow = document.createElement("div");
-            rightArrow.innerHTML = "&gt;";
-            rightArrow.setAttribute("class", "nav-button");
-            rightArrow.removeEventListener;
-            navArea.append(rightArrow);
-
-            // Activate/deactivate left arrow
-            // Get first child element of page numbers, if it's 1 then inactive, if > 1 then change pageIndex accordingly
-            let firstPage = navArea.firstChild.nextElementSibling.innerHTML;
-            let lastPage = navArea.lastChild.previousElementSibling.innerHTML;
-
-            if (filterOn) {
-                if (firstPage <= 1 || filteredList.length === 0) {
-                    leftArrow.setAttribute("class", "nav-button arrow-inactive");
-                }
-                else if (firstPage >= 6) {
-                    leftArrow.addEventListener("click", (e) => {
-                        pageIndex = parseInt(firstPage) - 6;
-                        printPage();
-                    });
-                }
-            }
-            else {
-                if (firstPage <= 1 || dragons.length === 0) {
-                    leftArrow.setAttribute("class", "nav-button arrow-inactive");
-                }
-                else if (firstPage >= 6) {
-                    leftArrow.addEventListener("click", (e) => {
-                        pageIndex = parseInt(firstPage) - 6;
-                        printPage();
-                    });
-                }
-            }
-
-            if (pages <= 5 || lastPage % 5 !== 0 || pages <= parseInt(lastPage)) {
-                rightArrow.setAttribute("class", "nav-button arrow-inactive");
-            }
-            else {
-                rightArrow.addEventListener("click", (e) => {
-                    pageIndex = parseInt(lastPage);
-                    printPage();
-                });
-            }
-        }
-
-        function printPage() {
-            if (dragons.length <= 0) {
-                const tableArea = document.querySelector(".display-entries");
-                tableArea.innerHTML = `<div class="no-dragons">용용이가 없네용 ㅠ0ㅠ</div>`;
-                printNavBar();
-                return;
-            }
-
-            let startIndex = pageIndex * entriesPerPage;
-            let dataToPrint;
-
-            if (filterOn) {
-                if (sortOn) dataToPrint = sortedList.slice(startIndex, startIndex + entriesPerPage);
-                else dataToPrint = filteredList.slice(startIndex, startIndex + entriesPerPage);
-            }
-            else {
-                if (sortOn) dataToPrint = sortedList.slice(startIndex, startIndex + entriesPerPage);
-                else dataToPrint = dragons.slice(startIndex, startIndex + entriesPerPage);
-            }
-
-            // 
-            // dataToPrint = sortOn ? sortedList.slice(startIndex, startIndex + entriesPerPage) : dragons.slice(startIndex, startIndex + entriesPerPage);
-
-            const tableArea = document.querySelector(".display-entries");
-            tableArea.innerHTML = "";
-
-            for (const data of dataToPrint) {
-                let newRow = document.createElement("div");
-                newRow.setAttribute("class", "entry");
-
-                // Print object property for each row of entry (name, species, trait, etc.)
-                for (const prop in data) {
-                    let entryText = document.createElement("div");
-
-                    // If prop is id, do not print any visible data (only attach attributes)
-                    if (prop == "id") {
-                        entryText.setAttribute("id", data["id"]);
-                        entryText.setAttribute("class", "id");
-                    }
-                    else {
-                        if (prop == "dragon-name") {
-                            entryText.setAttribute("class", "name");
-                            entryText.addEventListener("click", editName);
-                        }
-                        entryText.innerText = `${data[prop]}`;
-                    }
-
-                    newRow.appendChild(entryText);
-                }
-
-                let editBtn = document.createElement("div");
-                editBtn.innerHTML = '<img src="edit.png" width="18" alt="Edit button" class="btn-img" onclick="editMemo()">';
-                newRow.appendChild(editBtn);
-
-                let deleteBtn = document.createElement("div");
-                deleteBtn.innerHTML = '<img src="delete.png" width="18" alt="Delete button" class="btn-img" onclick="deleteData()">';
-                newRow.appendChild(deleteBtn);
-
-                tableArea.append(newRow);
-            }
-
-            printNavBar();
-
-            // Automatically move to previous page if deleted everything on this page
-            if (tableArea.innerHTML == "") {
-                pageIndex--;
-                printPage();
-            }
-        }
-
-        function addDragonData(e) {
-            e.preventDefault();
-
-            // Get fresh dragon data
-            if (localStorage.getItem("mydragons")) {
-                const getDragonData = localStorage.getItem("mydragons");
-                dragons = JSON.parse(getDragonData);
-            }
-
-            let entryData = Object.fromEntries(new FormData(e.target));
-
-            // Add auto-generated dragon name to entryData if user did not specify
-            if (entryData["dragon-name"] == '') {
-                const defaultName = `드래곤 #${nameCount}`;
-                nameCount++;
-                entryData["dragon-name"] = defaultName;
-            }
-
-            // Assign id to entryData (increase id index for next data)
-            entryData.id = idCount++;
-            dragons.push(entryData);
-
-            // If sortOn with no filters, then also push new entry data to currently sorted list (in order to reflect the change even if user is using sorted view)
-            if (sortOn && !filterOn) sortedList.push(entryData);
-
-            // If sortOn with filters, then only push to sortedList if new entry matches the filter
-            if (sortOn && filterOn) {
-                if (checkFilterMatch(entryData) === true) sortedList.push(entryData);
-            }
-
-            // Save newly added dragon data to localStorage and update counter data
-            const newData = JSON.stringify(dragons);
-            localStorage.setItem("mydragons", newData);
-
-            counterData["name-count"] = nameCount;
-            counterData["id-count"] = idCount;
-            const newCount = JSON.stringify(counterData);
-            localStorage.setItem("counters", newCount);
-
-            // Reset text input fields only
-            document.querySelector(".field-name").value = "";
-            document.querySelector(".field-memo").value = "";
-
-            // This goes through the process of re-printing entire current page even when the added data appears in another page; refactor later if possible
-            printPage();
-        }
-
-        function deleteData() {
-            // Get latest local storage data
-            refreshData();
-
-            // Identify this row's id
-            const getId = event.target.parentNode.previousElementSibling.previousElementSibling.id;
-
-            // Update dragon list
-            const dragonsUpdated = dragons.filter(x => x["id"] != getId);
-            const updatedList = JSON.stringify(dragonsUpdated);
-            localStorage.setItem("mydragons", updatedList);
-            dragons = dragonsUpdated.slice();
-
-            // Also update sorted list/filtered list if sortOn/filterOn
-            if (sortOn) {
-                sortedList = sortedList.filter(x => x["id"] != getId);
-            }
-            if (filterOn) {
-                filteredList = filteredList.filter(x => x["id"] != getId);
-            }
-
-            // Update counter data
-            const newCount = JSON.stringify(counterData);
-            localStorage.setItem("counters", newCount);
-
-            // Remove row element from table
-            const thisRow = event.target.parentNode.parentNode;
-            thisRow.style.animationPlayState = "running";
-            thisRow.addEventListener("animationend", () => {
-                thisRow.remove();
-                printPage();
-            });
-        }
-
-        function editMemo() {
-            const parentDiv = event.target.parentNode.parentNode;
-            const getId = event.target.parentNode.previousElementSibling.id;
-            const editField = parentDiv.children[5];
-
-            // Save old memo text
-            const oldData = editField.textContent;
-
-            // Draw out edit field
-            editField.innerHTML = `<form id="edit-memo"><input class="field-memo memo-change" type="text" name="memo" value="${oldData}" maxlength="25"> <input type="submit" value="수정"></form>`;
-            document.querySelector(".memo-change").focus();
-
-            const editForm = document.getElementById("edit-memo");
-            editForm.onsubmit = (e) => {
-                e.preventDefault();
-                submitMemo(e, getId);
-            };
-
-            // Change icon image
-            parentDiv.children[7].innerHTML = `<img src="cancelb.png" width="18" alt="Edit button" class="btn-img" onclick="cancelMemo('${oldData}')">`;
-        }
-
-        function submitMemo(e, id) {
-            let newEntry = Object.fromEntries(new FormData(e.target));
-            const newMemo = newEntry.memo;
-
-            // Get current dragon data
-            const getDragonData = localStorage.getItem("mydragons");
-            dragons = JSON.parse(getDragonData);
-
-            // Edit memo value in existing dragons object
-            dataIndex = dragons.findIndex((x) => {
-                return x["id"] == id;
-            });
-            dragons[dataIndex].memo = newMemo;
-
-            // Update localStorage data
-            const newData = JSON.stringify(dragons);
-            localStorage.setItem("mydragons", newData);
-
-            // Get rid of input field and reflect new memo
-            const parentDiv = event.target.parentNode.parentNode;
-            const editField = parentDiv.children[5];
-            editField.innerHTML = `${newMemo}`;
-
-            // Revert edit icon back to edit
-            parentDiv.children[7].innerHTML = '<img src="edit.png" width="18" alt="Edit button" class="btn-img" onclick="editMemo()">';
-        }
-
-        function cancelMemo(value) {
-            // Fill memo div with original value
-            const parentDiv = event.target.parentNode.parentNode;
-            const editField = parentDiv.children[5];
-            editField.innerHTML = `${value}`;
-
-            // Revert edit icon back to edit
-            parentDiv.children[7].innerHTML = '<img src="edit.png" width="18" alt="Edit button" class="btn-img" onclick="editMemo()">';
-        }
-
-        function editName() {
-            const parentDiv = event.target.parentNode;
-            const getId = event.target.parentNode.children[6].id;
-            const editField = event.target;
-
-            editField.removeEventListener("click", editName);
-            editField.classList.remove("name");
-
-            // Save old name
-            const oldData = editField.textContent;
-
-            // Draw out edit field
-            editField.innerHTML = `<form id="edit-name"><input class="field-name change-name" type="text" name="dragon-name" value="${oldData}" maxlength="12" size="10"> <input type="image" src="check.png"></form> <img src="cancel.png" class="btn-img" alt="Cancel name change" onclick="cancelName(event, '${oldData}')">`;
-            document.querySelector(".change-name").focus();
-
-            const editForm = document.getElementById("edit-name");
-            editForm.onsubmit = (e) => {
-                e.preventDefault();
-                submitName(e, getId);
-            };
-        }
-
-        function submitName(e, id) {
-            let newEntry = Object.fromEntries(new FormData(e.target));
-            const newName = newEntry["dragon-name"];
-
-            // Get current dragon data
-            const getDragonData = localStorage.getItem("mydragons");
-            dragons = JSON.parse(getDragonData);
-
-            // Edit name value in existing dragons object
-            dataIndex = dragons.findIndex((x) => {
-                return x["id"] == id;
-            });
-            dragons[dataIndex]["dragon-name"] = newName;
-
-            // Update localStorage data
-            const newData = JSON.stringify(dragons);
-            localStorage.setItem("mydragons", newData);
-
-            // Get rid of input field and reflect new name
-            const parentDiv = event.target.parentNode.parentNode;
-            const editField = event.target.parentNode;
-            editField.innerHTML = `${newName}`;
-
-            // Add back event listener and class
-            editField.addEventListener("click", editName);
-            editField.classList.add("name");
-
-            // Prevent event bubbling
-            e.stopPropagation();
-        }
-
-        function cancelName(e, value) {
-            // Fill name div with original value
-            const editField = event.target.parentNode;
-            editField.innerHTML = `${value}`;
-
-            // Add back event listener and class
-            editField.addEventListener("click", editName);
-            editField.classList.add("name");
-
-            // Prevent event bubbling
-            e.stopPropagation();
-        }
-
-        function clearLocalStorage() {
-            let key = prompt("데이터를 일괄 삭제합니다. 삭제된 데이터는 복구할 수 없습니다.\n삭제를 원하시면 단어 [삭제]를 입력해주세요.");
-
-            if (key === "삭제" || key === "[삭제]") {
-                localStorage.clear();
-                location.reload();
-            }
-        }
-
-        function download() {
-            if (dragons.length <= 0) {
-                alert("저장할 데이터가 없습니다. 정보를 먼저 입력해주세요.")
-                return;
-            }
-
-            const curDate = new Date();
-            let yr = curDate.getFullYear();
-            let mth = curDate.getMonth() + 1;
-            let d = curDate.getDate();
-            const fileName = "dvctd" + yr + "_" + mth + "_" + d;
-            const saveData = "data:text/json;charset=utf-8," + encodeURIComponent(localStorage.getItem("counters")) + "@dvcdata@" + encodeURIComponent(localStorage.getItem("mydragons"));
-            const downloadPrompt = document.createElement("a");
-            downloadPrompt.setAttribute("href", saveData);
-            downloadPrompt.setAttribute("download", fileName + ".txt");
-            downloadPrompt.click();
-            downloadPrompt.remove();
-        }
-
-        function callFile() {
-            let loadOld = true;
-
-            if (localStorage.getItem("mydragons")) {
-                loadOld = confirm("이미 내 용용이에 대한 데이터가 있습니다. 다른 데이터를 불러올까요?\n기존 데이터는 전부 삭제됩니다.");
-            }
-            if (loadOld == false) return;
-
-            document.getElementById("upload").click();
-        }
-
-        function load() {
-            const reader = new FileReader();
-            const [fileContent] = document.getElementById("upload").files;
-
-            reader.addEventListener("load", () => {
-                const retrieved = reader.result;
-                if (retrieved.indexOf("@dvcdata@") < 0) return alert("올바른 데이터 형식이 아닙니다. DVC툴과 호환되는 파일을 열어주세요.");
-                const rvdArray = retrieved.split("@dvcdata@");
-                dragons = JSON.parse(rvdArray[1]);
-                localStorage.setItem("counters", rvdArray[0]);
-                localStorage.setItem("mydragons", rvdArray[1]);
-                location.reload();
-            });
-
-            if (fileContent) {
-                reader.readAsText(fileContent);
-            }
-        }
-    </script>
+    <script src="recorder.js"></script>
 </body>
 
 </html>
