@@ -472,6 +472,10 @@ select {
 }
 
 @media (max-width: 1500px) {
+    * {
+        font-size: 14px;
+    }
+
     .content {
         flex-direction: column-reverse;
         align-items: center;
