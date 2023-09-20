@@ -19,6 +19,14 @@ body {
     }
 }
 
+.support {
+    display: none;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: bold;
+    padding-top: 50px;
+}
+
 hr {
     border: 1px solid pink;
     width: 100%;
@@ -112,7 +120,8 @@ hr {
     transition: transform 0.2s;
 }
 
-.table-header img:active {
+.table-header img:active,
+.filter-settings button:active {
     transform: translateY(2px);
 }
 
@@ -238,7 +247,7 @@ button,
 
 .desc {
     text-align: left;
-    padding: 10px 0px 25px;
+    padding: 0px 0px 25px;
 }
 
 .new-entry {
@@ -362,7 +371,7 @@ select {
 .menu {
     display: flex;
     position: absolute;
-    top: 6px;
+    top: 0;
     right: 0;
 }
 
@@ -393,6 +402,7 @@ select {
 
 .dropdown {
     position: relative;
+
 }
 
 .dropdown-menu {
@@ -444,6 +454,63 @@ select {
         justify-content: left;
         row-gap: 5px;
         font-size: 0.9rem;
+    }
+
+    .filter-species,
+    .filter-trait {
+        max-height: 180px;
+        overflow: hidden auto;
+    }
+
+    .filter-settings {
+        flex-direction: column;
+    }
+
+    .mode-button {
+        margin: 0px 0px 5px;
+    }
+}
+
+@media (max-width: 1500px) {
+    .content {
+        flex-direction: column-reverse;
+        align-items: center;
+        max-height: 100%;
+    }
+
+    .main {
+        min-width: 1250px;
+        width: 95%;
+    }
+
+    .filters {
+        box-sizing: border-box;
+        box-shadow: 3px 3px 3px rgb(231, 223, 223);
+        border: 1px solid rgb(231, 223, 223);
+        width: 95%;
+        border-radius: 20px;
+        margin: 8px;
+        padding: 15px 15px;
+    }
+
+    .display-entries {
+        min-width: 450px;
+    }
+
+    .filter-gender,
+    .filter-species,
+    .filter-trait {
+        /* display: grid;
+        grid-template-columns: auto;
+        justify-content: left;
+        row-gap: 5px; */
+        font-size: 0.9rem;
+    }
+
+    .filter-species,
+    .filter-trait {
+        max-height: 180px;
+        overflow: hidden auto;
     }
 
     .filter-settings {
