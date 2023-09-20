@@ -4,7 +4,6 @@
 
 body {
     margin: 0px;
-    -webkit-text-size-adjust: 100%;
 
     ::-webkit-scrollbar {
         width: 8px;
@@ -475,6 +474,10 @@ select {
 @media (max-width: 1500px) {
     * {
         font-size: 14px;
+    }
+
+    body {
+        -webkit-text-size-adjust: 100%;
     }
 
     .content {
