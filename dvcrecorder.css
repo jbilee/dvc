@@ -472,14 +472,6 @@ select {
 }
 
 @media (max-width: 1500px) {
-    * {
-        font-size: 14px;
-    }
-
-    body {
-        -webkit-text-size-adjust: 100%;
-    }
-
     .content {
         flex-direction: column-reverse;
         align-items: center;
@@ -508,10 +500,6 @@ select {
     .filter-gender,
     .filter-species,
     .filter-trait {
-        /* display: grid;
-        grid-template-columns: auto;
-        justify-content: left;
-        row-gap: 5px; */
         font-size: 0.9rem;
     }
 
@@ -527,5 +515,15 @@ select {
 
     .mode-button {
         margin: 0px 0px 5px;
+    }
+}
+
+@media screen and (max-width: 1299px) {
+    .content {
+        display: none;
+    }
+
+    .support {
+        display: block;
     }
 }
