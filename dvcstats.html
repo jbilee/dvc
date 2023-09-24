@@ -586,11 +586,6 @@
             speciesArea.innerHTML = `보유 개체수<br><span class="summary-total">${numTotal}</span>`;
 
             printComments(species, summary);
-
-            for (const dragon of summary[0]) {
-                printRecordEntry(listArea, dragon);
-            }
-
             printTraits(traitsArea, summary[1]);
         }
 
@@ -610,17 +605,6 @@
                 }
                 printArea.append(tag);
             }
-        }
-
-        function printRecordEntry(printArea, dragon) {
-            const name = dragon["dragon-name"];
-            const gender = dragon["gender"];
-            const trait = dragon["trait"];
-            const gen = dragon["generation"];
-            const row = document.createElement("div");
-            row.classList.add("row");
-            row.innerHTML = `<div>${name}</div><div>${gender}</div><div>${trait}</div><div>${gen}</div>`;
-            printArea.append(row);
         }
 
         function printComments(species, summary) {
@@ -695,16 +679,6 @@
                 </div>
                 <div class="statistics">
                     <div id="traits">
-                    </div>
-                    <div id="names">
-                        <div class="row-header">
-                            <div>이름</div>
-                            <div>성별</div>
-                            <div>성격</div>
-                            <div>세대</div>
-                        </div>
-                        <div id="list">
-                        </div>
                     </div>
                 </div>`;
         }
