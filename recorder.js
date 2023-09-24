@@ -73,12 +73,12 @@ function toggleStrictFilter() {
 
     if (filterMode === "default") {
         filterMode = "strict";
-        button.style.backgroundColor = "rgb(60, 60, 60)";
+        button.style.backgroundColor = "rgb(181, 66, 110)";
         button.innerText = "필터 옵션 전체해당 ON";
     }
     else if (filterMode === "strict") {
         filterMode = "default";
-        button.style.backgroundColor = "rgb(105, 86, 90)";
+        button.style.backgroundColor = "rgb(195, 148, 152)";
         button.innerText = "필터 옵션 전체해당 OFF";
     }
 }
@@ -91,7 +91,9 @@ function printSpeciesFilters() {
     dragons.forEach((x) => {
         speciesSet.add(x.species);
     }, 0);
-    const speciesKeys = speciesSet.keys();
+    const keyArray = speciesSet.keys();
+    const speciesKeys = [...keyArray];
+    speciesKeys.sort((a, b) => a.localeCompare(b));
 
     for (const species of speciesKeys) {
         const newLabel = document.createElement("label");
@@ -108,7 +110,9 @@ function printTraitFilters() {
     dragons.forEach((x) => {
         traitsSet.add(x.trait);
     }, 0);
-    const traitsKeys = traitsSet.keys();
+    const keyArray = traitsSet.keys();
+    const traitsKeys = [...keyArray];
+    traitsKeys.sort((a, b) => a.localeCompare(b));
 
     for (const trait of traitsKeys) {
         const newLabel = document.createElement("label");
@@ -125,7 +129,9 @@ function printGenderFilters() {
     dragons.forEach((x) => {
         genderSet.add(x.gender);
     }, 0);
-    const genderKeys = genderSet.keys();
+    const keyArray = genderSet.keys();
+    const genderKeys = [...keyArray];
+    genderKeys.sort((a, b) => a.localeCompare(b));
 
     for (const gender of genderKeys) {
         const newLabel = document.createElement("label");
@@ -762,15 +768,15 @@ function addDragonData(e) {
     dragons.push(entryData);
 
     // If sortOn with no filters, then also push new entry data to currently sorted list (in order to reflect the change even if user is using sorted view)
-    if (sortOn && !filterOn && !strictFilterOn) sortedList.push(entryData);
+    if (sortOn && !filterOn) sortedList.push(entryData);
 
     // If sortOn with filters, then only push to sortedList if new entry matches the filter
-    if (sortOn && filterOn || sortOn && strictFilterOn) {
+    if (sortOn && filterOn) {
         if (checkFilterMatch(entryData) === true) sortedList.push(entryData);
     }
 
     // If only filtersOn, then check whether to push new data to current filteredList
-    if (!sortOn && filterOn || !sortOn && strictFilterOn) {
+    if (!sortOn && filterOn) {
         if (checkFilterMatch(entryData) === true) {
             filteredList.push(entryData);
         }
