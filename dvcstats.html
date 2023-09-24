@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>DVC툴</title>
+    <script src="recorder_data.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
@@ -13,14 +14,156 @@
             font-family: 'Noto Sans KR', sans-serif;
         }
 
-        .top {
-            background-color: white;
-            height: 200px;
-            position: fixed;
+        body {
+            margin: 0px;
+
+            ::-webkit-scrollbar {
+                width: 8px;
+            }
+
+            ::-webkit-scrollbar-track {
+                background: #ffffff;
+            }
+
+            ::-webkit-scrollbar-thumb {
+                background: pink;
+                border-radius: 30px;
+            }
+        }
+
+        h2 {
+            padding-left: 30px;
+        }
+
+        .main {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 100px;
+        }
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            min-width: 1050px;
+        }
+
+        .overview {
+            position: relative;
+            box-sizing: border-box;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: flex-end;
+            box-shadow: 3px 3px 3px rgb(231, 223, 223);
+            border: 1px solid rgb(231, 223, 223);
+            border-radius: 20px;
+            margin: 8px 0px 20px;
+            padding: 15px 20px;
+            min-width: 50vw;
+        }
+
+        .menu-btn {
+            position: absolute;
             top: 0px;
-            left: 0px;
+            right: 2px;
+        }
+
+        .btn-img {
+            cursor: pointer;
+        }
+
+        .overview div {
+            margin: 20px 20px;
+        }
+
+        .total-owned {
+            text-align: center;
+        }
+
+        .overview-total {
+            font-size: 6rem;
+            font-weight: bold;
+            line-height: 110%;
+        }
+
+        .summary-total {
+            font-size: 4rem;
+            font-weight: bold;
+            line-height: 110%;
+        }
+
+        .overview-key {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .analytics {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 5px;
+        }
+
+        .analytics>div {
+            min-width: 250px;
+            margin: 15px 0px;
+        }
+
+        h3 {
+            display: inline-block;
+            padding-left: 15px;
+        }
+
+        hr {
+            border: 1px solid pink;
             width: 100%;
-            z-index: 1;
+            margin: 0px;
+            align-self: center;
+        }
+
+        .header {
+            overflow: hidden;
+        }
+
+        .content img {
+            position: relative;
+            top: 2px;
+        }
+
+        .searchbar {
+            position: relative;
+            padding: 15px 10px;
+            text-align: right;
+        }
+
+        .ranking {
+            width: 180px;
+            text-align: left;
+        }
+
+        .gender,
+        .species,
+        .trait {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .a-gender,
+        .a-species,
+        .a-trait {
+            align-self: center;
+            display: grid;
+            grid-template-columns: 200px 200px 200px 200px;
+            gap: 40px 70px;
+            justify-content: left;
+            margin-bottom: 40px;
+        }
+
+        .ranking ol {
+            margin: 10px 0px;
         }
 
         .stat-text {
@@ -38,9 +181,148 @@
             position: relative;
             z-index: 0;
             overflow: hidden;
-            margin: 5px 0px 1px;
+            margin: 10px 0px 3px;
         }
 
+        .stat {
+            position: absolute;
+            z-index: 1;
+            border-radius: 10px;
+            height: 10px;
+            /* bottom: 0px; */
+        }
+
+        select {
+            position: relative;
+            bottom: 1px;
+        }
+
+        .trait-tag {
+            display: flex;
+            flex-direction: column;
+            border-radius: 8px;
+            border: 1px solid black;
+            width: 120px;
+            text-align: center;
+            margin: 5px;
+            padding: 5px;
+            align-items: center;
+        }
+
+        .tag-name {
+            font-weight: bold;
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        .tag-num {
+            box-sizing: border-box;
+            width: 70px;
+            border-radius: 30px;
+            background-color: white;
+            text-align: center;
+            padding: 2px;
+        }
+
+        .hide {
+            display: none;
+        }
+
+        .row-header {
+            display: grid;
+            grid-template-columns: 215px 60px 100px 60px;
+            font-weight: bold;
+            text-align: center;
+            padding: 5px 2px;
+            margin: 3px 5px;
+        }
+
+        .statistics {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: rgb(219, 61, 108);
+            padding: 25px 0px 20px;
+        }
+
+        .summary {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .summary>div {
+            margin: 0px 20px;
+        }
+
+        #list {
+            display: flex;
+            flex-direction: column;
+            height: 300px;
+            overflow: hidden auto;
+        }
+
+        #species {
+            border-radius: 23px;
+            background-color: pink;
+            padding: 25px 20px;
+            min-width: 200px;
+            text-align: center;
+        }
+
+        #comments {
+            width: 350px;
+            text-align: left;
+        }
+
+        #traits {
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+            justify-content: center;
+            max-width: 1000px;
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 215px 60px 100px 60px;
+            font-size: 0.9rem;
+            text-align: center;
+            padding: 5px 2px;
+            margin: 3px 5px;
+        }
+
+        .row:nth-child(even) {
+            background-color: aliceblue;
+        }
+
+        .row:nth-child(odd) {
+            background-color: beige;
+        }
+
+        @media (max-width: 1199px) {
+            .content {
+                min-width: 750px;
+            }
+
+            .a-gender,
+            .a-species,
+            .a-trait {
+                align-self: center;
+                display: grid;
+                grid-template-columns: 200px 200px 200px;
+                gap: 40px 70px;
+                justify-content: left;
+                margin-bottom: 40px;
+            }
+        }
+
+        /* 
         .genderbg {
             border-radius: 10px;
             background-color: rgb(255, 156, 156);
@@ -58,17 +340,10 @@
             height: 10px;
         }
 
-        .stat {
-            position: absolute;
-            z-index: 1;
-            border-radius: 10px;
-            height: 10px;
-        }
-
-        .container {
+        .content {
             position: relative;
             top: 200px;
-            /* background-color: antiquewhite; */
+            background-color: antiquewhite;
             display: flex;
             flex-direction: row;
             width: 100%;
@@ -79,15 +354,11 @@
         }
 
         .analytics {
-            /* background-color: yellow; */
+            background-color: antiquewhite;
             flex-grow: 1;
             display: flex;
             flex-direction: row;
             justify-content: left;
-        }
-
-        body {
-            margin: 0px;
         }
 
         .analytics>div {
@@ -95,7 +366,7 @@
         }
 
         .overview-fixed {
-            /* background-color: lightsalmon; */
+            background-color: lightsalmon;
             position: fixed;
             left: 25%;
         }
@@ -108,123 +379,366 @@
         .total-owned {
             margin-bottom: 30px;
         }
+
+        ul {
+            list-style-type: none;
+        }
+
+         */
     </style>
 </head>
 
 <body>
     <div class="top">
-        <h2>데이터 기록툴</h2>
+        <h2>DVC툴</h2>
     </div>
 
-    <div class="container">
-        <div class="overview">
-            <div class="overview-fixed">
+    <div class="main">
+        <div class="content">
+            <div class="overview">
+
                 <div class="total-owned">
-                </div>
-                <div class="most-dragon">
-                    [ㅇ] <strong>제일 많이 보유한 개체종</strong><br>
-                    &nbsp;&nbsp;[ㅇㅇㅇ] (마리)
-                </div>
-                <div class="most-trait">
-                    [ㅇ] <strong>제일 많이 보유한 성격</strong><br>
-                    &nbsp;&nbsp;[ㅇㅇㅇ] (마리)
-                </div>
-                <div class="a-gender">
+                    <span class="overview-key">보유한 용 총 개체수</span><br>
+                    <span class="overview-total"></span>
                 </div>
 
+                <div class="ranking">
+                    <img src="./images/trophy.png">&nbsp;&nbsp;<strong>내가 모은 용용 TOP 3</strong><br>
+                    <ol class="most-species">
+                    </ol>
+                </div>
+                <div class="ranking">
+                    <img src="./images/trophy.png">&nbsp;&nbsp;<strong>내가 모은 성격 TOP 3</strong><br>
+                    <ol class="most-trait">
+                    </ol>
+                </div>
+
+                <div class="menu-btn">
+                    <a href="dvcrecorder_refactor2.html" target="_blank"><img src="./images/book.png" class="btn-img"
+                            alt="Go to recorder tool"></a>
+                </div>
             </div>
-        </div>
 
-        <div class="analytics">
-            <div class="a-species">
-                <div>개체종 비율</div>
+            <div class="searchbar">
+                드래곤별 상세 통계 보기:
+                <select>
+                    <option>전체</option>
+                </select>
             </div>
 
-            <div class="a-trait">
-                <div>성격 비율</div>
+            <div class="details">
+                <div class="header">
+                    <h3>상세 통계:</h3>
+                    <h3>전체</h3>
+                    <hr>
+                </div>
+
+                <div class="analytics">
+                    <div class="gender">
+                        <div>
+                            <h3>성별 비율</h3>
+                        </div>
+                        <div class="a-gender">
+                        </div>
+                    </div>
+
+                    <div class="species">
+                        <div>
+                            <h3>개체종 비율</h3>
+                        </div>
+                        <div class="a-species">
+                        </div>
+                    </div>
+
+                    <div class="trait">
+                        <div>
+                            <h3>성격 비율</h3>
+                        </div>
+                        <div class="a-trait">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="selected">
+                </div>
             </div>
         </div>
     </div>
-
-    <div style="height:1000px"></div>
 
     <script>
-        let dragons = [];
         const getDragonData = localStorage.getItem("mydragons");
-        dragons = JSON.parse(getDragonData);
+        const dragons = JSON.parse(getDragonData);
 
-        const totalOwnedArea = document.querySelector(".total-owned");
+        const totalOwnedArea = document.querySelector(".overview-total");
         const TOTALOWNED = dragons.length;
-        totalOwnedArea.innerHTML = `<div>보유한 용 총 개체수<br><span class="overview-total">${TOTALOWNED}</span></div>`;
+        totalOwnedArea.textContent = TOTALOWNED;
 
+        const counts = new Map([
+            ["species", returnCount(dragons, "species")],
+            ["trait", returnCount(dragons, "trait")],
+            ["gender", returnCount(dragons, "gender")]
+        ]);
 
-        let speciesCount = dragons.reduce((total, cur) => {
-            const { species } = cur;
+        function returnCount(list, category) {
+            const categoryCount = list.reduce((total, cur) => {
+                const type = cur[category];
+                if (total[type]) total[type]++;
+                else total[type] = 1;
+                return total;
+            }, {});
+            return categoryCount;
+        }
 
-            if (total[species]) {
-                total[species] += 1;
-            }
-            else {
-                total[species] = 1;
-            }
-            return total;
-        }, {});
+        // Print selector options
+        const speciesNames = Object.keys(counts.get("species"));
+        speciesNames.sort((a, b) => a.localeCompare(b));
+        for (const dragon of speciesNames) {
+            const selector = document.querySelector("select");
+            const searchOption = document.createElement("option");
+            searchOption.textContent = dragon;
+            selector.append(searchOption);
+        }
 
         let colors = ["#91C8E4", "#749BC2", "#4682A9", "#A0BFE0", "#99DBF5", "#5A96E3", "#62CDFF", "#5BC0F8"];
 
-        for (const data in speciesCount) {
-            const speciesStat = document.querySelector(".a-species");
-            const container = document.createElement("div");
-            const percentage = Math.round(speciesCount[data] / TOTALOWNED * 100);
-            const graphWidth = (200 * percentage) / 100; // 200 is the width of the full graph
-            const rand = Math.floor(Math.random() * 8);
-            container.innerHTML = `<strong>${data}</strong><div class="graphbg"><div class="stat" style="background-color: ${colors[rand]}; width: ${graphWidth}px;">&nbsp;</div></div><div class="stat-text">[ ${speciesCount[data]} / ${TOTALOWNED} ]</div>`;
-            speciesStat.append(container);
+        counts.forEach((value, key, map) => {
+            printGraph(key, value);
+        });
+
+        function printGraph(category, obj) {
+            const elem = document.querySelector(`.a-${category}`);
+
+            for (const count in obj) {
+                const container = document.createElement("div");
+                const percentage = Math.round(obj[count] / TOTALOWNED * 100);
+                // 200 in graphWidth is the CSS width of .graphbg attribute
+                const graphWidth = (200 * percentage) / 100;
+                const rand = Math.floor(Math.random() * 8);
+                container.innerHTML = `<strong>${count}</strong><div class="graphbg">
+                    <div class="stat" style="background-color: ${colors[rand]}; width: ${graphWidth}px;">&nbsp;</div></div>
+                    <div class="stat-text">[ ${obj[count]} / ${TOTALOWNED} ]</div>`;
+                elem.append(container);
+            }
         }
 
-        const genderStat = document.querySelector(".a-gender");
-        let genderCount = dragons.reduce((total, cur) => {
-            const { gender } = cur;
+        function getRanks(category) {
+            const numList = Object.values(counts.get(category));
+            numList.sort((a, b) => b - a);
+            const topThree = numList.slice(0, 3);
+            let topNames = [];
+            const dragonList = counts.get(category);
+            for (const num of topThree) {
+                for (const dragon in dragonList) {
+                    if (dragonList[dragon] == num) {
+                        topNames.push(dragon);
+                        break;
+                    }
+                }
+            }
+            return topNames;
+        }
 
-            if (total[gender]) {
-                total[gender] += 1;
+        printRanks("species");
+        printRanks("trait");
+
+        const searchName = document.querySelector("select");
+        searchName.addEventListener("change", (e) => {
+            const curSearch = e.target.value;
+            changePage(curSearch);
+        });
+
+        function printRanks(category) {
+            const parentDiv = document.querySelector(`.most-${category}`);
+            const list = getRanks(category);
+            for (const name of list) {
+                const newElem = document.createElement("li");
+                newElem.textContent = name;
+                parentDiv.append(newElem);
+            }
+        }
+
+        function changePage(option) {
+            const analytics = document.querySelector(".analytics");
+            const dragon = document.querySelector(".selected");
+            const header = document.querySelector(".header").children[1];
+            header.textContent = option;
+
+            if (option === "전체") {
+                analytics.classList.remove("hide");
+                dragon.classList.add("hide");
             }
             else {
-                total[gender] = 1;
+                erasePage();
+                printDragonPage(option);
+                analytics.classList.add("hide");
+                dragon.classList.remove("hide");
             }
-            return total;
-        }, {});
+        }
 
-        const genderContainer = document.createElement("div");
-        genderContainer.classList.add("genderbg");
-        const newGenderGraph = document.createElement("div");
-        newGenderGraph.innerHTML = "성별 비율<br>";
-        const genderPercentage = Math.round(genderCount["수컷"] / TOTALOWNED * 100);
-        const genderGraphWidth = (200 * genderPercentage) / 100;
-        genderContainer.innerHTML = `<div class="gender" style="background-color: green; width: ${genderGraphWidth}px;">&nbsp;</div><br>`;
-        genderStat.append(newGenderGraph);
-        genderStat.append(genderContainer);
+        function printDragonPage(species) {
+            const summary = getSpeciesSummary(species);
+            const numTotal = summary[0].length;
+            const titleArea = document.getElementById("title");
+            const speciesArea = document.getElementById("species");
+            const listArea = document.getElementById("list");
+            const traitsArea = document.getElementById("traits");
+            titleArea.innerText = `🐉 우리 빌리지의 ${species}`;
+            speciesArea.innerHTML = `보유 개체수<br><span class="summary-total">${numTotal}</span>`;
 
-        const traitStat = document.querySelector(".a-trait");
-        let traitCount = dragons.reduce((total, cur) => {
-            const { trait } = cur;
+            printComments(species, summary);
 
-            if (total[trait]) {
-                total[trait] += 1;
+            for (const dragon of summary[0]) {
+                printRecordEntry(listArea, dragon);
             }
-            else {
-                total[trait] = 1;
-            }
-            return total;
-        }, {});
 
-        for (const data in traitCount) {
-            const traitStat = document.querySelector(".a-trait");
-            const container = document.createElement("div");
-            const percentage = Math.round(traitCount[data] / TOTALOWNED * 100);
-            const graphWidth = (200 * percentage) / 100;
-            container.innerHTML = `<strong>${data}</strong><div class="graphbg"><div class="stat" style="background-color: blue; width: ${graphWidth}px;">&nbsp;</div></div><div class="stat-text">[ ${traitCount[data]} / ${TOTALOWNED} ]</div>`;
-            traitStat.append(container);
+            printTraits(traitsArea, summary[1]);
+        }
+
+        function printTraits(printArea, list) {
+            for (const trait of dragonTraits) {
+                const tag = document.createElement("div");
+                tag.classList.add("trait-tag");
+                if (list[trait.traitKo]) {
+                    tag.style.backgroundColor = traitColors[trait.traitKo];
+                    tag.innerHTML = `<div class="tag-name">${trait.traitKo}</div><div class="tag-num">${list[trait.traitKo]}</div>`;
+                    if (trait.traitKo === "고귀한" || trait.traitKo === "순수한" || trait.traitKo === "완벽주의자" || trait.traitKo === "품위있는") tag.style.background = "linear-gradient(135deg, #82A0D8, #FFA1F5)";
+                }
+                else {
+                    tag.style.opacity = 0.4;
+                    tag.style.backgroundColor = "rgb(184, 184, 184)";
+                    tag.innerHTML = `<div class="tag-name">${trait.traitKo}</div><div class="tag-num">0</div>`;
+                }
+                printArea.append(tag);
+            }
+        }
+
+        function printRecordEntry(printArea, dragon) {
+            const name = dragon["dragon-name"];
+            const gender = dragon["gender"];
+            const trait = dragon["trait"];
+            const gen = dragon["generation"];
+            const row = document.createElement("div");
+            row.classList.add("row");
+            row.innerHTML = `<div>${name}</div><div>${gender}</div><div>${trait}</div><div>${gen}</div>`;
+            printArea.append(row);
+        }
+
+        function printComments(species, summary) {
+            const commentArea = document.getElementById("comments");
+            const numTotal = summary[0].length;
+            const mostSpecies = getRanks("species")[0];
+
+            if (numTotal < 5) {
+                const elemFew = document.createElement("div");
+                elemFew.innerHTML = `몇 마리 없지만 오손도손 잘 지내요.`;
+                commentArea.append(elemFew);
+            }
+
+            if (species === mostSpecies) {
+                const elemSpecies = document.createElement("div");
+                elemSpecies.innerHTML = "내가 가장 많이 보유하고 있는 종이에요!";
+                commentArea.append(elemSpecies);
+            }
+
+            const traitCountHighest = Math.max(...Object.values(summary[1]));
+            if (traitCountHighest >= 3) {
+                const elemTrait = document.createElement("div");
+                const mostTrait = getPropOfMax(summary[1], traitCountHighest);
+                elemTrait.innerHTML = `주로 ${mostTrait} 성격을 가진 친구들을 키웠어요.`;
+                commentArea.append(elemTrait);
+            }
+
+            const numMales = summary[2]["수컷"];
+            const numFemales = summary[2]["암컷"];
+            if (numMales > 0 && numFemales > 0) {
+                if ((numMales / numTotal) >= 0.80) {
+                    const elemGender = document.createElement("div");
+                    elemGender.innerHTML = `${numTotal}마리 중 ${numMales}마리가 남아네요...`;
+                    commentArea.append(elemGender);
+                }
+
+                if ((numFemales / numTotal) >= 0.80) {
+                    const elemGender = document.createElement("div");
+                    elemGender.innerHTML = `${numTotal}마리 중 ${numFemales}마리가 여아네요...`;
+                    commentArea.append(elemGender);
+                }
+            }
+
+            const numPrimos = summary[3]["1"];
+            if (numPrimos >= 16) {
+                const elemPrimo = document.createElement("div");
+                elemPrimo.innerHTML = `1세대가 무려 ${numPrimos}마리나 있어요!`;
+                commentArea.append(elemPrimo);
+            }
+
+            const lastGen = parseInt(summary[4]);
+            if (lastGen >= 10) {
+                const elemGen = document.createElement("div");
+                elemGen.innerHTML = `${lastGen}세대까지 혈통이 이어지고 있어요.`;
+                commentArea.append(elemGen);
+            }
+        }
+
+        function erasePage() {
+            const printArea = document.querySelector(".selected");
+            printArea.innerHTML = `
+                <div id="title">
+                </div>
+                <div class="summary">
+                    <div id="species">
+                    </div>
+                    <div id="comments">
+                    </div>
+                </div>
+                <div class="section-header" style="margin-top: 50px">
+                    <h3>성격별 개체수</h3>
+                </div>
+                <div class="statistics">
+                    <div id="traits">
+                    </div>
+                    <div id="names">
+                        <div class="row-header">
+                            <div>이름</div>
+                            <div>성별</div>
+                            <div>성격</div>
+                            <div>세대</div>
+                        </div>
+                        <div id="list">
+                        </div>
+                    </div>
+                </div>`;
+        }
+
+        function getPropOfMax(object, value) {
+            for (const prop in object) {
+                if (object[prop] === value) return prop;
+            }
+        }
+
+        function getSpeciesSummary(species) {
+            const filtered = [];
+            dragons.forEach((dragon) => {
+                if (dragon["species"] === species) {
+                    filtered.push(dragon);
+                }
+            });
+
+            const traitsSummary = returnCount(filtered, "trait");
+            const genderSummary = returnCount(filtered, "gender");
+            const genOneSummary = returnCount(filtered, "generation");
+            const lastGen = Object.keys(genOneSummary).slice(-1);
+
+            return [filtered, traitsSummary, genderSummary, genOneSummary, ...lastGen];
+        }
+
+        function sortProps(obj) {
+            const oldData = Object.keys(obj);
+            oldData.sort((a, b) => a.localeCompare(b));
+            const newData = {};
+
+            for (const value of oldData) newData[value] = obj[value];
+
+            return newData;
         }
     </script>
 </body>
