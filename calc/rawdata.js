@@ -186,19 +186,19 @@ const normalTraits = [
     { traitName: "naive", nameKo: "천진난만한", highest: "agility", lowest: "strength" },
     { traitName: "rash", nameKo: "덜렁대는", highest: "agility", lowest: "focus" },
     { traitName: "hasty", nameKo: "성급한", highest: "agility", lowest: "intellect" },
-    { traitName: "quickWitted", nameKo: "눈치빠른", highest: "agility", lowest: null },
+    { traitName: "quickWitted", nameKo: "눈치빠른", highest: "agility", lowest: "none" },
     { traitName: "brave", nameKo: "용감한", highest: "strength", lowest: "agility" },
     { traitName: "quirky", nameKo: "변덕쟁이", highest: "strength", lowest: "focus" },
     { traitName: "adamant", nameKo: "고집있는", highest: "strength", lowest: "intellect" },
-    { traitName: "bold", nameKo: "대담한", highest: "strength", lowest: null },
+    { traitName: "bold", nameKo: "대담한", highest: "strength", lowest: "none" },
     { traitName: "quiet", nameKo: "냉정한", highest: "focus", lowest: "agility" },
     { traitName: "calm", nameKo: "차분한", highest: "focus", lowest: "strength" },
     { traitName: "careful", nameKo: "신중한", highest: "focus", lowest: "intellect" },
-    { traitName: "hardy", nameKo: "노력하는", highest: "focus", lowest: null },
+    { traitName: "hardy", nameKo: "노력하는", highest: "focus", lowest: "none" },
     { traitName: "docile", nameKo: "온순한", highest: "intellect", lowest: "agility" },
     { traitName: "bashful", nameKo: "수줍은", highest: "intellect", lowest: "strength" },
     { traitName: "lax", nameKo: "촐랑대는", highest: "intellect", lowest: "focus" },
-    { traitName: "smart", nameKo: "똑똑한", highest: "intellect", lowest: null }
+    { traitName: "smart", nameKo: "똑똑한", highest: "intellect", lowest: "none" }
 ];
 
 const statList = ["agility", "strength", "focus", "intellect"];
