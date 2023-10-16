@@ -3,6 +3,29 @@ const STATCOUNT = 4;
 const trainValues = [3, 5, 9];
 let dragonName, dragonIndex;
 let reqAgility, reqStrength, reqFocus, reqIntellect;
+const adjustments = new Map([
+    [8, 9],
+    [13, 14],
+    [16, 18],
+    [20, 21],
+    [26, 27],
+    [28, 27],
+    [31, 32],
+    [33, 32],
+    [125, 126],
+    [130, 131],
+]);
+
+// Attach event listeners to base stat input fields (to disable/enable dull trait)
+for (const stat of statList) {
+    const field = document.getElementById(`start-${stat}`);
+    field.addEventListener("change", detectBase);
+}
+
+function detectBase() {
+    if (event.target.value <= 25) return enableDull();
+    else disableDull();
+}
 
 function selectDragon() {
     // Initialize variables
@@ -103,64 +126,208 @@ function selectSpecialTrait() {
     }
 }
 
+class Stats {
+    constructor(agility, strength, focus, intellect) {
+        this.agility = agility || 0;
+        this.strength = strength || 0;
+        this.focus = focus || 0;
+        this.intellect = intellect || 0;
+    }
+
+    getMaxTrait() {
+        const maxVal = this.getMaxVal();
+        const maxTraits = [];
+        if (this.agility === maxVal) maxTraits.push("agility");
+        if (this.strength === maxVal) maxTraits.push("strength");
+        if (this.focus === maxVal) maxTraits.push("focus");
+        if (this.intellect === maxVal) maxTraits.push("intellect");
+        return maxTraits;
+    }
+
+    getMinTrait() {
+        const minVal = this.getMinVal();
+        const minTraits = [];
+        if (this.agility === minVal) minTraits.push("agility");
+        if (this.strength === minVal) minTraits.push("strength");
+        if (this.focus === minVal) minTraits.push("focus");
+        if (this.intellect === minVal) minTraits.push("intellect");
+        return minTraits;
+    }
+
+    getMaxVal() {
+        return Math.max(this.agility, this.strength, this.focus, this.intellect);
+    }
+
+    getMinVal() {
+        return Math.min(this.agility, this.strength, this.focus, this.intellect);
+    }
+
+    sortInc() {
+        const cur = [this.agility, this.strength, this.focus, this.intellect];
+        return cur.sort((a, b) => a - b);
+    }
+}
+
+function getStatFields(prefix) {
+    const values = new Stats();
+    for (const stat of statList) {
+        values[stat] = Number(document.querySelector(`${prefix}${stat}`).value);
+    }
+    return values;
+}
+
+function printStatFields(stats, prefix) {
+    for (const stat in stats) {
+        document.querySelector(`${prefix}${stat}`).value = stats[stat];
+    }
+}
+
+function getKeyByValue(obj, value) {
+    return Object.keys(obj).find((key) => obj[key] === value);
+}
+
 // Print recommended end stats for selected normal trait
 function selectNormalTrait() {
-    let baseStats = [];
-    let startStats = ["#start-agility", "#start-strength", "#start-focus", "#start-intellect"];
-    let endStats = ["#end-agility", "#end-strength", "#end-focus", "#end-intellect"];
-
     // Store dragon's base stats
-    for (let i = 0; i < STATCOUNT; i++) {
-        baseStats[i] = Number(document.querySelector(startStats[i]).value);
-    }
+    const base = getStatFields("#start-");
 
-    let traitSelected = event.target.value;
-    traitIndex = normalTraits.findIndex((traits) => { return traits.traitName === traitSelected; });
+    const traitSelected = event.target.value;
+    const traitIndex = normalTraits.findIndex((traits) => { return traits.traitName === traitSelected; });
+    const highestReq = normalTraits[traitIndex].highest;
+    const lowestReq = normalTraits[traitIndex].lowest;
+    let req;
 
-    let highestReq = normalTraits[traitIndex].highest;
-    let lowestReq = normalTraits[traitIndex].lowest;
-    let reqArray = baseStats.slice();
+    if (lowestReq === "none") doubleTraining(base, highestReq);
+    else singleTraining(base, highestReq, lowestReq);
 
-    // Handle null trait values
-    if (lowestReq == null) {
-        let maxValue = Math.max(...baseStats);
-        let highestBase = statList[baseStats.indexOf(maxValue)];
+    // Make coloring the borders optional for now
+    // colorStatFields(traitIndex);
+}
 
-        if (highestBase === highestReq) {
-            let baseOrdered = baseStats.slice();
-            baseOrdered.sort((a, b) => { return b - a; });
-            baseStats.forEach((e, i) => { if (e < baseOrdered[1]) reqArray[i] = baseOrdered[1]; });
-        }
-        else {
-            for (let i = 0; i < STATCOUNT; i++) {
-                reqArray[i] = maxValue;
-            }
-        }
-    }
-    else {
-        // Determine lowest required stat (iterates through indices except `lowestReq`)
-        let iLowestReq = statList.indexOf(lowestReq);
-        for (let i = 0; i < STATCOUNT; i++) {
-            if (baseStats[i] <= baseStats[iLowestReq] && i != iLowestReq) {
-                reqArray[i] = baseStats[iLowestReq] + BASEINCREMENT;
-            }
-        }
-    }
+function doubleTraining(base, highest) {
+    let req = calcSingleHighest(base, highest);
+    const sortedArr = req.sortInc();
+
+    if (sortedArr[0] !== sortedArr[1]) req = calcDoubleLowest(req, sortedArr);
+
+    const diff = calcSub(base, req)
+    const optimized = optimizeHighest(base, diff, highest);
+    const final = calcSum(base, optimized);
+
+    printStatFields(final, "#end-");
+}
+
+function singleTraining(base, highest, lowest) {
+    let req = calcSingleLowest(base, lowest);
 
     // Determine highest required stat
-    let iHighestReq = statList.indexOf(highestReq);
-    let currentMax = Math.max(...reqArray);
-    if (reqArray.indexOf(currentMax) != reqArray.lastIndexOf(currentMax)) {
-        reqArray[iHighestReq] = currentMax + BASEINCREMENT;
-    }
-    else if (reqArray[iHighestReq] != currentMax) {
-        reqArray[iHighestReq] = currentMax + BASEINCREMENT;
-    }
+    req = calcSingleHighest(req, highest);
+
+    const diff = calcSub(base, req)
+    const optimized = optimizeAll(base, diff, highest, lowest);
+    const final = calcSum(base, optimized);
 
     // Print goal stats on page
-    for (let i = 0; i < STATCOUNT; i++) {
-        document.querySelector(endStats[i]).value = reqArray[i];
+    printStatFields(final, "#end-");
+}
+
+function optimizeAll(base, change, highest, lowest) {
+    const newStats = copyStats(change);
+    for (const stat in newStats) {
+        const curValue = newStats[stat];
+        if (adjustments.has(curValue)) {
+            // try inserting new value
+            newStats[stat] = adjustments.get(curValue);
+            // replace value and see if highest of stats and lowest of stats changed (compare newStats highest and lowest using getMax and getMin)
+        }
     }
+    const application = calcSum(base, newStats);
+    const newMax = application.getMaxTrait();
+    const newMin = application.getMinTrait();
+    if (newMax.length === 1 && newMin.length === 1 && newMax.includes(highest) && newMin.includes(lowest)) return newStats;
+    else return change;
+}
+
+function optimizeHighest(base, change, highest) {
+    const newStats = copyStats(change);
+    for (const stat in newStats) {
+        const curValue = newStats[stat];
+        if (adjustments.has(curValue)) {
+            newStats[stat] = adjustments.get(curValue);
+        }
+    }
+    const application = calcSum(base, newStats);
+    const newMax = application.getMaxTrait();
+    if (newMax.length === 1 && newMax.includes(highest)) return newStats;
+    else return change;
+}
+
+function colorStatFields(index) {
+    const high = normalTraits[index].highest;
+    const low = normalTraits[index].lowest;
+    document.querySelector(`#end-${high}`).style.border = "solid 2px red";
+    document.querySelector(`#end-${low}`).style.border = "solid 2px blue";
+}
+
+function copyStats(object) {
+    const agility = Number(object.agility);
+    const strength = Number(object.strength);
+    const focus = Number(object.focus);
+    const intellect = Number(object.intellect);
+    const newObject = new Stats(agility, strength, focus, intellect);
+    return newObject;
+}
+
+function calcSub(a, b) {
+    const sub = new Stats();
+    for (const stat of statList) {
+        sub[stat] = Math.abs(a[stat] - b[stat]);
+    }
+    return sub;
+}
+
+function calcSum(a, b) {
+    const sum = new Stats();
+    for (const stat of statList) {
+        sum[stat] = a[stat] + b[stat];
+    }
+    return sum;
+}
+
+// Will always return one lowest trait
+function calcSingleLowest(curStats, lowestReq) {
+    const newStats = copyStats(curStats);
+    const baseMinTrait = curStats.getMinTrait();
+    const reqVal = curStats[lowestReq];
+
+    if (baseMinTrait.length === 1 && baseMinTrait[0] === lowestReq) return newStats;
+    for (const stat in curStats) {
+        if (stat === lowestReq) continue;
+        if (curStats[stat] <= reqVal) newStats[stat] = reqVal + BASEINCREMENT;
+    }
+    return newStats;
+}
+
+function calcDoubleLowest(curStats, array) {
+    const newStats = copyStats(curStats);
+    const lowestValue = array[0];
+    const adjustmentValue = array[1];
+    const adjustmentKey = getKeyByValue(newStats, lowestValue);
+
+    newStats[adjustmentKey] = adjustmentValue;
+    return newStats;
+}
+
+// Always returns one highest trait
+function calcSingleHighest(curStats, highestReq) {
+    const newStats = copyStats(curStats);
+    const baseMaxTrait = curStats.getMaxTrait();
+    const baseMaxValue = curStats.getMaxVal();
+    const includesReq = baseMaxTrait.includes(highestReq);
+
+    if (baseMaxTrait.length === 1 && includesReq) return newStats;
+    if (baseMaxTrait.length > 1 && includesReq || baseMaxTrait[0] !== highestReq) newStats[highestReq] = baseMaxValue + BASEINCREMENT;
+    return newStats;
 }
 
 function calculator() {
@@ -225,21 +392,26 @@ function calculateTrainCount(targetSum, trainValues, memo = {}) {
     return shortestCombination;
 };
 
+function disableDull() {
+    document.getElementById("special-trait-selector").selectedIndex = 0;
+    const dull = document.getElementById("dull");
+    dull.setAttribute("disabled", "");
+    dull.textContent = "평범한 (조건초과)";
+}
+
+function enableDull() {
+    const dull = document.getElementById("dull");
+    dull.removeAttribute("disabled");
+    dull.textContent = "평범한";
+}
+
 function unavailabilityCheck(dragonIndex, traitSelected) {
     let endTrait = document.getElementById("dull");
 
-    if (dragonList[dragonIndex][traitSelected].findIndex((item) => item > 25) === -1) {
-        endTrait.removeAttribute("disabled");
-        endTrait.textContent = "평범한";
-        return;
-    }
+    if (dragonList[dragonIndex][traitSelected].findIndex((item) => item > 25) === -1) return enableDull();
 
     for (let i = 0; i < STATCOUNT; i++) {
-        if (dragonList[dragonIndex][traitSelected][i] > 25) {
-            document.querySelector("#special-trait-selector").selectedIndex = 0;
-            endTrait.setAttribute("disabled", "");
-            endTrait.textContent = "평범한 (조건초과)";
-        }
+        if (dragonList[dragonIndex][traitSelected][i] > 25) return disableDull();
     }
 }
 
