@@ -82,7 +82,7 @@ function selectSpecialTrait() {
     }
 
     switch (traitSelected) {
-        case "Immersed In":
+        case "Immersed":
             for (let i = 0; i < STATCOUNT; i++) {
                 document.querySelector(endStats[i]).value = specialTraits[traitIndex].stats[i];
             }
