@@ -246,7 +246,7 @@ const specialTraits = [
     { traitName: "Noble", nameKo: "고귀한", stats: [20, 20, 20, 20] },
     { traitName: "Perfectionist", nameKo: "완벽주의자", stats: [20, 20, 20, 20] },
     { traitName: "Arrogant", nameKo: "오만한", stats: [25, 25, 25, 25] },
-    { traitName: "Immersed In", nameKo: "몰입하는", stats: [0, 0, 0, 0] },
+    { traitName: "Immersed", nameKo: "몰입하는", stats: [0, 0, 0, 0] },
     { traitName: "Dull", nameKo: "평범한", stats: [20, 20, 20, 20] },
     { traitName: "Capable", nameKo: "유능한", stats: [28, 28, 28, 28] }
 ];

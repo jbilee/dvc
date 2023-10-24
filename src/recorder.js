@@ -564,7 +564,7 @@ function disableEntries(currentRow) {
     for (const entry of children) {
         if (entry.classList.contains("editing")) {
             entry.lastElementChild.firstElementChild.removeEventListener("click", deleteData);
-            entry.lastElementChild.classList.add("untouchable");
+            entry.lastElementChild.innerHTML = "";
         }
         else {
             entry.classList.add("untouchable");
@@ -580,8 +580,8 @@ function enableEntries(currentRow) {
 
     for (const entry of children) {
         if (entry.classList.contains("editing")) {
+            entry.lastElementChild.innerHTML = '<img src="./images/delete.png" width="18" alt="Delete button" class="btn-img"></img>';
             entry.lastElementChild.firstElementChild.addEventListener("click", deleteData);
-            entry.lastElementChild.classList.remove("untouchable");
         }
         else {
             entry.classList.remove("untouchable");
@@ -664,6 +664,7 @@ function submitChange(btn, oldData) { // got rid of '${oldEntry["species"]}' '${
 
     // Get data from input fields
     for (const field of rowFields) {
+        if (field.classList.length === 0) continue;
         if (field.classList[0] === "e-id") newData[field.classList[1]] = Number(field.textContent);
         else newData[field.classList[1]] = field.firstElementChild.value;
     }

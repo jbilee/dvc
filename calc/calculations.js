@@ -82,7 +82,7 @@ function selectSpecialTrait() {
     }
 
     switch (traitSelected) {
-        case "immersedIn":
+        case "Immersed":
             for (let i = 0; i < STATCOUNT; i++) {
                 document.querySelector(endStats[i]).value = specialTraits[traitIndex].stats[i];
             }
@@ -91,7 +91,7 @@ function selectSpecialTrait() {
             document.querySelector(highestEnd).value = 150;
             break;
 
-        case "dull":
+        case "Dull":
             maxValue = Math.max(...baseStats);
             if (maxValue <= 20) {
                 for (let i = 0; i < STATCOUNT; i++) {
@@ -105,7 +105,7 @@ function selectSpecialTrait() {
             }
             break;
 
-        case "capable":
+        case "Capable":
             maxValue = Math.max(...baseStats);
             if (maxValue < 30) {
                 for (let i = 0; i < STATCOUNT; i++) {
@@ -394,19 +394,19 @@ function calculateTrainCount(targetSum, trainValues, memo = {}) {
 
 function disableDull() {
     document.getElementById("special-trait-selector").selectedIndex = 0;
-    const dull = document.getElementById("dull");
+    const dull = document.getElementById("Dull");
     dull.setAttribute("disabled", "");
     dull.textContent = "평범한 (조건초과)";
 }
 
 function enableDull() {
-    const dull = document.getElementById("dull");
+    const dull = document.getElementById("Dull");
     dull.removeAttribute("disabled");
     dull.textContent = "평범한";
 }
 
 function unavailabilityCheck(dragonIndex, traitSelected) {
-    let endTrait = document.getElementById("dull");
+    let endTrait = document.getElementById("Dull");
 
     if (dragonList[dragonIndex][traitSelected].findIndex((item) => item > 25) === -1) return enableDull();
 
