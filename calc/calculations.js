@@ -77,11 +77,22 @@ function selectSpecialTrait() {
     let maxValue;
 
     // Store dragon's base stats
+    const base = getStatFields("#start-");
     for (let i = 0; i < STATCOUNT; i++) {
         baseStats[i] = Number(document.querySelector(startStats[i]).value);
     }
 
     switch (traitSelected) {
+        case "Meticulous":
+            {
+                const startSum = base.getTotal();
+                const reqSum = 100 - startSum;
+                const goal = new Stats(reqSum);
+                const final = calcSum(base, goal);
+                printStatFields(final, "#end-");
+                break;
+            }
+
         case "Immersed":
             for (let i = 0; i < STATCOUNT; i++) {
                 document.querySelector(endStats[i]).value = specialTraits[traitIndex].stats[i];
@@ -162,6 +173,10 @@ class Stats {
         return Math.min(this.agility, this.strength, this.focus, this.intellect);
     }
 
+    getTotal() {
+        return this.agility + this.strength + this.focus + this.intellect;
+    }
+
     sortInc() {
         const cur = [this.agility, this.strength, this.focus, this.intellect];
         return cur.sort((a, b) => a - b);
@@ -183,7 +198,7 @@ function printStatFields(stats, prefix) {
 }
 
 function getKeyByValue(obj, value) {
-    return Object.keys(obj).find((key) => obj[key] === value);
+    return Object.keys(obj).find((key) => obj[key] === value) || null;
 }
 
 // Print recommended end stats for selected normal trait
@@ -195,7 +210,7 @@ function selectNormalTrait() {
     const traitIndex = normalTraits.findIndex((traits) => { return traits.traitName === traitSelected; });
     const highestReq = normalTraits[traitIndex].highest;
     const lowestReq = normalTraits[traitIndex].lowest;
-    let req;
+    // let req;
 
     if (lowestReq === "none") doubleTraining(base, highestReq);
     else singleTraining(base, highestReq, lowestReq);
