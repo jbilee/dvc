@@ -93,6 +93,29 @@ function selectSpecialTrait() {
                 break;
             }
 
+        case "Distracted":
+            {
+                const curFocus = base.focus;
+                const goal = new Stats();
+                if (curFocus) {
+                    const low = [getKeyByValue(base, 0), 0];
+                    const rest = statList.filter((x) => {
+                        if (x !== low[0] && x !== "focus") return x;
+                    });
+                    const middletest = [rest[0], base[rest[0]]];
+                    const hightest = [rest[1], base[rest[1]]];
+                    console.log(low)
+                    console.log(middletest)
+                    console.log(hightest)
+                    console.log("------")
+                    console.log(compareTraining(middletest[1], hightest[1]));
+                }
+                // if (curFocus ===) {
+
+                // }
+                break;
+            }
+
         case "Immersed":
             for (let i = 0; i < STATCOUNT; i++) {
                 document.querySelector(endStats[i]).value = specialTraits[traitIndex].stats[i];
