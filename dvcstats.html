@@ -522,20 +522,22 @@
         }
 
         function getRanks(category) {
-            const numList = Object.values(counts.get(category));
-            numList.sort((a, b) => b - a);
-            const topThree = numList.slice(0, 3);
-            let topNames = [];
-            const dragonList = counts.get(category);
-            for (const num of topThree) {
-                for (const dragon in dragonList) {
-                    if (dragonList[dragon] == num) {
-                        topNames.push(dragon);
-                        break;
+            const valueList = Object.values(counts.get(category));
+            valueList.sort((a, b) => b - a);
+            const highestThree = valueList.slice(0, 3);
+            let topProps = [];
+            const propList = counts.get(category);
+
+            while (highestThree.length > 0) {
+                for (const prop in propList) {
+                    if (propList[prop] === highestThree[0]) {
+                        topProps.push(prop);
+                        highestThree.shift();
                     }
                 }
             }
-            return topNames;
+
+            return topProps;
         }
 
         printRanks("species");

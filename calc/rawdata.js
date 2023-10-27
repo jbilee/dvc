@@ -242,13 +242,15 @@ const dragonList = [
 ];
 
 const specialTraits = [
-    { traitName: "Classy", nameKo: "품위있는", stats: [20, 20, 20, 20] },
     { traitName: "Noble", nameKo: "고귀한", stats: [20, 20, 20, 20] },
-    { traitName: "Perfectionist", nameKo: "완벽주의자", stats: [20, 20, 20, 20] },
-    { traitName: "Arrogant", nameKo: "오만한", stats: [25, 25, 25, 25] },
     { traitName: "Immersed", nameKo: "몰입하는", stats: [0, 0, 0, 0] },
+    // { traitName: "Distracted", nameKo: "산만한", stats: [0, 0, 0, 0] },
+    { traitName: "Arrogant", nameKo: "오만한", stats: [25, 25, 25, 25] },
+    { traitName: "Perfectionist", nameKo: "완벽주의자", stats: [20, 20, 20, 20] },
+    { traitName: "Capable", nameKo: "유능한", stats: [28, 28, 28, 28] },
+    { traitName: "Meticulous", nameKo: "정확한", stats: [0, 0, 0, 0] },
     { traitName: "Dull", nameKo: "평범한", stats: [20, 20, 20, 20] },
-    { traitName: "Capable", nameKo: "유능한", stats: [28, 28, 28, 28] }
+    { traitName: "Classy", nameKo: "품위있는", stats: [20, 20, 20, 20] }
 ];
 
 const normalTraits = [
@@ -290,7 +292,7 @@ document.addEventListener("DOMContentLoaded", function () {
     for (let i = 0; i < specialTraits.length; i++) {
         let newOption = document.createElement("option");
         newOption.setAttribute("value", specialTraits[i].traitName);
-        if (newOption.value == "dull") newOption.setAttribute("id", specialTraits[i].traitName);
+        if (newOption.value == "Dull") newOption.setAttribute("id", specialTraits[i].traitName);
         newOption.textContent = specialTraits[i].nameKo;
         document.querySelector("#special-trait-selector").append(newOption);
     }
