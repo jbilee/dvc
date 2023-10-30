@@ -259,34 +259,34 @@ const dragonList = [
 ];
 
 const specialTraits = [
-    { traitName: "Noble", nameKo: "고귀한", stats: [20, 20, 20, 20] },
-    { traitName: "Immersed", nameKo: "몰입하는", stats: [0, 0, 0, 0] },
-    // { traitName: "Distracted", nameKo: "산만한", stats: [0, 0, 0, 0] },
-    { traitName: "Arrogant", nameKo: "오만한", stats: [25, 25, 25, 25] },
-    { traitName: "Perfectionist", nameKo: "완벽주의자", stats: [20, 20, 20, 20] },
-    { traitName: "Capable", nameKo: "유능한", stats: [28, 28, 28, 28] },
-    { traitName: "Meticulous", nameKo: "정확한", stats: [0, 0, 0, 0] },
-    { traitName: "Dull", nameKo: "평범한", stats: [20, 20, 20, 20] },
-    { traitName: "Classy", nameKo: "품위있는", stats: [20, 20, 20, 20] }
+    { nameEn: "Noble", nameKo: "고귀한", stats: [20, 20, 20, 20] },
+    { nameEn: "Immersed", nameKo: "몰입하는", stats: [0, 0, 0, 0] },
+    // { nameEn: "Distracted", nameKo: "산만한", stats: [0, 0, 0, 0] },
+    { nameEn: "Arrogant", nameKo: "오만한", stats: [25, 25, 25, 25] },
+    { nameEn: "Perfectionist", nameKo: "완벽주의자", stats: [20, 20, 20, 20] },
+    { nameEn: "Capable", nameKo: "유능한", stats: [28, 28, 28, 28] },
+    { nameEn: "Meticulous", nameKo: "정확한", stats: [0, 0, 0, 0] },
+    { nameEn: "Dull", nameKo: "평범한", stats: [20, 20, 20, 20] },
+    { nameEn: "Classy", nameKo: "품위있는", stats: [20, 20, 20, 20] }
 ];
 
 const normalTraits = [
-    { traitName: "Naive", nameKo: "천진난만한", highest: "agility", lowest: "strength" },
-    { traitName: "Rash", nameKo: "덜렁대는", highest: "agility", lowest: "focus" },
-    { traitName: "Hasty", nameKo: "성급한", highest: "agility", lowest: "intellect" },
-    { traitName: "quickWitted", nameKo: "눈치빠른", highest: "agility", lowest: "none" },
-    { traitName: "Brave", nameKo: "용감한", highest: "strength", lowest: "agility" },
-    { traitName: "Quirky", nameKo: "변덕쟁이", highest: "strength", lowest: "focus" },
-    { traitName: "Adamant", nameKo: "고집있는", highest: "strength", lowest: "intellect" },
-    { traitName: "Bold", nameKo: "대담한", highest: "strength", lowest: "none" },
-    { traitName: "Quiet", nameKo: "냉정한", highest: "focus", lowest: "agility" },
-    { traitName: "Calm", nameKo: "차분한", highest: "focus", lowest: "strength" },
-    { traitName: "Careful", nameKo: "신중한", highest: "focus", lowest: "intellect" },
-    { traitName: "Hardy", nameKo: "노력하는", highest: "focus", lowest: "none" },
-    { traitName: "Docile", nameKo: "온순한", highest: "intellect", lowest: "agility" },
-    { traitName: "Bashful", nameKo: "수줍은", highest: "intellect", lowest: "strength" },
-    { traitName: "Lax", nameKo: "촐랑대는", highest: "intellect", lowest: "focus" },
-    { traitName: "Smart", nameKo: "똑똑한", highest: "intellect", lowest: "none" }
+    { nameEn: "Naive", nameKo: "천진난만한", highestTrait: "agility", lowestTrait: "strength" },
+    { nameEn: "Rash", nameKo: "덜렁대는", highestTrait: "agility", lowestTrait: "focus" },
+    { nameEn: "Hasty", nameKo: "성급한", highestTrait: "agility", lowestTrait: "intellect" },
+    { nameEn: "quickWitted", nameKo: "눈치빠른", highestTrait: "agility", lowestTrait: "none" },
+    { nameEn: "Brave", nameKo: "용감한", highestTrait: "strength", lowestTrait: "agility" },
+    { nameEn: "Quirky", nameKo: "변덕쟁이", highestTrait: "strength", lowestTrait: "focus" },
+    { nameEn: "Adamant", nameKo: "고집있는", highestTrait: "strength", lowestTrait: "intellect" },
+    { nameEn: "Bold", nameKo: "대담한", highestTrait: "strength", lowestTrait: "none" },
+    { nameEn: "Quiet", nameKo: "냉정한", highestTrait: "focus", lowestTrait: "agility" },
+    { nameEn: "Calm", nameKo: "차분한", highestTrait: "focus", lowestTrait: "strength" },
+    { nameEn: "Careful", nameKo: "신중한", highestTrait: "focus", lowestTrait: "intellect" },
+    { nameEn: "Hardy", nameKo: "노력하는", highestTrait: "focus", lowestTrait: "none" },
+    { nameEn: "Docile", nameKo: "온순한", highestTrait: "intellect", lowestTrait: "agility" },
+    { nameEn: "Bashful", nameKo: "수줍은", highestTrait: "intellect", lowestTrait: "strength" },
+    { nameEn: "Lax", nameKo: "촐랑대는", highestTrait: "intellect", lowestTrait: "focus" },
+    { nameEn: "Smart", nameKo: "똑똑한", highestTrait: "intellect", lowestTrait: "none" }
 ];
 
 const statList = ["agility", "strength", "focus", "intellect"];
@@ -301,15 +301,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
     for (let i = 0; i < normalTraits.length; i++) {
         let newOption = document.createElement("option");
-        newOption.setAttribute("value", normalTraits[i].traitName);
+        newOption.setAttribute("value", normalTraits[i].nameEn);
         newOption.textContent = normalTraits[i].nameKo;
         document.querySelector("#normal-trait-selector").append(newOption);
     }
 
     for (let i = 0; i < specialTraits.length; i++) {
         let newOption = document.createElement("option");
-        newOption.setAttribute("value", specialTraits[i].traitName);
-        if (newOption.value == "Dull") newOption.setAttribute("id", specialTraits[i].traitName);
+        newOption.setAttribute("value", specialTraits[i].nameEn);
+        if (newOption.value == "Dull") newOption.setAttribute("id", specialTraits[i].nameEn);
         newOption.textContent = specialTraits[i].nameKo;
         document.querySelector("#special-trait-selector").append(newOption);
     }

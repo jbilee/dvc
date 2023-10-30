@@ -70,7 +70,7 @@ function selectStartTrait() {
 // Print recommended end stats for selected special trait
 function selectSpecialTrait() {
     let traitSelected = event.target.value;
-    traitIndex = specialTraits.findIndex((traits) => { return traits.traitName === traitSelected; });
+    traitIndex = specialTraits.findIndex((traits) => { return traits.nameEn === traitSelected; });
     let baseStats = [];
     let startStats = ["#start-agility", "#start-strength", "#start-focus", "#start-intellect"];
     let endStats = ["#end-agility", "#end-strength", "#end-focus", "#end-intellect"];
@@ -88,7 +88,7 @@ function selectSpecialTrait() {
                 const startSum = base.getTotal();
                 const reqSum = 100 - startSum;
                 const goal = new Stats(reqSum);
-                const final = calcSum(base, goal);
+                const final = addStats(base, goal);
                 printStatFields(final, "#end-");
                 break;
             }
@@ -230,13 +230,15 @@ function selectNormalTrait() {
     const base = getStatFields("#start-");
 
     const traitSelected = event.target.value;
-    const traitIndex = normalTraits.findIndex((traits) => { return traits.traitName === traitSelected; });
-    const highestReq = normalTraits[traitIndex].highest;
-    const lowestReq = normalTraits[traitIndex].lowest;
-    // let req;
+    const traitIndex = normalTraits.findIndex((trait) => { return trait.nameEn === traitSelected; });
+    const highestReq = normalTraits[traitIndex].highestTrait;
+    const lowestReq = normalTraits[traitIndex].lowestTrait;
+    let req;
 
-    if (lowestReq === "none") doubleTraining(base, highestReq);
-    else singleTraining(base, highestReq, lowestReq);
+    if (lowestReq === "none") req = doubleTraining(base, highestReq);
+    else req = singleTraining(base, highestReq, lowestReq);
+
+    printStatFields(req, "#end-");
 
     // Make coloring the borders optional for now
     // colorStatFields(traitIndex);
@@ -248,25 +250,27 @@ function doubleTraining(base, highest) {
 
     if (sortedArr[0] !== sortedArr[1]) req = calcDoubleLowest(req, sortedArr);
 
-    const diff = calcSub(base, req)
+    const diff = subtractStats(base, req)
     const optimized = optimizeHighest(base, diff, highest);
-    const final = calcSum(base, optimized);
+    const final = addStats(base, optimized);
 
-    printStatFields(final, "#end-");
+    return final;
 }
 
 function singleTraining(base, highest, lowest) {
+    // Determine lowest required state
     let req = calcSingleLowest(base, lowest);
 
     // Determine highest required stat
     req = calcSingleHighest(req, highest);
 
-    const diff = calcSub(base, req)
-    const optimized = optimizeAll(base, diff, highest, lowest);
-    const final = calcSum(base, optimized);
+    const diff = subtractStats(base, req)
 
-    // Print goal stats on page
-    printStatFields(final, "#end-");
+    // Optimization
+    const optimized = optimizeAll(base, diff, highest, lowest);
+    const final = addStats(base, optimized);
+
+    return final;
 }
 
 function optimizeAll(base, change, highest, lowest) {
@@ -279,11 +283,11 @@ function optimizeAll(base, change, highest, lowest) {
             // replace value and see if highest of stats and lowest of stats changed (compare newStats highest and lowest using getMax and getMin)
         }
     }
-    const application = calcSum(base, newStats);
+    const application = addStats(base, newStats);
     const newMax = application.getMaxTrait();
     const newMin = application.getMinTrait();
     if (newMax.length === 1 && newMin.length === 1 && newMax.includes(highest) && newMin.includes(lowest)) return newStats;
-    else return change;
+    return change;
 }
 
 function optimizeHighest(base, change, highest) {
@@ -294,29 +298,29 @@ function optimizeHighest(base, change, highest) {
             newStats[stat] = adjustments.get(curValue);
         }
     }
-    const application = calcSum(base, newStats);
+    const application = addStats(base, newStats);
     const newMax = application.getMaxTrait();
     if (newMax.length === 1 && newMax.includes(highest)) return newStats;
-    else return change;
+    return change;
 }
 
 function colorStatFields(index) {
-    const high = normalTraits[index].highest;
-    const low = normalTraits[index].lowest;
+    const high = normalTraits[index].highestTrait;
+    const low = normalTraits[index].lowestTrait;
     document.querySelector(`#end-${high}`).style.border = "solid 2px red";
     document.querySelector(`#end-${low}`).style.border = "solid 2px blue";
 }
 
 function copyStats(object) {
-    const agility = Number(object.agility);
-    const strength = Number(object.strength);
-    const focus = Number(object.focus);
-    const intellect = Number(object.intellect);
-    const newObject = new Stats(agility, strength, focus, intellect);
+    const newAgility = Number(object.agility);
+    const newStrength = Number(object.strength);
+    const newFocus = Number(object.focus);
+    const newIntellect = Number(object.intellect);
+    const newObject = new Stats(newAgility, newStrength, newFocus, newIntellect);
     return newObject;
 }
 
-function calcSub(a, b) {
+function subtractStats(a, b) {
     const sub = new Stats();
     for (const stat of statList) {
         sub[stat] = Math.abs(a[stat] - b[stat]);
@@ -324,7 +328,7 @@ function calcSub(a, b) {
     return sub;
 }
 
-function calcSum(a, b) {
+function addStats(a, b) {
     const sum = new Stats();
     for (const stat of statList) {
         sum[stat] = a[stat] + b[stat];
@@ -368,14 +372,14 @@ function calcSingleHighest(curStats, highestReq) {
     return newStats;
 }
 
-function calculator() {
-    printCount("agility");
-    printCount("strength");
-    printCount("focus");
-    printCount("intellect");
+function calculate() {
+    printTrainingCount("agility");
+    printTrainingCount("strength");
+    printTrainingCount("focus");
+    printTrainingCount("intellect");
 }
 
-function printCount(traitType) {
+function printTrainingCount(traitType) {
     let reqStat = document.querySelector(`#end-${traitType}`).value - document.querySelector(`#start-${traitType}`).value;
     if (reqStat < 0) {
         reqStat = 0;
@@ -385,10 +389,10 @@ function printCount(traitType) {
         document.querySelector(`#required-${traitType}`).textContent = "+" + reqStat;
     }
 
-    let trainCount = calculateTrainCount(reqStat, trainValues);
+    const trainCount = calculateTrainCount(reqStat, trainValues);
     let trainText;
 
-    if (trainCount[5] == 9) {
+    if (trainCount[5] === 9) {
         let nineCount = trainCount.lastIndexOf(9) + 1;
         trainCountCondensed = trainCount.slice(nineCount);
         trainText = `<span class="nine">9</span><sub>(x${nineCount})</sub> ` + trainCountCondensed.map((e) => {
@@ -444,8 +448,6 @@ function enableDull() {
 }
 
 function unavailabilityCheck(dragonIndex, traitSelected) {
-    let endTrait = document.getElementById("Dull");
-
     if (dragonList[dragonIndex][traitSelected].findIndex((item) => item > 25) === -1) return enableDull();
 
     for (let i = 0; i < STATCOUNT; i++) {
