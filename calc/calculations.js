@@ -95,24 +95,41 @@ function selectSpecialTrait() {
 
         case "Distracted":
             {
-                const curFocus = base.focus;
-                const goal = new Stats();
-                if (curFocus) {
-                    const low = [getKeyByValue(base, 0), 0];
-                    const rest = statList.filter((x) => {
-                        if (x !== low[0] && x !== "focus") return x;
-                    });
-                    const middletest = [rest[0], base[rest[0]]];
-                    const hightest = [rest[1], base[rest[1]]];
-                    console.log(low)
-                    console.log(middletest)
-                    console.log(hightest)
-                    console.log("------")
-                    console.log(compareTraining(middletest[1], hightest[1]));
-                }
-                // if (curFocus ===) {
-
+                // const curFocus = base.focus;
+                // const goal = new Stats();
+                // if (curFocus === 15) {
+                //     const zeroTrait = [getFirstKeyByValue(base, 0), 0];
+                //     const rest = statList.filter((x) => {
+                //         if (x !== zeroTrait[0] && x !== "focus") return x;
+                //     });
+                //     const middletest = [rest[0], base[rest[0]]];
+                //     const hightest = [rest[1], base[rest[1]]];
+                //     console.log(zeroTrait)
+                //     console.log(middletest)
+                //     console.log(hightest)
+                //     console.log("------")
+                //     console.log(compareTraining(middletest[1], hightest[1]));
                 // }
+                // if (curFocus === 30) {
+                //     // get zero
+                //     const zeroTrait = { trait: getFirstKeyByValue(base, 0), value: 0 };
+                //     // find the remaining two
+                //     let remainingTraits = statList.filter((x) => {
+                //         if (x !== zeroTrait.trait && x !== "focus") return x;
+                //     });
+                //     // is one of the remaining two a 15?
+                //     if (getFirstKeyByValue(base, 15)) {
+                //         const fifteenTrait = getFirstKeyByValue(base, 15);
+                //         goal[fifteenTrait] = 15;
+                //         remainingTraits = remainingTraits.filte((x) => {
+                //             if (x !== fifteenTrait) return x;
+                //         });
+                //         goal[remainingTraits] = 45;
+                //     }
+                //     else console.log("15 doesn't exist")
+                //     console.log(goal)
+                // }
+                alert('계산식을 준비 중입니다.');
                 break;
             }
 
@@ -220,7 +237,7 @@ function printStatFields(stats, prefix) {
     }
 }
 
-function getKeyByValue(obj, value) {
+function getFirstKeyByValue(obj, value) {
     return Object.keys(obj).find((key) => obj[key] === value) || null;
 }
 
@@ -290,7 +307,7 @@ function optimizeAll(base, change, highest, lowest) {
     return change;
 }
 
-function optimizeHighest(base, change, highest) {
+function optimizeHighest(base, change, targetTrait) {
     const newStats = copyStats(change);
     for (const stat in newStats) {
         const curValue = newStats[stat];
@@ -300,7 +317,7 @@ function optimizeHighest(base, change, highest) {
     }
     const application = addStats(base, newStats);
     const newMax = application.getMaxTrait();
-    if (newMax.length === 1 && newMax.includes(highest)) return newStats;
+    if (newMax.length === 1 && newMax.includes(targetTrait)) return newStats;
     return change;
 }
 
@@ -354,7 +371,7 @@ function calcDoubleLowest(curStats, array) {
     const newStats = copyStats(curStats);
     const lowestValue = array[0];
     const adjustmentValue = array[1];
-    const adjustmentKey = getKeyByValue(newStats, lowestValue);
+    const adjustmentKey = getFirstKeyByValue(newStats, lowestValue);
 
     newStats[adjustmentKey] = adjustmentValue;
     return newStats;
