@@ -95,41 +95,40 @@ function selectSpecialTrait() {
 
         case "Distracted":
             {
-                // const curFocus = base.focus;
-                // const goal = new Stats();
-                // if (curFocus === 15) {
-                //     const zeroTrait = [getFirstKeyByValue(base, 0), 0];
-                //     const rest = statList.filter((x) => {
-                //         if (x !== zeroTrait[0] && x !== "focus") return x;
-                //     });
-                //     const middletest = [rest[0], base[rest[0]]];
-                //     const hightest = [rest[1], base[rest[1]]];
-                //     console.log(zeroTrait)
-                //     console.log(middletest)
-                //     console.log(hightest)
-                //     console.log("------")
-                //     console.log(compareTraining(middletest[1], hightest[1]));
-                // }
-                // if (curFocus === 30) {
-                //     // get zero
-                //     const zeroTrait = { trait: getFirstKeyByValue(base, 0), value: 0 };
-                //     // find the remaining two
-                //     let remainingTraits = statList.filter((x) => {
-                //         if (x !== zeroTrait.trait && x !== "focus") return x;
-                //     });
-                //     // is one of the remaining two a 15?
-                //     if (getFirstKeyByValue(base, 15)) {
-                //         const fifteenTrait = getFirstKeyByValue(base, 15);
-                //         goal[fifteenTrait] = 15;
-                //         remainingTraits = remainingTraits.filte((x) => {
-                //             if (x !== fifteenTrait) return x;
-                //         });
-                //         goal[remainingTraits] = 45;
-                //     }
-                //     else console.log("15 doesn't exist")
-                //     console.log(goal)
-                // }
-                alert('계산식을 준비 중입니다.');
+                const curFocus = base.focus;
+                const goal = new Stats();
+                if (curFocus === 15) {
+                    const zeroTrait = [getFirstKeyByValue(base, 0), 0];
+                    const rest = statList.filter((x) => {
+                        if (x !== zeroTrait[0] && x !== "focus") return x;
+                    });
+                    const middletest = [rest[0], base[rest[0]]];
+                    const hightest = [rest[1], base[rest[1]]];
+                    console.log(zeroTrait)
+                    console.log(middletest)
+                    console.log(hightest)
+                    console.log("------")
+                    console.log(compareTraining(middletest[1], hightest[1]));
+                }
+                if (curFocus === 30) {
+                    // get zero
+                    const zeroTrait = { trait: getFirstKeyByValue(base, 0), value: 0 };
+                    // find the remaining two
+                    let remainingTraits = statList.filter((x) => {
+                        if (x !== zeroTrait.trait && x !== "focus") return x;
+                    });
+                    // is one of the remaining two a 15?
+                    if (getFirstKeyByValue(base, 15)) {
+                        const fifteenTrait = getFirstKeyByValue(base, 15);
+                        goal[fifteenTrait] = 15;
+                        remainingTraits = remainingTraits.filte((x) => {
+                            if (x !== fifteenTrait) return x;
+                        });
+                        goal[remainingTraits] = 45;
+                    }
+                    else console.log("15 doesn't exist")
+                    console.log(goal)
+                }
                 break;
             }
 
