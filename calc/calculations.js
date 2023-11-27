@@ -1,7 +1,10 @@
+// import Stats from "./statscl.js"
+
 const BASEINCREMENT = 3;
 const STATCOUNT = 4;
 const trainValues = [3, 5, 9];
-let dragonName, dragonIndex;
+const statList = ["agility", "strength", "focus", "intellect"];
+
 let reqAgility, reqStrength, reqFocus, reqIntellect;
 const adjustments = new Map([
     [8, 9],
@@ -29,20 +32,18 @@ function detectBase() {
 
 function selectDragon() {
     // Initialize variables
-    let baseStats = ["#start-agility", "#start-strength", "#start-focus", "#start-intellect"];
-    let firstTrait = document.querySelector("#trait1");
-    let secondTrait = document.querySelector("#trait2");
-    dragonName = document.querySelector("#dragon-selector").value;
-    dragonIndex = dragonList.findIndex((dragons) => { return dragons.name[0] === dragonName; });
+    const baseStats = ["#start-agility", "#start-strength", "#start-focus", "#start-intellect"];
+    const firstTrait = document.querySelector("#trait1");
+    const secondTrait = document.querySelector("#trait2");
+    const dragonName = document.querySelector("#dragon-selector").value;
+    const dragonIndex = dragonList.findIndex((dragons) => { return dragons.name[0] === dragonName; });
 
     // Enable trait selector
     document.querySelector("#start-trait-selector").removeAttribute("disabled");
 
     // Reset previously selected base stat values and trait
     document.querySelector("#start-trait-selector").selectedIndex = 0;
-    for (let i = 0; i < STATCOUNT; i++) {
-        document.querySelector(baseStats[i]).value = 0;
-    }
+    baseStats.forEach(stat => document.querySelector(stat).value = 0);
 
     // Fill in trait dropdown choices
     firstTrait.textContent = dragonList[dragonIndex].traitsKo[0];
@@ -53,15 +54,13 @@ function selectDragon() {
 
 // Print the selected dragon's base stats 
 function selectStartTrait() {
-    let traitSelected = event.target.value;
-    dragonName = document.querySelector("#dragon-selector").value;
-    dragonIndex = dragonList.findIndex((dragons) => { return dragons.name[0] === dragonName; });
-    let baseStats = ["#start-agility", "#start-strength", "#start-focus", "#start-intellect"];
+    const traitSelected = event.target.value;
+    const dragonName = document.querySelector("#dragon-selector").value;
+    const dragonIndex = dragonList.findIndex((dragons) => { return dragons.name[0] === dragonName; });
+    const baseStats = ["#start-agility", "#start-strength", "#start-focus", "#start-intellect"];
 
     // Fill in base stats
-    for (let i = 0; i < STATCOUNT; i++) {
-        document.querySelector(baseStats[i]).value = dragonList[dragonIndex][traitSelected][i];
-    }
+    baseStats.forEach((stat, i) => document.querySelector(stat).value = dragonList[dragonIndex][traitSelected][i]);
 
     // Disable selector for end traits where applicable
     unavailabilityCheck(dragonIndex, traitSelected);
@@ -69,11 +68,11 @@ function selectStartTrait() {
 
 // Print recommended end stats for selected special trait
 function selectSpecialTrait() {
-    let traitSelected = event.target.value;
-    traitIndex = specialTraits.findIndex((traits) => { return traits.nameEn === traitSelected; });
+    const traitSelected = event.target.value;
+    const traitIndex = specialTraits.findIndex((traits) => { return traits.nameEn === traitSelected; });
     let baseStats = [];
-    let startStats = ["#start-agility", "#start-strength", "#start-focus", "#start-intellect"];
-    let endStats = ["#end-agility", "#end-strength", "#end-focus", "#end-intellect"];
+    const startStats = ["#start-agility", "#start-strength", "#start-focus", "#start-intellect"];
+    const endStats = ["#end-agility", "#end-strength", "#end-focus", "#end-intellect"];
     let maxValue;
 
     // Store dragon's base stats
@@ -88,7 +87,7 @@ function selectSpecialTrait() {
                 const startSum = base.getTotal();
                 const reqSum = 100 - startSum;
                 const goal = new Stats(reqSum);
-                const final = addStats(base, goal);
+                const final = getStatSum(base, goal);
                 printStatFields(final, "#end-");
                 break;
             }
@@ -176,52 +175,6 @@ function selectSpecialTrait() {
     }
 }
 
-class Stats {
-    constructor(agility, strength, focus, intellect) {
-        this.agility = agility || 0;
-        this.strength = strength || 0;
-        this.focus = focus || 0;
-        this.intellect = intellect || 0;
-    }
-
-    getMaxTrait() {
-        const maxVal = this.getMaxVal();
-        const maxTraits = [];
-        if (this.agility === maxVal) maxTraits.push("agility");
-        if (this.strength === maxVal) maxTraits.push("strength");
-        if (this.focus === maxVal) maxTraits.push("focus");
-        if (this.intellect === maxVal) maxTraits.push("intellect");
-        return maxTraits;
-    }
-
-    getMinTrait() {
-        const minVal = this.getMinVal();
-        const minTraits = [];
-        if (this.agility === minVal) minTraits.push("agility");
-        if (this.strength === minVal) minTraits.push("strength");
-        if (this.focus === minVal) minTraits.push("focus");
-        if (this.intellect === minVal) minTraits.push("intellect");
-        return minTraits;
-    }
-
-    getMaxVal() {
-        return Math.max(this.agility, this.strength, this.focus, this.intellect);
-    }
-
-    getMinVal() {
-        return Math.min(this.agility, this.strength, this.focus, this.intellect);
-    }
-
-    getTotal() {
-        return this.agility + this.strength + this.focus + this.intellect;
-    }
-
-    sortInc() {
-        const cur = [this.agility, this.strength, this.focus, this.intellect];
-        return cur.sort((a, b) => a - b);
-    }
-}
-
 function getStatFields(prefix) {
     const values = new Stats();
     for (const stat of statList) {
@@ -266,9 +219,9 @@ function doubleTraining(base, highest) {
 
     if (sortedArr[0] !== sortedArr[1]) req = calcDoubleLowest(req, sortedArr);
 
-    const diff = subtractStats(base, req)
+    const diff = getStatDifference(base, req)
     const optimized = optimizeHighest(base, diff, highest);
-    const final = addStats(base, optimized);
+    const final = getStatSum(base, optimized);
 
     return final;
 }
@@ -280,11 +233,11 @@ function singleTraining(base, highest, lowest) {
     // Determine highest required stat
     req = calcSingleHighest(req, highest);
 
-    const diff = subtractStats(base, req)
+    const diff = getStatDifference(base, req)
 
     // Optimization
     const optimized = optimizeAll(base, diff, highest, lowest);
-    const final = addStats(base, optimized);
+    const final = getStatSum(base, optimized);
 
     return final;
 }
@@ -299,7 +252,7 @@ function optimizeAll(base, change, highest, lowest) {
             // replace value and see if highest of stats and lowest of stats changed (compare newStats highest and lowest using getMax and getMin)
         }
     }
-    const application = addStats(base, newStats);
+    const application = getStatSum(base, newStats);
     const newMax = application.getMaxTrait();
     const newMin = application.getMinTrait();
     if (newMax.length === 1 && newMin.length === 1 && newMax.includes(highest) && newMin.includes(lowest)) return newStats;
@@ -314,7 +267,7 @@ function optimizeHighest(base, change, targetTrait) {
             newStats[stat] = adjustments.get(curValue);
         }
     }
-    const application = addStats(base, newStats);
+    const application = getStatSum(base, newStats);
     const newMax = application.getMaxTrait();
     if (newMax.length === 1 && newMax.includes(targetTrait)) return newStats;
     return change;
@@ -336,7 +289,7 @@ function copyStats(object) {
     return newObject;
 }
 
-function subtractStats(a, b) {
+function getStatDifference(a, b) {
     const sub = new Stats();
     for (const stat of statList) {
         sub[stat] = Math.abs(a[stat] - b[stat]);
@@ -344,7 +297,7 @@ function subtractStats(a, b) {
     return sub;
 }
 
-function addStats(a, b) {
+function getStatSum(a, b) {
     const sum = new Stats();
     for (const stat of statList) {
         sum[stat] = a[stat] + b[stat];
@@ -480,4 +433,53 @@ function reset() {
 
     document.querySelector("#special-trait-selector").selectedIndex = 0;
     document.querySelector("#normal-trait-selector").selectedIndex = 0;
+}
+
+
+
+
+class Stats {
+    constructor(agility = 0, strength = 0, focus = 0, intellect = 0) {
+        this.agility = agility;
+        this.strength = strength;
+        this.focus = focus;
+        this.intellect = intellect;
+    }
+
+    getMaxTrait() {
+        const maxVal = this.getMaxVal();
+        const maxTraits = [];
+        if (this.agility === maxVal) maxTraits.push("agility");
+        if (this.strength === maxVal) maxTraits.push("strength");
+        if (this.focus === maxVal) maxTraits.push("focus");
+        if (this.intellect === maxVal) maxTraits.push("intellect");
+        return maxTraits;
+    }
+
+    getMinTrait() {
+        const minVal = this.getMinVal();
+        const minTraits = [];
+        if (this.agility === minVal) minTraits.push("agility");
+        if (this.strength === minVal) minTraits.push("strength");
+        if (this.focus === minVal) minTraits.push("focus");
+        if (this.intellect === minVal) minTraits.push("intellect");
+        return minTraits;
+    }
+
+    getMaxVal() {
+        return Math.max(this.agility, this.strength, this.focus, this.intellect);
+    }
+
+    getMinVal() {
+        return Math.min(this.agility, this.strength, this.focus, this.intellect);
+    }
+
+    getTotal() {
+        return this.agility + this.strength + this.focus + this.intellect;
+    }
+
+    sortInc() {
+        const cur = [this.agility, this.strength, this.focus, this.intellect];
+        return cur.sort((a, b) => a - b);
+    }
 }
