@@ -3,16 +3,18 @@ const dragonList = [
     { name: ["Gautling-Gon", "개틀링곤"], traitsEn: ["Quiet", "Bold"], traitsKo: ["냉정한", "대담한"], Quiet: [0, 5, 20, 5], Bold: [0, 20, 0, 10] },
     { name: ["Girdletail Dragon", "거들테일"], traitsEn: ["Bold", "Rash"], traitsKo: ["대담한", "덜렁대는"], Bold: [10, 30, 0, 0], Rash: [25, 0, 0, 10] },
     { name: ["Gust", "거스트"], traitsEn: ["Hasty", "Adamant"], traitsKo: ["성급한", "고집있는"], Hasty: [25, 10, 10, 0], Adamant: [5, 20, 5, 0] },
+    { name: ["Ges", "게스"], traitsEn: ["Brave", "Smart"], traitsKo: ["용감한", "똑똑한"], Brave: [0, 20, 5, 5], Smart: [10, 0, 0, 20] },
     { name: ["God Dragon", "고대신룡"], traitsEn: ["Brave", "Docile"], traitsKo: ["용감한", "온순한"], Brave: [0, 25, 10, 10], Docile: [0, 10, 10, 30] },
     { name: ["God Jr", "고대주니어"], traitsEn: ["Brave", "Hasty"], traitsKo: ["용감한", "성급한"], Brave: [0, 30, 15, 15], Hasty: [30, 10, 10, 0] },
-    // { name: ["Gorgon", "고르곤"], traitsEn: ["", ""], traitsKo: ["", ""], Smart: [0, 10, 0, 30], Docile: [0, 15, 15, 30] },
+    { name: ["Gorgon", "고르곤"], traitsEn: ["Calm", "quickWitted"], traitsKo: ["차분한", "눈치빠른"], Calm: [10, 0, 20, 10], quickWitted: [30, 0, 0, 5] },
     { name: ["Gold Dragon", "골드"], traitsEn: ["Docile", "Calm"], traitsKo: ["온순한", "차분한"], Docile: [0, 5, 5, 20], Calm: [10, 0, 15, 10] },
     { name: ["Gold Metal", "골드메탈"], traitsEn: ["Hasty", "Bold"], traitsKo: ["성급한", "대담한"], Hasty: [20, 10, 10, 0], Bold: [10, 25, 0, 0] },
     { name: ["Gold Pike", "골드파이크"], traitsEn: ["Hasty", "Lax"], traitsKo: ["성급한", "촐랑대는"], Hasty: [25, 10, 10, 0], Lax: [10, 10, 0, 20] },
     { name: ["Goldie", "골디"], traitsEn: ["Bold", "Lax"], traitsKo: ["대담한", "촐랑대는"], Bold: [0, 30, 10, 0], Lax: [15, 15, 0, 30] },
     { name: ["Granos", "그라노스"], traitsEn: ["Smart", "Careful"], traitsKo: ["똑똑한", "신중한"], Smart: [5, 0, 0, 20], Careful: [10, 10, 30, 0] },
     { name: ["Gracia", "그라치아"], traitsEn: ["Brave", "quickWitted"], traitsKo: ["용감한", "눈치빠른"], Brave: [0, 20, 10, 10], quickWitted: [20, 10, 0, 0] },
-    { name: ["---Glaonae", "글라오네"], traitsEn: ["Smart", "Brave"], traitsKo: ["똑똑한", "용감한"], Smart: [0, 5, 0, 20], Brave: [0, 25, 10, 10] },
+    { name: ["Glaone", "글라오네"], traitsEn: ["Smart", "Brave"], traitsKo: ["똑똑한", "용감한"], Smart: [0, 5, 0, 20], Brave: [0, 25, 10, 10] },
+    { name: ["Gigantis", "기간티스"], traitsEn: ["Adamant", "Quiet"], traitsKo: ["고집있는", "냉정한"], Adamant: [15, 30, 15, 0], Quiet: [0, 15, 30, 15] },
     { name: ["Goblin Dragon", "깨비곤"], traitsEn: ["Naive", "Brave"], traitsKo: ["천진난만한", "용감한"], Naive: [25, 0, 10, 10], Brave: [0, 25, 10, 10] },
     { name: ["Knight Dragon", "나이트"], traitsEn: ["Brave", "Smart"], traitsKo: ["용감한", "똑똑한"], Brave: [0, 30, 10, 10], Smart: [10, 0, 0, 20] },
     { name: ["Nebula", "네뷸라"], traitsEn: ["Quiet", "Careful"], traitsKo: ["냉정한", "신중한"], Quiet: [0, 10, 30, 10], Careful: [10, 10, 25, 0] },
@@ -29,6 +31,7 @@ const dragonList = [
     { name: ["Daros", "다로스"], traitsEn: ["Careful", "Quiet"], traitsKo: ["신중한", "냉정한"], Careful: [15, 15, 30, 0], Quiet: [0, 15, 30, 15] },
     { name: ["Darknix", "다크닉스"], traitsEn: ["Quiet", "Careful"], traitsKo: ["냉정한", "신중한"], Quiet: [0, 15, 30, 15], Careful: [15, 15, 30, 0] },
     { name: ["Dark Cloud Dragon", "다크클라우드"], traitsEn: ["Naive", "Quirky"], traitsKo: ["천진난만한", "변덕쟁이"], Naive: [30, 0, 10, 10], Quirky: [10, 20, 0, 10] },
+    { name: ["Demonio", "데모니오"], traitsEn: ["Quiet", "Docile"], traitsKo: ["냉정한", "온순한"], Quiet: [0, 10, 20, 10], Docile: [0, 10, 10, 30] },
     { name: ["Demong & Gargoyle", "데몽과 가고일"], traitsEn: ["quickWitted", "Adamant"], traitsKo: ["눈치빠른", "고집있는"], quickWitted: [30, 0, 5, 0], Adamant: [10, 30, 10, 0] },
     { name: ["Deva", "데바"], traitsEn: ["Adamant", "Quiet"], traitsKo: ["고집있는", "냉정한"], Adamant: [5, 20, 5, 0], Quiet: [0, 5, 20, 5] },
     { name: ["Devared", "데바레드"], traitsEn: ["Brave", "Smart"], traitsKo: ["용감한", "똑똑한"], Brave: [0, 20, 5, 5], Smart: [10, 0, 0, 20] },
@@ -67,6 +70,7 @@ const dragonList = [
     { name: ["Rupia", "루피아"], traitsEn: ["Docile", "Smart"], traitsKo: ["온순한", "똑똑한"], Docile: [0, 10, 10, 30], Smart: [10, 0, 0, 30] },
     { name: ["Libera", "리베라"], traitsEn: ["Adamant", "Careful"], traitsKo: ["고집있는", "신중한"], Adamant: [5, 20, 5, 0], Careful: [5, 5, 20, 0] },
     { name: ["Liberte", "리베티"], traitsEn: ["Calm", "Hardy"], traitsKo: ["차분한", "노력하는"], Calm: [5, 0, 20, 5], Hardy: [0, 0, 20, 0] },
+    { name: ["Libro", "리브로"], traitsEn: ["Smart", "Naive"], traitsKo: ["똑똑한", "천진난만한"], Smart: [5, 0, 0, 25], Naive: [30, 0, 15, 15] },
     { name: ["Lichmond", "리치몬드"], traitsEn: ["Hardy", "Quirky"], traitsKo: ["노력하는", "변덕쟁이"], Hardy: [0, 0, 20, 10], Quirky: [10, 20, 0, 10] },
     { name: ["Leaf Dragon", "리프"], traitsEn: ["Naive", "Rash"], traitsKo: ["천진난만한", "덜렁대는"], Naive: [25, 0, 10, 10], Rash: [20, 10, 0, 10] },
     { name: ["Maga", "마가"], traitsEn: ["Bold", "Naive"], traitsKo: ["대담한", "천진난만한"], Bold: [0, 30, 10, 0], Naive: [20, 0, 10, 10] },
@@ -85,6 +89,7 @@ const dragonList = [
     { name: ["mongsuryong", "몽수룡"], traitsEn: ["Calm", "Smart"], traitsKo: ["차분한", "똑똑한"], Calm: [10, 0, 20, 10], Smart: [10, 0, 0, 20] },
     { name: ["Minas", "미나스"], traitsEn: ["Quiet", "Calm"], traitsKo: ["냉정한", "차분한"], Quiet: [0, 10, 20, 10], Calm: [10, 0, 25, 10] },
     { name: ["Mist Dragon", "미스트 드래곤"], traitsEn: ["Quirky", "Rash"], traitsKo: ["변덕쟁이", "덜렁대는"], Quirky: [5, 20, 0, 5], Rash: [30, 15, 0, 15] },
+    { name: ["Mystictiny", "미스틱티니"], traitsEn: ["Smart", "Rash"], traitsKo: ["똑똑한", "덜렁대는"], Smart: [0, 0, 10, 20], Rash: [25, 10, 0, 10] },
     { name: ["Mummy Dragon", "미이라곤"], traitsEn: ["Brave", "Adamant"], traitsKo: ["용감한", "고집있는"], Brave: [0, 25, 10, 10], Adamant: [15, 30, 15, 0] },
     { name: ["Mithra", "미트라"], traitsEn: ["Careful", "Brave"], traitsKo: ["신중한", "용감한"], Careful: [10, 10, 30, 0], Brave: [0, 25, 10, 10] },
     { name: ["Bagma", "바그마"], traitsEn: ["Docile", "Calm"], traitsKo: ["온순한", "차분한"], Docile: [0, 5, 5, 20], Calm: [10, 0, 20, 10] },
@@ -107,7 +112,7 @@ const dragonList = [
     { name: ["Bonehead", "본헤드"], traitsEn: ["Quirky", "Bashful"], traitsKo: ["변덕쟁이", "수줍은"], Quirky: [5, 20, 0, 5], Bashful: [15, 0, 15, 30] },
     { name: ["Volcano Dragon", "볼케이노"], traitsEn: ["Docile", "Hasty"], traitsKo: ["온순한", "성급한"], Docile: [0, 10, 10, 20], Hasty: [20, 10, 10, 0] },
     { name: ["Bomber Dragon", "봄버"], traitsEn: ["Naive", "Lax"], traitsKo: ["천진난만한", "촐랑대는"], Naive: [30, 0, 10, 10], Lax: [10, 10, 0, 30] },
-    // { name: ["Voodoo Dragon", "부두룡"], traitsEn: ["", ""], traitsKo: ["", ""], Smart: [0, 10, 0, 30], Docile: [0, 15, 15, 30] },
+    { name: ["Voodoo Dragon", "부두룡"], traitsEn: ["Quirky", "quickWitted"], traitsKo: ["변덕쟁이", "눈치빠른"], Quirky: [10, 20, 0, 10], quickWitted: [20, 0, 10, 0] },
     { name: ["Firetail", "불나래"], traitsEn: ["quickWitted", "Quirky"], traitsKo: ["눈치빠른", "변덕쟁이"], quickWitted: [25, 0, 0, 0], Quirky: [10, 25, 0, 10] },
     { name: ["Black Armor", "블랙아머"], traitsEn: ["Bold", "Adamant"], traitsKo: ["대담한", "고집있는"], Bold: [0, 30, 0, 10], Adamant: [15, 30, 15, 0] },
     { name: ["Black Armor Sword", "블랙아머소드"], traitsEn: ["Brave", "Hardy"], traitsKo: ["용감한", "노력하는"], Brave: [0, 30, 15, 15], Hardy: [5, 0, 30, 0] },
@@ -136,6 +141,7 @@ const dragonList = [
     { name: ["Surtr", "수르트"], traitsEn: ["Hasty", "Adamant"], traitsKo: ["성급한", "고집있는"], Hasty: [30, 10, 10, 0], Adamant: [15, 30, 15, 0] },
     { name: ["Smart Dragon", "스마트"], traitsEn: ["Smart", "Docile"], traitsKo: ["똑똑한", "온순한"], Smart: [0, 10, 0, 20], Docile: [0, 5, 5, 20] },
     { name: ["Swamp Dragon", "스왐프"], traitsEn: ["Calm", "Docile"], traitsKo: ["차분한", "온순한"], Calm: [5, 0, 20, 5], Docile: [0, 5, 5, 20] },
+    { name: ["Sky Lancer", "스카이랜서"], traitsEn: ["Quiet", "Brave"], traitsKo: ["냉정한", "용감한"], Quiet: [0, 10, 20, 10], Brave: [0, 30, 15, 15] },
     { name: ["Scarlet", "스칼렛"], traitsEn: ["Bashful", "Careful"], traitsKo: ["수줍은", "신중한"], Bashful: [10, 0, 10, 20], Careful: [10, 10, 20, 0] },
     { name: ["Skelegon", "스켈레곤"], traitsEn: ["quickWitted", "Rash"], traitsKo: ["눈치빠른", "덜렁대는"], quickWitted: [20, 10, 0, 0], Rash: [25, 10, 0, 10] },
     { name: ["Scorpion Dragon", "스콜피온"], traitsEn: ["Bold", "Brave"], traitsKo: ["대담한", "용감한"], Bold: [5, 20, 0, 0], Brave: [0, 25, 10, 10] },
@@ -153,6 +159,7 @@ const dragonList = [
     { name: ["Six-leg Horn", "식스레그혼"], traitsEn: ["Careful", "Docile"], traitsKo: ["신중한", "온순한"], Careful: [10, 10, 20, 0], Docile: [0, 15, 15, 30] },
     { name: ["Agnad", "아그나드"], traitsEn: ["Smart", "Calm"], traitsKo: ["똑똑한", "차분한"], Smart: [0, 5, 0, 20], Calm: [10, 0, 30, 10] },
     { name: ["Anemone", "아네모네"], traitsEn: ["Docile", "Bashful"], traitsKo: ["온순한", "수줍은"], Docile: [0, 5, 5, 20], Bashful: [10, 0, 10, 20] },
+    { name: ["Adela", "아델라"], traitsEn: ["Bold", "Calm"], traitsKo: ["대담한", "차분한"], Bold: [0, 30, 5, 0], Calm: [10, 0, 30, 10] },
     { name: ["Artemis", "아르테미스"], traitsEn: ["Docile", "Calm"], traitsKo: ["온순한", "차분한"], Docile: [0, 10, 10, 20], Calm: [10, 0, 30, 10] },
     { name: ["Abvalle", "아브벨리"], traitsEn: ["Careful", "Adamant"], traitsKo: ["신중한", "고집있는"], Careful: [5, 5, 20, 0], Adamant: [5, 20, 5, 0] },
     { name: ["Asti", "아스티"], traitsEn: ["Docile", "Bold"], traitsKo: ["온순한", "대담한"], Docile: [0, 5, 5, 20], Bold: [0, 20, 10, 0] },
@@ -227,7 +234,7 @@ const dragonList = [
     { name: ["Pangpang", "팡팡"], traitsEn: ["Hardy", "quickWitted"], traitsKo: ["노력하는", "눈치빠른"], Hardy: [0, 10, 10, 0], quickWitted: [30, 0, 10, 0] },
     { name: ["Fat", "패트"], traitsEn: ["Calm", "Docile"], traitsKo: ["신중한", "온순한"], Calm: [10, 0, 25, 10], Docile: [0, 10, 10, 20] },
     { name: ["Patroa", "패트로아"], traitsEn: ["Naive", "Hardy"], traitsKo: ["천진난만한", "노력하는"], Naive: [20, 0, 5, 5], Hardy: [0, 0, 25, 0] },
-    // { name: ["Pancake Dragon", "팬케이크 드래곤"], traitsEn: ["", ""], traitsKo: ["", ""], Smart: [0, 10, 0, 30], Docile: [0, 15, 15, 30] },
+    { name: ["Pancake Dragon", "팬케이크 드래곤"], traitsEn: ["Docile", "Naive"], traitsKo: ["온순한", "천진난만한"], Docile: [0, 10, 10, 25], Naive: [30, 0, 10, 10] },
     { name: ["Enoki Mushroom Dragon", "팽이버섯"], traitsEn: ["Adamant", "Rash"], traitsKo: ["고집있는", "덜렁대는"], Adamant: [10, 30, 10, 0], Rash: [25, 10, 0, 10] },
     { name: ["Purple Lips", "퍼플립스"], traitsEn: ["Smart", "Docile"], traitsKo: ["똑똑한", "온순한"], Smart: [0, 10, 0, 30], Docile: [0, 15, 15, 30] },
     { name: ["Feros", "페로스"], traitsEn: ["Smart", "Careful"], traitsKo: ["똑똑한", "신중한"], Smart: [10, 0, 0, 30], Careful: [10, 10, 30, 0] },
@@ -238,7 +245,7 @@ const dragonList = [
     { name: ["Popomo", "포포모"], traitsEn: ["Naive", "Lax"], traitsKo: ["천진난만한", "촐랑대는"], Naive: [20, 0, 10, 10], Lax: [10, 10, 0, 30] },
     { name: ["Popon", "포폰"], traitsEn: ["Bashful", "Lax"], traitsKo: ["수줍은", "촐랑대는"], Bashful: [10, 0, 10, 20], Lax: [5, 5, 0, 20] },
     { name: ["Frankenstein Dragon", "프랑켄슈타곤"], traitsEn: ["Docile", "Hardy"], traitsKo: ["온순한", "노력하는"], Docile: [0, 5, 5, 20], Hardy: [5, 0, 25, 0] },
-    // { name: ["Frame", "프레임"], traitsEn: ["", ""], traitsKo: ["", ""], Smart: [0, 10, 0, 30], Docile: [0, 15, 15, 30] },
+    { name: ["Frame", "프레임"], traitsEn: ["Hardy", "Docile"], traitsKo: ["노력하는", "온순한"], Hardy: [0, 10, 20, 0], Docile: [0, 10, 10, 30] },
     { name: ["Frog Dragon", "프로그"], traitsEn: ["Quirky", "Calm"], traitsKo: ["변덕쟁이", "차분한"], Quirky: [10, 25, 0, 10], Calm: [10, 0, 20, 10] },
     { name: ["Flower Dragon", "플라워"], traitsEn: ["Bashful", "Rash"], traitsKo: ["수줍은", "덜렁대는"], Bashful: [10, 0, 10, 30], Rash: [20, 10, 0, 10] },
     { name: ["Flame Dragon", "플레임"], traitsEn: ["Careful", "Calm"], traitsKo: ["신중한", "차분한"], Careful: [5, 5, 20, 0], Calm: [10, 0, 20, 10] },    
@@ -294,25 +301,23 @@ const normalTraits = [
     { nameEn: "Smart", nameKo: "똑똑한", highestTrait: "intellect", lowestTrait: "none" }
 ];
 
-const statList = ["agility", "strength", "focus", "intellect"];
-
 document.addEventListener("DOMContentLoaded", function () {
     for (let i = 0; i < dragonList.length; i++) {
-        let newOption = document.createElement("option");
+        const newOption = document.createElement("option");
         newOption.setAttribute("value", dragonList[i].name[0]);
         newOption.textContent = dragonList[i].name[1];
         document.querySelector("#dragon-selector").append(newOption);
     }
 
     for (let i = 0; i < normalTraits.length; i++) {
-        let newOption = document.createElement("option");
+        const newOption = document.createElement("option");
         newOption.setAttribute("value", normalTraits[i].nameEn);
         newOption.textContent = normalTraits[i].nameKo;
         document.querySelector("#normal-trait-selector").append(newOption);
     }
 
     for (let i = 0; i < specialTraits.length; i++) {
-        let newOption = document.createElement("option");
+        const newOption = document.createElement("option");
         newOption.setAttribute("value", specialTraits[i].nameEn);
         if (newOption.value == "Dull") newOption.setAttribute("id", specialTraits[i].nameEn);
         newOption.textContent = specialTraits[i].nameKo;
