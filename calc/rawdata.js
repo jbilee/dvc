@@ -1,5 +1,6 @@
 const dragonList = [
     { name: ["Gaian", "가이안"], traitsEn: ["Bold", "Calm"], traitsKo: ["대담한", "차분한"], Bold: [0, 30, 10, 0], Calm: [5, 0, 20, 5] },
+    { name: ["Kangkang", "강강"], traitsEn: ["quickWitted", "Bold"], traitsKo: ["눈치빠른", "대담한"], quickWitted: [25, 0, 0, 5], Bold: [0, 25, 0, 5] },
     { name: ["Gautling-Gon", "개틀링곤"], traitsEn: ["Quiet", "Bold"], traitsKo: ["냉정한", "대담한"], Quiet: [0, 5, 20, 5], Bold: [0, 20, 0, 10] },
     { name: ["Girdletail Dragon", "거들테일"], traitsEn: ["Bold", "Rash"], traitsKo: ["대담한", "덜렁대는"], Bold: [10, 30, 0, 0], Rash: [25, 0, 0, 10] },
     { name: ["Gust", "거스트"], traitsEn: ["Hasty", "Adamant"], traitsKo: ["성급한", "고집있는"], Hasty: [25, 10, 10, 0], Adamant: [5, 20, 5, 0] },
@@ -36,6 +37,7 @@ const dragonList = [
     { name: ["Deva", "데바"], traitsEn: ["Adamant", "Quiet"], traitsKo: ["고집있는", "냉정한"], Adamant: [5, 20, 5, 0], Quiet: [0, 5, 20, 5] },
     { name: ["Devared", "데바레드"], traitsEn: ["Brave", "Smart"], traitsKo: ["용감한", "똑똑한"], Brave: [0, 20, 5, 5], Smart: [10, 0, 0, 20] },
     { name: ["Devilgon", "데빌곤"], traitsEn: ["Quiet", "Adamant"], traitsKo: ["냉정한", "고집있는"], Quiet: [0, 10, 20, 10], Adamant: [10, 25, 10, 0] },
+    { name: ["Caretaker God Dragon", "돌보미 고대신룡"], traitsEn: ["Brave", "Docile"], traitsKo: ["용감한", "온순한"], Brave: [0, 25, 10, 10], Docile: [0, 10, 10, 30] },
     { name: ["Dupen", "듀펜"], traitsEn: ["Bold", "Quiet"], traitsKo: ["대담한", "냉정한"], Bold: [0, 30, 5, 0], Quiet: [0, 10, 30, 10] },
     { name: ["Dragonoid", "드라고노이드"], traitsEn: ["quickWitted", "Smart"], traitsKo: ["눈치빠른", "똑똑한"], quickWitted: [20, 10, 0, 0], Smart: [10, 0, 0, 30] },
     { name: ["Dragonoid Soul", "드라고노이드소울"], traitsEn: ["Quiet", "Smart"], traitsKo: ["냉정한", "똑똑한"], Quiet: [0, 10, 20, 10], Smart: [0, 0, 5, 30] },
@@ -139,6 +141,7 @@ const dragonList = [
     { name: ["Sura Dragon", "수라 드래곤"], traitsEn: ["Adamant", "Bold"], traitsKo: ["고집있는", "대담한"], Adamant: [5, 20, 5, 0], Bold: [0, 20, 10, 0] },
     { name: ["Water Dragon", "수룡"], traitsEn: ["Docile", "Naive"], traitsKo: ["온순한", "천진난만한"], Docile: [0, 10, 10, 20], Naive: [20, 0, 10, 10] },
     { name: ["Surtr", "수르트"], traitsEn: ["Hasty", "Adamant"], traitsKo: ["성급한", "고집있는"], Hasty: [30, 10, 10, 0], Adamant: [15, 30, 15, 0] },
+    { name: ["Sullae", "술래"], traitsEn: ["Adamant", "Quirky"], traitsKo: ["고집있는", "변덕쟁이"], Adamant: [10, 25, 10, 0], Quirky: [10, 30, 0, 10] },
     { name: ["Smart Dragon", "스마트"], traitsEn: ["Smart", "Docile"], traitsKo: ["똑똑한", "온순한"], Smart: [0, 10, 0, 20], Docile: [0, 5, 5, 20] },
     { name: ["Swamp Dragon", "스왐프"], traitsEn: ["Calm", "Docile"], traitsKo: ["차분한", "온순한"], Calm: [5, 0, 20, 5], Docile: [0, 5, 5, 20] },
     { name: ["Sky Lancer", "스카이랜서"], traitsEn: ["Quiet", "Brave"], traitsKo: ["냉정한", "용감한"], Quiet: [0, 10, 20, 10], Brave: [0, 30, 15, 15] },
