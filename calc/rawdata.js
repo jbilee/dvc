@@ -308,27 +308,3 @@ const normalTraits = [
     { nameEn: "Lax", nameKo: "촐랑대는", highestTrait: "intellect", lowestTrait: "focus" },
     { nameEn: "Smart", nameKo: "똑똑한", highestTrait: "intellect", lowestTrait: "none" }
 ];
-
-document.addEventListener("DOMContentLoaded", function () {
-    for (let i = 0; i < dragonList.length; i++) {
-        const newOption = document.createElement("option");
-        newOption.setAttribute("value", dragonList[i].name[0]);
-        newOption.textContent = dragonList[i].name[1];
-        document.querySelector("#dragon-selector").append(newOption);
-    }
-
-    for (let i = 0; i < normalTraits.length; i++) {
-        const newOption = document.createElement("option");
-        newOption.setAttribute("value", normalTraits[i].nameEn);
-        newOption.textContent = normalTraits[i].nameKo;
-        document.querySelector("#normal-trait-selector").append(newOption);
-    }
-
-    for (let i = 0; i < specialTraits.length; i++) {
-        const newOption = document.createElement("option");
-        newOption.setAttribute("value", specialTraits[i].nameEn);
-        if (newOption.value == "Dull") newOption.setAttribute("id", specialTraits[i].nameEn);
-        newOption.textContent = specialTraits[i].nameKo;
-        document.querySelector("#special-trait-selector").append(newOption);
-    }
-});

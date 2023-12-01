@@ -6,8 +6,8 @@ class Stats {
         this.intellect = intellect;
     }
 
-    getMaxTrait() {
-        const maxVal = this.getMaxVal();
+    getMaxStatName() {
+        const maxVal = this.getMaxStatValue();
         const maxTraits = [];
         if (this.agility === maxVal) maxTraits.push("agility");
         if (this.strength === maxVal) maxTraits.push("strength");
@@ -16,8 +16,8 @@ class Stats {
         return maxTraits;
     }
 
-    getMinTrait() {
-        const minVal = this.getMinVal();
+    getMinStatName() {
+        const minVal = this.getMinStatValue();
         const minTraits = [];
         if (this.agility === minVal) minTraits.push("agility");
         if (this.strength === minVal) minTraits.push("strength");
@@ -26,11 +26,11 @@ class Stats {
         return minTraits;
     }
 
-    getMaxVal() {
+    getMaxStatValue() {
         return Math.max(this.agility, this.strength, this.focus, this.intellect);
     }
 
-    getMinVal() {
+    getMinStatValue() {
         return Math.min(this.agility, this.strength, this.focus, this.intellect);
     }
 

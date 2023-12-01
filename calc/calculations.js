@@ -9,20 +9,6 @@ const STAT_LISTS = {
     end: ["#end-agility", "#end-strength", "#end-focus", "#end-intellect"]
 }
 
-const adjustments = new Map([
-    [8, 9],
-    [13, 14],
-    [16, 18],
-    [20, 21],
-    [26, 27],
-    [28, 27],
-    [31, 32],
-    [33, 32],
-    [40, 41], // remove if gives invalid training
-    [125, 126],
-    [130, 131],
-]);
-
 const ADJUSTMENTS = {
     regular: new Map([
         [8, 9],
@@ -154,13 +140,13 @@ function selectSpecialTrait(e) {
                 const curFocus = base.focus;
                 const goal = copyStats(base);
                 if (curFocus === 15) {
-                    const zeroTrait = getFirstKeyByValue(base, 0);
+                    const zeroTrait = getFirstKeyByValue(base, 0); // Will cause error if lowest stat isn't 0 (such as when user enters values themselves)
                     const remainingTraits = STAT_LISTS.base.filter((x) => x !== zeroTrait && x !== "focus");
                     const changesToMake = compareTrainingCounts(base, remainingTraits, [30, 45]);
                     changesToMake.forEach((change) => {
                         goal[change.traitName] = change.value;
                     });
-                    const highestGoal = goal.getMaxTrait();
+                    const highestGoal = goal.getMaxStatName();
                     if (goal[highestGoal] - base[highestGoal] > 30) {
                         goal[highestGoal] = 46;
                     }
@@ -173,7 +159,7 @@ function selectSpecialTrait(e) {
                     changesToMake.forEach((change) => {
                         goal[change.traitName] = change.value;
                     });
-                    const highestGoal = goal.getMaxTrait();
+                    const highestGoal = goal.getMaxStatName();
                     if (goal[highestGoal] - base[highestGoal] > 30) {
                         goal[highestGoal] = 46;
                     }
@@ -258,7 +244,7 @@ function selectSpecialTrait(e) {
                     changesToMake.forEach((change) => {
                         goal[change.traitName] = change.value;
                     });
-                    const highestGoal = goal.getMaxTrait();
+                    const highestGoal = goal.getMaxStatName();
                     if (goal[highestGoal] - base[highestGoal] >= 40 && goal[highestGoal] - base[highestGoal] < 45) {
                         goal[highestGoal] = 51;
                     }
@@ -268,13 +254,21 @@ function selectSpecialTrait(e) {
             }
 
         case "Immersed":
-            for (let i = 0; i < STAT_COUNT; i++) {
-                document.querySelector(STAT_LISTS.end[i]).value = specialTraits[traitIndex].stats[i];
+            {
+                const goal = copyStats(base);
+                const highestValue = base.getMaxStatValue();
+                const highestTrait = getFirstKeyByValue(base, highestValue);
+                const difference = 150 - highestValue;
+                
+                if (ADJUSTMENTS.regular.has(difference)) {
+                    goal[highestTrait] = base[highestTrait] + ADJUSTMENTS.regular.get(difference);
+                    return printStatFields(goal, "#end-");
+                }
+ 
+                goal[highestTrait] = base[highestTrait] + difference;
+                printStatFields(goal, "#end-");
+                break;
             }
-
-            let highestEnd = "#end-".concat(STAT_LISTS.base[baseStats.indexOf(Math.max(...baseStats))]);
-            document.querySelector(highestEnd).value = 150;
-            break;
 
         case "Dull":
             maxValue = Math.max(...baseStats);
@@ -406,15 +400,15 @@ function optimizeAll(base, change, highest, lowest) {
     const newStats = copyStats(change);
     for (const stat in newStats) {
         const curValue = newStats[stat];
-        if (adjustments.has(curValue)) {
+        if (ADJUSTMENTS.regular.has(curValue)) {
             // try inserting new value
-            newStats[stat] = adjustments.get(curValue);
+            newStats[stat] = ADJUSTMENTS.regular.get(curValue);
             // replace value and see if highest of stats and lowest of stats changed (compare newStats highest and lowest using getMax and getMin)
         }
     }
     const application = getStatSum(base, newStats);
-    const newMax = application.getMaxTrait();
-    const newMin = application.getMinTrait();
+    const newMax = application.getMaxStatName();
+    const newMin = application.getMinStatName();
     if (newMax.length === 1 && newMin.length === 1 && newMax.includes(highest) && newMin.includes(lowest)) return newStats;
     return change;
 }
@@ -423,12 +417,12 @@ function optimizeHighest(base, change, targetTrait) {
     const newStats = copyStats(change);
     for (const stat in newStats) {
         const curValue = newStats[stat];
-        if (adjustments.has(curValue)) {
-            newStats[stat] = adjustments.get(curValue);
+        if (ADJUSTMENTS.regular.has(curValue)) {
+            newStats[stat] = ADJUSTMENTS.regular.get(curValue);
         }
     }
     const application = getStatSum(base, newStats);
-    const newMax = application.getMaxTrait();
+    const newMax = application.getMaxStatName();
     if (newMax.length === 1 && newMax.includes(targetTrait)) return newStats;
     return change;
 }
@@ -494,7 +488,7 @@ function calcTwentyFive(curStats) {
 // Will always return one lowest trait
 function calcSingleLowest(curStats, lowestReq) {
     const newStats = copyStats(curStats);
-    const baseMinTrait = curStats.getMinTrait();
+    const baseMinTrait = curStats.getMinStatName();
     const reqVal = curStats[lowestReq];
 
     if (baseMinTrait.length === 1 && baseMinTrait[0] === lowestReq) return newStats;
@@ -518,8 +512,8 @@ function calcDoubleLowest(curStats, array) {
 // Always returns one highest trait
 function calcSingleHighest(curStats, highestReq) {
     const newStats = copyStats(curStats);
-    const baseMaxTrait = curStats.getMaxTrait();
-    const baseMaxValue = curStats.getMaxVal();
+    const baseMaxTrait = curStats.getMaxStatName();
+    const baseMaxValue = curStats.getMaxStatValue();
     const includesReq = baseMaxTrait.includes(highestReq);
 
     if (baseMaxTrait.length === 1 && includesReq) return newStats;
@@ -634,8 +628,8 @@ class Stats {
         this.intellect = intellect;
     }
 
-    getMaxTrait() {
-        const maxVal = this.getMaxVal();
+    getMaxStatName() {
+        const maxVal = this.getMaxStatValue();
         const maxTraits = [];
         if (this.agility === maxVal) maxTraits.push("agility");
         if (this.strength === maxVal) maxTraits.push("strength");
@@ -644,8 +638,8 @@ class Stats {
         return maxTraits;
     }
 
-    getMinTrait() {
-        const minVal = this.getMinVal();
+    getMinStatName() {
+        const minVal = this.getMinStatValue();
         const minTraits = [];
         if (this.agility === minVal) minTraits.push("agility");
         if (this.strength === minVal) minTraits.push("strength");
@@ -654,11 +648,11 @@ class Stats {
         return minTraits;
     }
 
-    getMaxVal() {
+    getMaxStatValue() {
         return Math.max(this.agility, this.strength, this.focus, this.intellect);
     }
 
-    getMinVal() {
+    getMinStatValue() {
         return Math.min(this.agility, this.strength, this.focus, this.intellect);
     }
 

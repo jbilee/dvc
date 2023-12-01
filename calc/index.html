@@ -23,6 +23,31 @@
     <link rel="icon" href="../images/favicon.png">
     <link rel="stylesheet" href="dvccalculator.css">
     <script src="rawdata.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            for (let i = 0; i < dragonList.length; i++) {
+                const newOption = document.createElement("option");
+                newOption.setAttribute("value", dragonList[i].name[0]);
+                newOption.textContent = dragonList[i].name[1];
+                document.querySelector("#dragon-selector").append(newOption);
+            }
+
+            for (let i = 0; i < normalTraits.length; i++) {
+                const newOption = document.createElement("option");
+                newOption.setAttribute("value", normalTraits[i].nameEn);
+                newOption.textContent = normalTraits[i].nameKo;
+                document.querySelector("#normal-trait-selector").append(newOption);
+            }
+
+            for (let i = 0; i < specialTraits.length; i++) {
+                const newOption = document.createElement("option");
+                newOption.setAttribute("value", specialTraits[i].nameEn);
+                if (newOption.value == "Dull") newOption.setAttribute("id", specialTraits[i].nameEn);
+                newOption.textContent = specialTraits[i].nameKo;
+                document.querySelector("#special-trait-selector").append(newOption);
+            }
+        });
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
