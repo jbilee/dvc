@@ -1,11 +1,14 @@
 // import Stats from "./statscl.js"
 
-const BASEINCREMENT = 3;
-const STATCOUNT = 4;
-const trainValues = [3, 5, 9];
-const statList = ["agility", "strength", "focus", "intellect"];
+const BASE_INCREMENT = 3;
+const STAT_COUNT = 4;
+const TRAIN_VALUES = [3, 5, 9];
+const STAT_LISTS = {
+    base: ["agility", "strength", "focus", "intellect"],
+    start: ["#start-agility", "#start-strength", "#start-focus", "#start-intellect"],
+    end: ["#end-agility", "#end-strength", "#end-focus", "#end-intellect"]
+}
 
-let reqAgility, reqStrength, reqFocus, reqIntellect;
 const adjustments = new Map([
     [8, 9],
     [13, 14],
@@ -15,24 +18,46 @@ const adjustments = new Map([
     [28, 27],
     [31, 32],
     [33, 32],
+    [40, 41], // remove if gives invalid training
     [125, 126],
     [130, 131],
 ]);
 
+const ADJUSTMENTS = {
+    regular: new Map([
+        [8, 9],
+        [13, 14],
+        [16, 18],
+        [20, 21],
+        [26, 27],
+        [28, 27],
+        [31, 32],
+        [33, 32],
+        [40, 41], // remove if gives invalid training
+        [125, 126],
+        [130, 131],
+    ]),
+    twenties: new Map([
+        [0, 27],
+        [5, 23],
+        [10, 20],
+        [15, 20],
+    ]),
+};
+
 // Attach event listeners to base stat input fields (to disable/enable dull trait)
-for (const stat of statList) {
+for (const stat of STAT_LISTS.base) {
     const field = document.getElementById(`start-${stat}`);
     field.addEventListener("change", detectBase);
 }
 
-function detectBase() {
-    if (event.target.value <= 25) return enableDull();
+function detectBase(e) {
+    if (e.target.value <= 25) return enableDull();
     else disableDull();
 }
 
 function selectDragon() {
     // Initialize variables
-    const baseStats = ["#start-agility", "#start-strength", "#start-focus", "#start-intellect"];
     const firstTrait = document.querySelector("#trait1");
     const secondTrait = document.querySelector("#trait2");
     const dragonName = document.querySelector("#dragon-selector").value;
@@ -43,7 +68,7 @@ function selectDragon() {
 
     // Reset previously selected base stat values and trait
     document.querySelector("#start-trait-selector").selectedIndex = 0;
-    baseStats.forEach(stat => document.querySelector(stat).value = 0);
+    STAT_LISTS.start.forEach(stat => document.querySelector(stat).value = 0);
 
     // Fill in trait dropdown choices
     firstTrait.textContent = dragonList[dragonIndex].traitsKo[0];
@@ -53,32 +78,29 @@ function selectDragon() {
 }
 
 // Print the selected dragon's base stats 
-function selectStartTrait() {
-    const traitSelected = event.target.value;
+function selectStartTrait(e) {
+    const traitSelected = e.target.value;
     const dragonName = document.querySelector("#dragon-selector").value;
     const dragonIndex = dragonList.findIndex((dragons) => { return dragons.name[0] === dragonName; });
-    const baseStats = ["#start-agility", "#start-strength", "#start-focus", "#start-intellect"];
 
     // Fill in base stats
-    baseStats.forEach((stat, i) => document.querySelector(stat).value = dragonList[dragonIndex][traitSelected][i]);
+    STAT_LISTS.start.forEach((stat, i) => document.querySelector(stat).value = dragonList[dragonIndex][traitSelected][i]);
 
     // Disable selector for end traits where applicable
     unavailabilityCheck(dragonIndex, traitSelected);
 }
 
 // Print recommended end stats for selected special trait
-function selectSpecialTrait() {
-    const traitSelected = event.target.value;
+function selectSpecialTrait(e) {
+    const traitSelected = e.target.value;
     const traitIndex = specialTraits.findIndex((traits) => { return traits.nameEn === traitSelected; });
     let baseStats = [];
-    const startStats = ["#start-agility", "#start-strength", "#start-focus", "#start-intellect"];
-    const endStats = ["#end-agility", "#end-strength", "#end-focus", "#end-intellect"];
     let maxValue;
 
     // Store dragon's base stats
     const base = getStatFields("#start-");
-    for (let i = 0; i < STATCOUNT; i++) {
-        baseStats[i] = Number(document.querySelector(startStats[i]).value);
+    for (let i = 0; i < STAT_COUNT; i++) {
+        baseStats[i] = Number(document.querySelector(STAT_LISTS.start[i]).value);
     }
 
     switch (traitSelected) {
@@ -95,61 +117,140 @@ function selectSpecialTrait() {
         case "Distracted":
             {
                 const curFocus = base.focus;
-                const goal = new Stats();
+                const goal = copyStats(base);
                 if (curFocus === 15) {
-                    const zeroTrait = [getFirstKeyByValue(base, 0), 0];
-                    const rest = statList.filter((x) => {
-                        if (x !== zeroTrait[0] && x !== "focus") return x;
+                    const zeroTrait = getFirstKeyByValue(base, 0);
+                    const remainingTraits = STAT_LISTS.base.filter((x) => x !== zeroTrait && x !== "focus");
+                    const changesToMake = compareTrainingCounts(base, remainingTraits, [30, 45]);
+                    changesToMake.forEach((change) => {
+                        goal[change.traitName] = change.value;
                     });
-                    const middletest = [rest[0], base[rest[0]]];
-                    const hightest = [rest[1], base[rest[1]]];
-                    console.log(zeroTrait)
-                    console.log(middletest)
-                    console.log(hightest)
-                    console.log("------")
-                    console.log(compareTraining(middletest[1], hightest[1]));
+                    const highestGoal = goal.getMaxTrait();
+                    if (goal[highestGoal] - base[highestGoal] > 30) {
+                        goal[highestGoal] = 46;
+                    }
+                    printStatFields(goal, "#end-");
                 }
                 if (curFocus === 30) {
-                    // get zero
-                    const zeroTrait = { trait: getFirstKeyByValue(base, 0), value: 0 };
-                    // find the remaining two
-                    let remainingTraits = statList.filter((x) => {
-                        if (x !== zeroTrait.trait && x !== "focus") return x;
+                    const zeroTrait = getFirstKeyByValue(base, 0);
+                    const remainingTraits = STAT_LISTS.base.filter((x) => x !== zeroTrait && x !== "focus");
+                    const changesToMake = compareTrainingCounts(base, remainingTraits, [15, 45]); // This line needs to be refactored if any of the other stats is bigger than 15
+                    changesToMake.forEach((change) => {
+                        goal[change.traitName] = change.value;
                     });
-                    // is one of the remaining two a 15?
-                    if (getFirstKeyByValue(base, 15)) {
-                        const fifteenTrait = getFirstKeyByValue(base, 15);
-                        goal[fifteenTrait] = 15;
-                        remainingTraits = remainingTraits.filte((x) => {
-                            if (x !== fifteenTrait) return x;
-                        });
-                        goal[remainingTraits] = 45;
+                    const highestGoal = goal.getMaxTrait();
+                    if (goal[highestGoal] - base[highestGoal] > 30) {
+                        goal[highestGoal] = 46;
                     }
-                    else console.log("15 doesn't exist")
-                    console.log(goal)
+                    printStatFields(goal, "#end-");
+                }
+                if (curFocus < 14) {
+                    const goals = [curFocus + 15, curFocus + 30, curFocus + 45];
+                    const excludedValues = [];
+                    const excludedTraits = [];
+                    for (let i = 0; i < goals.length; i++) {
+                        if (Object.values(base).includes(goals[i])) {
+                            excludedValues.push(goals[i]);
+                            excludedTraits.push(getFirstKeyByValue(base, goals[i]));
+                        }
+                    }
+                    let keptValues = goals.filter((x) => !excludedValues.includes(x));
+                    const remainingTraits = STAT_LISTS.base.filter((x) => !excludedTraits.includes(x) && x !== "focus");
+                    if (remainingTraits.length === 1) {
+                        goal[remainingTraits[0]] = keptValues[0];
+                        return printStatFields(goal, "#end-");
+                    }
+                    if (remainingTraits.length === 2) {
+                        const changesToMake = compareTrainingCounts(base, remainingTraits, keptValues);
+                        changesToMake.forEach((change) => {
+                            goal[change.traitName] = change.value;
+                        });
+                        return printStatFields(goal, "#end-");
+                    }
+
+                    // if (keptValues.includes(25)) {
+                    //     keptValues = [27, 45, 60]; // find cases where this may be better
+                    // }
+
+                    for (let i = 0; i < keptValues.length; i++) {
+                        const diffOne = keptValues[i] - base[remainingTraits[0]];
+                        const diffTwo = keptValues[i] - base[remainingTraits[1]];
+                        const diffThree = keptValues[i] - base[remainingTraits[2]];
+
+                        if (diffOne === 45 || diffOne === 10) {
+                            goal[remainingTraits[0]] = keptValues[i];
+                            remainingTraits.splice(0, 1);
+                            keptValues.splice(i, 1);
+                            break;
+                        }
+                        if (diffTwo === 45 || diffTwo === 10) {
+                            goal[remainingTraits[1]] = keptValues[i];
+                            remainingTraits.splice(1, 1);
+                            keptValues.splice(i, 1);
+                            break;
+                        }
+                        if (diffThree === 45 || diffThree === 10) {
+                            goal[remainingTraits[2]] = keptValues[i];
+                            remainingTraits.splice(2, 1);
+                            keptValues.splice(i, 1);
+                            break;
+                        }
+                    }
+
+                    if (remainingTraits.length === 3) {
+                        const lastValue = keptValues.pop();
+                        const lastTrait = remainingTraits.pop();
+                        goal[lastTrait] = lastValue;
+
+                        const changesToMake = compareTrainingCounts(base, remainingTraits, keptValues);
+                        changesToMake.forEach((change) => {
+                            goal[change.traitName] = change.value;
+                        });
+                        printStatFields(goal, "#end-");
+                    } else {
+                        const changesToMake = compareTrainingCounts(base, remainingTraits, keptValues);
+                        changesToMake.forEach((change) => {
+                            goal[change.traitName] = change.value;
+                        });
+                        printStatFields(goal, "#end-");
+                    }
+                }
+                if (curFocus > 15 && curFocus < 30) {
+                    const zeroTrait = getFirstKeyByValue(base, 0);
+                    const remainingTraits = STAT_LISTS.base.filter((x) => x !== zeroTrait && x !== "focus");
+                    const goals = [curFocus + 15, curFocus + 30];
+                    const changesToMake = compareTrainingCounts(base, remainingTraits, goals);
+                    changesToMake.forEach((change) => {
+                        goal[change.traitName] = change.value;
+                    });
+                    const highestGoal = goal.getMaxTrait();
+                    if (goal[highestGoal] - base[highestGoal] >= 40 && goal[highestGoal] - base[highestGoal] < 45) {
+                        goal[highestGoal] = 51;
+                    }
+                    printStatFields(goal, "#end-");
                 }
                 break;
             }
 
         case "Immersed":
-            for (let i = 0; i < STATCOUNT; i++) {
-                document.querySelector(endStats[i]).value = specialTraits[traitIndex].stats[i];
+            for (let i = 0; i < STAT_COUNT; i++) {
+                document.querySelector(STAT_LISTS.end[i]).value = specialTraits[traitIndex].stats[i];
             }
 
-            let highestEnd = "#end-".concat(statList[baseStats.indexOf(Math.max(...baseStats))]);
+            let highestEnd = "#end-".concat(STAT_LISTS.base[baseStats.indexOf(Math.max(...baseStats))]);
             document.querySelector(highestEnd).value = 150;
             break;
 
         case "Dull":
             maxValue = Math.max(...baseStats);
             if (maxValue <= 20) {
-                for (let i = 0; i < STATCOUNT; i++) {
-                    document.querySelector(endStats[i]).value = specialTraits[traitIndex].stats[i];
+                for (let i = 0; i < STAT_COUNT; i++) {
+                    document.querySelector(STAT_LISTS.end[i]).value = specialTraits[traitIndex].stats[i];
                 }
             }
             else {
-                for (let i = 0; i < STATCOUNT; i++) {
-                    document.querySelector(endStats[i]).value = 25;
+                for (let i = 0; i < STAT_COUNT; i++) {
+                    document.querySelector(STAT_LISTS.end[i]).value = 25;
                 }
             }
             break;
@@ -157,27 +258,51 @@ function selectSpecialTrait() {
         case "Capable":
             maxValue = Math.max(...baseStats);
             if (maxValue < 30) {
-                for (let i = 0; i < STATCOUNT; i++) {
-                    document.querySelector(endStats[i]).value = specialTraits[traitIndex].stats[i];
+                for (let i = 0; i < STAT_COUNT; i++) {
+                    document.querySelector(STAT_LISTS.end[i]).value = specialTraits[traitIndex].stats[i];
                 }
             }
             else {
-                for (let i = 0; i < STATCOUNT; i++) {
-                    document.querySelector(endStats[i]).value = 30;
+                for (let i = 0; i < STAT_COUNT; i++) {
+                    document.querySelector(STAT_LISTS.end[i]).value = 30;
                 }
             }
             break;
 
         default:
-            for (let i = 0; i < STATCOUNT; i++) {
-                document.querySelector(endStats[i]).value = specialTraits[traitIndex].stats[i];
+            for (let i = 0; i < STAT_COUNT; i++) {
+                document.querySelector(STAT_LISTS.end[i]).value = specialTraits[traitIndex].stats[i];
             }
+    }
+}
+
+function compareTrainingCounts(base, traits, goals) {
+    const firstComboOne = calculateTrainCount(goals[0] - base[traits[0]], TRAIN_VALUES);
+    const firstComboTwo = calculateTrainCount(goals[1] - base[traits[1]], TRAIN_VALUES);
+
+    const secondComboOne = calculateTrainCount(goals[1] - base[traits[0]], TRAIN_VALUES);
+    const secondComboTwo = calculateTrainCount(goals[0] - base[traits[1]], TRAIN_VALUES);
+
+    if (!firstComboOne || !firstComboTwo) {
+        return [{ traitName: traits[0], value: goals[1]}, { traitName: traits[1], value: goals[0]}];
+    }
+    if (!secondComboOne || !secondComboTwo) {
+        return [{ traitName: traits[0], value: goals[0]}, { traitName: traits[1], value: goals[1]}];
+    }
+
+    const firstComboCounts = firstComboOne.length + firstComboTwo.length;
+    const secondComboCounts = secondComboOne.length + secondComboTwo.length;
+
+    if (firstComboCounts < secondComboCounts) {
+        return [{ traitName: traits[0], value: goals[0]}, { traitName: traits[1], value: goals[1]}];
+    } else {
+        return [{ traitName: traits[0], value: goals[1]}, { traitName: traits[1], value: goals[0]}];
     }
 }
 
 function getStatFields(prefix) {
     const values = new Stats();
-    for (const stat of statList) {
+    for (const stat of STAT_LISTS.base) {
         values[stat] = Number(document.querySelector(`${prefix}${stat}`).value);
     }
     return values;
@@ -194,11 +319,11 @@ function getFirstKeyByValue(obj, value) {
 }
 
 // Print recommended end stats for selected normal trait
-function selectNormalTrait() {
+function selectNormalTrait(e) {
     // Store dragon's base stats
     const base = getStatFields("#start-");
 
-    const traitSelected = event.target.value;
+    const traitSelected = e.target.value;
     const traitIndex = normalTraits.findIndex((trait) => { return trait.nameEn === traitSelected; });
     const highestReq = normalTraits[traitIndex].highestTrait;
     const lowestReq = normalTraits[traitIndex].lowestTrait;
@@ -291,7 +416,7 @@ function copyStats(object) {
 
 function getStatDifference(a, b) {
     const sub = new Stats();
-    for (const stat of statList) {
+    for (const stat of STAT_LISTS.base) {
         sub[stat] = Math.abs(a[stat] - b[stat]);
     }
     return sub;
@@ -299,7 +424,7 @@ function getStatDifference(a, b) {
 
 function getStatSum(a, b) {
     const sum = new Stats();
-    for (const stat of statList) {
+    for (const stat of STAT_LISTS.base) {
         sum[stat] = a[stat] + b[stat];
     }
     return sum;
@@ -314,7 +439,7 @@ function calcSingleLowest(curStats, lowestReq) {
     if (baseMinTrait.length === 1 && baseMinTrait[0] === lowestReq) return newStats;
     for (const stat in curStats) {
         if (stat === lowestReq) continue;
-        if (curStats[stat] <= reqVal) newStats[stat] = reqVal + BASEINCREMENT;
+        if (curStats[stat] <= reqVal) newStats[stat] = reqVal + BASE_INCREMENT;
     }
     return newStats;
 }
@@ -337,15 +462,19 @@ function calcSingleHighest(curStats, highestReq) {
     const includesReq = baseMaxTrait.includes(highestReq);
 
     if (baseMaxTrait.length === 1 && includesReq) return newStats;
-    if (baseMaxTrait.length > 1 && includesReq || baseMaxTrait[0] !== highestReq) newStats[highestReq] = baseMaxValue + BASEINCREMENT;
+    if (baseMaxTrait.length > 1 && includesReq || baseMaxTrait[0] !== highestReq) newStats[highestReq] = baseMaxValue + BASE_INCREMENT;
     return newStats;
 }
 
 function calculate() {
-    printTrainingCount("agility");
-    printTrainingCount("strength");
-    printTrainingCount("focus");
-    printTrainingCount("intellect");
+    try {
+        printTrainingCount("agility");
+        printTrainingCount("strength");
+        printTrainingCount("focus");
+        printTrainingCount("intellect");
+    } catch(e) {
+        alert("만들 수 없는 숫자예요! 목표치를 더 높게 설정해주세요.");
+    }
 }
 
 function printTrainingCount(traitType) {
@@ -358,7 +487,7 @@ function printTrainingCount(traitType) {
         document.querySelector(`#required-${traitType}`).textContent = "+" + reqStat;
     }
 
-    const trainCount = calculateTrainCount(reqStat, trainValues);
+    const trainCount = calculateTrainCount(reqStat, TRAIN_VALUES);
     let trainText;
 
     if (trainCount[5] === 9) {
@@ -419,16 +548,14 @@ function enableDull() {
 function unavailabilityCheck(dragonIndex, traitSelected) {
     if (dragonList[dragonIndex][traitSelected].findIndex((item) => item > 25) === -1) return enableDull();
 
-    for (let i = 0; i < STATCOUNT; i++) {
+    for (let i = 0; i < STAT_COUNT; i++) {
         if (dragonList[dragonIndex][traitSelected][i] > 25) return disableDull();
     }
 }
 
 function reset() {
-    let endStats = ["#end-agility", "#end-strength", "#end-focus", "#end-intellect"];
-
-    for (let i = 0; i < STATCOUNT; i++) {
-        document.querySelector(endStats[i]).value = 0;
+    for (let i = 0; i < STAT_COUNT; i++) {
+        document.querySelector(STAT_LISTS.end[i]).value = 0;
     }
 
     document.querySelector("#special-trait-selector").selectedIndex = 0;
@@ -437,7 +564,7 @@ function reset() {
 
 
 
-
+// Delete later
 class Stats {
     constructor(agility = 0, strength = 0, focus = 0, intellect = 0) {
         this.agility = agility;
