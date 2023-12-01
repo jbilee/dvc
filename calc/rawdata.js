@@ -218,6 +218,7 @@ const dragonList = [
     { name: ["Cupi Friend", "큐피프렌드"], traitsEn: ["Brave", "Hardy"], traitsKo: ["용감한", "노력하는"], Brave: [0, 20, 5, 5], Hardy: [0, 0, 25, 0] },
     { name: ["Crested Dragon", "크레스티드"], traitsEn: ["Lax", "quickWitted"], traitsKo: ["촐랑대는", "눈치빠른"], Lax: [5, 5, 0, 20], quickWitted: [20, 5, 0, 0] },
     { name: ["Crookers", "크룩커스"], traitsEn: ["quickWitted", "Docile"], traitsKo: ["눈치빠른", "온순한"], quickWitted: [20, 5, 0, 0], Docile: [0, 10, 10, 20] },
+    { name: ["Clavis", "클라비스"], traitsEn: ["Adamant", "Quirky"], traitsKo: ["고집있는", "변덕쟁이"], Adamant: [10, 20, 10, 0], Quirky: [10, 25, 0, 10] },
     { name: ["Cloud Dragon", "클라우드"], traitsEn: ["Hasty", "Quirky"], traitsKo: ["성급한", "변덕쟁이"], Hasty: [20, 5, 5, 0], Quirky: [10, 25, 0, 10] },
     { name: ["Taros", "타로스"], traitsEn: ["quickWitted", "Quiet"], traitsKo: ["눈치빠른", "냉정한"], quickWitted: [20, 0, 10, 0], Quiet: [0, 10, 30, 10] },
     { name: ["Taabire", "타아비레"], traitsEn: ["Quiet", "Brave"], traitsKo: ["냉정한", "용감한"], Quiet: [0, 10, 25, 10], Brave: [0, 20, 10, 10] },
