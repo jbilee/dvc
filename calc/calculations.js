@@ -3,7 +3,6 @@
 const BASE_INCREMENT = 3;
 const STAT_COUNT = 4;
 const TRAIN_VALUES = [3, 5, 9];
-// const STAT_LISTS.base = ["agility", "strength", "focus", "intellect"];
 const STAT_LISTS = {
     base: ["agility", "strength", "focus", "intellect"],
     start: ["#start-agility", "#start-strength", "#start-focus", "#start-intellect"],
@@ -19,9 +18,32 @@ const adjustments = new Map([
     [28, 27],
     [31, 32],
     [33, 32],
+    [40, 41], // remove if gives invalid training
     [125, 126],
     [130, 131],
 ]);
+
+const ADJUSTMENTS = {
+    regular: new Map([
+        [8, 9],
+        [13, 14],
+        [16, 18],
+        [20, 21],
+        [26, 27],
+        [28, 27],
+        [31, 32],
+        [33, 32],
+        [40, 41], // remove if gives invalid training
+        [125, 126],
+        [130, 131],
+    ]),
+    twenties: new Map([
+        [0, 27],
+        [5, 23],
+        [10, 20],
+        [15, 20],
+    ]),
+};
 
 // Attach event listeners to base stat input fields (to disable/enable dull trait)
 for (const stat of STAT_LISTS.base) {
@@ -122,25 +144,90 @@ function selectSpecialTrait(e) {
                     }
                     printStatFields(goal, "#end-");
                 }
-                if (curFocus <= 10) {
+                if (curFocus < 14) {
                     const goals = [curFocus + 15, curFocus + 30, curFocus + 45];
                     const excludedValues = [];
                     const excludedTraits = [];
-                    for (let i = 0; i < goals.length; i++) {    
+                    for (let i = 0; i < goals.length; i++) {
                         if (Object.values(base).includes(goals[i])) {
                             excludedValues.push(goals[i]);
                             excludedTraits.push(getFirstKeyByValue(base, goals[i]));
                         }
                     }
-                    const keptValues = goals.filter((x) => !excludedValues.includes(x));
+                    let keptValues = goals.filter((x) => !excludedValues.includes(x));
                     const remainingTraits = STAT_LISTS.base.filter((x) => !excludedTraits.includes(x) && x !== "focus");
-                    console.log(keptValues)
-                    console.log(remainingTraits)
+                    if (remainingTraits.length === 1) {
+                        goal[remainingTraits[0]] = keptValues[0];
+                        return printStatFields(goal, "#end-");
+                    }
+                    if (remainingTraits.length === 2) {
+                        const changesToMake = compareTrainingCounts(base, remainingTraits, keptValues);
+                        changesToMake.forEach((change) => {
+                            goal[change.traitName] = change.value;
+                        });
+                        return printStatFields(goal, "#end-");
+                    }
+
+                    // if (keptValues.includes(25)) {
+                    //     keptValues = [27, 45, 60]; // find cases where this may be better
+                    // }
+
+                    for (let i = 0; i < keptValues.length; i++) {
+                        const diffOne = keptValues[i] - base[remainingTraits[0]];
+                        const diffTwo = keptValues[i] - base[remainingTraits[1]];
+                        const diffThree = keptValues[i] - base[remainingTraits[2]];
+
+                        if (diffOne === 45 || diffOne === 10) {
+                            goal[remainingTraits[0]] = keptValues[i];
+                            remainingTraits.splice(0, 1);
+                            keptValues.splice(i, 1);
+                            break;
+                        }
+                        if (diffTwo === 45 || diffTwo === 10) {
+                            goal[remainingTraits[1]] = keptValues[i];
+                            remainingTraits.splice(1, 1);
+                            keptValues.splice(i, 1);
+                            break;
+                        }
+                        if (diffThree === 45 || diffThree === 10) {
+                            goal[remainingTraits[2]] = keptValues[i];
+                            remainingTraits.splice(2, 1);
+                            keptValues.splice(i, 1);
+                            break;
+                        }
+                    }
+
+                    if (remainingTraits.length === 3) {
+                        const lastValue = keptValues.pop();
+                        const lastTrait = remainingTraits.pop();
+                        goal[lastTrait] = lastValue;
+
+                        const changesToMake = compareTrainingCounts(base, remainingTraits, keptValues);
+                        changesToMake.forEach((change) => {
+                            goal[change.traitName] = change.value;
+                        });
+                        printStatFields(goal, "#end-");
+                    } else {
+                        const changesToMake = compareTrainingCounts(base, remainingTraits, keptValues);
+                        changesToMake.forEach((change) => {
+                            goal[change.traitName] = change.value;
+                        });
+                        printStatFields(goal, "#end-");
+                    }
                 }
-                if (curFocus >= 20) {
+                if (curFocus > 15 && curFocus < 30) {
                     const zeroTrait = getFirstKeyByValue(base, 0);
                     const remainingTraits = STAT_LISTS.base.filter((x) => x !== zeroTrait && x !== "focus");
-
+                    const goals = [curFocus + 15, curFocus + 30];
+                    const changesToMake = compareTrainingCounts(base, remainingTraits, goals);
+                    changesToMake.forEach((change) => {
+                        goal[change.traitName] = change.value;
+                    });
+                    const highestGoal = goal.getMaxTrait();
+                    if (goal[highestGoal] - base[highestGoal] >= 40 && goal[highestGoal] - base[highestGoal] < 45) {
+                        goal[highestGoal] = 51;
+                    }
+                    printStatFields(goal, "#end-");
                 }
                 break;
             }
@@ -192,10 +279,18 @@ function selectSpecialTrait(e) {
 function compareTrainingCounts(base, traits, goals) {
     const firstComboOne = calculateTrainCount(goals[0] - base[traits[0]], TRAIN_VALUES);
     const firstComboTwo = calculateTrainCount(goals[1] - base[traits[1]], TRAIN_VALUES);
-    const firstComboCounts = firstComboOne.length + firstComboTwo.length;
 
     const secondComboOne = calculateTrainCount(goals[1] - base[traits[0]], TRAIN_VALUES);
     const secondComboTwo = calculateTrainCount(goals[0] - base[traits[1]], TRAIN_VALUES);
+
+    if (!firstComboOne || !firstComboTwo) {
+        return [{ traitName: traits[0], value: goals[1]}, { traitName: traits[1], value: goals[0]}];
+    }
+    if (!secondComboOne || !secondComboTwo) {
+        return [{ traitName: traits[0], value: goals[0]}, { traitName: traits[1], value: goals[1]}];
+    }
+
+    const firstComboCounts = firstComboOne.length + firstComboTwo.length;
     const secondComboCounts = secondComboOne.length + secondComboTwo.length;
 
     if (firstComboCounts < secondComboCounts) {
@@ -372,10 +467,14 @@ function calcSingleHighest(curStats, highestReq) {
 }
 
 function calculate() {
-    printTrainingCount("agility");
-    printTrainingCount("strength");
-    printTrainingCount("focus");
-    printTrainingCount("intellect");
+    try {
+        printTrainingCount("agility");
+        printTrainingCount("strength");
+        printTrainingCount("focus");
+        printTrainingCount("intellect");
+    } catch(e) {
+        alert("만들 수 없는 숫자예요! 목표치를 더 높게 설정해주세요.");
+    }
 }
 
 function printTrainingCount(traitType) {
