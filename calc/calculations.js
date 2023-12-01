@@ -37,11 +37,18 @@ const ADJUSTMENTS = {
         [125, 126],
         [130, 131],
     ]),
-    twenties: new Map([
+    twenty: new Map([
         [0, 27],
         [5, 23],
         [10, 20],
         [15, 20],
+    ]),
+    twentyFive: new Map([
+        [0, 27],
+        [5, 26],
+        [10, 28],
+        [15, 25],
+        [20, 25],
     ]),
 };
 
@@ -104,6 +111,34 @@ function selectSpecialTrait(e) {
     }
 
     switch (traitSelected) {
+        case "Perfectionist":
+            {
+                const final = new Stats(...calcTwenty(base));
+                printStatFields(final, "#end-");
+                break;
+            }
+
+        case "Classy":
+            {
+                const final = new Stats(...calcTwenty(base));
+                printStatFields(final, "#end-");
+                break;
+            }
+
+        case "Noble":
+            {
+                const final = new Stats(...calcTwenty(base));
+                printStatFields(final, "#end-");
+                break;
+            }
+
+        case "Arrogant":
+            {
+                const final = new Stats(...calcTwentyFive(base));
+                printStatFields(final, "#end-");
+                break;
+            }
+
         case "Meticulous":
             {
                 const startSum = base.getTotal();
@@ -428,6 +463,32 @@ function getStatSum(a, b) {
         sum[stat] = a[stat] + b[stat];
     }
     return sum;
+}
+
+function calcTwenty(curStats) {
+    const array = STAT_LISTS.base.map((stat) => curStats[stat]);
+
+    const final = array.map((stat) => {
+        if (ADJUSTMENTS.twenty.has(stat)) {
+            return ADJUSTMENTS.twenty.get(stat);
+        }
+        return stat;
+    });
+
+    return final;
+}
+
+function calcTwentyFive(curStats) {
+    const array = STAT_LISTS.base.map((stat) => curStats[stat]);
+
+    const final = array.map((stat) => {
+        if (ADJUSTMENTS.twentyFive.has(stat)) {
+            return ADJUSTMENTS.twentyFive.get(stat);
+        }
+        return stat;
+    });
+
+    return final;
 }
 
 // Will always return one lowest trait
