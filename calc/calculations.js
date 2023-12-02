@@ -51,16 +51,16 @@ function detectBase(e) {
 
 function selectDragon() {
     // Initialize variables
-    const firstTrait = document.querySelector("#trait1");
-    const secondTrait = document.querySelector("#trait2");
-    const dragonName = document.querySelector("#dragon-selector").value;
+    const firstTrait = document.getElementById("trait1");
+    const secondTrait = document.getElementById("trait2");
+    const dragonName = document.getElementById("dragon-selector").value;
     const dragonIndex = dragonList.findIndex((dragons) => { return dragons.name[0] === dragonName; });
 
     // Enable trait selector
-    document.querySelector("#start-trait-selector").removeAttribute("disabled");
+    document.getElementById("start-trait-selector").removeAttribute("disabled");
 
     // Reset previously selected base stat values and trait
-    document.querySelector("#start-trait-selector").selectedIndex = 0;
+    document.getElementById("start-trait-selector").selectedIndex = 0;
     STAT_LISTS.start.forEach(stat => document.querySelector(stat).value = 0);
 
     // Fill in trait dropdown choices
@@ -523,17 +523,21 @@ function calcSingleHighest(curStats, highestReq) {
 
 function calculate() {
     try {
-        printTrainingCount("agility");
-        printTrainingCount("strength");
-        printTrainingCount("focus");
-        printTrainingCount("intellect");
+        STAT_LISTS.base.forEach((stat) => printTrainingCount(stat));
     } catch(e) {
-        alert("만들 수 없는 숫자예요! 목표치를 더 높게 설정해주세요.");
+        alert(e);
     }
 }
 
 function printTrainingCount(traitType) {
     let reqStat = document.querySelector(`#end-${traitType}`).value - document.querySelector(`#start-${traitType}`).value;
+
+    const trainCount = calculateTrainCount(reqStat, TRAIN_VALUES);
+
+    if (!trainCount) {
+        throw new Error(`${reqStat}는 조합할 수 없는 숫자입니다. 다른 목표치를 설정해주세요!`);
+    }
+
     if (reqStat < 0) {
         reqStat = 0;
         document.querySelector(`#required-${traitType}`).textContent = "+0";
@@ -542,7 +546,6 @@ function printTrainingCount(traitType) {
         document.querySelector(`#required-${traitType}`).textContent = "+" + reqStat;
     }
 
-    const trainCount = calculateTrainCount(reqStat, TRAIN_VALUES);
     let trainText;
 
     if (trainCount[5] === 9) {
@@ -613,8 +616,8 @@ function reset() {
         document.querySelector(STAT_LISTS.end[i]).value = 0;
     }
 
-    document.querySelector("#special-trait-selector").selectedIndex = 0;
-    document.querySelector("#normal-trait-selector").selectedIndex = 0;
+    document.getElementById("special-trait-selector").selectedIndex = 0;
+    document.getElementById("normal-trait-selector").selectedIndex = 0;
 }
 
 
