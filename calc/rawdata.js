@@ -191,6 +191,7 @@ const dragonList = [
     { name: ["Wind Dragon", "윈드"], traitsEn: ["quickWitted", "Hasty"], traitsKo: ["눈치빠른", "성급한"], quickWitted: [25, 0, 0, 0], Hasty: [20, 10, 10, 0] },
     { name: ["Witch Dragon", "윗치 드래곤"], traitsEn: ["Quirky", "Bold"], traitsKo: ["변덕쟁이", "대담한"], Quirky: [10, 20, 0, 10], Bold: [0, 30, 0, 10] },
     { name: ["Wings Dragon", "윙스"], traitsEn: ["Rash", "Bashful"], traitsKo: ["덜렁대는", "수줍어하는"], Rash: [25, 10, 0, 10], Bashful: [5, 0, 5, 20] },
+    { name: ["Yurion", "유리온"], traitsEn: ["Docile", "Smart"], traitsKo: ["온순한", "똑똑한"], Docile: [0, 10, 10, 20], Smart: [0, 0, 5, 30] },
     { name: ["Ignis", "이그니스"], traitsEn: ["Calm", "Docile"], traitsKo: ["차분한", "온순한"], Calm: [10, 0, 20, 10], Docile: [0, 10, 10, 25] },
     { name: ["Aegis", "이지스"], traitsEn: ["Bold", "Calm"], traitsKo: ["대담한", "차분한"], Bold: [0, 25, 0, 5], Calm: [10, 0, 30, 10] },
     { name: ["Insect Dragon", "인섹트"], traitsEn: ["Naive", "Bashful"], traitsKo: ["천진난만한", "수줍은"], Naive: [20, 0, 5, 5], Bashful: [15, 0, 15, 30] },
