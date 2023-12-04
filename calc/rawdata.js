@@ -118,7 +118,7 @@ const dragonList = [
     { name: ["Bonehead", "본헤드"], traitsEn: ["Quirky", "Bashful"], traitsKo: ["변덕쟁이", "수줍은"], Quirky: [5, 20, 0, 5], Bashful: [15, 0, 15, 30] },
     { name: ["Volcano Dragon", "볼케이노"], traitsEn: ["Docile", "Hasty"], traitsKo: ["온순한", "성급한"], Docile: [0, 10, 10, 20], Hasty: [20, 10, 10, 0] },
     { name: ["Bomber Dragon", "봄버"], traitsEn: ["Naive", "Lax"], traitsKo: ["천진난만한", "촐랑대는"], Naive: [30, 0, 10, 10], Lax: [10, 10, 0, 30] },
-    // { name: ["Sealed Darknix", "봉인된 다크니스"], traitsEn: ["Quiet", "Hasty"], traitsKo: ["", "성급한"], Quiet: [0, 0, 0, 0], Hasty: [30, 15, 15, 0] },
+    { name: ["Sealed Darknix", "봉인된 다크니스"], traitsEn: ["Bold", "Hasty"], traitsKo: ["대담한", "성급한"], Bold: [5, 25, 0, 0], Hasty: [30, 15, 15, 0] },
     { name: ["Voodoo Dragon", "부두룡"], traitsEn: ["Quirky", "quickWitted"], traitsKo: ["변덕쟁이", "눈치빠른"], Quirky: [10, 20, 0, 10], quickWitted: [20, 0, 10, 0] },
     { name: ["Firetail", "불나래"], traitsEn: ["quickWitted", "Quirky"], traitsKo: ["눈치빠른", "변덕쟁이"], quickWitted: [25, 0, 0, 0], Quirky: [10, 25, 0, 10] },
     { name: ["Black Armor", "블랙아머"], traitsEn: ["Bold", "Adamant"], traitsKo: ["대담한", "고집있는"], Bold: [0, 30, 0, 10], Adamant: [15, 30, 15, 0] },
