@@ -17,7 +17,7 @@ const dragonList = [
     { name: ["Griffar", "그리파르"], traitsEn: ["Bold", "Quiet"], traitsKo: ["대담한", "냉정한"], Bold: [0, 30, 5, 0], Quiet: [0, 10, 30, 10] },
     { name: ["Glaone", "글라오네"], traitsEn: ["Smart", "Brave"], traitsKo: ["똑똑한", "용감한"], Smart: [0, 5, 0, 20], Brave: [0, 25, 10, 10] },
     { name: ["Gigantis", "기간티스"], traitsEn: ["Adamant", "Quiet"], traitsKo: ["고집있는", "냉정한"], Adamant: [15, 30, 15, 0], Quiet: [0, 15, 30, 15] },
-    // { name: ["Kirin", "기린"], traitsEn: ["Bold", "Adamant"], traitsKo: ["", ""], Bold: [0, 0, 0, 0], Adamant: [0, 0, 0, 0] },
+    { name: ["Kirin", "기린"], traitsEn: ["Calm", "Bold"], traitsKo: ["차분한", "대담한"], Calm: [10, 0, 25, 10], Bold: [0, 30, 10, 0] },
     { name: ["Goblin Dragon", "깨비곤"], traitsEn: ["Naive", "Brave"], traitsKo: ["천진난만한", "용감한"], Naive: [25, 0, 10, 10], Brave: [0, 25, 10, 10] },
     { name: ["Knight Dragon", "나이트"], traitsEn: ["Brave", "Smart"], traitsKo: ["용감한", "똑똑한"], Brave: [0, 30, 10, 10], Smart: [10, 0, 0, 20] },
     { name: ["Nebula", "네뷸라"], traitsEn: ["Quiet", "Careful"], traitsKo: ["냉정한", "신중한"], Quiet: [0, 10, 30, 10], Careful: [10, 10, 25, 0] },
@@ -205,6 +205,7 @@ const dragonList = [
     { name: ["Eelos", "일로스"], traitsEn: ["Lax", "Naive"], traitsKo: ["촐랑대는", "천진난만한"], Lax: [10, 10, 0, 30], Naive: [30, 0, 10, 10] },
     { name: ["Ilios", "일리오스"], traitsEn: ["Brave", "Smart"], traitsKo: ["용감한", "똑똑한"], Brave: [0, 20, 10, 10], Smart: [0, 0, 0, 30] },
     { name: ["Jarukah", "자루카"], traitsEn: ["Naive", "quickWitted"], traitsKo: ["천진난만한", "눈치빠른"], Naive: [20, 0, 10, 10], quickWitted: [25, 0, 5, 0] },
+    { name: ["Jango", "장고"], traitsEn: ["Brave", "Quiet"], traitsKo: ["용감한", "냉정한"], Brave: [0, 25, 10, 10], Quiet: [0, 10, 25, 10] },
     { name: ["Zephyros", "제피로스"], traitsEn: ["Quirky", "Adamant"], traitsKo: ["변덕쟁이", "고집있는"], Quirky: [10, 25, 0, 10], Adamant: [10, 30, 10, 0] },
     { name: ["Zombie Dragon", "좀비 드래곤"], traitsEn: ["Hasty", "Rash"], traitsKo: ["성급한", "덜렁대는"], Hasty: [20, 5, 5, 0], Rash: [25, 10, 0, 10] },
     { name: ["Jujak", "주작"], traitsEn: ["quickWitted", "Adamant"], traitsKo: ["눈치빠른", "고집있는"], quickWitted: [20, 0, 0, 5], Adamant: [15, 30, 15, 0] },
@@ -226,6 +227,7 @@ const dragonList = [
     { name: ["Cupi Friend", "큐피프렌드"], traitsEn: ["Brave", "Hardy"], traitsKo: ["용감한", "노력하는"], Brave: [0, 20, 5, 5], Hardy: [0, 0, 25, 0] },
     { name: ["Crested Dragon", "크레스티드"], traitsEn: ["Lax", "quickWitted"], traitsKo: ["촐랑대는", "눈치빠른"], Lax: [5, 5, 0, 20], quickWitted: [20, 5, 0, 0] },
     { name: ["Crookers", "크룩커스"], traitsEn: ["quickWitted", "Docile"], traitsKo: ["눈치빠른", "온순한"], quickWitted: [20, 5, 0, 0], Docile: [0, 10, 10, 20] },
+    { name: ["Xmas Dragon", "크리마용"], traitsEn: ["Naive", "Docile"], traitsKo: ["천진난만한", "온순한"], Naive: [30, 0, 15, 15], Docile: [0, 15, 15, 30] },
     { name: ["Clavis", "클라비스"], traitsEn: ["Adamant", "Quirky"], traitsKo: ["고집있는", "변덕쟁이"], Adamant: [10, 20, 10, 0], Quirky: [10, 25, 0, 10] },
     { name: ["Cloud Dragon", "클라우드"], traitsEn: ["Hasty", "Quirky"], traitsKo: ["성급한", "변덕쟁이"], Hasty: [20, 5, 5, 0], Quirky: [10, 25, 0, 10] },
     { name: ["Taros", "타로스"], traitsEn: ["quickWitted", "Quiet"], traitsKo: ["눈치빠른", "냉정한"], quickWitted: [20, 0, 10, 0], Quiet: [0, 10, 30, 10] },
@@ -284,6 +286,7 @@ const dragonList = [
     { name: ["Fire Ghost Dragon", "화귀 드래곤"], traitsEn: ["Quirky", "Adamant"], traitsKo: ["변덕쟁이", "고집있는"], Quirky: [10, 30, 0, 10], Adamant: [15, 30, 15, 0] },
     { name: ["White Gold", "화이트골드"], traitsEn: ["Bold", "Calm"], traitsKo: ["대담한", "차분한"], Bold: [10, 20, 0, 0], Calm: [15, 0, 30, 15] },
     { name: ["White Thunder Dragon", "화이트썬더"], traitsEn: ["Hasty", "Bold"], traitsKo: ["성급한", "대담한"], Hasty: [30, 10, 10, 0], Bold: [0, 30, 5, 0] },
+    { name: ["White Applecheek", "화이트애플칙"], traitsEn: ["Quiet", "Rash"], traitsKo: ["냉정한", "덜렁대는"], Quiet: [0, 10, 20, 10], Rash: [30, 10, 0, 10] },
     { name: ["Black Dragon", "흑룡"], traitsEn: ["Quiet", "Careful"], traitsKo: ["냉정한", "신중한"], Quiet: [0, 5, 20, 5], Careful: [5, 5, 20, 0] },
     { name: ["Hydragon", "히드라곤"], traitsEn: ["Adamant", "Hasty"], traitsKo: ["고집있는", "성급한"], Adamant: [10, 20, 10, 0], Hasty: [20, 5, 5, 0] }
 ];
