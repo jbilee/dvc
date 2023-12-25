@@ -13,6 +13,13 @@ const STAT_LISTS = {
   ],
   end: ["#end-agility", "#end-strength", "#end-focus", "#end-intellect"],
 };
+const COUNT_PREFIX = "train-count-";
+const CLIP_TEXT = {
+  agility: "순발력: ",
+  strength: "근력: ",
+  focus: "집중력: ",
+  intellect: "지력: ",
+};
 
 const ADJUSTMENTS = {
   regular: new Map([
@@ -720,6 +727,47 @@ function reset() {
 
   document.getElementById("special-trait-selector").selectedIndex = 0;
   document.getElementById("normal-trait-selector").selectedIndex = 0;
+}
+
+function copyResults() {
+  const text = [];
+  STAT_LISTS.base.forEach((stat) => {
+    const field = document.getElementById(`${COUNT_PREFIX}${stat}`);
+    if (field.innerText !== "-") {
+      const counts = field.childNodes;
+      let spanText = "";
+      counts.forEach((child) => {
+        if (child.innerText) spanText += child.innerText;
+      });
+      text.push(`${CLIP_TEXT[stat]}${spanText}`);
+    }
+  });
+
+  navigator.clipboard.writeText(text.join("\n")).then(
+    () => {
+      displayToast(true);
+    },
+    () => {
+      displayToast(false);
+    }
+  );
+}
+
+function displayToast(successful) {
+  const container = document.getElementById("main-content");
+  if (container.lastElementChild.id === "toast") {
+    container.lastElementChild.remove();
+  }
+
+  const newToast = document.createElement("div");
+  newToast.id = "toast";
+  newToast.innerText = successful ? "복사되었습니다." : "복사에 실패했습니다.";
+
+  container.appendChild(newToast);
+  newToast.style.animationPlayState = "running";
+  setTimeout(() => {
+    newToast.remove();
+  }, 610);
 }
 
 // Delete later
