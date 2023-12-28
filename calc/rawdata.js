@@ -293,6 +293,7 @@ const dragonList = [
 
 const specialTraits = [
     { nameEn: "Noble", nameKo: "고귀한", stats: [20, 20, 20, 20] },
+    { nameEn: "Solitary", nameKo: "고독한", stats: [0, 0, 0, 0] },
     { nameEn: "Immersed", nameKo: "몰입하는", stats: [0, 0, 0, 0] },
     { nameEn: "Distracted", nameKo: "산만한", stats: [0, 0, 0, 0] },
     { nameEn: "Arrogant", nameKo: "오만한", stats: [25, 25, 25, 25] },

@@ -109,14 +109,9 @@ function selectSpecialTrait(e) {
   const traitIndex = specialTraits.findIndex((traits) => {
     return traits.nameEn === traitSelected;
   });
-  let baseStats = [];
-  let maxValue;
 
   // Store dragon's base stats
   const base = getStatFields("#start-");
-  for (let i = 0; i < STAT_COUNT; i++) {
-    baseStats[i] = Number(document.querySelector(STAT_LISTS.start[i]).value);
-  }
 
   switch (traitSelected) {
     case "Perfectionist": {
@@ -321,8 +316,8 @@ function selectSpecialTrait(e) {
       break;
     }
 
-    case "Dull":
-      maxValue = Math.max(...baseStats);
+    case "Dull": {
+      const maxValue = base.getMaxStatValue();
       if (maxValue <= 20) {
         for (let i = 0; i < STAT_COUNT; i++) {
           document.querySelector(STAT_LISTS.end[i]).value =
@@ -334,9 +329,10 @@ function selectSpecialTrait(e) {
         }
       }
       break;
+    }
 
-    case "Capable":
-      maxValue = Math.max(...baseStats);
+    case "Capable": {
+      const maxValue = base.getMaxStatValue();
       if (maxValue < 30) {
         for (let i = 0; i < STAT_COUNT; i++) {
           document.querySelector(STAT_LISTS.end[i]).value =
@@ -348,6 +344,21 @@ function selectSpecialTrait(e) {
         }
       }
       break;
+    }
+
+    case "Solitary": {
+      const goal = new Stats();
+      STAT_LISTS.base.forEach((stat) => {
+        if (base[stat].toString().endsWith("5")) {
+          goal[stat] = base[stat] + 6;
+        } else {
+          goal[stat] = base[stat] + 11;
+        }
+      });
+
+      printStatFields(goal, "#end-");
+      break;
+    }
 
     default:
       for (let i = 0; i < STAT_COUNT; i++) {
