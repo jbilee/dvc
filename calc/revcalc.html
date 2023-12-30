@@ -49,71 +49,31 @@
   <div id="main-box">
     <div id="main-content">
       <div id="header">
-        <h1>DVC 노력치 계산기</h1>
+        <h1></h1>
         <span id="tooltip"><a href="#tips"><img src="../images/help64.png" width="24"></a></span>
       </div>
 
       <div id="calculations">
         <div class="grid-container">
-          <div></div>
           <div>
-            <h3>기본치</h3>
+            <h3>순발력</h3>
+            <input type="number" inputmode="numeric" min="0" value="0" id="start-agility" class="stat-field agility">
           </div>
-          <div></div>
-          <div class="grid-item">
-            <h3>목표치</h3>
-          </div>
+
           <div>
-            <div class="agility">순발력</div>
+            <h3>근력</h3>
+            <input type="number" inputmode="numeric" min="0" value="0" id="start-strength" class="stat-field strength">
           </div>
+
           <div>
-            <input type="number" inputmode="numeric" min="0" max="30" value="0" id="start-agility"
-              class="stat-field agility">
+            <h3>집중력</h3>
+            <input type="number" inputmode="numeric" min="0" value="0" id="start-focus" class="stat-field focus">
           </div>
+
           <div>
-            →
-          </div>
-          <div>
-            ❌
-          </div>
-          <div>
-            <div class="strength">근력</div>
-          </div>
-          <div>
-            <input type="number" inputmode="numeric" min="0" max="30" value="0" id="start-strength"
-              class="stat-field strength">
-          </div>
-          <div>
-            →
-          </div>
-          <div>
-            ❌
-          </div>
-          <div>
-            <div class="focus">집중력</div>
-          </div>
-          <div>
-            <input type="number" inputmode="numeric" min="0" max="30" value="0" id="start-focus"
-              class="stat-field focus">
-          </div>
-          <div>
-            →
-          </div>
-          <div>
-            ❌
-          </div>
-          <div>
-            <div class="intellect">지력</div>
-          </div>
-          <div>
-            <input type="number" inputmode="numeric" min="0" max="30" value="0" id="start-intellect"
+            <h3>지력</h3>
+            <input type="number" inputmode="numeric" min="0" value="0" id="start-intellect"
               class="stat-field intellect">
-          </div>
-          <div>
-            →
-          </div>
-          <div>
-            ❌
           </div>
         </div>
       </div>
@@ -130,6 +90,7 @@
         </div>
 
         <div class="sel2">
+          <h3>가장 높은 스탯:</h3>
           <label>순발력<input type="checkbox" id="checkbox-agility"></label>
           <label>근력<input type="checkbox" id="checkbox-strength"></label>
           <label>집중력<input type="checkbox" id="checkbox-focus"></label>
@@ -147,18 +108,9 @@
 
       <div id="tips">
         <h2>[툴 이용가이드]</h2>
-        <ol>
-          <li>자동입력 옵션에서 나의 드래곤과 드래곤의 초기 성격을 선택하거나 기본치를 직접 입력합니다.</li>
-          <li>만들고 싶은 성격을 <strong>목표치 자동입력</strong> 드롭다운 메뉴에서 선택하거나 목표치를 직접 입력합니다.</li>
-          <li><b>계산하기</b>를 클릭하면 목표치에 도달하기까지 필요한 훈련치와 그에 따른 훈련 횟수가 출력됩니다.</li>
-        </ol>
         <ul>
-          <li>계산기가 출력하는 훈련 횟수대로 훈련할 필요는 없습니다. 일반성격의 경우 목표치의 비율만 유지하고, 특수성격의 경우 각 성격의 조건만 충족하면 됩니다.</li>
-          <li>성실한 성격이 뜰 가능성은 계산식에서 제외합니다. 성실한 성격을 방지하려면 훈련 실패를 따로 해줘야 합니다.</li>
-          <li>동일한 점수의 훈련 횟수가 5회를 초과하면 괄호 형식으로 축소됩니다. (예: <span class="nine">9</span><sub>(x13)</sub>일 경우 9점짜리 훈련을 13회
-            진행)</li>
-          <li>특수성격은 목표치를 계산해야 하는 성격만 자동입력에 포함되어 있습니다. (기품있는, 서투른 등의 성격은 계산이 필요없으니 제외)</li>
-          <li>에브리아 전용 드래곤은 기본치가 1, 1, 1, 1로 고정이기 때문에 자동입력에 포함되어 있지 않습니다.</li>
+          <li>드래곤의 현재 성격, 가장 높은 스탯, 그리고 이미 훈련된 수치를 입력합니다.</li>
+          <li>가장 높은 스탯은 1개 이상일 수 있으며, 4개가 동시에 해당될 수 있습니다.<br>인게임 훈련창에서 알려주는 스탯과 동일하게 체크해주세요.</li>
         </ul>
       </div>
     </div>
