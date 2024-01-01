@@ -58,7 +58,7 @@ for (const stat of STAT_LISTS.base) {
 
 function detectBase(e) {
   if (e.target.value <= 25) return enableDull();
-  else disableDull();
+  return disableDull();
 }
 
 function selectDragon() {
