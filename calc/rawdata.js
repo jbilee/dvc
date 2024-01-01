@@ -185,7 +185,7 @@ const dragonList = [
     { name: ["Angra", "앙그라"], traitsEn: ["Hasty", "Adamant"], traitsKo: ["성급한", "고집있는"], Hasty: [25, 10, 10, 0], Adamant: [10, 30, 10, 0] },
     { name: ["Animala", "애니마라"], traitsEn: ["Quiet", "Adamant"], traitsKo: ["냉정한", "고집있는"], Quiet: [0, 10, 25, 10], Adamant: [10, 30, 10, 0] },
     { name: ["Applecheek", "애플칙"], traitsEn: ["quickWitted", "Bashful"], traitsKo: ["눈치빠른", "수줍은"], quickWitted: [20, 5, 0, 0], Bashful: [10, 0, 10, 20] },
-    // { name: ["Janus", "야누스"], traitsEn: ["Docile", "Calm"], traitsKo: ["", ""], Docile: [0, 0, 0, 0], Calm: [0, 0, 0, 0] },
+    { name: ["Janus", "야누스"], traitsEn: ["Bold", "Smart"], traitsKo: ["대담한", "똑똑한"], Bold: [5, 25, 0, 0], Smart: [0, 0, 10, 30] },
     { name: ["Abyssedge", "어비스엣지"], traitsEn: ["Quiet", "Adamant"], traitsKo: ["냉정한", "고집있는"], Quiet: [0, 15, 30, 15], Adamant: [5, 20, 5, 0] },
     { name: ["Egg Dragon", "에그드래곤"], traitsEn: ["Adamant", "Docile"], traitsKo: ["고집있는", "온순한"], Adamant: [10, 25, 10, 0], Docile: [0, 5, 5, 20] },
     { name: ["Ereboss", "에레보스"], traitsEn: ["Adamant", "Quiet"], traitsKo: ["고집있는", "냉정한"], Adamant: [5, 20, 5, 0], Quiet: [0, 10, 25, 10] },
