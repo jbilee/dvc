@@ -4,158 +4,239 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DVC툴</title>
-    <!-- <link rel="icon" href="favicon.png"> -->
-    <script src="./src/recorder_data.js"></script>
-    <script src="./src/recpre.js"></script>
+    <meta name="description" content="DVC 드래곤 육성에 필요한 훈련치를 계산해주는 툴입니다.">
+    
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://jbilee.github.io/dvc/">
+    <meta property="og:title" content="DVC 노력치 계산기">
+    <meta property="og:image" content="https://i.imgur.com/19p98ma.png">
+    <meta property="og:description" content="DVC 드래곤 육성에 필요한 훈련치를 계산해주는 툴입니다.">
+    <meta property="og:site_name" content="DVC 노력치 계산기">
+    <meta property="og:locale" content="ko_KR">
+    
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="DVC 노력치 계산기">
+    <meta name="twitter:description" content="DVC 드래곤 육성에 필요한 훈련치를 계산해주는 툴입니다.">
+    <meta name="twitter:image" content="https://i.imgur.com/19p98ma.png">
+    
+    <title>DVC 노력치 계산기</title>
+    <link rel="icon" href="./img/favicon.png">
+    <link rel="stylesheet" href="./calc/dvccalculator.css">
+    <script src="./calc/rawdata.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            for (let i = 0; i < dragonList.length; i++) {
+                const newOption = document.createElement("option");
+                newOption.setAttribute("value", dragonList[i].name[0]);
+                newOption.textContent = dragonList[i].name[1];
+                document.querySelector("#dragon-selector").append(newOption);
+            }
+
+            for (let i = 0; i < normalTraits.length; i++) {
+                const newOption = document.createElement("option");
+                newOption.setAttribute("value", normalTraits[i].nameEn);
+                newOption.textContent = normalTraits[i].nameKo;
+                document.querySelector("#normal-trait-selector").append(newOption);
+            }
+
+            for (let i = 0; i < specialTraits.length; i++) {
+                const newOption = document.createElement("option");
+                newOption.setAttribute("value", specialTraits[i].nameEn);
+                if (newOption.value == "Dull") newOption.setAttribute("id", specialTraits[i].nameEn);
+                newOption.textContent = specialTraits[i].nameKo;
+                document.querySelector("#special-trait-selector").append(newOption);
+            }
+        });
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="dvcrecorder.css">
 </head>
 
 <body>
-    <div class="top">
-        <h2>DVC툴</h2>
-    </div>
+    <div id="main-box">
+        <div id="main-content">
+            <div id="header">
+                <h1>DVC 노력치 계산기</h1>
+                <span id="tooltip"><a href="#tips"><img src="./img/help64.png" width="18"></a></span>
+            </div>
+            
+            <div id="calculations">
+                <div class="grid-container">
+                    <div></div>
+                    <div>
+                        <h3>기본치</h3>
+                    </div>
+                    <div></div>
+                    <div class="grid-item">
+                        <h3>목표치</h3>
+                    </div>
+                    <div>
+                        <div class="agility">순발력</div>
+                    </div>
+                    <div>
+                        <input type="number" inputmode="numeric" min="0" max="30" value="0" id="start-agility" class="stat-field agility">
+                    </div>
+                    <div>
+                        →
+                    </div>
+                    <div>
+                        <input type="number" inputmode="numeric" min="0" max="999" maxlength="3" value="0" id="end-agility"
+                            class="stat-field agility">
+                    </div>
+                    <div>
+                        <div class="strength">근력</div>
+                    </div>
+                    <div>
+                        <input type="number" inputmode="numeric" min="0" max="30" value="0" id="start-strength" class="stat-field strength">
+                    </div>
+                    <div>
+                        →
+                    </div>
+                    <div>
+                        <input type="number" inputmode="numeric" min="0" max="999" maxlength="3" value="0" id="end-strength"
+                            class="stat-field strength">
+                    </div>
+                    <div>
+                        <div class="focus">집중력</div>
+                    </div>
+                    <div>
+                        <input type="number" inputmode="numeric" min="0" max="30" value="0" id="start-focus" class="stat-field focus">
+                    </div>
+                    <div>
+                        →
+                    </div>
+                    <div>
+                        <input type="number" inputmode="numeric" min="0" max="999" maxlength="3" value="0" id="end-focus"
+                            class="stat-field focus">
+                    </div>
+                    <div>
+                        <div class="intellect">지력</div>
+                    </div>
+                    <div>
+                        <input type="number" inputmode="numeric" min="0" max="30" value="0" id="start-intellect"
+                            class="stat-field intellect">
+                    </div>
+                    <div>
+                        →
+                    </div>
+                    <div>
+                        <input type="number" inputmode="numeric" min="0" max="999" maxlength="3" value="0" id="end-intellect"
+                            class="stat-field intellect">
+                    </div>
+                </div>
 
-    <div class="support">
-        1500픽셀 이상의 해상도에서 테스트해주세요!
-    </div>
+                <div class="grid-container2">
+                    <div class="grid-item">
+                        <h3>필요치</h3>
+                    </div>
+                    <div class="grid-item">
+                        <h3>필요 훈련 횟수</h3>
+                    </div>
 
-    <div class="content">
-        <div class="filters">
-            <h3>데이터 조회 필터</h3>
-            <div class="filter-title">
-                <strong>성별</strong>
-                <hr>
-                <div class="filter-gender"></div>
+                    <div class="grid-item">
+                        <span id="required-agility"></span>
+                        <span class="stat-mobile-view">순발력</span>
+                    </div>
+                    <div>
+                        <span id="train-count-agility"></span>
+                    </div>
+                    <div>
+                        <span id="required-strength"></span>
+                        <span class="stat-mobile-view">근력</span>
+                    </div>
+                    <div>
+                        <span id="train-count-strength"></span>
+                    </div>
+                    <div>
+                        <span id="required-focus"></span>
+                        <span class="stat-mobile-view">집중력</span>
+                    </div>
+                    <div>
+                        <span id="train-count-focus"></span>
+                    </div>
+                    <div>
+                        <span id="required-intellect"></span>
+                        <span class="stat-mobile-view">지력</span>
+                    </div>
+                    <div>
+                        <span id="train-count-intellect"></span>
+                    </div>
+                </div>
             </div>
-            <div class="filter-title">
-                <strong>종</strong>
-                <hr>
-                <div class="filter-species"></div>
+
+            <div id="controls">
+                <div class="sel1">
+                    <h3>드래곤 정보 자동입력:</h3>
+                    <select name="dragon-selector" id="dragon-selector" onchange="selectDragon()">
+                        <option selected disabled>드래곤</option>
+                    </select>
+                    <select name="trait-selector" id="start-trait-selector" onchange="selectStartTrait(event)" disabled>
+                        <option selected disabled>성격</option>
+                        <option value="" id="trait1">-</option>
+                        <option value="" id="trait2">-</option>
+                    </select>
+                </div>
+
+                <div class="sel2">
+                    <h3>목표치 자동입력:</h3>
+                    <select name="trait-selector" id="normal-trait-selector" onchange="selectNormalTrait(event)">
+                        <option selected disabled>일반성격 선택</option>
+                    </select>
+                    <select name="trait-selector" id="special-trait-selector" onchange="selectSpecialTrait(event)">
+                        <option selected disabled>특수성격 선택</option>
+                    </select>
+                </div>
             </div>
-            <div class="filter-title">
-                <strong>성격</strong>
-                <hr>
-                <div class="filter-trait"></div>
+                    
+            <div class="buttons">
+                <button onclick="calculate()">계산하기</button>
+                <button onclick="reset()">목표치 초기화</button>
+                <button onclick="copyResults()">결과 복사</button> <br>
             </div>
-            <div class="filter-settings">
-                <button type="button" class="mode-button button-small" onclick="toggleStrictFilter()"
-                    style="background-color: rgb(195, 148, 152)">필터 옵션 전체해당 OFF</button>
-                <button type="button" class="reset-button button-small" onclick="resetFilters()"
-                    style="background-color: rgb(135, 126, 128)">필터 전체해제</button>
+
+            <div id="tips">
+                <h2>[툴 이용가이드]</h2>
+                <ul>
+                    <li><b>결과 복사</b> 버튼으로 훈련 횟수를 텍스트 형식으로 복사할 수 있습니다.</li>
+                    <li>동일한 점수의 훈련 횟수가 5회를 초과하면 괄호 형식으로 축소됩니다. <br> (예: <span class="nine">9</span><sub>(x13)</sub>일 경우 9점짜리 훈련을 13회 진행)</li>
+                    <li>성실한 성격이 뜰 가능성은 고려하지 않기 때문에 따로 방지해야 합니다.</li>
+                    <li>특수성격은 목표치를 계산해야 하는 성격만 자동입력에 포함되어 있습니다. <br> (기품있는, 서투른 등의 성격은 계산이 필요없으니 제외)</li>
+                    <li>에브리아 전용 드래곤은 기본치가 고정이기 때문에 자동입력에 포함되어 있지 않습니다.</li>
+                </ul>
             </div>
         </div>
-
-        <div class="main">
-            <div class="desc-header">
-                <h3>용용이 목록</h3>
-                <div class="menu">
-                    <div class="tip-box">
-                        <a href="dvcstats.html" target="_blank"><img src="./images/stats.png" class="menu-btn" alt="Analytics"></a>
-                    </div>
-                    <div class="dropdown" data-dropdown>
-                        <img src="./images/folder.png" class="menu-btn" alt="File menus" data-dropdown-button>
-                        <div class="dropdown-menu">
-                            <button onclick="download()">데이터 다운로드</button>
-                            <input type="file" id="upload" accept="text/*" style="display:none"
-                                onchange="load()"><button id="uploadBtn" onclick="callFile()">데이터 가져오기</button>
-                        </div>
-                    </div>
-                    <div class="dropdown" data-dropdown>
-                        <img src="./images/settings.png" class="menu-btn" alt="Settings" data-dropdown-button>
-                        <div class="dropdown-menu">
-                            <button onclick="window.open('https://open.kakao.com/o/stYLmUCf', '_blank')">문의하기</button>
-                            <button onclick="clearLocalStorage()">캐시 삭제</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="desc">
-                <div class="flex-container">
-                    <div class="instructions">
-                        <strong>나의 용용이 데이터를 요약해주는 툴입니다. 🐲</strong><br>
-                        본 툴의 데이터는 별도 서버가 아닌 브라우저 캐시에 저장됩니다. <u>캐시를 삭제하면 용용이 데이터도 함께 삭제됩니다.</u> 우측 상단의 폴더 아이콘을 클릭해 데이터를
-                        백업하거나 복원할 수 있습니다.
-                    </div>
-                    <div class="form">
-                        <strong>용용 추가</strong>
-                        <hr>
-                        <div class="new-entry">
-
-                            <div class="entry-item">
-                                <span class="field-label">이름:</span>
-                                <br>
-                                <input class="field-name" type="text" name="dragon-name" placeholder="이름" maxlength="14"
-                                    size="14">
-                            </div>
-                            <div class="entry-item">
-                                <span class="field-label">드래곤:</span>
-                                <br>
-                                <select class="field-dragon" name="species">
-                                </select>
-                            </div>
-                            <div class="entry-item">
-                                <span class="field-label">성별:</span>
-                                <br>
-                                <select class="field-gender" name="gender">
-                                    <option>수컷</option>
-                                    <option>암컷</option>
-                                    <option>중성</option>
-                                </select>
-                            </div>
-                            <div class="entry-item">
-                                <span class="field-label">성격:</span>
-                                <br>
-                                <select class="field-trait" name="trait">
-                                </select>
-                            </div>
-                            <div class="entry-item">
-                                <span class="field-label">세대:</span>
-                                <br>
-                                <input class="field-gen" type="number" inputmode="numeric" name="generation" value="1"
-                                    min="1" onchange="validate(event)">
-                            </div>
-                            <div class="entry-item">
-                                <span class="field-label">메모:</span>
-                                <br>
-                                <input class="field-memo" type="text" name="memo" placeholder="메모" maxlength="25">
-                            </div>
-                            <div class="entry-item">
-                                <br>
-                                <button id="btn" onclick="addDragonData(event)">추가</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="display-table">
-                <div class="display-header">
-                    <div class="table-header">
-                        <div><strong>이름</strong> <span class="neutral"><img src="./images/neutral.png"
-                                    onclick="sortChange(event)"></span></div>
-                        <div><strong>종</strong></div>
-                        <div><strong>성별</strong></div>
-                        <div><strong>성격</strong></div>
-                        <div><strong>세대</strong></div>
-                        <div><strong>메모</strong></div>
-                        <div></div>
-                        <div></div>
-                    </div>
-                </div>
-                <hr>
-                <div class="display-entries"></div>
-                <div id="display-nav"></div>
-                <div class="version">v0.0.2</div>
-            </div>
-        </div>
     </div>
 
-    <script src="./src/recorder.js"></script>
+    <div class="version">
+        <p>
+            23-08-08. version 0.0.0<br>
+            23-08-24. version 0.1.0<br>
+            23-08-26. version 0.1.1<br>
+            23-10-17. version 0.1.2<br>
+            23-12-01. version 0.1.3<br>
+            23-12-25. version 0.2.0<br>
+            23-12-28. version 0.3.0<br>
+            DVC Calculator by jbilee@GitHub
+        </p>
+        <p>
+            데이터 출처:<br>
+            <a href="https://community.withhive.com/dvc/ko/board/22/2929"
+                target="_blank">https://community.withhive.com/dvc/ko/board/22/2929
+                (전체도감 by 앙그라님)</a><br>
+            <a href="https://community.withhive.com/dvc/ko/board/22/9761"
+                target="_blank">https://community.withhive.com/dvc/ko/board/22/9761
+                (일반성격 계산법 by 앙그라님)</a><br>
+            <a href="https://community.withhive.com/dvc/ko/board/22/113031"
+                target="_blank">https://community.withhive.com/dvc/ko/board/22/113031
+                (성격작 정리 by 순대국밥할매님)</a><br>
+        </p>
+        <p>
+            버그/데이터 오류 제보: <a href="https://open.kakao.com/o/stYLmUCf">오픈카톡</a>
+        </p>
+    </div>
+
+    <script src="./calc/calculations.js"></script>
 </body>
 
 </html>
