@@ -8,21 +8,21 @@
 
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://jbilee.github.io/dvc/">
-  <meta property="og:title" content="DVC 노력치 계산기">
+  <meta property="og:title" content="DVC툴: 성격 탐색기">
   <meta property="og:image" content="https://i.imgur.com/19p98ma.png">
   <meta property="og:description" content="DVC 드래곤 육성에 필요한 훈련치를 계산해주는 툴입니다.">
-  <meta property="og:site_name" content="DVC 노력치 계산기">
+  <meta property="og:site_name" content="DVC툴: 성격 탐색기">
   <meta property="og:locale" content="ko_KR">
 
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="DVC 노력치 계산기">
+  <meta name="twitter:title" content="DVC툴: 성격 탐색기">
   <meta name="twitter:description" content="DVC 드래곤 육성에 필요한 훈련치를 계산해주는 툴입니다.">
   <meta name="twitter:image" content="https://i.imgur.com/19p98ma.png">
 
-  <title>DVC 노력치 계산기</title>
-  <link rel="icon" href="../images/favicon.png">
-  <link rel="stylesheet" href="dvccalculator.css">
-  <script src="rawdata.js"></script>
+  <title>DVC툴: 성격 탐색기</title>
+  <link rel="icon" href="../img/favicon.png">
+  <link rel="stylesheet" href="../src/dvccalculator.css">
+  <script src="../src/rawdata.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       for (let i = 0; i < dragonList.length; i++) {
@@ -50,29 +50,29 @@
     <div id="main-content">
       <div id="header">
         <h1></h1>
-        <span id="tooltip"><a href="#tips"><img src="../images/help64.png" width="24"></a></span>
+        <span id="tooltip"><a href="#tips"><img src="../img/help64.png" width="24"></a></span>
       </div>
 
       <div id="calculations">
         <div class="grid-container">
           <div>
             <h3>순발력</h3>
-            <input type="number" inputmode="numeric" min="0" value="0" id="start-agility" class="stat-field agility">
+            <input type="number" inputmode="numeric" min="0" max="999" value="0" id="start-agility" class="stat-field agility">
           </div>
 
           <div>
             <h3>근력</h3>
-            <input type="number" inputmode="numeric" min="0" value="0" id="start-strength" class="stat-field strength">
+            <input type="number" inputmode="numeric" min="0" max="999" value="0" id="start-strength" class="stat-field strength">
           </div>
 
           <div>
             <h3>집중력</h3>
-            <input type="number" inputmode="numeric" min="0" value="0" id="start-focus" class="stat-field focus">
+            <input type="number" inputmode="numeric" min="0" max="999" value="0" id="start-focus" class="stat-field focus">
           </div>
 
           <div>
             <h3>지력</h3>
-            <input type="number" inputmode="numeric" min="0" value="0" id="start-intellect"
+            <input type="number" inputmode="numeric" min="0" max="999" value="0" id="start-intellect"
               class="stat-field intellect">
           </div>
         </div>

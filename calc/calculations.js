@@ -1,4 +1,4 @@
-// import Stats from "./statscl.js"
+// import Stats from "../src/Stats.js"
 
 const BASE_INCREMENT = 3;
 const STAT_COUNT = 4;
