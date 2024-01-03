@@ -1,0 +1,281 @@
+* {
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 16px;
+}
+
+h1 {
+  font-size: 20px;
+  display: inline-block;
+}
+
+h2 {
+  margin-bottom: -5px;
+}
+
+h3 {
+  margin-bottom: 5px;
+}
+
+sub {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+li {
+  margin: 1.1rem 0;
+}
+
+span#tooltip {
+  position: absolute;
+  right: 10px;
+}
+
+.grid-container {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 90px auto 50px auto;
+  grid-template-rows: auto 30px 30px 30px 30px;
+  width: 100%;
+  gap: 10px 5px;
+  padding: 8px;
+  text-align: center;
+  align-items: center;
+}
+
+.grid-container2 {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 200px auto;
+  grid-template-rows: auto 30px 30px 30px 30px;
+  width: 100%;
+  gap: 10px 5px;
+  padding: 8px;
+  text-align: center;
+}
+
+#main-box {
+  display: flex;
+  justify-content: center;
+}
+
+#main-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#main-content #tips {
+  padding: 20px;
+}
+
+#calculator-body {
+  display: flex;
+  padding: 2%;
+  flex-flow: column wrap;
+}
+
+#controls {
+  padding: 2%;
+  display: flex;
+  flex-flow: column wrap;
+  align-self: flex-start;
+}
+
+.menu-button {
+  border: none;
+  border-radius: 6px;
+  color: white;
+  background-color: rgb(19, 93, 213);
+  font-size: 18px;
+  margin: 0px 8px;
+  padding: 8px 14px;
+  width: 200px;
+  cursor: pointer;
+}
+
+.menu-button:disabled {
+  background-color: rgb(152, 152, 152);
+  cursor: default;
+}
+
+.buttons {
+  align-self: center;
+  margin: 14px 0;
+}
+
+.buttons > button {
+  display: inline-block;
+  margin: 3px;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  background-color: #4f4f4f;
+  padding: 8px 14px;
+}
+
+div.agility,
+div.strength,
+div.focus,
+div.intellect {
+  border-radius: 6px;
+  padding: 3px;
+  font-weight: bold;
+}
+
+div.agility {
+  background-color: rgb(170, 222, 255);
+}
+
+div.strength {
+  background-color: rgb(255, 176, 176);
+}
+
+div.focus {
+  background-color: rgb(217, 171, 255);
+}
+
+div.intellect {
+  background-color: rgb(199, 255, 110);
+}
+
+span.nine,
+span.five,
+span.three {
+  display: inline-block;
+  padding: 0px 3px;
+  color: white;
+  border-radius: 10px;
+  font-weight: 700;
+}
+
+span.nine {
+  background-color: rgb(176, 0, 44);
+}
+
+span.five {
+  background-color: rgb(0, 147, 177);
+}
+
+span.three {
+  background-color: rgb(99, 169, 0);
+}
+
+.version * {
+  font-family: Tahoma;
+  font-size: 11px;
+  text-align: end;
+}
+
+@media (min-width: 800px) {
+  h1 {
+    font-size: 32px;
+  }
+
+  #header {
+    text-align: center;
+    padding: 50px 0px;
+  }
+
+  span#tooltip,
+  .stat-mobile-view {
+    display: none;
+  }
+
+  #main-content {
+    max-width: 900px;
+  }
+
+  #controls {
+    flex-flow: row;
+    align-self: center;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+
+  #calculations {
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  #controls div {
+    margin: 0px 20px;
+  }
+
+  #start-trait-selector {
+    width: 100px;
+  }
+
+  #normal-trait-selector,
+  #special-trait-selector {
+    width: 135px;
+  }
+
+  .stat-field {
+    width: 50px;
+  }
+
+  .grid-container2 {
+    grid-template-columns: 100px auto;
+  }
+
+  .buttons > button {
+    margin: 8px;
+    width: 140px;
+    height: 40px;
+  }
+}
+
+#toast {
+  position: fixed;
+  border-radius: 8px;
+  background-color: rgb(0, 83, 161);
+  color: white;
+  padding: 8px 30px;
+  animation: pop 1s forwards;
+  transition: opacity 2s;
+}
+
+#toast.active {
+  opacity: 0.7;
+  bottom: 2.2rem;
+}
+
+@keyframes pop {
+  0% {
+    opacity: 0;
+    bottom: 2rem;
+  }
+
+  10% {
+    bottom: 2.6rem;
+  }
+
+  12% {
+    bottom: 2.5rem;
+  }
+
+  13% {
+    bottom: 2.4rem;
+  }
+
+  14% {
+    bottom: 2.3rem;
+  }
+
+  15% {
+    opacity: 1;
+    bottom: 2.3rem;
+  }
+
+  70% {
+    opacity: 1;
+    bottom: 2.3rem;
+  }
+
+  100% {
+    opacity: 0;
+    bottom: 2.3rem;
+  }
+}
