@@ -3,6 +3,10 @@
   font-size: 16px;
 }
 
+main {
+  text-align: center;
+}
+
 h1 {
   font-size: 20px;
   display: inline-block;
@@ -28,29 +32,6 @@ li {
 span#tooltip {
   position: absolute;
   right: 10px;
-}
-
-.grid-container {
-  box-sizing: border-box;
-  display: grid;
-  grid-template-columns: 90px auto 50px auto;
-  grid-template-rows: auto 30px 30px 30px 30px;
-  width: 100%;
-  gap: 10px 5px;
-  padding: 8px;
-  text-align: center;
-  align-items: center;
-}
-
-.grid-container2 {
-  box-sizing: border-box;
-  display: grid;
-  grid-template-columns: 200px auto;
-  grid-template-rows: auto 30px 30px 30px 30px;
-  width: 100%;
-  gap: 10px 5px;
-  padding: 8px;
-  text-align: center;
 }
 
 #main-box {
@@ -216,10 +197,6 @@ span.three {
     width: 50px;
   }
 
-  .grid-container2 {
-    grid-template-columns: 100px auto;
-  }
-
   .buttons > button {
     margin: 8px;
     width: 140px;
@@ -230,7 +207,7 @@ span.three {
 #toast {
   position: fixed;
   border-radius: 8px;
-  background-color: rgb(0, 83, 161);
+  background-color: rgb(19, 93, 213);
   color: white;
   padding: 8px 30px;
   animation: pop 1s forwards;
