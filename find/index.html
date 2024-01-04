@@ -50,9 +50,9 @@
   <div id="main-box">
     <div id="main-content">
       <div id="header">
+        <span id="tooltip"><a href="#tips"><img src="../img/help64.png" width="18"></a></span>
         <button class="menu-button" onclick="location.href='../calc/index.html'">노력치 계산기</button>
         <button class="menu-button" disabled>성격 탐색기</button>
-        <span id="tooltip"><a href="#tips"><img src="../img/help64.png" width="18"></a></span>
       </div>
 
       <div id="calculations">
@@ -80,6 +80,11 @@
         </div>
       </div>
 
+      <div id="result">
+        <div id="find-label"><strong>예상 성격:</strong></div>
+        <div id="find-result"></div>
+      </div>
+
       <div id="controls">
         <div class="sel1">
           <h3>정보 입력:</h3>
@@ -103,9 +108,6 @@
       <div class="buttons">
         <button onclick="getChangedFields()">성격 찾기</button>
         <button onclick="reset()">초기화</button> <br>
-      </div>
-
-      <div id="result">
       </div>
 
       <div id="tips">
