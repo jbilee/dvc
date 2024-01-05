@@ -70,16 +70,6 @@ function getChangedFields() {
   dragonTraits.secondTrait.trainedHighest =
     dragonTraits.secondTrait.trainedStats.getMaxStatName();
 
-  if (
-    !checkedHighest.includes(dragonTraits.firstTrait.trainedHighest) &&
-    !checkedHighest.includes(dragonTraits.secondTrait.trainedHighest)
-  ) {
-    alert(
-      "입력하신 정보로는 드래곤의 초기 성격을 예측할 수 없습니다.\n입력값에 오류가 없는지 확인해주세요."
-    );
-    return;
-  }
-
   for (const trait in dragonTraits) {
     const minStats = dragonTraits[trait].trainedStats.getMinStatName();
     if (minStats.length > 1) {
@@ -104,7 +94,7 @@ function getChangedFields() {
   } else {
     // exception handling
     alert(
-      "예상치 못한 오류가 발생했습니다.\n내용을 공유해주시면 버그 해결에 큰 힘이 됩니다!"
+      "입력하신 정보로는 드래곤의 초기 성격을 예측할 수 없습니다.\n입력값에 오류가 없는지 확인해주세요."
     );
   }
 }
