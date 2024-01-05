@@ -1,4 +1,4 @@
-// import Stats from "./statscl.js"
+// import Stats from "../src/Stats.js"
 
 const BASE_INCREMENT = 3;
 const STAT_COUNT = 4;
@@ -293,6 +293,10 @@ function selectSpecialTrait(e) {
           goal[highestGoal] - base[highestGoal] < 45
         ) {
           goal[highestGoal] = 51;
+          const thirtyFive = getFirstKeyByValue(goal, 35);
+          if (thirtyFive && base[thirtyFive] === 0) {
+            goal[thirtyFive] = 36;
+          }
         }
         printStatFields(goal, "#end-");
       }

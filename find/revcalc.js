@@ -15,13 +15,30 @@ function getChangedFields() {
   const dragonName = document.getElementById("dragon-selector").value;
   const checkedHighest = getCheckedTraits();
   const currentTrait = document.getElementById("trait-selector").value;
-  requirements.lowest = normalTraits.filter((trait) => trait.nameEn === currentTrait).map((trait) => trait.lowestTrait).toString();
-  requirements.highest = normalTraits.filter((trait) => trait.nameEn === currentTrait).map((trait) => trait.highestTrait).toString();
+  requirements.lowest = normalTraits
+    .filter((trait) => trait.nameEn === currentTrait)
+    .map((trait) => trait.lowestTrait)
+    .toString();
+  requirements.highest = normalTraits
+    .filter((trait) => trait.nameEn === currentTrait)
+    .map((trait) => trait.highestTrait)
+    .toString();
 
-  // Early return 1: user input error (personality user selected and checkboxes don't match)
+  // Early return 1: no data (user did not provide required information)
+  if (
+    document.getElementById("dragon-selector").selectedIndex === 0 ||
+    document.getElementById("trait-selector").selectedIndex === 0
+  ) {
+    alert("드래곤과 드래곤의 현재 성격을 선택해주세요!");
+    return;
+  }
+
+  // Early return 2: user input error (personality user selected and checkboxes don't match)
   if (!checkedHighest.includes(requirements.highest)) {
-    console.log("impossible")
-    return
+    alert(
+      "입력하신 정보로는 드래곤의 초기 성격을 예측할 수 없습니다.\n입력값에 오류가 없는지 확인해주세요."
+    );
+    return;
   }
 
   // get dragon's trait data
@@ -38,12 +55,20 @@ function getChangedFields() {
   const trainAmount = new Stats(...fields);
 
   // add the affected stats to base stats
-  dragonTraits.firstTrait.trainedStats = getStatSum(dragonTraits.firstTrait.baseStats, trainAmount);
-  dragonTraits.secondTrait.trainedStats = getStatSum(dragonTraits.secondTrait.baseStats, trainAmount);
+  dragonTraits.firstTrait.trainedStats = getStatSum(
+    dragonTraits.firstTrait.baseStats,
+    trainAmount
+  );
+  dragonTraits.secondTrait.trainedStats = getStatSum(
+    dragonTraits.secondTrait.baseStats,
+    trainAmount
+  );
 
   // find final trait based on the changes
-  dragonTraits.firstTrait.trainedHighest = dragonTraits.firstTrait.trainedStats.getMaxStatName();
-  dragonTraits.secondTrait.trainedHighest = dragonTraits.secondTrait.trainedStats.getMaxStatName();
+  dragonTraits.firstTrait.trainedHighest =
+    dragonTraits.firstTrait.trainedStats.getMaxStatName();
+  dragonTraits.secondTrait.trainedHighest =
+    dragonTraits.secondTrait.trainedStats.getMaxStatName();
 
   for (const trait in dragonTraits) {
     const minStats = dragonTraits[trait].trainedStats.getMinStatName();
@@ -54,15 +79,23 @@ function getChangedFields() {
     }
   }
 
-  const resultDiv = document.getElementById("result");
+  const resultDiv = document.getElementById("find-result");
 
-  if (dragonTraits.firstTrait.trainedHighest.includes(requirements.highest) && dragonTraits.firstTrait.trainedLowest === requirements.lowest) {
+  if (
+    dragonTraits.firstTrait.trainedHighest.includes(requirements.highest) &&
+    dragonTraits.firstTrait.trainedLowest === requirements.lowest
+  ) {
     resultDiv.innerText = dragonTraits.firstTrait.trait;
-  } else if (dragonTraits.secondTrait.trainedHighest.includes(requirements.highest) && dragonTraits.secondTrait.trainedLowest === requirements.lowest) {
+  } else if (
+    dragonTraits.secondTrait.trainedHighest.includes(requirements.highest) &&
+    dragonTraits.secondTrait.trainedLowest === requirements.lowest
+  ) {
     resultDiv.innerText = dragonTraits.secondTrait.trait;
   } else {
     // exception handling
-    console.log("impossible")
+    alert(
+      "예상치 못한 오류가 발생했습니다.\n내용을 공유해주시면 버그 해결에 큰 힘이 됩니다!"
+    );
   }
 }
 
@@ -109,9 +142,19 @@ function reset() {
     const field = document.getElementById(selector);
     field.value = 0;
   });
+
+  const nameSelector = document.getElementById("dragon-selector");
+  nameSelector.selectedIndex = 0;
+  const traitSelector = document.getElementById("trait-selector");
+  traitSelector.selectedIndex = 0;
+
+  STAT_LISTS.base.forEach(
+    (stat) => (document.getElementById(`checkbox-${stat}`).checked = false)
+  );
+
+  const resultDiv = document.getElementById("find-result");
+  resultDiv.innerText = "";
 }
-
-
 
 // separate as utilities later
 function getStatDifference(a, b) {

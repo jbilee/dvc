@@ -1,0 +1,38 @@
+.grid-container {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: auto auto;
+  /* grid-template-rows: auto auto; */
+  gap: 10px 5px;
+  padding: 8px;
+  text-align: center;
+  align-items: center;
+}
+
+#result {
+  display: flex;
+  border-radius: 6px;
+  padding: 14px 24px;
+  background-color: rgb(221, 221, 221);
+}
+
+#find-result {
+  width: 120px;
+  text-align: center;
+}
+
+.sel2 label {
+  margin: 10px;
+}
+
+@media (min-width: 800px) {
+  .grid-container {
+    grid-template-columns: 90px 90px 90px 90px;
+    gap: 10px;
+  }
+
+  .grid-container input {
+    box-sizing: border-box;
+    width: 100%;
+  }
+}

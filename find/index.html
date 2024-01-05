@@ -8,21 +8,22 @@
 
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://jbilee.github.io/dvc/">
-  <meta property="og:title" content="DVC 노력치 계산기">
+  <meta property="og:title" content="DVC툴: 성격 탐색기">
   <meta property="og:image" content="https://i.imgur.com/19p98ma.png">
   <meta property="og:description" content="DVC 드래곤 육성에 필요한 훈련치를 계산해주는 툴입니다.">
-  <meta property="og:site_name" content="DVC 노력치 계산기">
+  <meta property="og:site_name" content="DVC툴: 성격 탐색기">
   <meta property="og:locale" content="ko_KR">
 
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="DVC 노력치 계산기">
+  <meta name="twitter:title" content="DVC툴: 성격 탐색기">
   <meta name="twitter:description" content="DVC 드래곤 육성에 필요한 훈련치를 계산해주는 툴입니다.">
   <meta name="twitter:image" content="https://i.imgur.com/19p98ma.png">
 
-  <title>DVC 노력치 계산기</title>
-  <link rel="icon" href="../images/favicon.png">
-  <link rel="stylesheet" href="dvccalculator.css">
-  <script src="rawdata.js"></script>
+  <title>DVC툴: 성격 탐색기</title>
+  <link rel="icon" href="../img/favicon.png">
+  <link rel="stylesheet" href="../src/app.css">
+  <link rel="stylesheet" href="./index.css">
+  <script src="../src/db.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       for (let i = 0; i < dragonList.length; i++) {
@@ -49,33 +50,41 @@
   <div id="main-box">
     <div id="main-content">
       <div id="header">
-        <h1></h1>
-        <span id="tooltip"><a href="#tips"><img src="../images/help64.png" width="24"></a></span>
+        <span id="tooltip"><a href="#tips"><img src="../img/help64.png" width="18"></a></span>
+        <button class="menu-button" onclick="location.href='../calc/index.html'">노력치 계산기</button>
+        <button class="menu-button" disabled>성격 탐색기</button>
       </div>
+
+      <h2 style="align-self: flex-start;">훈련된 수치:</h2>
 
       <div id="calculations">
         <div class="grid-container">
           <div>
             <h3>순발력</h3>
-            <input type="number" inputmode="numeric" min="0" value="0" id="start-agility" class="stat-field agility">
+            <input type="number" inputmode="numeric" min="0" max="999" value="0" id="start-agility" class="stat-field agility">
           </div>
 
           <div>
             <h3>근력</h3>
-            <input type="number" inputmode="numeric" min="0" value="0" id="start-strength" class="stat-field strength">
+            <input type="number" inputmode="numeric" min="0" max="999" value="0" id="start-strength" class="stat-field strength">
           </div>
 
           <div>
             <h3>집중력</h3>
-            <input type="number" inputmode="numeric" min="0" value="0" id="start-focus" class="stat-field focus">
+            <input type="number" inputmode="numeric" min="0" max="999" value="0" id="start-focus" class="stat-field focus">
           </div>
 
           <div>
             <h3>지력</h3>
-            <input type="number" inputmode="numeric" min="0" value="0" id="start-intellect"
+            <input type="number" inputmode="numeric" min="0" max="999" value="0" id="start-intellect"
               class="stat-field intellect">
           </div>
         </div>
+      </div>
+
+      <div id="result">
+        <div id="find-label"><strong>예상 성격:</strong></div>
+        <div id="find-result"></div>
       </div>
 
       <div id="controls">
@@ -103,9 +112,6 @@
         <button onclick="reset()">초기화</button> <br>
       </div>
 
-      <div id="result">
-      </div>
-
       <div id="tips">
         <h2>[툴 이용가이드]</h2>
         <ul>
@@ -114,6 +120,35 @@
         </ul>
       </div>
     </div>
+  </div>
+
+  <div class="version">
+    <p>
+      23-08-08. version 0.0.0<br>
+      23-08-24. version 0.1.0<br>
+      23-08-26. version 0.1.1<br>
+      23-10-17. version 0.1.2<br>
+      23-12-01. version 0.1.3<br>
+      23-12-25. version 0.2.0<br>
+      23-12-28. version 0.3.0<br>
+      24-01-05. version 1.0.0<br>
+      DVC Calculator by jbilee@GitHub
+    </p>
+    <p>
+      데이터 출처:<br>
+      <a href="https://community.withhive.com/dvc/ko/board/22/2929"
+        target="_blank">https://community.withhive.com/dvc/ko/board/22/2929
+        (전체도감 by 앙그라님)</a><br>
+      <a href="https://community.withhive.com/dvc/ko/board/22/9761"
+        target="_blank">https://community.withhive.com/dvc/ko/board/22/9761
+        (일반성격 계산법 by 앙그라님)</a><br>
+      <a href="https://community.withhive.com/dvc/ko/board/22/113031"
+        target="_blank">https://community.withhive.com/dvc/ko/board/22/113031
+        (성격작 정리 by 순대국밥할매님)</a><br>
+    </p>
+    <p>
+      버그/데이터 오류 제보: <a href="https://open.kakao.com/o/stYLmUCf">오픈카톡</a>
+    </p>
   </div>
 
   <script src="revcalc.js"></script>
