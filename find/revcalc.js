@@ -71,7 +71,7 @@ function getChangedFields() {
     dragonTraits.secondTrait.trainedStats.getMaxStatName();
 
   if (
-    !checkedHighest.includes(dragonTraits.firstTrait.trainedHighest) ||
+    !checkedHighest.includes(dragonTraits.firstTrait.trainedHighest) &&
     !checkedHighest.includes(dragonTraits.secondTrait.trainedHighest)
   ) {
     alert(
