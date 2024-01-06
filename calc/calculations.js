@@ -150,6 +150,7 @@ function selectSpecialTrait(e) {
     case "Distracted": {
       const curFocus = base.focus;
       const goal = copyStats(base);
+
       if (curFocus === 15) {
         const zeroTrait = getFirstKeyByValue(base, 0); // Will cause error if lowest stat isn't 0 (such as when user enters values themselves)
         const remainingTraits = STAT_LISTS.base.filter(
@@ -164,11 +165,19 @@ function selectSpecialTrait(e) {
           goal[change.traitName] = change.value;
         });
         const highestGoal = goal.getMaxStatName();
-        if (goal[highestGoal] - base[highestGoal] > 30) {
+        if (
+          goal[highestGoal] - base[highestGoal] > 30 &&
+          goal[highestGoal] - base[highestGoal] !== 45
+        ) {
           goal[highestGoal] = 46;
         }
-        printStatFields(goal, "#end-");
+        const thirtyRemains = getFirstKeyByValue(goal, 30);
+        if (goal[highestGoal] === 46 && thirtyRemains) {
+          goal[thirtyRemains] = 31;
+        }
+        return printStatFields(goal, "#end-");
       }
+
       if (curFocus === 30) {
         const zeroTrait = getFirstKeyByValue(base, 0);
         const remainingTraits = STAT_LISTS.base.filter(
@@ -186,8 +195,9 @@ function selectSpecialTrait(e) {
         if (goal[highestGoal] - base[highestGoal] > 30) {
           goal[highestGoal] = 46;
         }
-        printStatFields(goal, "#end-");
+        return printStatFields(goal, "#end-");
       }
+
       if (curFocus < 15) {
         const goals = [curFocus + 15, curFocus + 30, curFocus + 45];
         const excludedValues = [];
