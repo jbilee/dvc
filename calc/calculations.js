@@ -152,13 +152,13 @@ function selectSpecialTrait(e) {
       const goal = copyStats(base);
 
       if (curFocus === 15) {
-        const zeroTrait = getFirstKeyByValue(base, 0); // Will cause error if lowest stat isn't 0 (such as when user enters values themselves)
-        const remainingTraits = STAT_LISTS.base.filter(
-          (x) => x !== zeroTrait && x !== "focus"
+        const zeroStat = getFirstKeyByValue(base, 0); // Will cause error if lowest stat isn't 0 (such as when user enters values themselves)
+        const remainingStats = STAT_LISTS.base.filter(
+          (x) => x !== zeroStat && x !== "focus"
         );
         const changesToMake = compareTrainingCounts(
           base,
-          remainingTraits,
+          remainingStats,
           [30, 45]
         );
         changesToMake.forEach((change) => {
@@ -179,13 +179,13 @@ function selectSpecialTrait(e) {
       }
 
       if (curFocus === 30) {
-        const zeroTrait = getFirstKeyByValue(base, 0);
-        const remainingTraits = STAT_LISTS.base.filter(
-          (x) => x !== zeroTrait && x !== "focus"
+        const zeroStat = getFirstKeyByValue(base, 0);
+        const remainingStats = STAT_LISTS.base.filter(
+          (x) => x !== zeroStat && x !== "focus"
         );
         const changesToMake = compareTrainingCounts(
           base,
-          remainingTraits,
+          remainingStats,
           [15, 45]
         ); // This line needs to be refactored if any of the other stats is bigger than 15
         changesToMake.forEach((change) => {
@@ -201,25 +201,25 @@ function selectSpecialTrait(e) {
       if (curFocus < 15) {
         const goals = [curFocus + 15, curFocus + 30, curFocus + 45];
         const excludedValues = [];
-        const excludedTraits = [];
+        const excludedStats = [];
         for (let i = 0; i < goals.length; i++) {
           if (Object.values(base).includes(goals[i])) {
             excludedValues.push(goals[i]);
-            excludedTraits.push(getFirstKeyByValue(base, goals[i]));
+            excludedStats.push(getFirstKeyByValue(base, goals[i]));
           }
         }
         let keptValues = goals.filter((x) => !excludedValues.includes(x));
-        const remainingTraits = STAT_LISTS.base.filter(
-          (x) => !excludedTraits.includes(x) && x !== "focus"
+        const remainingStats = STAT_LISTS.base.filter(
+          (x) => !excludedStats.includes(x) && x !== "focus"
         );
-        if (remainingTraits.length === 1) {
-          goal[remainingTraits[0]] = keptValues[0];
+        if (remainingStats.length === 1) {
+          goal[remainingStats[0]] = keptValues[0];
           return printStatFields(goal, "#end-");
         }
-        if (remainingTraits.length === 2) {
+        if (remainingStats.length === 2) {
           const changesToMake = compareTrainingCounts(
             base,
-            remainingTraits,
+            remainingStats,
             keptValues
           );
           changesToMake.forEach((change) => {
@@ -233,38 +233,38 @@ function selectSpecialTrait(e) {
         // }
 
         for (let i = 0; i < keptValues.length; i++) {
-          const diffOne = keptValues[i] - base[remainingTraits[0]];
-          const diffTwo = keptValues[i] - base[remainingTraits[1]];
-          const diffThree = keptValues[i] - base[remainingTraits[2]];
+          const diffOne = keptValues[i] - base[remainingStats[0]];
+          const diffTwo = keptValues[i] - base[remainingStats[1]];
+          const diffThree = keptValues[i] - base[remainingStats[2]];
 
           if (diffOne === 45 || diffOne === 10) {
-            goal[remainingTraits[0]] = keptValues[i];
-            remainingTraits.splice(0, 1);
+            goal[remainingStats[0]] = keptValues[i];
+            remainingStats.splice(0, 1);
             keptValues.splice(i, 1);
             break;
           }
           if (diffTwo === 45 || diffTwo === 10) {
-            goal[remainingTraits[1]] = keptValues[i];
-            remainingTraits.splice(1, 1);
+            goal[remainingStats[1]] = keptValues[i];
+            remainingStats.splice(1, 1);
             keptValues.splice(i, 1);
             break;
           }
           if (diffThree === 45 || diffThree === 10) {
-            goal[remainingTraits[2]] = keptValues[i];
-            remainingTraits.splice(2, 1);
+            goal[remainingStats[2]] = keptValues[i];
+            remainingStats.splice(2, 1);
             keptValues.splice(i, 1);
             break;
           }
         }
 
-        if (remainingTraits.length === 3) {
+        if (remainingStats.length === 3) {
           const lastValue = keptValues.pop();
-          const lastTrait = remainingTraits.pop();
-          goal[lastTrait] = lastValue;
+          const lastStat = remainingStats.pop();
+          goal[lastStat] = lastValue;
 
           const changesToMake = compareTrainingCounts(
             base,
-            remainingTraits,
+            remainingStats,
             keptValues
           );
           changesToMake.forEach((change) => {
@@ -274,7 +274,7 @@ function selectSpecialTrait(e) {
         } else {
           const changesToMake = compareTrainingCounts(
             base,
-            remainingTraits,
+            remainingStats,
             keptValues
           );
           changesToMake.forEach((change) => {
@@ -284,14 +284,14 @@ function selectSpecialTrait(e) {
         }
       }
       if (curFocus > 15 && curFocus < 30) {
-        const zeroTrait = getFirstKeyByValue(base, 0);
-        const remainingTraits = STAT_LISTS.base.filter(
-          (x) => x !== zeroTrait && x !== "focus"
+        const zeroStat = getFirstKeyByValue(base, 0);
+        const remainingStats = STAT_LISTS.base.filter(
+          (x) => x !== zeroStat && x !== "focus"
         );
         const goals = [curFocus + 15, curFocus + 30];
         const changesToMake = compareTrainingCounts(
           base,
-          remainingTraits,
+          remainingStats,
           goals
         );
         changesToMake.forEach((change) => {
@@ -316,16 +316,16 @@ function selectSpecialTrait(e) {
     case "Immersed": {
       const goal = copyStats(base);
       const highestValue = base.getMaxStatValue();
-      const highestTrait = getFirstKeyByValue(base, highestValue);
+      const highestStat = getFirstKeyByValue(base, highestValue);
       const difference = 150 - highestValue;
 
       if (ADJUSTMENTS.regular.has(difference)) {
-        goal[highestTrait] =
-          base[highestTrait] + ADJUSTMENTS.regular.get(difference);
+        goal[highestStat] =
+          base[highestStat] + ADJUSTMENTS.regular.get(difference);
         return printStatFields(goal, "#end-");
       }
 
-      goal[highestTrait] = base[highestTrait] + difference;
+      goal[highestStat] = base[highestStat] + difference;
       printStatFields(goal, "#end-");
       break;
     }
@@ -457,7 +457,7 @@ function selectNormalTrait(e) {
   const traitIndex = normalTraits.findIndex((trait) => {
     return trait.nameEn === traitSelected;
   });
-  const highestReq = normalTraits[traitIndex].highestTrait;
+  const highestReq = normalTraits[traitIndex].highestStat;
   const lowestReq = normalTraits[traitIndex].lowestTrait;
   let req;
 
@@ -537,7 +537,7 @@ function optimizeHighest(base, change, targetTrait) {
 }
 
 function colorStatFields(index) {
-  const high = normalTraits[index].highestTrait;
+  const high = normalTraits[index].highestStat;
   const low = normalTraits[index].lowestTrait;
   document.querySelector(`#end-${high}`).style.border = "solid 2px red";
   document.querySelector(`#end-${low}`).style.border = "solid 2px blue";
@@ -793,6 +793,18 @@ function displayToast(successful) {
   setTimeout(() => {
     newToast.remove();
   }, 610);
+}
+
+function addFavorites() {
+  // get favoritesData values
+  localStorage.setItem("dcfvs", JSON.stringify(favoritesData))
+}
+
+function loadFavorites() {
+  const favoritesData = JSON.parse(localStorage.getItem("dcfvs"));
+  if (favoritesData) {
+    // loading logic
+  }
 }
 
 // Delete later
