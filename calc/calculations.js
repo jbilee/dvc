@@ -110,12 +110,18 @@ function selectSpecialTrait(e) {
     return traits.nameEn === traitSelected;
   });
 
+  //Check for 9-only
+  const testAreaCheckbox = document.querySelector(".test-area input");
+
   // Store dragon's base stats
   const base = getStatFields("#start-");
 
   switch (traitSelected) {
     case "Perfectionist": {
       const final = new Stats(...calcTwenty(base));
+      if (testAreaCheckbox.checked && !specialTraits[traitIndex].valueSensitive) {
+        filteredAdjustment(base, final);
+      }
       printStatFields(final, "#end-");
       break;
     }
@@ -652,7 +658,7 @@ function printTrainingCount(traitType) {
 
   if (!trainCount) {
     throw new Error(
-      `${reqStat}는 조합할 수 없는 숫자입니다. 다른 목표치를 설정해주세요!`
+      `조합할 수 없는 숫자가 있습니다 (${reqStat}). 다른 목표치를 설정해주세요!`
     );
   }
 
@@ -805,6 +811,19 @@ function loadFavorites() {
   if (favoritesData) {
     // loading logic
   }
+}
+
+function filteredAdjustment(base, goal) {
+  console.log(goal)
+  STAT_LISTS.base.forEach((stat) => {
+    if ((goal[stat] - base[stat]) % 9 !== 0) {
+      while ((goal[stat] - base[stat]) % 9 !== 0) {
+        goal[stat] += 1;
+      }
+    }
+  });
+
+  console.log(goal)
 }
 
 // Delete later

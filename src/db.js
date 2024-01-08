@@ -296,16 +296,16 @@ const dragonList = [
 ];
 
 const specialTraits = [
-  { nameEn: "Noble", nameKo: "고귀한", stats: [20, 20, 20, 20] },
-  { nameEn: "Solitary", nameKo: "고독한", stats: [0, 0, 0, 0] },
-  { nameEn: "Immersed", nameKo: "몰입하는", stats: [0, 0, 0, 0] },
-  { nameEn: "Distracted", nameKo: "산만한", stats: [0, 0, 0, 0] },
-  { nameEn: "Arrogant", nameKo: "오만한", stats: [25, 25, 25, 25] },
-  { nameEn: "Perfectionist", nameKo: "완벽주의자", stats: [20, 20, 20, 20] },
-  { nameEn: "Capable", nameKo: "유능한", stats: [28, 28, 28, 28] },
-  { nameEn: "Meticulous", nameKo: "정확한", stats: [0, 0, 0, 0] },
-  { nameEn: "Dull", nameKo: "평범한", stats: [20, 20, 20, 20] },
-  { nameEn: "Classy", nameKo: "품위있는", stats: [20, 20, 20, 20] }
+  { nameEn: "Noble", nameKo: "고귀한", stats: [20, 20, 20, 20], valueSensitive: false },
+  { nameEn: "Solitary", nameKo: "고독한", stats: [0, 0, 0, 0], valueSensitive: true },
+  { nameEn: "Immersed", nameKo: "몰입하는", stats: [0, 0, 0, 0], valueSensitive: false },
+  { nameEn: "Distracted", nameKo: "산만한", stats: [0, 0, 0, 0], valueSensitive: true },
+  { nameEn: "Arrogant", nameKo: "오만한", stats: [25, 25, 25, 25], valueSensitive: false },
+  { nameEn: "Perfectionist", nameKo: "완벽주의자", stats: [20, 20, 20, 20], valueSensitive: false },
+  { nameEn: "Capable", nameKo: "유능한", stats: [28, 28, 28, 28], valueSensitive: true },
+  { nameEn: "Meticulous", nameKo: "정확한", stats: [0, 0, 0, 0], valueSensitive: true },
+  { nameEn: "Dull", nameKo: "평범한", stats: [20, 20, 20, 20], valueSensitive: true },
+  { nameEn: "Classy", nameKo: "품위있는", stats: [20, 20, 20, 20], valueSensitive: false }
 ];
 
 const normalTraits = [
