@@ -309,20 +309,20 @@ const specialTraits = [
 ];
 
 const normalTraits = [
-  { nameEn: "Naive", nameKo: "천진난만한", highestTrait: "agility", lowestTrait: "strength" },
-  { nameEn: "Rash", nameKo: "덜렁대는", highestTrait: "agility", lowestTrait: "focus" },
-  { nameEn: "Hasty", nameKo: "성급한", highestTrait: "agility", lowestTrait: "intellect" },
-  { nameEn: "quickWitted", nameKo: "눈치빠른", highestTrait: "agility", lowestTrait: "none" },
-  { nameEn: "Brave", nameKo: "용감한", highestTrait: "strength", lowestTrait: "agility" },
-  { nameEn: "Quirky", nameKo: "변덕쟁이", highestTrait: "strength", lowestTrait: "focus" },
-  { nameEn: "Adamant", nameKo: "고집있는", highestTrait: "strength", lowestTrait: "intellect" },
-  { nameEn: "Bold", nameKo: "대담한", highestTrait: "strength", lowestTrait: "none" },
-  { nameEn: "Quiet", nameKo: "냉정한", highestTrait: "focus", lowestTrait: "agility" },
-  { nameEn: "Calm", nameKo: "차분한", highestTrait: "focus", lowestTrait: "strength" },
-  { nameEn: "Careful", nameKo: "신중한", highestTrait: "focus", lowestTrait: "intellect" },
-  { nameEn: "Hardy", nameKo: "노력하는", highestTrait: "focus", lowestTrait: "none" },
-  { nameEn: "Docile", nameKo: "온순한", highestTrait: "intellect", lowestTrait: "agility" },
-  { nameEn: "Bashful", nameKo: "수줍은", highestTrait: "intellect", lowestTrait: "strength" },
-  { nameEn: "Lax", nameKo: "촐랑대는", highestTrait: "intellect", lowestTrait: "focus" },
-  { nameEn: "Smart", nameKo: "똑똑한", highestTrait: "intellect", lowestTrait: "none" }
+  { nameEn: "Naive", nameKo: "천진난만한", highestStat: "agility", lowestStat: "strength" },
+  { nameEn: "Rash", nameKo: "덜렁대는", highestStat: "agility", lowestStat: "focus" },
+  { nameEn: "Hasty", nameKo: "성급한", highestStat: "agility", lowestStat: "intellect" },
+  { nameEn: "quickWitted", nameKo: "눈치빠른", highestStat: "agility", lowestStat: "none" },
+  { nameEn: "Brave", nameKo: "용감한", highestStat: "strength", lowestStat: "agility" },
+  { nameEn: "Quirky", nameKo: "변덕쟁이", highestStat: "strength", lowestStat: "focus" },
+  { nameEn: "Adamant", nameKo: "고집있는", highestStat: "strength", lowestStat: "intellect" },
+  { nameEn: "Bold", nameKo: "대담한", highestStat: "strength", lowestStat: "none" },
+  { nameEn: "Quiet", nameKo: "냉정한", highestStat: "focus", lowestStat: "agility" },
+  { nameEn: "Calm", nameKo: "차분한", highestStat: "focus", lowestStat: "strength" },
+  { nameEn: "Careful", nameKo: "신중한", highestStat: "focus", lowestStat: "intellect" },
+  { nameEn: "Hardy", nameKo: "노력하는", highestStat: "focus", lowestStat: "none" },
+  { nameEn: "Docile", nameKo: "온순한", highestStat: "intellect", lowestStat: "agility" },
+  { nameEn: "Bashful", nameKo: "수줍은", highestStat: "intellect", lowestStat: "strength" },
+  { nameEn: "Lax", nameKo: "촐랑대는", highestStat: "intellect", lowestStat: "focus" },
+  { nameEn: "Smart", nameKo: "똑똑한", highestStat: "intellect", lowestStat: "none" }
 ];
