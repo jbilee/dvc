@@ -3,6 +3,7 @@
 const BASE_INCREMENT = 3;
 const STAT_COUNT = 4;
 const TRAIN_VALUES = [3, 5, 9];
+const EXCLUDED_VALUES = [1, 2, 4, 7];
 const STAT_LISTS = {
   base: ["agility", "strength", "focus", "intellect"],
   start: [
@@ -115,11 +116,15 @@ function selectSpecialTrait(e) {
 
   // Store dragon's base stats
   const base = getStatFields("#start-");
+  console.log(base);
 
   switch (traitSelected) {
     case "Perfectionist": {
       const final = new Stats(...calcTwenty(base));
-      if (testAreaCheckbox.checked && !specialTraits[traitIndex].valueSensitive) {
+      if (
+        testAreaCheckbox.checked &&
+        !specialTraits[traitIndex].valueSensitive
+      ) {
         filteredAdjustment(base, final);
       }
       printStatFields(final, "#end-");
@@ -367,13 +372,17 @@ function selectSpecialTrait(e) {
     }
 
     case "Solitary": {
-      const goal = new Stats();
+      const goal = new Stats(
+        base.agility,
+        base.strength,
+        base.focus,
+        base.intellect
+      );
       STAT_LISTS.base.forEach((stat) => {
-        if (base[stat].toString().endsWith("5")) {
-          goal[stat] = base[stat] + 6;
-        } else {
-          goal[stat] = base[stat] + 11;
+        while (!goal[stat].toString().endsWith("1")) {
+          goal[stat] += 1;
         }
+        if (EXCLUDED_VALUES.includes(goal[stat] - base[stat])) goal[stat] += 10;
       });
 
       printStatFields(goal, "#end-");
@@ -471,9 +480,6 @@ function selectNormalTrait(e) {
   else req = singleTraining(base, highestReq, lowestReq);
 
   printStatFields(req, "#end-");
-
-  // Make coloring the borders optional for now
-  // colorStatFields(traitIndex);
 }
 
 function doubleTraining(base, highest) {
@@ -496,6 +502,8 @@ function singleTraining(base, highest, lowest) {
   // Determine highest required stat
   req = calcSingleHighest(req, highest);
 
+  console.log(req);
+  console.log(base);
   const diff = getStatDifference(base, req);
 
   // Optimization
@@ -803,7 +811,7 @@ function displayToast(successful) {
 
 function addFavorites() {
   // get favoritesData values
-  localStorage.setItem("dcfvs", JSON.stringify(favoritesData))
+  localStorage.setItem("dcfvs", JSON.stringify(favoritesData));
 }
 
 function loadFavorites() {
@@ -814,7 +822,7 @@ function loadFavorites() {
 }
 
 function filteredAdjustment(base, goal) {
-  console.log(goal)
+  console.log(goal);
   STAT_LISTS.base.forEach((stat) => {
     if ((goal[stat] - base[stat]) % 9 !== 0) {
       while ((goal[stat] - base[stat]) % 9 !== 0) {
@@ -823,7 +831,7 @@ function filteredAdjustment(base, goal) {
     }
   });
 
-  console.log(goal)
+  console.log(goal);
 }
 
 // Delete later
