@@ -341,15 +341,11 @@ function selectSpecialTrait(e) {
 
     case "Dull": {
       const maxValue = base.getMaxStatValue();
-      if (maxValue <= 20) {
-        for (let i = 0; i < STAT_COUNT; i++) {
-          $(STAT_LISTS.end[i]).value = specialTraits[traitIndex].stats[i];
-        }
-      } else {
-        for (let i = 0; i < STAT_COUNT; i++) {
-          $(STAT_LISTS.end[i]).value = 25;
-        }
-      }
+      STAT_LISTS.end.forEach((stat) => $(stat).value = maxValue);
+
+      // Make adjustments here
+      // Conditional: if maxValue >= 23, cannot make any adjustments
+      // if maxValue < 22, can make upper adjustments +3 at a time
       break;
     }
 

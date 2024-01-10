@@ -304,7 +304,7 @@ const specialTraits = [
   { nameEn: "Perfectionist", nameKo: "완벽주의자", stats: [20, 20, 20, 20], valueSensitive: false },
   { nameEn: "Capable", nameKo: "유능한", stats: [28, 28, 28, 28], valueSensitive: true },
   { nameEn: "Meticulous", nameKo: "정확한", stats: [0, 0, 0, 0], valueSensitive: true },
-  { nameEn: "Dull", nameKo: "평범한", stats: [20, 20, 20, 20], valueSensitive: true },
+  { nameEn: "Dull", nameKo: "평범한", stats: [0, 0, 0, 0], valueSensitive: true },
   { nameEn: "Classy", nameKo: "품위있는", stats: [20, 20, 20, 20], valueSensitive: false }
 ];
 
