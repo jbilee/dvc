@@ -17,11 +17,11 @@ function getChangedFields() {
   const currentTrait = document.getElementById("trait-selector").value;
   requirements.lowest = normalTraits
     .filter((trait) => trait.nameEn === currentTrait)
-    .map((trait) => trait.lowestTrait)
+    .map((trait) => trait.lowestStat)
     .toString();
   requirements.highest = normalTraits
     .filter((trait) => trait.nameEn === currentTrait)
-    .map((trait) => trait.highestTrait)
+    .map((trait) => trait.highestStat)
     .toString();
 
   // Early return 1: no data (user did not provide required information)
@@ -112,8 +112,8 @@ function findLowestStatName(stats) {
 function findTraitData(traitName) {
   const statInfo = normalTraits.reduce((final, cur) => {
     if (cur.nameKo === traitName) {
-      final.highest = cur.highestTrait;
-      final.lowest = cur.lowestTrait;
+      final.highest = cur.highestStat;
+      final.lowest = cur.lowestStat;
     }
     return final;
   }, {});
