@@ -1,5 +1,6 @@
 // import Stats from "../src/Stats.js"
 
+const $ = (selector) => document.querySelector(selector);
 const BASE_INCREMENT = 3;
 const STAT_COUNT = 4;
 const TRAIN_VALUES = [3, 5, 9];
@@ -53,7 +54,7 @@ const ADJUSTMENTS = {
 
 // Attach event listeners to base stat input fields (to disable/enable dull trait)
 for (const stat of STAT_LISTS.base) {
-  const field = document.getElementById(`start-${stat}`);
+  const field = $(`#start-${stat}`);
   field.addEventListener("change", detectBase);
 }
 
@@ -64,19 +65,19 @@ function detectBase(e) {
 
 function selectDragon() {
   // Initialize variables
-  const firstTrait = document.getElementById("trait1");
-  const secondTrait = document.getElementById("trait2");
-  const dragonName = document.getElementById("dragon-selector").value;
+  const firstTrait = $("#trait1");
+  const secondTrait = $("#trait2");
+  const dragonName = $("#dragon-selector").value;
   const dragonIndex = dragonList.findIndex((dragons) => {
     return dragons.name[0] === dragonName;
   });
 
   // Enable trait selector
-  document.getElementById("start-trait-selector").removeAttribute("disabled");
+  $("#start-trait-selector").removeAttribute("disabled");
 
   // Reset previously selected base stat values and trait
-  document.getElementById("start-trait-selector").selectedIndex = 0;
-  STAT_LISTS.start.forEach((stat) => (document.querySelector(stat).value = 0));
+  $("#start-trait-selector").selectedIndex = 0;
+  STAT_LISTS.start.forEach((stat) => ($(stat).value = 0));
 
   // Fill in trait dropdown choices
   firstTrait.textContent = dragonList[dragonIndex].traitsKo[0];
@@ -88,16 +89,14 @@ function selectDragon() {
 // Print the selected dragon's base stats
 function selectStartTrait(e) {
   const traitSelected = e.target.value;
-  const dragonName = document.querySelector("#dragon-selector").value;
+  const dragonName = $("#dragon-selector").value;
   const dragonIndex = dragonList.findIndex((dragons) => {
     return dragons.name[0] === dragonName;
   });
 
   // Fill in base stats
   STAT_LISTS.start.forEach(
-    (stat, i) =>
-      (document.querySelector(stat).value =
-        dragonList[dragonIndex][traitSelected][i])
+    (stat, i) => ($(stat).value = dragonList[dragonIndex][traitSelected][i])
   );
 
   // Disable selector for end traits where applicable
@@ -112,7 +111,7 @@ function selectSpecialTrait(e) {
   });
 
   //Check for 9-only
-  const testAreaCheckbox = document.querySelector(".test-area input");
+  const testAreaCheckbox = $(".test-area input");
 
   // Store dragon's base stats
   const base = getStatFields("#start-");
@@ -344,12 +343,11 @@ function selectSpecialTrait(e) {
       const maxValue = base.getMaxStatValue();
       if (maxValue <= 20) {
         for (let i = 0; i < STAT_COUNT; i++) {
-          document.querySelector(STAT_LISTS.end[i]).value =
-            specialTraits[traitIndex].stats[i];
+          $(STAT_LISTS.end[i]).value = specialTraits[traitIndex].stats[i];
         }
       } else {
         for (let i = 0; i < STAT_COUNT; i++) {
-          document.querySelector(STAT_LISTS.end[i]).value = 25;
+          $(STAT_LISTS.end[i]).value = 25;
         }
       }
       break;
@@ -359,12 +357,11 @@ function selectSpecialTrait(e) {
       const maxValue = base.getMaxStatValue();
       if (maxValue < 30) {
         for (let i = 0; i < STAT_COUNT; i++) {
-          document.querySelector(STAT_LISTS.end[i]).value =
-            specialTraits[traitIndex].stats[i];
+          $(STAT_LISTS.end[i]).value = specialTraits[traitIndex].stats[i];
         }
       } else {
         for (let i = 0; i < STAT_COUNT; i++) {
-          document.querySelector(STAT_LISTS.end[i]).value = 30;
+          $(STAT_LISTS.end[i]).value = 30;
         }
       }
       break;
@@ -385,8 +382,7 @@ function selectSpecialTrait(e) {
 
     default:
       for (let i = 0; i < STAT_COUNT; i++) {
-        document.querySelector(STAT_LISTS.end[i]).value =
-          specialTraits[traitIndex].stats[i];
+        $(STAT_LISTS.end[i]).value = specialTraits[traitIndex].stats[i];
       }
   }
 }
@@ -442,14 +438,14 @@ function compareTrainingCounts(base, stats, goals) {
 function getStatFields(prefix) {
   const values = new Stats();
   for (const stat of STAT_LISTS.base) {
-    values[stat] = Number(document.querySelector(`${prefix}${stat}`).value);
+    values[stat] = Number($(`${prefix}${stat}`).value);
   }
   return values;
 }
 
 function printStatFields(stats, prefix) {
   for (const stat in stats) {
-    document.querySelector(`${prefix}${stat}`).value = stats[stat];
+    $(`${prefix}${stat}`).value = stats[stat];
   }
 }
 
@@ -539,13 +535,6 @@ function optimizeHighest(change, targetStat) {
   return newStats;
 }
 
-function colorStatFields(index) {
-  const high = normalTraits[index].highestStat;
-  const low = normalTraits[index].lowestStat;
-  document.querySelector(`#end-${high}`).style.border = "solid 2px red";
-  document.querySelector(`#end-${low}`).style.border = "solid 2px blue";
-}
-
 function copyStats(object) {
   const newAgility = Number(object.agility);
   const newStrength = Number(object.strength);
@@ -603,8 +592,7 @@ function calcSingleLowest(curStats, lowestReq) {
   const baseMinStat = curStats.getMinStatName();
   const reqVal = curStats[lowestReq];
 
-  if (baseMinStat.length === 1 && baseMinStat[0] === lowestReq)
-    return newStats;
+  if (baseMinStat.length === 1 && baseMinStat[0] === lowestReq) return newStats;
   for (const stat in curStats) {
     if (stat === lowestReq) continue;
     if (curStats[stat] <= reqVal) newStats[stat] = reqVal + BASE_INCREMENT;
@@ -630,10 +618,7 @@ function calcSingleHighest(curStats, highestReq) {
   const includesReq = baseMaxStat.includes(highestReq);
 
   if (baseMaxStat.length === 1 && includesReq) return newStats;
-  if (
-    (baseMaxStat.length > 1 && includesReq) ||
-    baseMaxStat[0] !== highestReq
-  )
+  if ((baseMaxStat.length > 1 && includesReq) || baseMaxStat[0] !== highestReq)
     newStats[highestReq] = baseMaxValue + BASE_INCREMENT;
   return newStats;
 }
@@ -647,24 +632,20 @@ function calculate() {
 }
 
 function printTrainingCount(statType) {
-  let reqStat =
-    document.querySelector(`#end-${statType}`).value -
-    document.querySelector(`#start-${statType}`).value;
+  const reqStat = $(`#end-${statType}`).value - $(`#start-${statType}`).value;
 
-  const trainCount = calculateTrainCount(reqStat, TRAIN_VALUES);
-
-  if (!trainCount) {
+  if (EXCLUDED_VALUES.includes(reqStat)) {
     throw new Error(
       `조합할 수 없는 숫자가 있습니다 (${reqStat}). 다른 목표치를 설정해주세요!`
     );
   }
 
+  const trainCount = calculateTrainCount(reqStat, TRAIN_VALUES);
+
   if (reqStat < 0) {
-    reqStat = 0;
-    document.querySelector(`#required-${statType}`).textContent = "+0";
+    $(`#required-${statType}`).textContent = "+0";
   } else {
-    document.querySelector(`#required-${statType}`).textContent =
-      "+" + reqStat;
+    $(`#required-${statType}`).textContent = "+" + reqStat;
   }
 
   let trainText;
@@ -694,9 +675,9 @@ function printTrainingCount(statType) {
   }
 
   if (trainCount.length === 0) {
-    document.querySelector(`#train-count-${statType}`).textContent = "-";
+    $(`#train-count-${statType}`).textContent = "-";
   } else {
-    document.querySelector(`#train-count-${statType}`).innerHTML = trainText;
+    $(`#train-count-${statType}`).innerHTML = trainText;
   }
 }
 
@@ -725,14 +706,14 @@ function calculateTrainCount(targetSum, trainValues, memo = {}) {
 }
 
 function disableDull() {
-  document.getElementById("special-trait-selector").selectedIndex = 0;
-  const dull = document.getElementById("Dull");
+  $("#special-trait-selector").selectedIndex = 0;
+  const dull = $("#Dull");
   dull.setAttribute("disabled", "");
   dull.textContent = "평범한 (조건초과)";
 }
 
 function enableDull() {
-  const dull = document.getElementById("Dull");
+  const dull = $("#Dull");
   dull.removeAttribute("disabled");
   dull.textContent = "평범한";
 }
@@ -750,17 +731,17 @@ function unavailabilityCheck(dragonIndex, traitSelected) {
 
 function reset() {
   for (let i = 0; i < STAT_COUNT; i++) {
-    document.querySelector(STAT_LISTS.end[i]).value = 0;
+    $(STAT_LISTS.end[i]).value = 0;
   }
 
-  document.getElementById("special-trait-selector").selectedIndex = 0;
-  document.getElementById("normal-trait-selector").selectedIndex = 0;
+  $("#special-trait-selector").selectedIndex = 0;
+  $("#normal-trait-selector").selectedIndex = 0;
 }
 
 function copyResults() {
   const text = [];
   STAT_LISTS.base.forEach((stat) => {
-    const field = document.getElementById(`${COUNT_PREFIX}${stat}`);
+    const field = $(`#${COUNT_PREFIX}${stat}`);
     if (field.innerText !== "-") {
       const counts = field.childNodes;
       let spanText = "";
@@ -782,7 +763,7 @@ function copyResults() {
 }
 
 function displayToast(successful) {
-  const container = document.getElementById("main-content");
+  const container = $("#main-content");
   if (container.lastElementChild.id === "toast") {
     container.lastElementChild.remove();
   }
