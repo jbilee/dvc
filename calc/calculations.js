@@ -341,7 +341,7 @@ function selectSpecialTrait(e) {
 
     case "Dull": {
       const maxValue = base.getMaxStatValue();
-      STAT_LISTS.end.forEach((stat) => $(stat).value = maxValue);
+      STAT_LISTS.end.forEach((stat) => ($(stat).value = maxValue));
 
       // Make adjustments here
       // Conditional: if maxValue >= 23, cannot make any adjustments
@@ -699,6 +699,19 @@ function calculateTrainCount(targetSum, trainValues, memo = {}) {
   }
   memo[targetSum] = shortestCombination;
   return shortestCombination;
+}
+
+function lowerTrainCount(count) {
+  const newCount = [...count];
+
+  if (count.includes(3) && count.includes(5)) {
+    const threeIndex = newCount.indexOf(3);
+    newCount.splice(threeIndex, 1);
+    const fiveIndex = newCount.indexOf(5);
+    newCount.splice(fiveIndex, 1, 9);
+  }
+
+  return newCount;
 }
 
 function disableDull() {
