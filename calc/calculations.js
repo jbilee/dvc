@@ -117,36 +117,6 @@ function selectSpecialTrait(e) {
   const base = getStatFields("#start-");
 
   switch (traitSelected) {
-    case "Perfectionist": {
-      const final = new Stats(...calcTwenty(base));
-      if (
-        testAreaCheckbox.checked &&
-        !specialTraits[traitIndex].valueSensitive
-      ) {
-        filteredAdjustment(base, final);
-      }
-      printStatFields(final, "#end-");
-      break;
-    }
-
-    case "Classy": {
-      const final = new Stats(...calcTwenty(base));
-      printStatFields(final, "#end-");
-      break;
-    }
-
-    case "Noble": {
-      const final = new Stats(...calcTwenty(base));
-      printStatFields(final, "#end-");
-      break;
-    }
-
-    case "Arrogant": {
-      const final = new Stats(...calcTwentyFive(base));
-      printStatFields(final, "#end-");
-      break;
-    }
-
     case "Meticulous": {
       const startSum = base.getTotal();
       const reqSum = 100 - startSum;
@@ -377,9 +347,9 @@ function selectSpecialTrait(e) {
     }
 
     default:
-      for (let i = 0; i < STAT_COUNT; i++) {
-        $(STAT_LISTS.end[i]).value = specialTraits[traitIndex].stats[i];
-      }
+      // If 9-only training is checked:
+      const final = calcDefault(traitSelected, base);
+      printStatFields(final, "#end-");
   }
 }
 
@@ -554,6 +524,26 @@ function getStatSum(a, b) {
     sum[stat] = a[stat] + b[stat];
   }
   return sum;
+}
+
+function calcDefault(targetTrait, curStats) {
+  const targetValues = specialTraits.filter(
+    (trait) => trait.nameEn === targetTrait
+  )[0].stats;
+
+  const goal = new Stats(...targetValues);
+
+  STAT_LISTS.base.forEach((stat) => {
+    if (curStats[stat] > goal[stat]) {
+      goal[stat] = curStats[stat];
+    }
+  });
+
+  console.log(goal);
+
+  filteredAdjustment(curStats, goal)
+
+  return goal;
 }
 
 function calcTwenty(curStats) {
@@ -801,7 +791,6 @@ function loadFavorites() {
 }
 
 function filteredAdjustment(base, goal) {
-  console.log(goal);
   STAT_LISTS.base.forEach((stat) => {
     if ((goal[stat] - base[stat]) % 9 !== 0) {
       while ((goal[stat] - base[stat]) % 9 !== 0) {
