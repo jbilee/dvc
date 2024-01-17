@@ -226,7 +226,7 @@ const dragonList = [
     { name: ["Khan", "칸"], traitsEn: ["Careful", "Quiet"], traitsKo: ["신중한", "냉정한"], Careful: [10, 10, 25, 0], Quiet: [0, 10, 20, 10] },
     { name: ["Khan Marino", "칸마리노"], traitsEn: ["Adamant", "Hasty"], traitsKo: ["고집있는", "성급한"], Adamant: [10, 25, 10, 0], Hasty: [20, 10, 10, 0] },
     { name: ["Catsgon", "캣츠곤"], traitsEn: ["quickWitted", "Quirky"], traitsKo: ["눈치빠른", "변덕쟁이"], quickWitted: [30, 10, 0, 0], Quirky: [10, 20, 0, 10] },
-    // { name: ["Cortus", "코르투스"], traitsEn: ["Smart", "Bold"], traitsKo: ["", ""], Smart: [0, 0, 0, 0], Bold: [0, 0, 0, 0] },
+    { name: ["Cortus", "코르투스"], traitsEn: ["Quiet", "Bold"], traitsKo: ["냉정한", "대담한"], Quiet: [0, 5, 20, 5], Bold: [0, 30, 0, 10] },
     { name: ["Cobra Dragon", "코브라곤"], traitsEn: ["Quirky", "Adamant"], traitsKo: ["변덕쟁이", "고집있는"], Quirky: [10, 30, 0, 10], Adamant: [10, 25, 10, 0] },
     { name: ["Kuzmara", "쿠즈마라"], traitsEn: ["Brave", "Careful"], traitsKo: ["용감한", "신중한"], Brave: [0, 25, 10, 10], Careful: [10, 10, 25, 0] },
     { name: ["Cupid", "큐피트"], traitsEn: ["Naive", "Hardy"], traitsKo: ["천진난만한", "노력하는"], Naive: [30, 0, 10, 10], Hardy: [0, 0, 25, 0] },
