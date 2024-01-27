@@ -167,6 +167,7 @@ const dragonList = [
     { name: ["Spike Dragon", "스파이크"], traitsEn: ["Careful", "Calm"], traitsKo: ["신중한", "차분한"], Careful: [10, 10, 25, 0], Calm: [10, 0, 20, 10] },
     { name: ["Spine Dragon", "스파인 드래곤"], traitsEn: ["Naive", "Lax"], traitsKo: ["천진난만한", "촐랑대는"], Naive: [20, 0, 5, 5], Lax: [10, 10, 0, 20] },
     { name: ["Splender", "스플렌더"], traitsEn: ["quickWitted", "Careful"], traitsKo: ["눈치빠른", "신중한"], quickWitted: [20, 5, 0, 0], Careful: [10, 10, 20, 0] },
+    { name: ["Spica", "스피카"], traitsEn: ["Hardy", "Docile"], traitsKo: ["노력하는", "온순한"], Hardy: [0, 5, 20, 0], Docile: [0, 10, 10, 30] },
     { name: ["Slime Dragon", "슬라임"], traitsEn: ["Quirky", "Lax"], traitsKo: ["변덕쟁이", "촐랑대는"], Quirky: [15, 30, 0, 15], Lax: [15, 15, 0, 30] },
     { name: ["Citael", "시타엘"], traitsEn: ["Calm", "Docile"], traitsKo: ["차분한", "온순한"], Calm: [15, 0, 30, 15], Docile: [0, 10, 10, 20] },
     { name: ["Six-leg Horn", "식스레그혼"], traitsEn: ["Careful", "Docile"], traitsKo: ["신중한", "온순한"], Careful: [10, 10, 20, 0], Docile: [0, 15, 15, 30] },
