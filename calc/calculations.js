@@ -117,6 +117,12 @@ function selectSpecialTrait(e) {
   const base = getStatFields("#start-");
 
   switch (traitSelected) {
+    case "Arrogant": {
+      const final = new Stats(...calcTwentyFive(base));
+      printStatFields(final, "#end-");
+      break;
+    }
+
     case "Meticulous": {
       const startSum = base.getTotal();
       const reqSum = 100 - startSum;
