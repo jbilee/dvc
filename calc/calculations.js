@@ -52,15 +52,13 @@ const ADJUSTMENTS = {
   ]),
 };
 
-// Attach event listeners to base stat input fields (to disable/enable dull trait)
-for (const stat of STAT_LISTS.base) {
-  const field = $(`#start-${stat}`);
-  field.addEventListener("change", detectBase);
-}
+STAT_LISTS.start.forEach((stat) =>
+  $(stat).addEventListener("change", checkDullAvailability)
+);
 
-function detectBase(e) {
-  if (e.target.value <= 25) return enableDull();
-  return disableDull();
+function checkDullAvailability(e) {
+  const isAvailable = e.target.value <= 25 ? true : false;
+  changeDullAvailability(isAvailable);
 }
 
 function selectDragon() {
@@ -93,14 +91,16 @@ function selectStartTrait(e) {
   const dragonIndex = dragonList.findIndex((dragons) => {
     return dragons.name[0] === dragonName;
   });
+  const dragonStats = dragonList[dragonIndex][traitSelected];
 
   // Fill in base stats
-  STAT_LISTS.start.forEach(
-    (stat, i) => ($(stat).value = dragonList[dragonIndex][traitSelected][i])
-  );
+  STAT_LISTS.start.forEach((stat, i) => ($(stat).value = dragonStats[i]));
 
-  // Disable selector for end traits where applicable
-  unavailabilityCheck(dragonIndex, traitSelected);
+  const maxStatValue = Math.max(...dragonStats);
+  if (maxStatValue > 25) changeDullAvailability(false);
+  else changeDullAvailability(true);
+
+  reset();
 }
 
 // Print recommended end stats for selected special trait
@@ -117,36 +117,6 @@ function selectSpecialTrait(e) {
   const base = getStatFields("#start-");
 
   switch (traitSelected) {
-    case "Perfectionist": {
-      const final = new Stats(...calcTwenty(base));
-      if (
-        testAreaCheckbox.checked &&
-        !specialTraits[traitIndex].valueSensitive
-      ) {
-        filteredAdjustment(base, final);
-      }
-      printStatFields(final, "#end-");
-      break;
-    }
-
-    case "Classy": {
-      const final = new Stats(...calcTwenty(base));
-      printStatFields(final, "#end-");
-      break;
-    }
-
-    case "Noble": {
-      const final = new Stats(...calcTwenty(base));
-      printStatFields(final, "#end-");
-      break;
-    }
-
-    case "Arrogant": {
-      const final = new Stats(...calcTwentyFive(base));
-      printStatFields(final, "#end-");
-      break;
-    }
-
     case "Meticulous": {
       const startSum = base.getTotal();
       const reqSum = 100 - startSum;
@@ -341,7 +311,7 @@ function selectSpecialTrait(e) {
 
     case "Dull": {
       const maxValue = base.getMaxStatValue();
-      STAT_LISTS.end.forEach((stat) => $(stat).value = maxValue);
+      STAT_LISTS.end.forEach((stat) => ($(stat).value = maxValue));
 
       // Make adjustments here
       // Conditional: if maxValue >= 23, cannot make any adjustments
@@ -377,9 +347,13 @@ function selectSpecialTrait(e) {
     }
 
     default:
-      for (let i = 0; i < STAT_COUNT; i++) {
-        $(STAT_LISTS.end[i]).value = specialTraits[traitIndex].stats[i];
-      }
+      // Standard calculation
+      const final = new Stats(...calcTwenty(base));
+      printStatFields(final, "#end-");
+
+    // If 9-only training is checked:
+    // const final = calcDefault(traitSelected, base);
+    // printStatFields(final, "#end-");
   }
 }
 
@@ -556,6 +530,26 @@ function getStatSum(a, b) {
   return sum;
 }
 
+function calcDefault(targetTrait, curStats) {
+  const targetValues = specialTraits.filter(
+    (trait) => trait.nameEn === targetTrait
+  )[0].stats;
+
+  const goal = new Stats(...targetValues);
+
+  STAT_LISTS.base.forEach((stat) => {
+    if (curStats[stat] > goal[stat]) {
+      goal[stat] = curStats[stat];
+    }
+  });
+
+  console.log(goal);
+
+  filteredAdjustment(curStats, goal);
+
+  return goal;
+}
+
 function calcTwenty(curStats) {
   const array = STAT_LISTS.base.map((stat) => curStats[stat]);
 
@@ -701,35 +695,31 @@ function calculateTrainCount(targetSum, trainValues, memo = {}) {
   return shortestCombination;
 }
 
-function disableDull() {
-  $("#special-trait-selector").selectedIndex = 0;
-  const dull = $("#Dull");
-  dull.setAttribute("disabled", "");
-  dull.textContent = "평범한 (조건초과)";
-}
+function lowerTrainCount(count) {
+  if (!newCount.includes(3) && !newCount.includes(5)) return null;
 
-function enableDull() {
-  const dull = $("#Dull");
-  dull.removeAttribute("disabled");
-  dull.textContent = "평범한";
-}
+  const newCount = [...count];
 
-function unavailabilityCheck(dragonIndex, traitSelected) {
-  if (
-    dragonList[dragonIndex][traitSelected].findIndex((item) => item > 25) === -1
-  )
-    return enableDull();
-
-  for (let i = 0; i < STAT_COUNT; i++) {
-    if (dragonList[dragonIndex][traitSelected][i] > 25) return disableDull();
+  if (newCount.includes(3) && newCount.includes(5)) {
+    const threeIndex = newCount.indexOf(3);
+    newCount.splice(threeIndex, 1);
+    const fiveIndex = newCount.indexOf(5);
+    newCount.splice(fiveIndex, 1, 9);
   }
+
+  return newCount;
 }
+
+const changeDullAvailability = (isAvailable) => {
+  const dull = $("#Dull");
+  if (isAvailable) return dull.removeAttribute("disabled");
+
+  $("#special-trait-selector").selectedIndex = 0;
+  dull.setAttribute("disabled", "");
+};
 
 function reset() {
-  for (let i = 0; i < STAT_COUNT; i++) {
-    $(STAT_LISTS.end[i]).value = 0;
-  }
-
+  STAT_LISTS.end.forEach((stat) => ($(stat).value = 0));
   $("#special-trait-selector").selectedIndex = 0;
   $("#normal-trait-selector").selectedIndex = 0;
 }
@@ -758,7 +748,7 @@ function copyResults() {
   );
 }
 
-function displayToast(successful) {
+function displayToast(isSuccessful) {
   const container = $("#main-content");
   if (container.lastElementChild.id === "toast") {
     container.lastElementChild.remove();
@@ -766,7 +756,9 @@ function displayToast(successful) {
 
   const newToast = document.createElement("div");
   newToast.id = "toast";
-  newToast.innerText = successful ? "복사되었습니다." : "복사에 실패했습니다.";
+  newToast.innerText = isSuccessful
+    ? "복사되었습니다."
+    : "복사에 실패했습니다.";
 
   container.appendChild(newToast);
   newToast.style.animationPlayState = "running";
@@ -788,7 +780,6 @@ function loadFavorites() {
 }
 
 function filteredAdjustment(base, goal) {
-  console.log(goal);
   STAT_LISTS.base.forEach((stat) => {
     if ((goal[stat] - base[stat]) % 9 !== 0) {
       while ((goal[stat] - base[stat]) % 9 !== 0) {
@@ -798,6 +789,17 @@ function filteredAdjustment(base, goal) {
   });
 
   console.log(goal);
+}
+
+function adjustOneStat(base, goal) {
+  let adjusted = goal;
+  if ((goal - base) % 9 !== 0) {
+    while ((goal - base) % 9 !== 0) {
+      adjusted += 1;
+    }
+  }
+
+  return adjusted;
 }
 
 // Delete later
