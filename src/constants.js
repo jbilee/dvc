@@ -2,6 +2,7 @@ export const BASE_INCREMENT = 3;
 export const STAT_COUNT = 4;
 export const TRAIN_VALUES = [3, 5, 9];
 export const COUNT_PREFIX = "train-count-";
+export const EXCLUDED_VALUES = [1, 2, 4, 7];
 
 export const STAT_LISTS = {
   base: ["agility", "strength", "focus", "intellect"],
