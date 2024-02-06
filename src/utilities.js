@@ -27,3 +27,16 @@ export const getTargetSum = (targetSum, numbers, memo = {}) => {
   memo[targetSum] = shortestCombination;
   return shortestCombination;
 };
+
+export const popValues = (array, ...targets) => {
+  const newArray = [...array];
+
+  while (targets.length > 0) {
+    const targetValue = targets.shift();
+    const targetIndex = newArray.indexOf(targetValue);
+    if (targetIndex < 0) continue;
+    newArray.splice(targetIndex, 1);
+  }
+
+  return newArray;
+};

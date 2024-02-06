@@ -1,5 +1,10 @@
 import Stats from "../src/Stats.js";
-import { $, getFirstKeyByValue, getTargetSum } from "../src/utilities.js";
+import {
+  $,
+  getFirstKeyByValue,
+  getTargetSum,
+  popValues,
+} from "../src/utilities.js";
 import {
   BASE_INCREMENT,
   STAT_COUNT,
@@ -25,14 +30,14 @@ function checkDullAvailability(e) {
   changeDullAvailability(isAvailable);
 }
 
-function selectDragon() {
+function selectDragon(e) {
   // Initialize variables
-  const firstTrait = $("#trait1");
-  const secondTrait = $("#trait2");
-  const dragonName = $("#dragon-selector").value;
+  const dragonName = e.target.value;
   const dragonIndex = dragonList.findIndex((dragons) => {
     return dragons.name[0] === dragonName;
   });
+  const firstTrait = $("#trait1");
+  const secondTrait = $("#trait2");
 
   // Enable trait selector
   $("#start-trait-selector").removeAttribute("disabled");
@@ -328,23 +333,11 @@ function selectSpecialTrait(e) {
 }
 
 function compareTrainingCounts(base, stats, goals) {
-  const firstComboOne = getTargetSum(
-    goals[0] - base[stats[0]],
-    TRAIN_VALUES
-  );
-  const firstComboTwo = getTargetSum(
-    goals[1] - base[stats[1]],
-    TRAIN_VALUES
-  );
+  const firstComboOne = getTargetSum(goals[0] - base[stats[0]], TRAIN_VALUES);
+  const firstComboTwo = getTargetSum(goals[1] - base[stats[1]], TRAIN_VALUES);
 
-  const secondComboOne = getTargetSum(
-    goals[1] - base[stats[0]],
-    TRAIN_VALUES
-  );
-  const secondComboTwo = getTargetSum(
-    goals[0] - base[stats[1]],
-    TRAIN_VALUES
-  );
+  const secondComboOne = getTargetSum(goals[1] - base[stats[0]], TRAIN_VALUES);
+  const secondComboTwo = getTargetSum(goals[0] - base[stats[1]], TRAIN_VALUES);
 
   if (!firstComboOne || !firstComboTwo) {
     return [
@@ -585,28 +578,31 @@ function calcSingleHighest(curStats, highestReq) {
 
 function calculate() {
   try {
+    STAT_LISTS.base.forEach((stat) => checkViability(stat));
     STAT_LISTS.base.forEach((stat) => printTrainingCount(stat));
   } catch (e) {
     alert(e);
   }
 }
 
-function printTrainingCount(statType) {
+function checkViability(statType) {
   const reqStat = $(`#end-${statType}`).value - $(`#start-${statType}`).value;
-
+  if (reqStat < 0)
+    throw new Error(
+      `목표치가 기본치보다 낮습니다. 더 높은 목표치를 설정해주세요!`
+    );
   if (EXCLUDED_VALUES.includes(reqStat)) {
     throw new Error(
       `조합할 수 없는 숫자가 있습니다 (${reqStat}). 다른 목표치를 설정해주세요!`
     );
   }
+}
 
+function printTrainingCount(statType) {
+  const reqStat = $(`#end-${statType}`).value - $(`#start-${statType}`).value;
   const trainCount = getTargetSum(reqStat, TRAIN_VALUES);
 
-  if (reqStat < 0) {
-    $(`#required-${statType}`).textContent = "+0";
-  } else {
-    $(`#required-${statType}`).textContent = "+" + reqStat;
-  }
+  $(`#required-${statType}`).textContent = "+" + reqStat;
 
   let trainText;
 
@@ -641,17 +637,11 @@ function printTrainingCount(statType) {
   }
 }
 
-function lowerTrainCount(count) {
-  if (!newCount.includes(3) && !newCount.includes(5)) return null;
+function replaceWithNine(currentCount) {
+  if (!currentCount.includes(3) && !currentCount.includes(5)) return null;
 
-  const newCount = [...count];
-
-  if (newCount.includes(3) && newCount.includes(5)) {
-    const threeIndex = newCount.indexOf(3);
-    newCount.splice(threeIndex, 1);
-    const fiveIndex = newCount.indexOf(5);
-    newCount.splice(fiveIndex, 1, 9);
-  }
+  const newCount = popValues(currentCount, 3, 5);
+  newCount.unshift(9);
 
   return newCount;
 }
