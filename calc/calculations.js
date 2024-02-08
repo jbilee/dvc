@@ -1,74 +1,43 @@
-// import Stats from "../src/Stats.js"
-
-const $ = (selector) => document.querySelector(selector);
-const BASE_INCREMENT = 3;
-const STAT_COUNT = 4;
-const TRAIN_VALUES = [3, 5, 9];
-const EXCLUDED_VALUES = [1, 2, 4, 7];
-const STAT_LISTS = {
-  base: ["agility", "strength", "focus", "intellect"],
-  start: [
-    "#start-agility",
-    "#start-strength",
-    "#start-focus",
-    "#start-intellect",
-  ],
-  end: ["#end-agility", "#end-strength", "#end-focus", "#end-intellect"],
-};
-const COUNT_PREFIX = "train-count-";
-const CLIP_TEXT = {
-  agility: "순발력: ",
-  strength: "근력: ",
-  focus: "집중력: ",
-  intellect: "지력: ",
-};
-
-const ADJUSTMENTS = {
-  regular: new Map([
-    [8, 9],
-    [13, 14],
-    [16, 18],
-    [20, 21],
-    [26, 27],
-    [28, 27],
-    [31, 32],
-    [33, 32],
-    [40, 41], // remove if gives invalid training
-    [125, 126],
-    [130, 131],
-  ]),
-  twenty: new Map([
-    [0, 27],
-    [5, 23],
-    [10, 20],
-    [15, 20],
-  ]),
-  twentyFive: new Map([
-    [0, 27],
-    [5, 26],
-    [10, 28],
-    [15, 25],
-    [20, 25],
-  ]),
-};
+import Stats from "../src/Stats.js";
+import {
+  $,
+  getFirstKeyByValue,
+  getTargetSum,
+  popValues,
+} from "../src/utilities.js";
+import {
+  BASE_INCREMENT,
+  STAT_COUNT,
+  TRAIN_VALUES,
+  EXCLUDED_VALUES,
+  STAT_LISTS,
+  ADJUSTMENTS,
+} from "../src/constants.js";
 
 STAT_LISTS.start.forEach((stat) =>
   $(stat).addEventListener("change", checkDullAvailability)
 );
+
+$("#dragon-selector").addEventListener("change", selectDragon);
+$("#start-trait-selector").addEventListener("change", selectStartTrait);
+$("#normal-trait-selector").addEventListener("change", selectNormalTrait);
+$("#special-trait-selector").addEventListener("change", selectSpecialTrait);
+$("#btn-calculate").addEventListener("click", calculate);
+$("#btn-reset").addEventListener("click", reset);
 
 function checkDullAvailability(e) {
   const isAvailable = e.target.value <= 25 ? true : false;
   changeDullAvailability(isAvailable);
 }
 
-function selectDragon() {
+function selectDragon(e) {
   // Initialize variables
-  const firstTrait = $("#trait1");
-  const secondTrait = $("#trait2");
-  const dragonName = $("#dragon-selector").value;
+  const dragonName = e.target.value;
   const dragonIndex = dragonList.findIndex((dragons) => {
     return dragons.name[0] === dragonName;
   });
+  const firstTrait = $("#trait1");
+  const secondTrait = $("#trait2");
 
   // Enable trait selector
   $("#start-trait-selector").removeAttribute("disabled");
@@ -364,23 +333,11 @@ function selectSpecialTrait(e) {
 }
 
 function compareTrainingCounts(base, stats, goals) {
-  const firstComboOne = calculateTrainCount(
-    goals[0] - base[stats[0]],
-    TRAIN_VALUES
-  );
-  const firstComboTwo = calculateTrainCount(
-    goals[1] - base[stats[1]],
-    TRAIN_VALUES
-  );
+  const firstComboOne = getTargetSum(goals[0] - base[stats[0]], TRAIN_VALUES);
+  const firstComboTwo = getTargetSum(goals[1] - base[stats[1]], TRAIN_VALUES);
 
-  const secondComboOne = calculateTrainCount(
-    goals[1] - base[stats[0]],
-    TRAIN_VALUES
-  );
-  const secondComboTwo = calculateTrainCount(
-    goals[0] - base[stats[1]],
-    TRAIN_VALUES
-  );
+  const secondComboOne = getTargetSum(goals[1] - base[stats[0]], TRAIN_VALUES);
+  const secondComboTwo = getTargetSum(goals[0] - base[stats[1]], TRAIN_VALUES);
 
   if (!firstComboOne || !firstComboTwo) {
     return [
@@ -425,9 +382,9 @@ function printStatFields(stats, prefix) {
   }
 }
 
-function getFirstKeyByValue(obj, value) {
-  return Object.keys(obj).find((key) => obj[key] === value) || null;
-}
+// function getFirstKeyByValue(obj, value) {
+//   return Object.keys(obj).find((key) => obj[key] === value) || null;
+// }
 
 // Print recommended end stats for selected normal trait
 function selectNormalTrait(e) {
@@ -621,34 +578,37 @@ function calcSingleHighest(curStats, highestReq) {
 
 function calculate() {
   try {
+    STAT_LISTS.base.forEach((stat) => checkViability(stat));
     STAT_LISTS.base.forEach((stat) => printTrainingCount(stat));
   } catch (e) {
     alert(e);
   }
 }
 
-function printTrainingCount(statType) {
+function checkViability(statType) {
   const reqStat = $(`#end-${statType}`).value - $(`#start-${statType}`).value;
-
+  if (reqStat < 0)
+    throw new Error(
+      `목표치가 기본치보다 낮습니다. 더 높은 목표치를 설정해주세요!`
+    );
   if (EXCLUDED_VALUES.includes(reqStat)) {
     throw new Error(
       `조합할 수 없는 숫자가 있습니다 (${reqStat}). 다른 목표치를 설정해주세요!`
     );
   }
+}
 
-  const trainCount = calculateTrainCount(reqStat, TRAIN_VALUES);
+function printTrainingCount(statType) {
+  const reqStat = $(`#end-${statType}`).value - $(`#start-${statType}`).value;
+  const trainCount = getTargetSum(reqStat, TRAIN_VALUES);
 
-  if (reqStat < 0) {
-    $(`#required-${statType}`).textContent = "+0";
-  } else {
-    $(`#required-${statType}`).textContent = "+" + reqStat;
-  }
+  $(`#required-${statType}`).textContent = "+" + reqStat;
 
   let trainText;
 
   if (trainCount[5] === 9) {
     let nineCount = trainCount.lastIndexOf(9) + 1;
-    trainCountCondensed = trainCount.slice(nineCount);
+    const trainCountCondensed = trainCount.slice(nineCount);
     trainText =
       `<span class="nine">9</span><sub>(x${nineCount})</sub> ` +
       trainCountCondensed
@@ -677,41 +637,11 @@ function printTrainingCount(statType) {
   }
 }
 
-function calculateTrainCount(targetSum, trainValues, memo = {}) {
-  if (targetSum in memo) return memo[targetSum];
-  if (targetSum === 0) return [];
-  if (targetSum < 0) return null;
+function replaceWithNine(currentCount) {
+  if (!currentCount.includes(3) && !currentCount.includes(5)) return null;
 
-  let shortestCombination = null;
-
-  for (let num of trainValues) {
-    const remainder = targetSum - num;
-    const remainderResult = calculateTrainCount(remainder, trainValues, memo);
-    if (remainderResult !== null) {
-      const combination = [...remainderResult, num];
-      if (
-        shortestCombination === null ||
-        combination.length < shortestCombination.length
-      ) {
-        shortestCombination = combination;
-      }
-    }
-  }
-  memo[targetSum] = shortestCombination;
-  return shortestCombination;
-}
-
-function lowerTrainCount(count) {
-  if (!newCount.includes(3) && !newCount.includes(5)) return null;
-
-  const newCount = [...count];
-
-  if (newCount.includes(3) && newCount.includes(5)) {
-    const threeIndex = newCount.indexOf(3);
-    newCount.splice(threeIndex, 1);
-    const fiveIndex = newCount.indexOf(5);
-    newCount.splice(fiveIndex, 1, 9);
-  }
+  const newCount = popValues(currentCount, 3, 5);
+  newCount.unshift(9);
 
   return newCount;
 }
@@ -728,61 +658,6 @@ function reset() {
   STAT_LISTS.end.forEach((stat) => ($(stat).value = 0));
   $("#special-trait-selector").selectedIndex = 0;
   $("#normal-trait-selector").selectedIndex = 0;
-}
-
-function copyResults() {
-  const text = [];
-  STAT_LISTS.base.forEach((stat) => {
-    const field = $(`#${COUNT_PREFIX}${stat}`);
-    if (field.innerText !== "-") {
-      const counts = field.childNodes;
-      let spanText = "";
-      counts.forEach((child) => {
-        if (child.innerText) spanText += child.innerText;
-      });
-      text.push(`${CLIP_TEXT[stat]}${spanText}`);
-    }
-  });
-
-  navigator.clipboard.writeText(text.join("\n")).then(
-    () => {
-      displayToast(true);
-    },
-    () => {
-      displayToast(false);
-    }
-  );
-}
-
-function displayToast(isSuccessful) {
-  const container = $("#main-content");
-  if (container.lastElementChild.id === "toast") {
-    container.lastElementChild.remove();
-  }
-
-  const newToast = document.createElement("div");
-  newToast.id = "toast";
-  newToast.innerText = isSuccessful
-    ? "복사되었습니다."
-    : "복사에 실패했습니다.";
-
-  container.appendChild(newToast);
-  newToast.style.animationPlayState = "running";
-  setTimeout(() => {
-    newToast.remove();
-  }, 610);
-}
-
-function addFavorites() {
-  // get favoritesData values
-  localStorage.setItem("dcfvs", JSON.stringify(favoritesData));
-}
-
-function loadFavorites() {
-  const favoritesData = JSON.parse(localStorage.getItem("dcfvs"));
-  if (favoritesData) {
-    // loading logic
-  }
 }
 
 function filteredAdjustment(base, goal) {
@@ -806,51 +681,4 @@ function adjustOneStat(base, goal) {
   }
 
   return adjusted;
-}
-
-// Delete later
-class Stats {
-  constructor(agility = 0, strength = 0, focus = 0, intellect = 0) {
-    this.agility = agility;
-    this.strength = strength;
-    this.focus = focus;
-    this.intellect = intellect;
-  }
-
-  getMaxStatName() {
-    const maxVal = this.getMaxStatValue();
-    const maxStats = [];
-    if (this.agility === maxVal) maxStats.push("agility");
-    if (this.strength === maxVal) maxStats.push("strength");
-    if (this.focus === maxVal) maxStats.push("focus");
-    if (this.intellect === maxVal) maxStats.push("intellect");
-    return maxStats;
-  }
-
-  getMinStatName() {
-    const minVal = this.getMinStatValue();
-    const minStats = [];
-    if (this.agility === minVal) minStats.push("agility");
-    if (this.strength === minVal) minStats.push("strength");
-    if (this.focus === minVal) minStats.push("focus");
-    if (this.intellect === minVal) minStats.push("intellect");
-    return minStats;
-  }
-
-  getMaxStatValue() {
-    return Math.max(this.agility, this.strength, this.focus, this.intellect);
-  }
-
-  getMinStatValue() {
-    return Math.min(this.agility, this.strength, this.focus, this.intellect);
-  }
-
-  getTotal() {
-    return this.agility + this.strength + this.focus + this.intellect;
-  }
-
-  sortInc() {
-    const cur = [this.agility, this.strength, this.focus, this.intellect];
-    return cur.sort((a, b) => a - b);
-  }
 }

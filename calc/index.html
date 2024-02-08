@@ -173,10 +173,10 @@
       <div id="controls">
         <div class="sel1">
           <h3>드래곤 정보 자동입력:</h3>
-          <select name="dragon-selector" id="dragon-selector" onchange="selectDragon()">
+          <select name="dragon-selector" id="dragon-selector">
             <option selected disabled>드래곤</option>
           </select>
-          <select name="trait-selector" id="start-trait-selector" onchange="selectStartTrait(event)" disabled>
+          <select name="trait-selector" id="start-trait-selector" disabled>
             <option selected disabled>성격</option>
             <option value="" id="trait1">-</option>
             <option value="" id="trait2">-</option>
@@ -185,23 +185,23 @@
 
         <div class="sel2">
           <h3>목표치 자동입력:</h3>
-          <select name="trait-selector" id="normal-trait-selector" onchange="selectNormalTrait(event)">
+          <select name="trait-selector" id="normal-trait-selector">
             <option selected disabled>일반성격 선택</option>
           </select>
-          <select name="trait-selector" id="special-trait-selector" onchange="selectSpecialTrait(event)">
+          <select name="trait-selector" id="special-trait-selector">
             <option selected disabled>특수성격 선택</option>
           </select>
         </div>
       </div>
 
       <div class="buttons">
-        <button onclick="calculate()">계산하기</button>
-        <button onclick="reset()">목표치 초기화</button>
-        <button onclick="copyResults()">결과 복사</button> <br>
+        <button id="btn-calculate">계산하기</button>
+        <button id="btn-reset">목표치 초기화</button>
+        <button id="btn-clipboard">결과 복사</button> <br>
       </div>
 
       <div class="test-area">
-        <input type="checkbox">9점 훈련만 하기
+        <input type="checkbox" id="opt-nine">9점 훈련만 하기
       </div>
 
       <div id="tips">
@@ -240,7 +240,8 @@
     </p>
   </div>
 
-  <script src="calculations.js"></script>
+  <script type="module" src="toolcommands.js"></script>
+  <script type="module" src="calculations.js"></script>
 </body>
 
 </html>
