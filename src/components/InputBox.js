@@ -25,7 +25,7 @@ class InputBox extends HTMLElement {
       }
       .container {
         border-radius: 6px;
-        background: rgb(204, 204, 204);
+        background: rgb(237, 240, 240);
         padding: 6px 8px;
         display: flex;
         justify-content: center;
@@ -36,10 +36,12 @@ class InputBox extends HTMLElement {
         border: none;
         width: 100%;
         height: 100%;
+        text-align: center;
       }
     `;
 
     shadow.append(style);
+    this.initializeAttributes();
   }
 
   attributeChangedCallback(attribute, oldValue, newValue) {
@@ -65,6 +67,18 @@ class InputBox extends HTMLElement {
       }
       default:
     }
+  }
+
+  initializeAttributes() {
+    const attributes = ["boxlength", "boxcolor", "cap"];
+    attributes.forEach((attribute) => {
+      if (this.getAttribute(attribute))
+        this.attributeChangedCallback(
+          attribute,
+          null,
+          this.getAttribute(attribute)
+        );
+    });
   }
 }
 
