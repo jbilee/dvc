@@ -1,3 +1,16 @@
+* {
+  font-size: 14px;
+}
+
+.card-row {
+  display: flex;
+}
+
+.schedule {
+  width: 100vw;
+  overflow: auto
+}
+
 .input-wrapper {
   box-sizing: border-box;
   border-radius: 8px;
