@@ -46,6 +46,11 @@ export const forceNumberInput = (input) => {
   input.value = input.value.replace(/[^0-9]/g, "");
 };
 
+export const validateInput = (value, limit) => {
+  if (Number(value) > limit) return limit;
+  return Number(value);
+};
+
 export const handleIncreaseButton = (targetElem, max) => {
   if (Number(targetElem.value) + 1 > max) return;
   targetElem.value = Number(targetElem.value) + 1;

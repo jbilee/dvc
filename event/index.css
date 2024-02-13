@@ -2,7 +2,7 @@
   font-size: 14px;
 }
 
-.card-row {
+.row__mission, .row__bonus {
   display: flex;
 }
 
