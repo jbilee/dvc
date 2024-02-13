@@ -1,46 +1,33 @@
-import { $ } from "../utilities.js";
-import { events } from "../../event/data.js";
-import CardView from "./CardView.js";
-
-const NewCard = `<div class="card">hola!</div>`;
+import { $, newElem } from "../utilities.js";
 
 const EventView = {
   render() {
     const root = $("#root");
 
     // Main container
-    const header = document.createElement("div");
+    const header = newElem("div");
     header.id = "header";
     header.textContent = "이벤트 시뮬레이터";
     root.append(header);
 
-    const main = document.createElement("div");
+    const main = newElem("div");
     main.id = "main";
     root.append(main);
 
+    // Rewards section
+    const rewardTable = newElem("div");
+    rewardTable.classList.add("reward-table");
+    main.append(rewardTable);
+
     // Schedule section
-    const schedule = document.createElement("div");
+    const schedule = newElem("div");
     schedule.classList.add("schedule");
     main.append(schedule);
 
     // List of cards
-    const cardContainer = document.createElement("div");
+    const cardContainer = newElem("div");
     cardContainer.classList.add("card-container");
     schedule.append(cardContainer);
-
-    // // Get current event
-    // const currentEvent = events[0];
-    // // CardView.render(currentEvent.missions, currentEvent.bonusDragons);
-
-    // // Add card button
-    // const button = document.createElement("div");
-    // button.classList.add("btn-card");
-    // button.textContent = "+";
-    // button.addEventListener("click", () => {
-    //   CardView.render(currentEvent.missions, currentEvent.bonusDragons);
-    // });
-
-    // schedule.append(button);
   },
 };
 

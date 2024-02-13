@@ -1,23 +1,21 @@
 import Schedule from "../src/models/Schedule.js";
-import RewardTable from "../src/models/RewardTable.js";
 import EventView from "../src/view/EventView.js";
-import { $ } from "../src/utilities.js";
+import { $, newElem } from "../src/utilities.js";
 import { events } from "./data.js";
 
 class App {
   constructor() {
     this.init();
     this.schedule = new Schedule();
-    this.rewards = new RewardTable();
   }
 
   init() {
     EventView.render();
     const mainElem = $("#header");
-    const selectElem = document.createElement("select");
+    const selectElem = newElem("select");
 
     events.forEach((event) => {
-      const newOption = document.createElement("option");
+      const newOption = newElem("option");
       newOption.value = event.theme;
       newOption.textContent = event.title;
       selectElem.append(newOption);
