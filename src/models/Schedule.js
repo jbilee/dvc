@@ -1,5 +1,6 @@
+import RewardTable from "./RewardTable.js";
 import ScheduleCard from "./ScheduleCard.js";
-import { $ } from "../utilities.js";
+import { $, newElem } from "../utilities.js";
 import { events } from "../../event/data.js";
 
 class Schedule {
@@ -16,9 +17,17 @@ class Schedule {
       (event) => event.theme === currentTheme
     )[0];
 
-    this.cards = [new ScheduleCard(this.currentEvent)];
+    this.rewards = new RewardTable(this.currentEvent.rewards);
 
-    const button = document.createElement("div");
+    this.cards = [
+      new ScheduleCard(0, this.currentEvent, () => {
+        const total = this.cards.reduce((sum, cur) => sum + cur.dailyTotal, 0);
+        $(".current-points").textContent = total;
+        this.rewards.checkTier(total);
+      }),
+    ];
+
+    const button = newElem("div");
     button.classList.add("btn-card");
     button.textContent = "+";
     button.addEventListener("click", () => {
@@ -30,7 +39,14 @@ class Schedule {
   }
 
   createCard() {
-    this.cards = [...this.cards, new ScheduleCard(this.currentEvent)];
+    this.cards = [
+      ...this.cards,
+      new ScheduleCard(this.cards.length, this.currentEvent, () => {
+        const total = this.cards.reduce((sum, cur) => sum + cur.dailyTotal, 0);
+        $(".current-points").textContent = total;
+        this.rewards.checkTier(total);
+      }),
+    ];
   }
 }
 

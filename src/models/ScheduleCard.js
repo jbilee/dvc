@@ -1,6 +1,7 @@
 import {
   $,
   $$,
+  newElem,
   forceNumberInput,
   validateInput,
   handleDecreaseButton,
@@ -8,15 +9,16 @@ import {
 } from "../utilities.js";
 
 class ScheduleCard {
-  constructor({ missions, bonusDragons }) {
+  constructor(index, { missions, bonusDragons }, updateSchedule) {
     this.actionCount = Array(5).fill(0);
     this.dragonCount = Array(6).fill(0);
     this.bonusPercentages = Array(6).fill(0);
+    this.dailyTotal = 0;
     this.baseRewards = missions.reduce((arr, cur) => {
       arr.push(cur.baseReward);
       return arr;
     }, []);
-    this.render(missions, bonusDragons);
+    this.render(index, missions, bonusDragons, updateSchedule);
   }
 
   getBonusPercentage(count) {
@@ -50,16 +52,15 @@ class ScheduleCard {
     return this.bonusPercentages.reduce((sum, cur) => sum + cur, 0);
   }
 
-  updateTotalPoints(parent) {
+  updateTotalPoints(parent, updateSchedule) {
     const totalBonus = this.getTotalBonus();
     const rewardPoints = this.getRewardPoints(totalBonus);
-    const pointsEarned = rewardPoints.map(
-      (points, i) => points * this.actionCount[i]
-    );
-    parent.querySelector(".total-points").textContent = pointsEarned.reduce(
-      (sum, cur) => sum + cur,
-      0
-    );
+    this.dailyTotal = rewardPoints
+      .map((points, i) => points * this.actionCount[i])
+      .reduce((sum, cur) => sum + cur, 0);
+
+    parent.querySelector(".total-points").textContent = this.dailyTotal;
+    updateSchedule();
   }
 
   updateRewardValues(parent, index) {
@@ -80,14 +81,18 @@ class ScheduleCard {
     parent.querySelector(".total-bonuses").textContent = totalBonus;
   }
 
-  render(missions, dragons) {
+  render(index, missions, dragons, updateSchedule) {
     // Each schedule card
-    const newCard = document.createElement("div");
+    const newCard = newElem("div");
     newCard.classList.add("card");
+
+    const header = newElem("h2");
+    header.textContent = "D" + (index + 1);
+    newCard.append(header);
 
     // Fill card with content
     missions.forEach((mission, i) => {
-      const div = document.createElement("div");
+      const div = newElem("div");
       div.classList.add("row__mission");
       div.innerHTML = `${mission.action}<br><span class="rewards-value">${
         mission.baseReward
@@ -105,14 +110,14 @@ class ScheduleCard {
         );
         inputElem.value = result;
         this.actionCount[i] = result;
-        this.updateTotalPoints(newCard);
+        this.updateTotalPoints(newCard, updateSchedule);
       });
 
       const downbtn = div.querySelector(".down");
       downbtn.addEventListener("click", () => {
         handleDecreaseButton(inputElem, 0);
         this.actionCount[i] = Number(inputElem.value);
-        this.updateTotalPoints(newCard);
+        this.updateTotalPoints(newCard, updateSchedule);
       });
 
       const upbtn = div.querySelector(".up");
@@ -122,13 +127,13 @@ class ScheduleCard {
           mission.limit > 0 ? mission.limit : 999999999
         );
         this.actionCount[i] = Number(inputElem.value);
-        this.updateTotalPoints(newCard);
+        this.updateTotalPoints(newCard, updateSchedule);
       });
     });
 
     // Bonus dragons
     dragons.forEach((dragon, i) => {
-      const div = document.createElement("div");
+      const div = newElem("div");
       div.classList.add("row__bonus");
       div.innerHTML = `${dragon} (+ <span class="bonus-value">0</span>%) <button class="btn-input down">▼</button><div class="input-wrapper"><input type="text" inputmode="numeric" placeholder="0"></div><button class="btn-input up">▲</button>마리`;
       newCard.append(div);
@@ -140,7 +145,7 @@ class ScheduleCard {
         inputElem.value = result;
         this.dragonCount[i] = result;
         this.updateRewardValues(newCard, i);
-        this.updateTotalPoints(newCard);
+        this.updateTotalPoints(newCard, updateSchedule);
       });
 
       const downbtn = div.querySelector(".down");
@@ -148,7 +153,7 @@ class ScheduleCard {
         handleDecreaseButton(inputElem, 0);
         this.dragonCount[i] = Number(inputElem.value);
         this.updateRewardValues(newCard, i);
-        this.updateTotalPoints(newCard);
+        this.updateTotalPoints(newCard, updateSchedule);
       });
 
       const upbtn = div.querySelector(".up");
@@ -156,15 +161,15 @@ class ScheduleCard {
         handleIncreaseButton(inputElem, 50);
         this.dragonCount[i] = Number(inputElem.value);
         this.updateRewardValues(newCard, i);
-        this.updateTotalPoints(newCard);
+        this.updateTotalPoints(newCard, updateSchedule);
       });
     });
 
-    const bonus = document.createElement("div");
+    const bonus = newElem("div");
     bonus.innerHTML = `보너스: <span class="total-bonuses">0</span>%`;
     newCard.append(bonus);
 
-    const total = document.createElement("div");
+    const total = newElem("div");
     total.innerHTML = `일일 합계: <span class="total-points">0</span>`;
     newCard.append(total);
 
