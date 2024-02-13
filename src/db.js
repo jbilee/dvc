@@ -59,7 +59,7 @@ const dragonList = [
     { name: ["Rakshasa", "락샤사"], traitsEn: ["quickWitted", "Careful"], traitsKo: ["눈치빠른", "신중한"], quickWitted: [25, 0, 0, 5], Careful: [10, 10, 20, 0] },
     { name: ["Lambgon", "램곤"], traitsEn: ["Calm", "Docile"], traitsKo: ["차분한", "온순한"], Calm: [5, 0, 20, 5], Docile: [0, 10, 10, 20] },
     { name: ["Ranky", "랭키"], traitsEn: ["Naive", "Hardy"], traitsKo: ["천진난만한", "노력하는"], Naive: [20, 0, 5, 5], Hardy: [0, 0, 20, 5] },
-    // { name: ["Regnator", "레그나토르"], traitsEn: ["Adamant", "Quiet"], traitsKo: ["고집있는", ""], Adamant: [10, 20, 10, 0], Quiet: [0, 0, 0, 0] },
+    { name: ["Regnator", "레그나토르"], traitsEn: ["Adamant", "Careful"], traitsKo: ["고집있는", "신중한"], Adamant: [10, 20, 10, 0], Careful: [10, 10, 25, 0] },
     { name: ["Leglien", "레그리언"], traitsEn: ["Hardy", "Careful"], traitsKo: ["노력하는", "신중한"], Hardy: [10, 0, 30, 0], Careful: [10, 10, 25, 0] },
     { name: ["Redbull Dragon", "레드불"], traitsEn: ["Adamant", "Quiet"], traitsKo: ["고집있는", "냉정한"], Adamant: [10, 25, 10, 0], Quiet: [0, 5, 20, 5] },
     { name: ["Red Wyvern", "레드와이번"], traitsEn: ["Hasty", "Quirky"], traitsKo: ["성급한", "변덕쟁이"], Hasty: [20, 10, 10, 0], Quirky: [5, 20, 0, 5] },
