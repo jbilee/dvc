@@ -8,12 +8,10 @@ class RewardTable {
 
   checkTier(currentTotal) {
     const clearedTiers = this.rewardList.filter((tier) => tier.points <= currentTotal)
-    console.log(clearedTiers)
+
     if (clearedTiers.length > 0) {
-      console.log("at least one cleared tier")
       //render
       const currentTier = clearedTiers.length - 1;
-      console.log(currentTier)
       const rows = $$(".row__tier")
       rows.forEach((row, i) => {
         if (i <= currentTier) row.setAttribute("style", "text-decoration: line-through;")

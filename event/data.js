@@ -2,6 +2,7 @@ export const events = [
   {
     theme: "test",
     title: "테스트 이벤트",
+    eventPeriod: 14,
     bonusDragons: [
       "야누스",
       "네뷸라",
@@ -91,6 +92,7 @@ export const events = [
   {
     theme: "spica",
     title: "은하수의 기운 스피카",
+    eventPeriod: 14,
     bonusDragons: [
       "야누스",
       "네뷸라",
@@ -180,6 +182,7 @@ export const events = [
   // {
   //   theme: "",
   //   title: "",
+  // eventPeriod: 14,
   //   bonusDragons: [
   //     "페루나",
   //     "",

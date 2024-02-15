@@ -9,16 +9,26 @@ import {
 } from "../utilities.js";
 
 class ScheduleCard {
-  constructor(index, { missions, bonusDragons }, updateSchedule) {
+  constructor(prevData, index, id, event, ...callbacks) {
+    this.id = id;
+    this.init(prevData, event);
+    const [updateSchedule, removeCard] = callbacks;
+    this.render(index, event, updateSchedule, removeCard);
+  }
+
+  init(prevData, { missions }) {
     this.actionCount = Array(5).fill(0);
-    this.dragonCount = Array(6).fill(0);
-    this.bonusPercentages = Array(6).fill(0);
+    this.dragonCount = prevData
+      ? Array.from(prevData.dragonCount)
+      : Array(6).fill(0);
+    this.bonusPercentages = prevData
+      ? Array.from(prevData.bonusPercentages)
+      : Array(6).fill(0);
     this.dailyTotal = 0;
     this.baseRewards = missions.reduce((arr, cur) => {
       arr.push(cur.baseReward);
       return arr;
     }, []);
-    this.render(index, missions, bonusDragons, updateSchedule);
   }
 
   getBonusPercentage(count) {
@@ -81,22 +91,42 @@ class ScheduleCard {
     parent.querySelector(".total-bonuses").textContent = totalBonus;
   }
 
-  render(index, missions, dragons, updateSchedule) {
+  updateCardHeaders() {
+    const headers = $$("h2");
+    headers.forEach((header, i) => (header.textContent = "D" + (i + 1)));
+  }
+
+  render(index, { missions, bonusDragons }, updateSchedule, removeCard) {
     // Each schedule card
     const newCard = newElem("div");
     newCard.classList.add("card");
 
     const header = newElem("h2");
     header.textContent = "D" + (index + 1);
+
+    const deleteBtn = newElem("button");
+    deleteBtn.textContent = "삭제";
+    header.append(deleteBtn);
+    deleteBtn.addEventListener("click", () => {
+      const isLast = removeCard(this.id);
+      if (isLast) return alert("마지막 카드는 삭제할 수 없습니다.");
+      else {
+        newCard.remove();
+        this.updateCardHeaders();
+        updateSchedule();
+      }
+    });
+
     newCard.append(header);
 
     // Fill card with content
+    const rewardPoints = this.getRewardPoints(this.getTotalBonus());
     missions.forEach((mission, i) => {
       const div = newElem("div");
       div.classList.add("row__mission");
       div.innerHTML = `${mission.action}<br><span class="rewards-value">${
-        mission.baseReward
-      }</span>포인트<br><button class="btn-input down">▼</button><div class="input-wrapper"><input type="text" inputmode="numeric" placeholder="0"></div><button class="btn-input up">▲</button>/${
+        rewardPoints[i]
+      }</span>포인트<br><button class="btn-input down">▼</button><div class="input-wrapper"><input type="text" inputmode="numeric" value="${this.actionCount[i]}"></div><button class="btn-input up">▲</button>/${
         mission.limit > 0 ? mission.limit : "∞"
       }회`;
       newCard.append(div);
@@ -132,10 +162,10 @@ class ScheduleCard {
     });
 
     // Bonus dragons
-    dragons.forEach((dragon, i) => {
+    bonusDragons.forEach((dragon, i) => {
       const div = newElem("div");
       div.classList.add("row__bonus");
-      div.innerHTML = `${dragon} (+ <span class="bonus-value">0</span>%) <button class="btn-input down">▼</button><div class="input-wrapper"><input type="text" inputmode="numeric" placeholder="0"></div><button class="btn-input up">▲</button>마리`;
+      div.innerHTML = `${dragon} (+ <span class="bonus-value">${this.bonusPercentages[i]}</span>%) <button class="btn-input down">▼</button><div class="input-wrapper"><input type="text" inputmode="numeric" value="${this.dragonCount[i]}"></div><button class="btn-input up">▲</button>마리`;
       newCard.append(div);
 
       const inputElem = div.querySelector("input");
@@ -166,7 +196,7 @@ class ScheduleCard {
     });
 
     const bonus = newElem("div");
-    bonus.innerHTML = `보너스: <span class="total-bonuses">0</span>%`;
+    bonus.innerHTML = `보너스: <span class="total-bonuses">${this.getTotalBonus()}</span>%`;
     newCard.append(bonus);
 
     const total = newElem("div");
@@ -174,6 +204,7 @@ class ScheduleCard {
     newCard.append(total);
 
     $(".card-container").append(newCard);
+    newCard.scrollIntoView();
   }
 }
 
