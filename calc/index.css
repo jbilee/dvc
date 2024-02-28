@@ -25,6 +25,11 @@
   display: none;
 }
 
+.notice {
+  font-weight: 700;
+  color: #FF5733;
+}
+
 @media (min-width: 800px) {
   .grid-container2 {
     grid-template-columns: 100px auto;
