@@ -33,9 +33,9 @@ function checkDullAvailability(e) {
 function selectDragon(e) {
   // Initialize variables
   const dragonName = e.target.value;
-  const dragonIndex = dragonList.findIndex((dragons) => {
-    return dragons.name[0] === dragonName;
-  });
+  const { traitsEn, traitsKo } = dragonList.find(
+    (data) => data.name[0] === dragonName
+  );
   const firstTrait = $("#trait1");
   const secondTrait = $("#trait2");
 
@@ -47,20 +47,18 @@ function selectDragon(e) {
   STAT_LISTS.start.forEach((stat) => ($(stat).value = 0));
 
   // Fill in trait dropdown choices
-  firstTrait.textContent = dragonList[dragonIndex].traitsKo[0];
-  firstTrait.value = dragonList[dragonIndex].traitsEn[0];
-  secondTrait.textContent = dragonList[dragonIndex].traitsKo[1];
-  secondTrait.value = dragonList[dragonIndex].traitsEn[1];
+  firstTrait.textContent = traitsKo[0];
+  firstTrait.value = traitsEn[0];
+  secondTrait.textContent = traitsKo[1];
+  secondTrait.value = traitsEn[1];
 }
 
 // Print the selected dragon's base stats
 function selectStartTrait(e) {
   const traitSelected = e.target.value;
   const dragonName = $("#dragon-selector").value;
-  const dragonIndex = dragonList.findIndex((dragons) => {
-    return dragons.name[0] === dragonName;
-  });
-  const dragonStats = dragonList[dragonIndex][traitSelected];
+  const dragonData = dragonList.find((data) => data.name[0] === dragonName);
+  const dragonStats = dragonData[traitSelected];
 
   // Fill in base stats
   STAT_LISTS.start.forEach((stat, i) => ($(stat).value = dragonStats[i]));
