@@ -6,6 +6,10 @@ export const getFirstKeyByValue = (obj, value) => {
   return Object.keys(obj).find((key) => obj[key] === value) || null;
 };
 
+export const getArraySum = (array) => {
+  return array.reduce((sum, cur) => sum + cur, 0);
+};
+
 export const getTargetSum = (targetSum, numbers, memo = {}) => {
   if (targetSum in memo) return memo[targetSum];
   if (targetSum === 0) return [];
@@ -28,19 +32,6 @@ export const getTargetSum = (targetSum, numbers, memo = {}) => {
   }
   memo[targetSum] = shortestCombination;
   return shortestCombination;
-};
-
-export const popValues = (array, ...targets) => {
-  const newArray = [...array];
-
-  while (targets.length > 0) {
-    const targetValue = targets.shift();
-    const targetIndex = newArray.indexOf(targetValue);
-    if (targetIndex < 0) continue;
-    newArray.splice(targetIndex, 1);
-  }
-
-  return newArray;
 };
 
 export const forceNumberInput = (input) => {

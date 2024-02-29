@@ -38,6 +38,12 @@ class Stats {
     return this.agility + this.strength + this.focus + this.intellect;
   }
 
+  hasSameStats() {
+    const allValues = Object.values(this);
+    const valuesSet = new Set(allValues);
+    return allValues.length !== valuesSet.size;
+  }
+
   sortByIncreasing() {
     const cur = [this.agility, this.strength, this.focus, this.intellect];
     return cur.sort((a, b) => a - b);

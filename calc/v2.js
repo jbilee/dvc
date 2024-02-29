@@ -1,9 +1,9 @@
 import Stats from "../src/Stats.js";
 import {
   $,
+  getArraySum,
   getFirstKeyByValue,
   getTargetSum,
-  popValues,
 } from "../src/utilities.js";
 import {
   BASE_INCREMENT,
@@ -33,9 +33,9 @@ function checkDullAvailability(e) {
 function selectDragon(e) {
   // Initialize variables
   const dragonName = e.target.value;
-  const dragonIndex = dragonList.findIndex((dragons) => {
-    return dragons.name[0] === dragonName;
-  });
+  const { traitsEn, traitsKo } = dragonList.find(
+    (data) => data.name[0] === dragonName
+  );
   const firstTrait = $("#trait1");
   const secondTrait = $("#trait2");
 
@@ -47,20 +47,18 @@ function selectDragon(e) {
   STAT_LISTS.start.forEach((stat) => ($(stat).value = 0));
 
   // Fill in trait dropdown choices
-  firstTrait.textContent = dragonList[dragonIndex].traitsKo[0];
-  firstTrait.value = dragonList[dragonIndex].traitsEn[0];
-  secondTrait.textContent = dragonList[dragonIndex].traitsKo[1];
-  secondTrait.value = dragonList[dragonIndex].traitsEn[1];
+  firstTrait.textContent = traitsKo[0];
+  firstTrait.value = traitsEn[0];
+  secondTrait.textContent = traitsKo[1];
+  secondTrait.value = traitsEn[1];
 }
 
 // Print the selected dragon's base stats
 function selectStartTrait(e) {
   const traitSelected = e.target.value;
   const dragonName = $("#dragon-selector").value;
-  const dragonIndex = dragonList.findIndex((dragons) => {
-    return dragons.name[0] === dragonName;
-  });
-  const dragonStats = dragonList[dragonIndex][traitSelected];
+  const dragonData = dragonList.find((data) => data.name[0] === dragonName);
+  const dragonStats = dragonData[traitSelected];
 
   // Fill in base stats
   STAT_LISTS.start.forEach((stat, i) => ($(stat).value = dragonStats[i]));
@@ -86,7 +84,7 @@ function selectSpecialTrait(e) {
   const base = getStatFields("#start-");
 
   switch (traitSelected) {
-    case "Arrogant": {
+    case "Perfectionist": {
       const final = new Stats(...calcTwentyFive(base));
       printStatFields(final, "#end-");
       break;
@@ -310,7 +308,7 @@ function selectSpecialTrait(e) {
       const goal = copyStats(base);
       const highestValue = base.getMaxStatValue();
       const highestStat = getFirstKeyByValue(base, highestValue);
-      const difference = 150 - highestValue;
+      const difference = 120 - highestValue;
 
       if (ADJUSTMENTS.regular.has(difference)) {
         goal[highestStat] =
@@ -421,90 +419,147 @@ function printStatFields(stats, prefix) {
   }
 }
 
-// function getFirstKeyByValue(obj, value) {
-//   return Object.keys(obj).find((key) => obj[key] === value) || null;
-// }
-
 // Print recommended end stats for selected normal trait
 function selectNormalTrait(e) {
   // Store dragon's base stats
   const base = getStatFields("#start-");
 
   const traitSelected = e.target.value;
-  const traitIndex = normalTraits.findIndex((trait) => {
-    return trait.nameEn === traitSelected;
-  });
-  const highestReqStat = normalTraits[traitIndex].highestStat;
-  const lowestReqStat = normalTraits[traitIndex].lowestStat;
-  let req;
+  const { reqValue, reqStat, hasSameStats } = normalTraits.find(
+    (trait) => trait.nameEn === traitSelected
+  );
 
-  if (lowestReqStat === "none") req = doubleTraining(base, highestReqStat);
-  else req = singleTraining(base, highestReqStat, lowestReqStat);
+  // Satisfy stat requirement
+  const goal = copyStats(base);
 
-  printStatFields(req, "#end-");
-}
+  switch (reqValue) {
+    case "lowest": {
+      const baseMinStat = base.getMinStatName();
 
-function doubleTraining(base, highest) {
-  let req = calcSingleHighest(base, highest);
-  const sortedArr = req.sortByIncreasing();
+      if (!baseMinStat.includes(reqStat)) {
+        STAT_LISTS.base.forEach((stat) => {
+          if (stat === reqStat) return;
+          const newPotentialValue =
+            goal[reqStat] + 1 < goal[stat] ? goal[stat] : goal[reqStat] + 1;
 
-  if (sortedArr[0] !== sortedArr[1]) req = calcDoubleLowest(req, sortedArr);
+          if (EXCLUDED_VALUES.includes(newPotentialValue - base[stat])) {
+            const newFinalValue = getValidReqValue(
+              newPotentialValue - base[stat]
+            );
+            goal[stat] += newFinalValue;
+          } else {
+            goal[stat] = newPotentialValue;
+          }
+        });
+      }
+      if (baseMinStat.includes(reqStat) && baseMinStat.length > 1) {
+        const otherMinStats = baseMinStat.filter((stat) => stat !== reqStat);
+        otherMinStats.forEach((stat) => {
+          goal[stat] += BASE_INCREMENT;
+        });
+      }
 
-  const diff = getStatDifference(base, req);
-  const optimized = optimizeHighest(diff, highest);
-  const final = getStatSum(base, optimized);
+      // Optimization
+      STAT_LISTS.base.forEach((stat) => {
+        if (goal[stat] === base[stat]) return;
+        const trainingCounts = getTargetSum(
+          goal[stat] - base[stat],
+          TRAIN_VALUES
+        );
+        const optimizedCounts = replaceWithNine(trainingCounts);
+        const furtherOptimized = replaceWithNine2(trainingCounts);
+        if (optimizedCounts) {
+          goal[stat] = base[stat] + getArraySum(optimizedCounts);
+        }
+        if (furtherOptimized) {
+          goal[stat] = base[stat] + getArraySum(furtherOptimized);
+        }
+      });
+      break;
+    }
+    case "highest": {
+      const baseMaxStat = base.getMaxStatName();
+      const baseMaxValue = base.getMaxStatValue();
 
-  return final;
-}
-
-function singleTraining(base, highest, lowest) {
-  // Determine lowest required state
-  let req = calcSingleLowest(base, lowest);
-
-  // Determine highest required stat
-  req = calcSingleHighest(req, highest);
-
-  const diff = getStatDifference(base, req);
-
-  // Optimization
-  const optimized = optimizeAll(base, diff, highest, lowest);
-  const final = getStatSum(base, optimized);
-
-  return final;
-}
-
-function optimizeAll(base, change, highest, lowest) {
-  const newStats = copyStats(change);
-  for (const stat in newStats) {
-    const curValue = newStats[stat];
-    if (ADJUSTMENTS.regular.has(curValue)) {
-      // try inserting new value
-      newStats[stat] = ADJUSTMENTS.regular.get(curValue);
-      // replace value and see if highest of stats and lowest of stats changed (compare newStats highest and lowest using getMax and getMin)
+      if (!baseMaxStat.includes(reqStat)) {
+        goal[reqStat] = baseMaxValue + 1;
+      }
+      break;
     }
   }
-  const application = getStatSum(base, newStats);
-  const newMax = application.getMaxStatName();
-  const newMin = application.getMinStatName();
-  if (
-    newMax.length === 1 &&
-    newMin.length === 1 &&
-    newMax.includes(highest) &&
-    newMin.includes(lowest)
-  )
-    return newStats;
-  return change;
-}
 
-function optimizeHighest(change, targetStat) {
-  const newStats = copyStats(change);
-  const targetValue = newStats[targetStat];
-
-  if (ADJUSTMENTS.regular.has(targetValue)) {
-    newStats[targetStat] = ADJUSTMENTS.regular.get(targetValue);
+  // Satisfy hasSameStats requirement
+  if (hasSameStats === goal.hasSameStats()) {
+    return printStatFields(goal, "#end-");
   }
 
-  return newStats;
+  switch (hasSameStats) {
+    case true: {
+      if (reqValue === "lowest") {
+        // Leave out lowest and highest stats to balance out the middle
+        const allKeys = Object.keys(goal);
+        const [firstKey, secondKey] = allKeys.filter(
+          (key) => key !== reqStat && key !== goal.getMaxStatName()[0]
+        );
+
+        if (goal[firstKey] !== goal[secondKey]) {
+          switch (goal[firstKey] > goal[secondKey]) {
+            case true: {
+              goal[secondKey] = goal[firstKey];
+              break;
+            }
+            case false: {
+              goal[firstKey] = goal[secondKey];
+            }
+          }
+        }
+
+        // Ensure all stats can be trained using 3, 5, and 9
+        while (
+          EXCLUDED_VALUES.includes(goal[firstKey] - base[firstKey]) ||
+          EXCLUDED_VALUES.includes(goal[secondKey] - base[secondKey])
+        ) {
+          goal[firstKey] += 1;
+          goal[secondKey] += 1;
+        }
+      }
+      break;
+    }
+    case false: {
+      const allValues = Object.values(goal);
+      const duplicateValues = [];
+      allValues.forEach((value) => {
+        if (allValues.indexOf(value) !== allValues.lastIndexOf(value))
+          duplicateValues.push(value);
+      });
+
+      if (duplicateValues.length !== 2)
+        return alert(
+          `[계산식 에러] 아래 문자를 드래곤, 시작 성격, 목표 성격과 함께 오픈카톡으로 제보해주세요!:\n${duplicateValues.join(
+            "-"
+          )}`
+        );
+
+      const duplicateKeys = [];
+      STAT_LISTS.base.forEach((stat) => {
+        if (goal[stat] === duplicateValues[0]) duplicateKeys.push(stat);
+      });
+      goal[duplicateKeys[0]] = goal[duplicateKeys[0]] + BASE_INCREMENT;
+      break;
+    }
+  }
+
+  printStatFields(goal, "#end-");
+}
+
+function getValidReqValue(currentValue) {
+  let newValue;
+  TRAIN_VALUES.forEach((value) => {
+    if (!newValue && currentValue < value) {
+      newValue = value;
+    }
+  });
+  return newValue;
 }
 
 function copyStats(object) {
@@ -578,47 +633,6 @@ function calcTwentyFive(curStats) {
   return final;
 }
 
-// Will always return one lowest stat
-function calcSingleLowest(curStats, lowestReqStat) {
-  const newStats = copyStats(curStats);
-  const baseMinStat = curStats.getMinStatName();
-  const reqVal = curStats[lowestReqStat];
-
-  if (baseMinStat.length === 1 && baseMinStat[0] === lowestReqStat)
-    return newStats;
-  for (const stat in curStats) {
-    if (stat === lowestReqStat) continue;
-    if (curStats[stat] <= reqVal) newStats[stat] = reqVal + BASE_INCREMENT;
-  }
-  return newStats;
-}
-
-function calcDoubleLowest(curStats, array) {
-  const newStats = copyStats(curStats);
-  const lowestValue = array[0];
-  const adjustmentValue = array[1];
-  const adjustmentKey = getFirstKeyByValue(newStats, lowestValue);
-
-  newStats[adjustmentKey] = adjustmentValue;
-  return newStats;
-}
-
-// Always returns one highest stat
-function calcSingleHighest(curStats, highestReqStat) {
-  const newStats = copyStats(curStats);
-  const baseMaxStat = curStats.getMaxStatName();
-  const baseMaxValue = curStats.getMaxStatValue();
-  const includesReq = baseMaxStat.includes(highestReqStat);
-
-  if (baseMaxStat.length === 1 && includesReq) return newStats;
-  if (
-    (baseMaxStat.length > 1 && includesReq) ||
-    baseMaxStat[0] !== highestReqStat
-  )
-    newStats[highestReqStat] = baseMaxValue + BASE_INCREMENT;
-  return newStats;
-}
-
 function calculate() {
   try {
     STAT_LISTS.base.forEach((stat) => checkViability(stat));
@@ -680,13 +694,26 @@ function printTrainingCount(statType) {
   }
 }
 
-function replaceWithNine(currentCount) {
-  if (!currentCount.includes(3) && !currentCount.includes(5)) return null;
+function replaceWithNine(count) {
+  const optimizable = count.includes(3) && count.includes(5);
+  if (!optimizable) return null;
+  while (count.includes(3) && count.includes(5)) {
+    count.splice(count.indexOf(3), 1);
+    count.splice(count.indexOf(5), 1);
+    count.unshift(9);
+  }
+  return [...count];
+}
 
-  const newCount = popValues(currentCount, 3, 5);
-  newCount.unshift(9);
-
-  return newCount;
+function replaceWithNine2(count) {
+  const optimizable = count.indexOf(3) !== count.lastIndexOf(3);
+  if (!optimizable) return null;
+  while (count.indexOf(3) !== count.lastIndexOf(3)) {
+    count.splice(count.indexOf(3), 1);
+    count.splice(count.indexOf(3), 1);
+    count.unshift(9);
+  }
+  return [...count];
 }
 
 const changeDullAvailability = (isAvailable) => {
