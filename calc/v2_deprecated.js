@@ -484,6 +484,20 @@ function selectNormalTrait(e) {
       if (!baseMaxStat.includes(reqStat)) {
         goal[reqStat] = baseMaxValue + 1;
       }
+
+      // Optimization
+      const trainingCounts = getTargetSum(
+        goal[reqStat] - base[reqStat],
+        TRAIN_VALUES
+      );
+      const optimizedCounts = replaceWithNine(trainingCounts);
+      const furtherOptimized = replaceWithNine2(trainingCounts);
+      if (optimizedCounts) {
+        goal[reqStat] = base[reqStat] + getArraySum(optimizedCounts);
+      }
+      if (furtherOptimized) {
+        goal[reqStat] = base[reqStat] + getArraySum(furtherOptimized);
+      }
       break;
     }
   }
@@ -495,33 +509,31 @@ function selectNormalTrait(e) {
 
   switch (hasSameStats) {
     case true: {
-      if (reqValue === "lowest") {
-        // Leave out lowest and highest stats to balance out the middle
-        const allKeys = Object.keys(goal);
-        const [firstKey, secondKey] = allKeys.filter(
-          (key) => key !== reqStat && key !== goal.getMaxStatName()[0]
-        );
+      // Leave out lowest and highest stats to balance out the middle
+      const allKeys = Object.keys(goal);
+      const [firstKey, secondKey] = allKeys.filter(
+        (key) => key !== reqStat && key !== goal.getMaxStatName()[0]
+      );
 
-        if (goal[firstKey] !== goal[secondKey]) {
-          switch (goal[firstKey] > goal[secondKey]) {
-            case true: {
-              goal[secondKey] = goal[firstKey];
-              break;
-            }
-            case false: {
-              goal[firstKey] = goal[secondKey];
-            }
+      if (goal[firstKey] !== goal[secondKey]) {
+        switch (goal[firstKey] > goal[secondKey]) {
+          case true: {
+            goal[secondKey] = goal[firstKey];
+            break;
+          }
+          case false: {
+            goal[firstKey] = goal[secondKey];
           }
         }
+      }
 
-        // Ensure all stats can be trained using 3, 5, and 9
-        while (
-          EXCLUDED_VALUES.includes(goal[firstKey] - base[firstKey]) ||
-          EXCLUDED_VALUES.includes(goal[secondKey] - base[secondKey])
-        ) {
-          goal[firstKey] += 1;
-          goal[secondKey] += 1;
-        }
+      // Ensure all stats can be trained using 3, 5, and 9
+      while (
+        EXCLUDED_VALUES.includes(goal[firstKey] - base[firstKey]) ||
+        EXCLUDED_VALUES.includes(goal[secondKey] - base[secondKey])
+      ) {
+        goal[firstKey] += 1;
+        goal[secondKey] += 1;
       }
       break;
     }
