@@ -152,6 +152,30 @@ function selectSpecialTrait(e) {
         return printStatFields(goal, "#end-");
       }
 
+      if (curFocus === 10 && goal.getMaxStatValue() === 30) {
+        const allValues = Object.values(goal);
+        if (allValues.indexOf(10) !== allValues.lastIndexOf(10)) {
+          const maxKey = goal.getMaxStatName();
+          goal[maxKey] = 57;
+          const zeroKey = getFirstKeyByValue(goal, 0);
+          goal[zeroKey] = 27;
+          const leftoverKey = STAT_LISTS.base.filter(
+            (stat) => goal[stat] === 10 && stat !== "focus"
+          );
+          goal[leftoverKey] = 42;
+          return printStatFields(goal, "#end-");
+        } else if (allValues.indexOf(0) !== allValues.lastIndexOf(0)) {
+          const [zero1, zero2] = STAT_LISTS.base.filter(
+            (stat) => goal[stat] === 0 && stat !== "focus"
+          );
+          goal[zero1] = 57;
+          goal[zero2] = 27;
+          const maxKey = getFirstKeyByValue(goal, 30);
+          goal[maxKey] = 42;
+          return printStatFields(goal, "#end-");
+        }
+      }
+
       if (curFocus < 15) {
         const goals = [curFocus + 15, curFocus + 30, curFocus + 45];
         const excludedValues = [];

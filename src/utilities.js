@@ -1,4 +1,6 @@
 export const $ = (selector) => document.querySelector(selector);
+export const $$ = (selector) => document.querySelectorAll(selector);
+export const newElem = (elem) => document.createElement(elem);
 
 export const getFirstKeyByValue = (obj, value) => {
   return Object.keys(obj).find((key) => obj[key] === value) || null;
@@ -39,4 +41,23 @@ export const popValues = (array, ...targets) => {
   }
 
   return newArray;
+};
+
+export const forceNumberInput = (input) => {
+  input.value = input.value.replace(/[^0-9]/g, "");
+};
+
+export const validateInput = (value, limit) => {
+  if (Number(value) > limit) return limit;
+  return Number(value);
+};
+
+export const handleIncreaseButton = (targetElem, max) => {
+  if (Number(targetElem.value) + 1 > max) return;
+  targetElem.value = Number(targetElem.value) + 1;
+};
+
+export const handleDecreaseButton = (targetElem, min) => {
+  if (Number(targetElem.value) - 1 < min) return;
+  targetElem.value = Number(targetElem.value) - 1;
 };
