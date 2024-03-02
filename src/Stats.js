@@ -38,7 +38,7 @@ class Stats {
     return this.agility + this.strength + this.focus + this.intellect;
   }
 
-  sortInc() {
+  sortByIncreasing() {
     const cur = [this.agility, this.strength, this.focus, this.intellect];
     return cur.sort((a, b) => a - b);
   }
