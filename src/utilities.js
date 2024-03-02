@@ -65,3 +65,20 @@ export const handleDecreaseButton = (targetElem, min) => {
   if (Number(targetElem.value) - 1 < min) return;
   targetElem.value = Number(targetElem.value) - 1;
 };
+
+export const displayToast = (message, timeout) => {
+  const container = $("#main-content");
+  if (container.lastElementChild.id === "toast") {
+    container.lastElementChild.remove();
+  }
+
+  const newToast = document.createElement("div");
+  newToast.id = "toast";
+  newToast.innerText = message;
+
+  container.appendChild(newToast);
+  newToast.style.animationPlayState = "running";
+  setTimeout(() => {
+    newToast.remove();
+  }, timeout);
+};

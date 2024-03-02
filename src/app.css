@@ -209,6 +209,7 @@ span.three {
 
 #toast {
   position: fixed;
+  z-index: 5;
   border-radius: 8px;
   background-color: rgb(19, 93, 213);
   color: white;
