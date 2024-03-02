@@ -24,7 +24,7 @@ class Calculator {
 
   addListeners() {
     STAT_LISTS.start.forEach((stat) =>
-      $(stat).addEventListener("change", (e) => this.checkDullAvailability(e))
+      $(stat).addEventListener("change", () => this.checkDullAvailability())
     );
     $("#dragon-selector").addEventListener("change", (e) =>
       this.selectDragon(e)
@@ -48,26 +48,32 @@ class Calculator {
 
   handleCheckPoisoned(e) {
     const currentStats = this.getStatFields("#start-");
-    const maxStatName = currentStats.getMaxStatName();
+    const maxStatNames = currentStats.getMaxStatName();
+
+    // Display warning if highest value is more than one
+    if (maxStatNames.length > 1)
+      displayToast("맹독은 한 가지 노력치에만 적용할 수 있습니다.", 2700);
+
+    const maxStatName = maxStatNames[0];
     const maxStatValue = currentStats.getMaxStatValue();
 
     // Turn off check if highest starting value is 0
     if (!this.poisonedValue && maxStatValue === 0) {
       e.target.checked = false;
-      return displayToast("맹독을 적용할 대상이 없습니다.");
+      return displayToast("맹독을 적용할 대상이 없습니다.", 1700);
     }
 
     if (e.target.checked) {
       $(`#start-${maxStatName}`).value =
         maxStatValue - 10 <= 0 ? 0 : maxStatValue - 10;
       this.poisonedValue = { stat: maxStatName, value: maxStatValue };
-      this.changeDullAvailability(true);
+      this.checkDullAvailability();
       this.reset();
     } else {
-      if (this.poisonedValue.value > 25) this.changeDullAvailability(false);
-      this.reset();
       $(`#start-${this.poisonedValue.stat}`).value = this.poisonedValue.value;
       this.poisonedValue = null;
+      this.checkDullAvailability();
+      this.reset();
     }
   }
 
@@ -83,8 +89,10 @@ class Calculator {
     else this.highestFirst = false;
   }
 
-  checkDullAvailability(e) {
-    const isAvailable = e.target.value <= 25 ? true : false;
+  checkDullAvailability() {
+    const currentStartValues = this.getStatFields("#start-");
+    const isAvailable =
+      currentStartValues.getMaxStatValue() <= 25 ? true : false;
     this.changeDullAvailability(isAvailable);
   }
 
@@ -170,40 +178,60 @@ class Calculator {
 
       case "Immersed": {
         const goal = this.copyStats(base);
-        const maxStatKey = base.getMaxStatName();
+        const maxStatKey = base.getMaxStatName()[0];
         const goalValue = this.getOptimizedValue(120 - base[maxStatKey]);
         goal[maxStatKey] = base[maxStatKey] + goalValue;
         return this.printStatFields(goal, "#end-");
       }
 
       case "Dull": {
-        const maxValue = base.getMaxStatValue();
-        const goal = new Stats(maxValue, maxValue, maxValue, maxValue);
+        try {
+          const maxValue = base.getMaxStatValue();
+          const goal = new Stats(maxValue, maxValue, maxValue, maxValue);
 
-        // Optimization
-        if (maxValue < 25) {
-          const tempGoal = this.copyStats(goal);
-          const countsArray = STAT_LISTS.base.map((stat) =>
-            getTargetSum(goal[stat] - base[stat], TRAIN_VALUES)
-          );
-          const currentTrainingCounts = countsArray.reduce((sum, cur) => {
-            if (cur.length === 0) return sum;
-            return sum + cur.length;
-          }, 0);
+          // Optimization
+          if (maxValue < 25) {
+            let countsArray = STAT_LISTS.base.map((stat) =>
+              getTargetSum(goal[stat] - base[stat], TRAIN_VALUES)
+            );
 
-          STAT_LISTS.base.forEach((stat) => (tempGoal[stat] += 3));
-          const tempArray = STAT_LISTS.base.map((stat) =>
-            getTargetSum(tempGoal[stat] - base[stat], TRAIN_VALUES)
-          );
-          const tempTrainingCounts = tempArray.reduce((sum, cur) => {
-            if (cur.length === 0) return sum;
-            return sum + cur.length;
-          }, 0);
+            while (countsArray.includes(null)) {
+              STAT_LISTS.base.forEach((stat) => (goal[stat] += 1));
+              countsArray = STAT_LISTS.base.map((stat) =>
+                getTargetSum(goal[stat] - base[stat], TRAIN_VALUES)
+              );
+            }
 
-          if (tempTrainingCounts < currentTrainingCounts)
-            return this.printStatFields(tempGoal, "#end-");
+            if (goal.getMaxStatValue() > 25)
+              throw new Error(
+                "현재 기본치로는 평범한 성격을 만들 수 없습니다."
+              );
+
+            const currentTrainingCounts = countsArray.reduce((sum, cur) => {
+              if (cur.length === 0) return sum;
+              return sum + cur.length;
+            }, 0);
+
+            const tempGoal = this.copyStats(goal);
+            STAT_LISTS.base.forEach((stat) => (tempGoal[stat] += 3));
+            const tempArray = STAT_LISTS.base.map((stat) =>
+              getTargetSum(tempGoal[stat] - base[stat], TRAIN_VALUES)
+            );
+            const tempTrainingCounts = tempArray.reduce((sum, cur) => {
+              if (cur.length === 0) return sum;
+              return sum + cur.length;
+            }, 0);
+
+            if (
+              tempGoal.getMaxStatValue() < 25 &&
+              tempTrainingCounts < currentTrainingCounts
+            )
+              return this.printStatFields(tempGoal, "#end-");
+          }
+          return this.printStatFields(goal, "#end-");
+        } catch (e) {
+          alert(e);
         }
-        return this.printStatFields(goal, "#end-");
       }
 
       case "Capable": {
