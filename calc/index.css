@@ -50,6 +50,10 @@
   color: #FF5733;
 }
 
+#close-modal {
+  cursor: pointer;
+}
+
 @media (min-width: 800px) {
   .grid-container2 {
     grid-template-columns: 100px auto;

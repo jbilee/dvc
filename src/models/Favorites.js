@@ -12,12 +12,19 @@ class Favorites {
     return JSON.parse(storedItem);
   }
 
+  getNames() {
+    const dragonNames = this.#favorites.map((favorite) => favorite.name);
+    console.log(dragonNames)
+    console.log(dragonNames.sort((a, b) => a.localeCompare(b)))
+    return dragonNames.sort((a, b) => a.localeCompare(b));
+  }
+
   saveToStorage() {
     localStorage.setItem("dvcfvs", JSON.stringify(this.#favorites));
   }
 
   addFavorites(name) {
-    const existingData = this.#favorites.find((obj) => obj.name === name)
+    const existingData = this.#favorites.find((obj) => obj.name === name);
     if (existingData) return this.renderMessage();
 
     const id = Date.now().toString();
@@ -34,7 +41,7 @@ class Favorites {
   }
 
   renderMessage() {
-    "이미 추가한 드래곤입니다."
+    "이미 추가한 드래곤입니다.";
   }
 
   renderNewFav(fav, id) {

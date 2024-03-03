@@ -23,33 +23,6 @@
   <link rel="icon" href="../img/favicon.png">
   <link rel="stylesheet" href="../src/app.css">
   <link rel="stylesheet" href="./index.css">
-  <script src="../src/dd.js"></script>
-  <script src="../src/td.js"></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      dragonList.forEach(({ name: [nameEn, nameKo] }) => {
-        const newOption = document.createElement("option");
-        newOption.setAttribute("value", nameEn);
-        newOption.textContent = nameKo;
-        document.querySelector("#dragon-selector").append(newOption);
-      })
-
-      normalTraits.forEach(({ nameEn, nameKo }) => {
-        const newOption = document.createElement("option");
-        newOption.setAttribute("value", nameEn);
-        newOption.textContent = nameKo;
-        document.querySelector("#normal-trait-selector").append(newOption);
-      })
-
-      specialTraits.forEach(({ nameEn, nameKo }) => {
-        const newOption = document.createElement("option");
-        newOption.setAttribute("value", nameEn);
-        if (newOption.value === "Dull") newOption.setAttribute("id", nameEn);
-        newOption.textContent = nameKo;
-        document.querySelector("#special-trait-selector").append(newOption);
-      })
-    });
-  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
