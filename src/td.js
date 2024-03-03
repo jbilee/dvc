@@ -1,4 +1,4 @@
-const specialTraits = [
+export const specialTraits = [
   { nameEn: "Noble", nameKo: "고귀한", stats: [20, 20, 20, 20], optimizable: true },
   { nameEn: "Solitary", nameKo: "고독한", stats: [0, 0, 0, 0], optimizable: false },
   { nameEn: "Immersed", nameKo: "몰입하는", stats: [0, 0, 0, 0], optimizable: true },
@@ -11,7 +11,7 @@ const specialTraits = [
   { nameEn: "Classy", nameKo: "품위있는", stats: [20, 20, 20, 20], optimizable: true }
 ];
 
-const normalTraits = [
+export const normalTraits = [
   { nameEn: "Naive", nameKo: "천진난만한", highestStat: "agility", lowestStat: "strength" },
   { nameEn: "Rash", nameKo: "덜렁대는", highestStat: "agility", lowestStat: "focus" },
   { nameEn: "Hasty", nameKo: "성급한", highestStat: "agility", lowestStat: "intellect" },
@@ -30,7 +30,7 @@ const normalTraits = [
   { nameEn: "Smart", nameKo: "똑똑한", highestStat: "intellect", lowestStat: "none" }
 ];
 
-const normalTraitsv2 = [
+export const normalTraitsv2 = [
   { nameEn: "Docile", nameKo: "온순한", reqValue: "lowest", reqStat: "agility", hasSameStats: false },
   { nameEn: "Calm", nameKo: "차분한", reqValue: "lowest", reqStat: "agility", hasSameStats: true },
   { nameEn: "Naive", nameKo: "천진난만한", reqValue: "lowest", reqStat: "strength", hasSameStats: false },
