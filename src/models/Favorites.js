@@ -14,8 +14,6 @@ class Favorites {
 
   getNames() {
     const dragonNames = this.#favorites.map((favorite) => favorite.name);
-    console.log(dragonNames)
-    console.log(dragonNames.sort((a, b) => a.localeCompare(b)))
     return dragonNames.sort((a, b) => a.localeCompare(b));
   }
 

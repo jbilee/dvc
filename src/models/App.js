@@ -17,7 +17,7 @@ class App {
   init() {
     // Calculator controls
     const loadedFavs = this.favorites.getNames();
-    this.renderSelectOptions(loadedFavs);
+    this.renderDragonOptions(loadedFavs);
     this.renderTraitOptions();
 
     // Modal

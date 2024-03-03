@@ -13,6 +13,8 @@ import {
   STAT_LISTS,
   ADJUSTMENTS,
 } from "../constants.js";
+import { dragonList } from "../dd.js";
+import { normalTraits, specialTraits } from "../td.js";
 
 class Calculator {
   constructor() {
