@@ -12,9 +12,10 @@ class Favorites {
     return JSON.parse(storedItem);
   }
 
-  getNames() {
-    const dragonNames = this.#favorites.map((favorite) => favorite.name);
-    return dragonNames.sort((a, b) => a.localeCompare(b));
+  getFavorites(key) {
+    const favorites = this.#favorites.map((favorite) => favorite[key]);
+    if (key === "name") return favorites.sort((a, b) => a.localeCompare(b));
+    return favorites;
   }
 
   saveToStorage() {
@@ -27,12 +28,14 @@ class Favorites {
 
     const id = Date.now().toString();
     this.#favorites.push({ name, id });
-    this.renderNewFav(name, id);
+    const newRow = this.renderNewFav(name, id);
     this.saveToStorage();
+
+    return newRow;
   }
 
-  removeFavorites(targetId) {
-    const targetElem = $(`div[data-id="${targetId}"]`);
+  removeFavorites(targetElem) {
+    const targetId = targetElem.dataset.id;
     this.#favorites = this.#favorites.filter(({ id }) => id !== targetId);
     targetElem.remove();
     this.saveToStorage();
@@ -44,6 +47,7 @@ class Favorites {
 
   renderNewFav(fav, id) {
     const newRow = newElem("div");
+    newRow.classList.add("favorites-row");
     newRow.dataset.id = id;
     const rowText = newElem("span");
     rowText.textContent = fav;
@@ -52,7 +56,9 @@ class Favorites {
     newRow.append(rowText, rowBtn);
     $("#favorites").append(newRow);
 
-    rowBtn.addEventListener("click", () => this.removeFavorites(id));
+    // rowBtn.addEventListener("click", () => this.removeFavorites(id));
+
+    return newRow;
   }
 
   render() {

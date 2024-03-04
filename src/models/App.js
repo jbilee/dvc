@@ -16,21 +16,24 @@ class App {
 
   init() {
     // Calculator controls
-    const loadedFavs = this.favorites.getNames();
+    const loadedFavs = this.favorites.getFavorites("name");
     this.renderDragonOptions(loadedFavs);
     this.renderTraitOptions();
 
     // Modal
     ModalView.render();
-    this.addListeners();
     this.favorites.render();
+    this.addListeners();
   }
 
   renderDragonOptions(favorites) {
-    favorites.forEach((name) => {
+    favorites.forEach((fav) => {
       const newOption = document.createElement("option");
-      newOption.setAttribute("value", name);
-      newOption.textContent = "★" + name;
+      const {
+        name: [nameEn, nameKo],
+      } = dragonList.find(({ name: [, nameKo] }) => nameKo === fav);
+      newOption.setAttribute("value", nameEn);
+      newOption.textContent = "★" + nameKo;
       $("#dragon-selector").append(newOption);
     });
 
@@ -80,10 +83,29 @@ class App {
 
     const btn = $("#add-fav");
     btn.addEventListener("click", () => {
-      this.favorites.addFavorites($("#fav-selector").value);
-      const newFavs = this.favorites.getNames();
+      const newRow = this.favorites.addFavorites($("#fav-selector").value);
+      const newRowBtn = newRow.querySelector("button");
+      newRowBtn.addEventListener("click", () => {
+        this.favorites.removeFavorites(newRow);
+        const newFavs = this.favorites.getFavorites("name");
+        this.resetDragonOptions();
+        this.renderDragonOptions(newFavs);
+      });
+      const newFavs = this.favorites.getFavorites("name");
       this.resetDragonOptions();
       this.renderDragonOptions(newFavs);
+    });
+
+    const currentFavIds = this.favorites.getFavorites("id");
+    currentFavIds.forEach((id) => {
+      const elem = $(`div[data-id="${id}"]`);
+      const deleteBtn = elem.querySelector("button");
+      deleteBtn.addEventListener("click", () => {
+        this.favorites.removeFavorites(elem);
+        const newFavs = this.favorites.getFavorites("name");
+        this.resetDragonOptions();
+        this.renderDragonOptions(newFavs);
+      });
     });
   }
 }
