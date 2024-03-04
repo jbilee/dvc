@@ -8,13 +8,14 @@ import { normalTraits, specialTraits } from "../td.js";
 
 class App {
   constructor() {
-    this.calculator = new Calculator();
     this.settings = new Settings();
+    const initialSettings = this.settings.getCurrentSettings();
+    this.calculator = new Calculator(initialSettings);
     this.favorites = new Favorites();
-    this.init();
+    this.init(initialSettings);
   }
 
-  init() {
+  init({ priorityOn, prefStat }) {
     // Calculator controls
     const loadedFavs = this.favorites.getFavorites("name");
     this.renderDragonOptions(loadedFavs);
@@ -22,6 +23,8 @@ class App {
 
     // Modal
     ModalView.render();
+    if (priorityOn) $("#priority").checked = true;
+    if (prefStat !== "none") $(`#pref-${prefStat}`).checked = true;
     this.favorites.render();
     this.addListeners();
   }
@@ -107,6 +110,24 @@ class App {
         this.renderDragonOptions(newFavs);
       });
     });
+
+    const priority = $("#priority");
+    priority.addEventListener("change", (e) => {
+      const priorityStatus = e.target.checked;
+      this.settings.updatePriority(priorityStatus);
+      this.calculator.updateSettings(this.settings.getCurrentSettings());
+    });
+
+    const pref = $("#preferences");
+    const prefOptions = pref.children;
+    for (const child of prefOptions) {
+      const radioBtn = child.querySelector("input");
+      radioBtn.addEventListener("change", (e) => {
+        const statName = e.target.value;
+        this.settings.updatePreference(statName);
+        this.calculator.updateSettings(this.settings.getCurrentSettings());
+      });
+    }
   }
 }
 

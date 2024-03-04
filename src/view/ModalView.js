@@ -31,14 +31,30 @@ const ModalView = {
         <div>높은 점수 위주로 계산하기
         가능한 한 9점 → 5점 → 3점 순으로 훈련하도록 설정합니다. (훈련 시간이 늘어나게 되는 경우 이 설정은 무시합니다.)
         </div>
+        <div>
+          <input id="priority" type="checkbox"><label for="priority">높은 점수 위주로 계산하기</label>
+        </div>
       </div>
       <div class="checkbox-option">
         <div>선호 훈련 지정하기
         선택권이 주어질 경우, 내가 선호하는 훈련을 우선적으로 하도록 설정합니다.
-        순발력
-        근력
-        집중력
-        지력
+          <div id="preferences">
+            <div>
+              <input type="radio" name="preference" id="pref-none" value="none" checked><label for="pref-none">없음</label>
+            </div>
+            <div>
+              <input type="radio" name="preference" id="pref-agility" value="agility"><label for="pref-agility">순발력</label>
+            </div>
+            <div>
+              <input type="radio" name="preference" id="pref-strength" value="strength"><label for="pref-strength">근력</label>
+            </div>
+            <div>
+              <input type="radio" name="preference" id="pref-focus" value="focus"><label for="pref-focus">집중력</label>
+            </div>
+            <div>
+              <input type="radio" name="preference" id="pref-intellect" value="intellect"><label for="pref-intellect">지력</label>
+            </div>
+          </div>
         </div>
       </div>
     </div>

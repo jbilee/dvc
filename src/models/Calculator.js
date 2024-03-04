@@ -17,11 +17,17 @@ import { dragonList } from "../dd.js";
 import { normalTraits, specialTraits } from "../td.js";
 
 class Calculator {
-  constructor() {
+  constructor(settings) {
     this.poisonedValue = null;
-    this.highestFirst = false;
+    this.updateSettings(settings);
+
     this.addListeners();
     this.temp(); // Remove later
+  }
+
+  updateSettings({ priorityOn, prefStat }) {
+    this.highestFirst = priorityOn;
+    this.preference = prefStat;
   }
 
   addListeners() {
@@ -42,7 +48,6 @@ class Calculator {
     );
     $("#btn-calculate").addEventListener("click", () => this.calculate());
     $("#btn-reset").addEventListener("click", () => this.reset());
-    $("#nines").addEventListener("change", (e) => this.handleCheckHigh(e));
     $("#poisoned").addEventListener("change", (e) =>
       this.handleCheckPoisoned(e)
     );
@@ -80,9 +85,7 @@ class Calculator {
   }
 
   resetCheckboxes() {
-    $("#nines").checked = false;
     $("#poisoned").checked = false;
-    this.highestFirst = false;
     this.poisonedValue = null;
   }
 
@@ -262,6 +265,7 @@ class Calculator {
       default:
         // Standard calculation
         const final = new Stats(...this.calcTwenty(base));
+        console.log(final)
         this.printStatFields(final, "#end-");
 
       // If 9-only training is checked:
