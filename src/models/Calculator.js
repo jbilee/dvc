@@ -53,7 +53,7 @@ class Calculator {
     const maxStatNames = currentStats.getMaxStatName();
 
     // Display warning if highest value is more than one
-    if (maxStatNames.length > 1)
+    if (!this.poisonedValue && maxStatNames.length > 1)
       displayToast("맹독은 한 가지 노력치에만 적용할 수 있습니다.", 2700);
 
     const maxStatName = maxStatNames[0];
