@@ -31,7 +31,7 @@ class App {
       const newOption = document.createElement("option");
       newOption.setAttribute("value", name);
       newOption.textContent = "★" + name;
-      document.querySelector("#dragon-selector").append(newOption);
+      $("#dragon-selector").append(newOption);
     });
 
     dragonList.forEach(({ name: [nameEn, nameKo] }) => {
@@ -39,7 +39,7 @@ class App {
       const newOption = document.createElement("option");
       newOption.setAttribute("value", nameEn);
       newOption.textContent = nameKo;
-      document.querySelector("#dragon-selector").append(newOption);
+      $("#dragon-selector").append(newOption);
     });
   }
 
@@ -48,7 +48,7 @@ class App {
       const newOption = document.createElement("option");
       newOption.setAttribute("value", nameEn);
       newOption.textContent = nameKo;
-      document.querySelector("#normal-trait-selector").append(newOption);
+      $("#normal-trait-selector").append(newOption);
     });
 
     specialTraits.forEach(({ nameEn, nameKo }) => {
@@ -56,8 +56,17 @@ class App {
       newOption.setAttribute("value", nameEn);
       if (newOption.value === "Dull") newOption.setAttribute("id", nameEn);
       newOption.textContent = nameKo;
-      document.querySelector("#special-trait-selector").append(newOption);
+      $("#special-trait-selector").append(newOption);
     });
+  }
+
+  resetDragonOptions() {
+    $("#dragon-selector").innerHTML = "";
+    const defaultOption = newElem("option");
+    defaultOption.textContent = "드래곤 선택";
+    defaultOption.setAttribute("disabled", true);
+    defaultOption.setAttribute("selected", true);
+    $("#dragon-selector").append(defaultOption);
   }
 
   addListeners() {
@@ -72,6 +81,9 @@ class App {
     const btn = $("#add-fav");
     btn.addEventListener("click", () => {
       this.favorites.addFavorites($("#fav-selector").value);
+      const newFavs = this.favorites.getNames();
+      this.resetDragonOptions();
+      this.renderDragonOptions(newFavs);
     });
   }
 }
