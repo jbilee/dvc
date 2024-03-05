@@ -23,32 +23,6 @@
   <link rel="icon" href="../img/favicon.png">
   <link rel="stylesheet" href="../src/app.css">
   <link rel="stylesheet" href="./index.css">
-  <script src="../src/db.js"></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      for (let i = 0; i < dragonList.length; i++) {
-        const newOption = document.createElement("option");
-        newOption.setAttribute("value", dragonList[i].name[0]);
-        newOption.textContent = dragonList[i].name[1];
-        document.querySelector("#dragon-selector").append(newOption);
-      }
-
-      for (let i = 0; i < normalTraits.length; i++) {
-        const newOption = document.createElement("option");
-        newOption.setAttribute("value", normalTraits[i].nameEn);
-        newOption.textContent = normalTraits[i].nameKo;
-        document.querySelector("#normal-trait-selector").append(newOption);
-      }
-
-      for (let i = 0; i < specialTraits.length; i++) {
-        const newOption = document.createElement("option");
-        newOption.setAttribute("value", specialTraits[i].nameEn);
-        if (newOption.value == "Dull") newOption.setAttribute("id", specialTraits[i].nameEn);
-        newOption.textContent = specialTraits[i].nameKo;
-        document.querySelector("#special-trait-selector").append(newOption);
-      }
-    });
-  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
@@ -58,6 +32,7 @@
   <div id="main-box">
     <div id="main-content">
       <div id="header">
+        <span id="settings"><img src="../img/settings.png" width="24"></span>
         <button class="menu-button" disabled>노력치 계산기</button>
         <button class="menu-button" onclick="location.href='https://jbilee.github.io/dvc/find/'">성격 탐색기</button>
       </div>
@@ -75,56 +50,56 @@
           <div>
             <div class="agility">순발력</div>
           </div>
-          <div>
+          <div class="input-container">
             <input type="number" inputmode="numeric" min="0" max="30" value="0" id="start-agility"
               class="stat-field agility">
           </div>
           <div>
             →
           </div>
-          <div>
+          <div class="input-container">
             <input type="number" inputmode="numeric" min="0" max="999" maxlength="3" value="0" id="end-agility"
               class="stat-field agility">
           </div>
           <div>
             <div class="strength">근력</div>
           </div>
-          <div>
+          <div class="input-container">
             <input type="number" inputmode="numeric" min="0" max="30" value="0" id="start-strength"
               class="stat-field strength">
           </div>
           <div>
             →
           </div>
-          <div>
+          <div class="input-container">
             <input type="number" inputmode="numeric" min="0" max="999" maxlength="3" value="0" id="end-strength"
               class="stat-field strength">
           </div>
           <div>
             <div class="focus">집중력</div>
           </div>
-          <div>
+          <div class="input-container">
             <input type="number" inputmode="numeric" min="0" max="30" value="0" id="start-focus"
               class="stat-field focus">
           </div>
           <div>
             →
           </div>
-          <div>
+          <div class="input-container">
             <input type="number" inputmode="numeric" min="0" max="999" maxlength="3" value="0" id="end-focus"
               class="stat-field focus">
           </div>
           <div>
             <div class="intellect">지력</div>
           </div>
-          <div>
+          <div class="input-container">
             <input type="number" inputmode="numeric" min="0" max="30" value="0" id="start-intellect"
               class="stat-field intellect">
           </div>
           <div>
             →
           </div>
-          <div>
+          <div class="input-container">
             <input type="number" inputmode="numeric" min="0" max="999" maxlength="3" value="0" id="end-intellect"
               class="stat-field intellect">
           </div>
@@ -173,10 +148,10 @@
         <div class="sel1">
           <h3>드래곤 정보 자동입력:</h3>
           <select name="dragon-selector" id="dragon-selector">
-            <option selected disabled>드래곤</option>
+            <option selected disabled>드래곤 선택</option>
           </select>
           <select name="trait-selector" id="start-trait-selector" disabled>
-            <option selected disabled>성격</option>
+            <option selected disabled>성격 선택</option>
             <option value="" id="trait1">-</option>
             <option value="" id="trait2">-</option>
           </select>
@@ -199,7 +174,19 @@
         <button id="btn-clipboard">결과 복사</button> <br>
       </div>
 
+      <div class="conditions">
+        <div>
+          <input id="poisoned" type="checkbox"><label for="poisoned">맹독 적용하기</label>
+        </div>
+      </div>
+
+      <div class="devcontrols">
+        <button id="dev-decrease">목표치 일괄 하락</button>
+        <button id="dev-increase">목표치 일괄 증가</button>
+      </div>
+
       <div class="notice">
+        <!-- *수정 중인 계산식:  -->
       </div>
 
       <div id="tips">
@@ -208,8 +195,7 @@
           <li><b>결과 복사</b> 버튼으로 훈련 횟수를 텍스트 형식으로 복사할 수 있습니다.</li>
           <li>동일한 점수의 훈련 횟수가 5회를 초과하면 괄호 형식으로 축소됩니다. <br> (예: <span class="nine">9</span><sub>(x13)</sub>일 경우 9점짜리 훈련을
             13회 진행)</li>
-          <li>성실한 성격이 뜰 가능성은 고려하지 않기 때문에 따로 방지해야 합니다.</li>
-          <li>특수성격은 목표치를 계산해야 하는 성격만 자동입력에 포함되어 있습니다. <br> (기품있는, 서투른 등의 성격은 계산이 필요없으니 제외)</li>
+          <li>훈련할 값을 직접 계산해야 하는 성격만 자동입력에 포함되어 있습니다.</li>
           <li>에브리아 전용 드래곤은 기본치가 고정이기 때문에 자동입력에 포함되어 있지 않습니다.</li>
         </ul>
       </div>
@@ -218,11 +204,13 @@
 
   <div class="version">
     <p>
-      24-02-10. version 1.0.6<br>
+      24-03-00. version 2.0.0<br>
       DVC Calculator by jbilee@GitHub
     </p>
     <p>
       데이터 출처:<br>
+      <a href="https://community.withhive.com/dvc/ko/board/5/189097"
+        target="_blank">https://community.withhive.com/dvc/ko/board/5/189097 (성격 시스템 개편 공지)</a><br>
       <a href="https://community.withhive.com/dvc/ko/board/22/2929"
         target="_blank">https://community.withhive.com/dvc/ko/board/22/2929
         (전체도감 by 앙그라님)</a><br>
@@ -238,8 +226,8 @@
     </p>
   </div>
 
-  <script type="module" src="toolcommands.js"></script>
-  <script type="module" src="calculations.js"></script>
+  <script type="module" src="../calc/toolcommands.js"></script>
+  <script type="module" src="../calc/v2.js"></script>
 </body>
 
 </html>

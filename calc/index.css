@@ -1,7 +1,7 @@
 .grid-container {
   box-sizing: border-box;
   display: grid;
-  grid-template-columns: 90px auto 50px auto;
+  grid-template-columns: 75px auto 50px auto;
   grid-template-rows: auto 30px 30px 30px 30px;
   width: 100%;
   gap: 10px 5px;
@@ -21,6 +21,26 @@
   text-align: center;
 }
 
+.conditions input, .conditions label {
+  cursor: pointer;
+}
+
+.input-container {
+  box-sizing: border-box;
+  width: 50px;
+  height: 30px;
+  padding: 0px 4px;
+}
+
+.input-container>input {
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-bottom: 1px solid rgb(182, 182, 182);
+  background: transparent;
+  padding: 0;
+}
+
 .test-area {
   display: none;
 }
@@ -28,6 +48,10 @@
 .notice {
   font-weight: 700;
   color: #FF5733;
+}
+
+#close-modal {
+  cursor: pointer;
 }
 
 @media (min-width: 800px) {

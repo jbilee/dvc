@@ -3,6 +3,10 @@
   font-size: 16px;
 }
 
+body {
+  margin: 0;
+}
+
 main {
   text-align: center;
 }
@@ -29,14 +33,16 @@ li {
   margin: 1.1rem 0;
 }
 
-span#tooltip {
+span#settings {
   position: absolute;
   right: 10px;
+  cursor: pointer;
 }
 
 #main-box {
   display: flex;
   justify-content: center;
+  padding: 12px;
 }
 
 #main-content {
@@ -164,7 +170,6 @@ span.three {
     width: 200px;
   }
 
-  span#tooltip,
   .stat-mobile-view {
     display: none;
   }
@@ -209,6 +214,7 @@ span.three {
 
 #toast {
   position: fixed;
+  z-index: 5;
   border-radius: 8px;
   background-color: rgb(19, 93, 213);
   color: white;
