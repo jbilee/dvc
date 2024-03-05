@@ -150,18 +150,10 @@ class Calculator {
       return traits.nameEn === traitSelected;
     });
 
-    //Check for 9-only
-    const testAreaCheckbox = $(".test-area input");
-
     // Store dragon's base stats
     const base = this.getStatFields("#start-");
 
     switch (traitSelected) {
-      case "Perfectionist": {
-        const goal = new Stats(...this.calcTwentyFive(base));
-        return this.printStatFields(goal, "#end-");
-      }
-
       case "Meticulous": {
         const goal = this.copyStats(base);
         const allKeys = Object.keys(goal);
@@ -184,7 +176,8 @@ class Calculator {
       case "Immersed": {
         const goal = this.copyStats(base);
         const maxStatKey = base.getMaxStatName()[0];
-        const goalValue = this.getOptimizedValue(120 - base[maxStatKey]);
+        let goalValue = this.getOptimizedValue(150 - base[maxStatKey]);
+        if (this.highestFirst) goalValue = this.replaceWithNine(goalValue);
         goal[maxStatKey] = base[maxStatKey] + goalValue;
         return this.printStatFields(goal, "#end-");
       }
@@ -262,15 +255,33 @@ class Calculator {
         return this.printStatFields(goal, "#end-");
       }
 
-      default:
-        // Standard calculation
-        const final = new Stats(...this.calcTwenty(base));
-        console.log(final)
-        this.printStatFields(final, "#end-");
+      default: {
+        const dbValues = new Stats(...specialTraits[traitIndex].stats);
+        const minStatValues = STAT_LISTS.base.map((stat) =>
+          base[stat] > dbValues[stat] ? base[stat] : dbValues[stat]
+        );
+        const goal = new Stats(...minStatValues);
+        console.log(goal);
 
-      // If 9-only training is checked:
-      // const final = calcDefault(traitSelected, base);
-      // this.printStatFields(final, "#end-");
+        STAT_LISTS.base.forEach(
+          (stat) =>
+            (goal[stat] =
+              this.getOptimizedValue(goal[stat] - base[stat]) + base[stat])
+        );
+        console.log(goal);
+
+        if (this.highestFirst) {
+          STAT_LISTS.base.forEach(
+            (stat) =>
+              (goal[stat] =
+                this.replaceWithNine(goal[stat] - base[stat]) + base[stat])
+          );
+        }
+
+        console.log(goal);
+
+        return this.printStatFields(goal, "#end-");
+      }
     }
   }
 
@@ -481,18 +492,18 @@ class Calculator {
     return final;
   }
 
-  calcTwentyFive(curStats) {
-    const array = STAT_LISTS.base.map((stat) => curStats[stat]);
+  // calcTwentyFive(curStats) {
+  //   const array = STAT_LISTS.base.map((stat) => curStats[stat]);
 
-    const final = array.map((stat) => {
-      if (ADJUSTMENTS.twentyFive.has(stat)) {
-        return ADJUSTMENTS.twentyFive.get(stat);
-      }
-      return stat;
-    });
+  //   const final = array.map((stat) => {
+  //     if (ADJUSTMENTS.twentyFive.has(stat)) {
+  //       return ADJUSTMENTS.twentyFive.get(stat);
+  //     }
+  //     return stat;
+  //   });
 
-    return final;
-  }
+  //   return final;
+  // }
 
   // Will always return one lowest stat
   calcSingleLowest(curStats, lowestReqStat) {
@@ -618,19 +629,50 @@ class Calculator {
     return [...count];
   }
 
+  // getOptimizedValue(value) {
+  //   const initialCounts = getTargetSum(value, TRAIN_VALUES);
+  //   const filteredCounts = initialCounts.filter((value) => value !== 9);
+  //   const optimizableByOne =
+  //     filteredCounts.includes(5) && filteredCounts.includes(3);
+  //   const optimizableByThree =
+  //     filteredCounts.indexOf(3) !== filteredCounts.lastIndexOf(3);
+  //   const optimizedCounts = optimizableByOne
+  //     ? this.optimizeByOne(initialCounts)
+  //     : optimizableByThree
+  //     ? this.optimizeByThree(initialCounts)
+  //     : initialCounts;
+  //   return getArraySum(optimizedCounts);
+  // }
+
   getOptimizedValue(value) {
-    const initialCounts = getTargetSum(value, TRAIN_VALUES);
-    const filteredCounts = initialCounts.filter((value) => value !== 9);
-    const optimizableByOne =
-      filteredCounts.includes(5) && filteredCounts.includes(3);
-    const optimizableByThree =
-      filteredCounts.indexOf(3) !== filteredCounts.lastIndexOf(3);
-    const optimizedCounts = optimizableByOne
-      ? this.optimizeByOne(initialCounts)
-      : optimizableByThree
-      ? this.optimizeByThree(initialCounts)
-      : initialCounts;
-    return getArraySum(optimizedCounts);
+    console.log(value);
+    let trainingCounts = getTargetSum(value, TRAIN_VALUES);
+    if (
+      !trainingCounts.includes(5) &&
+      !trainingCounts.includes(3) &&
+      trainingCounts.indexOf(3) === trainingCounts.lastIndexOf(3)
+    )
+      return value;
+
+    console.log(trainingCounts);
+    if (trainingCounts.includes(5) && trainingCounts.includes(3))
+      trainingCounts = this.optimizeByOne(trainingCounts);
+    console.log(trainingCounts);
+    if (trainingCounts.indexOf(3) !== trainingCounts.lastIndexOf(3))
+      trainingCounts = this.optimizeByThree(trainingCounts);
+    console.log(trainingCounts);
+    return getArraySum(trainingCounts);
+  }
+
+  replaceWithNine(value) {
+    const trainingCounts = getTargetSum(value, TRAIN_VALUES);
+    while (trainingCounts.includes(5) || trainingCounts.includes(3)) {
+      if (trainingCounts.includes(5))
+        trainingCounts.splice(trainingCounts.indexOf(5), 1, 9);
+      if (trainingCounts.includes(3))
+        trainingCounts.splice(trainingCounts.indexOf(3), 1, 9);
+    }
+    return getArraySum(trainingCounts);
   }
 
   changeDullAvailability(isAvailable) {

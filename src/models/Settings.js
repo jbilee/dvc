@@ -5,7 +5,7 @@ class Settings {
 
   constructor() {
     this.#settings = this.getFromStorage() || {
-      priorityOn: false,
+      priorityOn: true,
       prefStat: "none",
     };
   }
