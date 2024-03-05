@@ -166,6 +166,7 @@ class Calculator {
       case "Distracted": {
         const curFocus = base.focus;
         const goal = this.copyStats(base);
+        const baseStatValues = Object.values(base);
 
         if (curFocus === 15) {
           const zeroStat = getFirstKeyByValue(base, 0); // Will cause error if lowest stat isn't 0 (such as when user enters values themselves)
@@ -238,6 +239,50 @@ class Calculator {
           }
         }
 
+        if (curFocus === 10 && goal.getMaxStatValue() === 20) {
+          if (baseStatValues.indexOf(0) !== baseStatValues.lastIndexOf(0)) {
+            const [zero1, zero2] = STAT_LISTS.base.filter(
+              (stat) => base[stat] === 0
+            );
+            goal[zero1] = 45;
+            goal[zero2] = 63;
+            const maxBaseStat = base.getMaxStatName();
+            goal[maxBaseStat] = 25;
+            return this.printStatFields(goal, "#end-");
+          } else if (
+            baseStatValues.indexOf(0) >= 0 &&
+            baseStatValues.indexOf(0) === baseStatValues.lastIndexOf(0)
+          ) {
+            const [zeroKey] = STAT_LISTS.base.filter(
+              (stat) => base[stat] === 0
+            );
+            goal[zeroKey] = 45;
+            const [maxBaseStat] = base.getMaxStatName();
+            goal[maxBaseStat] = 25;
+            const [remainingKey] = STAT_LISTS.base.filter(
+              (stat) =>
+                stat !== "focus" && stat !== zeroKey && stat !== maxBaseStat
+            );
+            goal[remainingKey] = 64;
+            return this.printStatFields(goal, "#end-");
+          }
+        }
+
+        if (
+          curFocus === 5 &&
+          goal.getMaxStatValue() === 30 &&
+          baseStatValues.indexOf(0) !== baseStatValues.lastIndexOf(0)
+        ) {
+          const [zero1, zero2] = STAT_LISTS.base.filter(
+            (stat) => base[stat] === 0
+          );
+          goal[zero1] = 21;
+          goal[zero2] = 54;
+          const maxBaseStat = base.getMaxStatName();
+          goal[maxBaseStat] = 39;
+          return this.printStatFields(goal, "#end-");
+        }
+
         if (curFocus < 15) {
           const goals = [curFocus + 15, curFocus + 30, curFocus + 45];
           const excludedValues = [];
@@ -254,6 +299,14 @@ class Calculator {
           );
           if (remainingStats.length === 1) {
             goal[remainingStats[0]] = keptValues[0];
+            const maxGoalStat = goal.getMaxStatName();
+            const optimizedMaxGoal =
+              this.getOptimizedValue(goal[maxGoalStat] - base[maxGoalStat]) +
+              base[maxGoalStat];
+            const finalMaxGoal =
+              this.replaceWithNine(optimizedMaxGoal - base[maxGoalStat]) +
+              base[maxGoalStat];
+            goal[maxGoalStat] = finalMaxGoal;
             return this.printStatFields(goal, "#end-");
           }
           if (remainingStats.length === 2) {
@@ -265,6 +318,14 @@ class Calculator {
             changesToMake.forEach((change) => {
               goal[change.statName] = change.value;
             });
+            const maxGoalStat = goal.getMaxStatName();
+            const optimizedMaxGoal =
+              this.getOptimizedValue(goal[maxGoalStat] - base[maxGoalStat]) +
+              base[maxGoalStat];
+            const finalMaxGoal =
+              this.replaceWithNine(optimizedMaxGoal - base[maxGoalStat]) +
+              base[maxGoalStat];
+            goal[maxGoalStat] = finalMaxGoal;
             return this.printStatFields(goal, "#end-");
           }
 
@@ -480,14 +541,12 @@ class Calculator {
           base[stat] > dbValues[stat] ? base[stat] : dbValues[stat]
         );
         const goal = new Stats(...minStatValues);
-        console.log(goal);
 
         STAT_LISTS.base.forEach(
           (stat) =>
             (goal[stat] =
               this.getOptimizedValue(goal[stat] - base[stat]) + base[stat])
         );
-        console.log(goal);
 
         if (this.highestFirst) {
           STAT_LISTS.base.forEach(
@@ -496,8 +555,6 @@ class Calculator {
                 this.replaceWithNine(goal[stat] - base[stat]) + base[stat])
           );
         }
-
-        console.log(goal);
 
         return this.printStatFields(goal, "#end-");
       }
