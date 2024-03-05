@@ -119,7 +119,7 @@ class App {
     });
 
     const pref = $("#preferences");
-    const prefOptions = pref.children;
+    const prefOptions = pref.firstElementChild.children;
     for (const child of prefOptions) {
       const radioBtn = child.querySelector("input");
       radioBtn.addEventListener("change", (e) => {
