@@ -1,4 +1,4 @@
-const dragonList = [
+export const dragonList = [
   { name: ["Gaian", "가이안"], traitsEn: ["Bold", "Calm"], traitsKo: ["대담한", "차분한"], Bold: [0, 30, 10, 0], Calm: [5, 0, 20, 5] },
   { name: ["Gandharba", "간다르바"], traitsEn: ["Quirky", "Lax"], traitsKo: ["변덕쟁이", "촐랑대는"], Quirky: [10, 20, 0, 10], Lax: [10, 10, 0, 20] },
   { name: ["Kangkang", "강강"], traitsEn: ["QuickWitted", "Bold"], traitsKo: ["눈치빠른", "대담한"], QuickWitted: [25, 0, 0, 5], Bold: [0, 25, 0, 5] },
