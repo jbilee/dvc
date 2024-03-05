@@ -156,21 +156,240 @@ class Calculator {
     switch (traitSelected) {
       case "Meticulous": {
         const goal = this.copyStats(base);
-        const allKeys = Object.keys(goal);
-        allKeys.forEach((key) => {
-          if (goal[key] % 10 !== 0) {
-            goal[key] += 5;
-          }
-        });
+        const startSum = base.getTotal();
+        const reqSum = 100 - startSum;
+        if (this.preference !== "none") goal[this.preference] += reqSum;
+        else goal.agility += reqSum;
         return this.printStatFields(goal, "#end-");
       }
 
       case "Distracted": {
+        const curFocus = base.focus;
         const goal = this.copyStats(base);
-        const applicableKeys = ["agility", "strength", "intellect"];
-        const unavailableValues = [goal.focus];
 
-        return this.printStatFields(goal, "#end-");
+        if (curFocus === 15) {
+          const zeroStat = getFirstKeyByValue(base, 0); // Will cause error if lowest stat isn't 0 (such as when user enters values themselves)
+          const remainingStats = STAT_LISTS.base.filter(
+            (x) => x !== zeroStat && x !== "focus"
+          );
+          const changesToMake = this.compareTrainingCounts(
+            base,
+            remainingStats,
+            [30, 45]
+          );
+          changesToMake.forEach((change) => {
+            goal[change.statName] = change.value;
+          });
+          const highestGoal = goal.getMaxStatName();
+          if (
+            goal[highestGoal] - base[highestGoal] > 30 &&
+            goal[highestGoal] - base[highestGoal] !== 45
+          ) {
+            goal[highestGoal] = 46;
+          }
+          const thirtyRemains = getFirstKeyByValue(goal, 30);
+          if (goal[highestGoal] === 46 && thirtyRemains) {
+            goal[thirtyRemains] = 31;
+          }
+          return this.printStatFields(goal, "#end-");
+        }
+
+        if (curFocus === 30) {
+          const zeroStat = getFirstKeyByValue(base, 0);
+          const remainingStats = STAT_LISTS.base.filter(
+            (x) => x !== zeroStat && x !== "focus"
+          );
+          const changesToMake = this.compareTrainingCounts(
+            base,
+            remainingStats,
+            [15, 45]
+          ); // This line needs to be refactored if any of the other stats is bigger than 15
+          changesToMake.forEach((change) => {
+            goal[change.statName] = change.value;
+          });
+          const highestGoal = goal.getMaxStatName();
+          if (goal[highestGoal] - base[highestGoal] > 30) {
+            goal[highestGoal] = 46;
+          }
+          return this.printStatFields(goal, "#end-");
+        }
+
+        if (curFocus === 10 && goal.getMaxStatValue() === 30) {
+          const allValues = Object.values(goal);
+          if (allValues.indexOf(10) !== allValues.lastIndexOf(10)) {
+            const maxKey = goal.getMaxStatName();
+            goal[maxKey] = 57;
+            const zeroKey = getFirstKeyByValue(goal, 0);
+            goal[zeroKey] = 27;
+            const leftoverKey = STAT_LISTS.base.filter(
+              (stat) => goal[stat] === 10 && stat !== "focus"
+            );
+            goal[leftoverKey] = 42;
+            return this.printStatFields(goal, "#end-");
+          } else if (allValues.indexOf(0) !== allValues.lastIndexOf(0)) {
+            const [zero1, zero2] = STAT_LISTS.base.filter(
+              (stat) => goal[stat] === 0 && stat !== "focus"
+            );
+            goal[zero1] = 57;
+            goal[zero2] = 27;
+            const maxKey = getFirstKeyByValue(goal, 30);
+            goal[maxKey] = 42;
+            return this.printStatFields(goal, "#end-");
+          }
+        }
+
+        if (curFocus < 15) {
+          const goals = [curFocus + 15, curFocus + 30, curFocus + 45];
+          const excludedValues = [];
+          const excludedStats = [];
+          for (let i = 0; i < goals.length; i++) {
+            if (Object.values(base).includes(goals[i])) {
+              excludedValues.push(goals[i]);
+              excludedStats.push(getFirstKeyByValue(base, goals[i]));
+            }
+          }
+          let keptValues = goals.filter((x) => !excludedValues.includes(x));
+          const remainingStats = STAT_LISTS.base.filter(
+            (x) => !excludedStats.includes(x) && x !== "focus"
+          );
+          if (remainingStats.length === 1) {
+            goal[remainingStats[0]] = keptValues[0];
+            return this.printStatFields(goal, "#end-");
+          }
+          if (remainingStats.length === 2) {
+            const changesToMake = this.compareTrainingCounts(
+              base,
+              remainingStats,
+              keptValues
+            );
+            changesToMake.forEach((change) => {
+              goal[change.statName] = change.value;
+            });
+            return this.printStatFields(goal, "#end-");
+          }
+
+          // if (keptValues.includes(25)) {
+          //     keptValues = [27, 45, 60]; // find cases where this may be better -> this is when 30 is present
+          // }
+
+          for (let i = 0; i < keptValues.length; i++) {
+            const diffOne = keptValues[i] - base[remainingStats[0]];
+            const diffTwo = keptValues[i] - base[remainingStats[1]];
+            const diffThree = keptValues[i] - base[remainingStats[2]];
+
+            if (diffOne === 45 || diffOne === 10) {
+              goal[remainingStats[0]] = keptValues[i];
+              remainingStats.splice(0, 1);
+              keptValues.splice(i, 1);
+              break;
+            }
+            if (diffTwo === 45 || diffTwo === 10) {
+              goal[remainingStats[1]] = keptValues[i];
+              remainingStats.splice(1, 1);
+              keptValues.splice(i, 1);
+              break;
+            }
+            if (diffThree === 45 || diffThree === 10) {
+              goal[remainingStats[2]] = keptValues[i];
+              remainingStats.splice(2, 1);
+              keptValues.splice(i, 1);
+              break;
+            }
+          }
+
+          if (remainingStats.length === 3) {
+            const lastValue = keptValues.pop();
+            const lastStat = remainingStats.pop();
+            goal[lastStat] = lastValue;
+
+            const changesToMake = this.compareTrainingCounts(
+              base,
+              remainingStats,
+              keptValues
+            );
+            changesToMake.forEach((change) => {
+              goal[change.statName] = change.value;
+            });
+            this.printStatFields(goal, "#end-");
+          } else {
+            const changesToMake = this.compareTrainingCounts(
+              base,
+              remainingStats,
+              keptValues
+            );
+            changesToMake.forEach((change) => {
+              goal[change.statName] = change.value;
+            });
+            this.printStatFields(goal, "#end-");
+          }
+        }
+        if (curFocus > 15 && curFocus < 30) {
+          const zeroStat = getFirstKeyByValue(base, 0);
+          const remainingStats = STAT_LISTS.base.filter(
+            (x) => x !== zeroStat && x !== "focus"
+          );
+
+          if (
+            remainingStats.length === 2 &&
+            base[remainingStats[0]] === base[remainingStats[1]]
+          ) {
+            const targetValue = base[remainingStats[0]];
+            switch (targetValue) {
+              case 0: {
+                const goal = new Stats(54, 36, 20, 0);
+                return this.printStatFields(goal, "#end-");
+              }
+              case 5: {
+                const goal = new Stats(0, 0, 20, 0);
+                const remainingValues = [50, 35];
+                remainingStats.forEach(
+                  (stat, i) => (goal[stat] = remainingValues[i])
+                );
+                return this.printStatFields(goal, "#end-");
+              }
+              case 10: {
+                const goal = new Stats(0, 0, 20, 0);
+                const remainingValues = [55, 37];
+                remainingStats.forEach(
+                  (stat, i) => (goal[stat] = remainingValues[i])
+                );
+                return this.printStatFields(goal, "#end-");
+              }
+              case 15: {
+                const goal = new Stats(0, 0, 20, 0);
+                const remainingValues = [51, 36];
+                remainingStats.forEach(
+                  (stat, i) => (goal[stat] = remainingValues[i])
+                );
+                return this.printStatFields(goal, "#end-");
+              }
+            }
+          } else {
+            const goals = [curFocus + 15, curFocus + 30];
+
+            const changesToMake = this.compareTrainingCounts(
+              base,
+              remainingStats,
+              goals
+            );
+            changesToMake.forEach((change) => {
+              goal[change.statName] = change.value;
+            });
+            const highestGoal = goal.getMaxStatName();
+            if (
+              goal[highestGoal] - base[highestGoal] >= 40 &&
+              goal[highestGoal] - base[highestGoal] < 45
+            ) {
+              goal[highestGoal] = 51;
+              const thirtyFive = getFirstKeyByValue(goal, 35);
+              if (thirtyFive && base[thirtyFive] === 0) {
+                goal[thirtyFive] = 36;
+              }
+            }
+            this.printStatFields(goal, "#end-");
+          }
+        }
+        break;
       }
 
       case "Immersed": {
