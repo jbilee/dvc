@@ -208,10 +208,15 @@ class Calculator {
           changesToMake.forEach((change) => {
             goal[change.statName] = change.value;
           });
-          const highestGoal = goal.getMaxStatName();
-          if (goal[highestGoal] - base[highestGoal] > 30) {
-            goal[highestGoal] = 46;
-          }
+
+          const maxGoalStat = goal.getMaxStatName();
+          const optimizedMaxGoal =
+            this.getOptimizedValue(goal[maxGoalStat] - base[maxGoalStat]) +
+            base[maxGoalStat];
+          const finalMaxGoal =
+            this.replaceWithNine(optimizedMaxGoal - base[maxGoalStat]) +
+            base[maxGoalStat];
+          goal[maxGoalStat] = finalMaxGoal;
           return this.printStatFields(goal, "#end-");
         }
 
@@ -280,6 +285,34 @@ class Calculator {
           goal[zero2] = 54;
           const maxBaseStat = base.getMaxStatName();
           goal[maxBaseStat] = 39;
+          return this.printStatFields(goal, "#end-");
+        }
+
+        if (
+          curFocus === 5 &&
+          goal.getMaxStatValue() === 20 &&
+          baseStatValues.indexOf(0) !== baseStatValues.lastIndexOf(0)
+        ) {
+          const [zero1, zero2] = STAT_LISTS.base.filter(
+            (stat) => base[stat] === 0
+          );
+          goal[zero1] = 36;
+          goal[zero2] = 54;
+          return this.printStatFields(goal, "#end-");
+        }
+
+        if (
+          curFocus === 5 &&
+          goal.getMaxStatValue() === 20 &&
+          baseStatValues.indexOf(0) === baseStatValues.lastIndexOf(0) &&
+          this.highestFirst
+        ) {
+          const [zeroKey] = STAT_LISTS.base.filter((stat) => base[stat] === 0);
+          goal[zeroKey] = 36;
+          const [remainingFive] = STAT_LISTS.base.filter(
+            (stat) => base[stat] === 5 && stat !== "focus"
+          );
+          goal[remainingFive] = 59;
           return this.printStatFields(goal, "#end-");
         }
 
@@ -735,52 +768,6 @@ class Calculator {
     return sum;
   }
 
-  calcDefault(targetTrait, curStats) {
-    const targetValues = specialTraits.filter(
-      (trait) => trait.nameEn === targetTrait
-    )[0].stats;
-
-    const goal = new Stats(...targetValues);
-
-    STAT_LISTS.base.forEach((stat) => {
-      if (curStats[stat] > goal[stat]) {
-        goal[stat] = curStats[stat];
-      }
-    });
-
-    console.log(goal);
-
-    this.filteredAdjustment(curStats, goal);
-
-    return goal;
-  }
-
-  calcTwenty(curStats) {
-    const array = STAT_LISTS.base.map((stat) => curStats[stat]);
-
-    const final = array.map((stat) => {
-      if (ADJUSTMENTS.twenty.has(stat)) {
-        return ADJUSTMENTS.twenty.get(stat);
-      }
-      return stat;
-    });
-
-    return final;
-  }
-
-  // calcTwentyFive(curStats) {
-  //   const array = STAT_LISTS.base.map((stat) => curStats[stat]);
-
-  //   const final = array.map((stat) => {
-  //     if (ADJUSTMENTS.twentyFive.has(stat)) {
-  //       return ADJUSTMENTS.twentyFive.get(stat);
-  //     }
-  //     return stat;
-  //   });
-
-  //   return final;
-  // }
-
   // Will always return one lowest stat
   calcSingleLowest(curStats, lowestReqStat) {
     const newStats = this.copyStats(curStats);
@@ -905,23 +892,7 @@ class Calculator {
     return [...count];
   }
 
-  // getOptimizedValue(value) {
-  //   const initialCounts = getTargetSum(value, TRAIN_VALUES);
-  //   const filteredCounts = initialCounts.filter((value) => value !== 9);
-  //   const optimizableByOne =
-  //     filteredCounts.includes(5) && filteredCounts.includes(3);
-  //   const optimizableByThree =
-  //     filteredCounts.indexOf(3) !== filteredCounts.lastIndexOf(3);
-  //   const optimizedCounts = optimizableByOne
-  //     ? this.optimizeByOne(initialCounts)
-  //     : optimizableByThree
-  //     ? this.optimizeByThree(initialCounts)
-  //     : initialCounts;
-  //   return getArraySum(optimizedCounts);
-  // }
-
   getOptimizedValue(value) {
-    console.log(value);
     let trainingCounts = getTargetSum(value, TRAIN_VALUES);
     if (
       !trainingCounts.includes(5) &&
@@ -930,13 +901,10 @@ class Calculator {
     )
       return value;
 
-    console.log(trainingCounts);
     if (trainingCounts.includes(5) && trainingCounts.includes(3))
       trainingCounts = this.optimizeByOne(trainingCounts);
-    console.log(trainingCounts);
     if (trainingCounts.indexOf(3) !== trainingCounts.lastIndexOf(3))
       trainingCounts = this.optimizeByThree(trainingCounts);
-    console.log(trainingCounts);
     return getArraySum(trainingCounts);
   }
 
