@@ -33,9 +33,10 @@ li {
   margin: 1.1rem 0;
 }
 
-span#tooltip {
+span#settings {
   position: absolute;
   right: 10px;
+  cursor: pointer;
 }
 
 #main-box {
@@ -169,7 +170,6 @@ span.three {
     width: 200px;
   }
 
-  span#tooltip,
   .stat-mobile-view {
     display: none;
   }
