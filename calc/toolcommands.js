@@ -26,15 +26,3 @@ function copyResults() {
     }
   );
 }
-
-function addFavorites() {
-  // get favoritesData values
-  localStorage.setItem("dcfvs", JSON.stringify(favoritesData));
-}
-
-function loadFavorites() {
-  const favoritesData = JSON.parse(localStorage.getItem("dcfvs"));
-  if (favoritesData) {
-    // loading logic
-  }
-}
