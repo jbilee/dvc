@@ -1,3 +1,5 @@
+import { displayToast } from "../utilities.js";
+
 class Settings {
   #settings;
 
@@ -20,11 +22,13 @@ class Settings {
   updatePriority(selection) {
     this.#settings.priorityOn = selection;
     localStorage.setItem("dvct_d", JSON.stringify(this.#settings));
+    displayToast("설정이 저장됐습니다.", 2000);
   }
 
   updatePreference(selection) {
     this.#settings.prefStat = selection;
     localStorage.setItem("dvct_d", JSON.stringify(this.#settings));
+    displayToast("설정이 저장됐습니다.", 2000);
   }
 }
 

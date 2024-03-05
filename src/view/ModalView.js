@@ -24,7 +24,11 @@ const ModalView = {
         <button id="add-fav">추가</button>
       </div>
       <div class="favorites-container">
-        <div id="favorites"></div>
+        <div id="favorites">
+          <div id="fav-default">
+            즐겨찾기한 드래곤이 없습니다.
+          </div>
+        </div>
       </div>
     </div>
     <div class="modal-option">
@@ -74,9 +78,10 @@ const ModalView = {
     container.append(modalBackground);
     document.body.append(container);
 
-    $("#close-modal").addEventListener("click", () =>
-      container.classList.add("modal__inactive")
-    );
+    $("#close-modal").addEventListener("click", () => {
+      container.classList.add("modal__inactive");
+      $("#fav-selector").selectedIndex = 0;
+    });
   },
 };
 

@@ -75,6 +75,8 @@ p {
   gap: 6px;
   height: 200px;
   overflow: auto;
+  text-align: center;
+  font-weight: 700;
 }
 
 .favorites-row {
@@ -162,7 +164,7 @@ p {
 .modal-option {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 10px;
 }
 
 .modal-foreground h2 {

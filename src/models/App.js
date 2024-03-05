@@ -36,7 +36,7 @@ class App {
         name: [nameEn, nameKo],
       } = dragonList.find(({ name: [, nameKo] }) => nameKo === fav);
       newOption.setAttribute("value", nameEn);
-      newOption.textContent = "★" + nameKo;
+      newOption.textContent = `★ ${nameKo}`;
       $("#dragon-selector").append(newOption);
     });
 
@@ -92,6 +92,7 @@ class App {
     const btn = $("#add-fav");
     btn.addEventListener("click", () => {
       const newRow = this.favorites.addFavorites($("#fav-selector").value);
+      if (!newRow) return;
       const newRowBtn = newRow.querySelector("button");
       newRowBtn.addEventListener("click", () => {
         this.favorites.removeFavorites(newRow);
