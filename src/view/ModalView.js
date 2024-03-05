@@ -4,7 +4,7 @@ const ModalView = {
   render() {
     const container = newElem("div");
     container.classList.add("modal");
-    // container.classList.add("modal__inactive");
+    container.classList.add("modal__inactive");
 
     const modalBackground = newElem("div");
     modalBackground.classList.add("modal-background");

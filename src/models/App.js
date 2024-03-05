@@ -76,6 +76,11 @@ class App {
   }
 
   addListeners() {
+    const settingsBtn = $("#settings");
+    settingsBtn.addEventListener("click", () =>
+      $(".modal").classList.remove("modal__inactive")
+    );
+
     const select = $("#fav-selector");
     dragonList.forEach(({ name: [, name] }) => {
       const newOption = newElem("option");
