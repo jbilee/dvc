@@ -1,4 +1,4 @@
-import { $, newElem } from "../utilities.js";
+import { $, displayToast, newElem } from "../utilities.js";
 
 class Favorites {
   #favorites;
@@ -42,7 +42,7 @@ class Favorites {
   }
 
   renderMessage() {
-    "이미 추가한 드래곤입니다.";
+    displayToast("이미 추가한 드래곤입니다.", 2000);
   }
 
   renderNewFav(fav, id) {
@@ -52,12 +52,9 @@ class Favorites {
     const rowText = newElem("span");
     rowText.textContent = fav;
     const rowBtn = newElem("button");
-    rowBtn.textContent = "x";
+    rowBtn.textContent = "삭제";
     newRow.append(rowText, rowBtn);
     $("#favorites").append(newRow);
-
-    // rowBtn.addEventListener("click", () => this.removeFavorites(id));
-
     return newRow;
   }
 
