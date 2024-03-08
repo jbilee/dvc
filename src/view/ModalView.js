@@ -45,6 +45,17 @@ const ModalView = {
       </div>
       <hr>
       <div class="checkbox-option">
+        <div><strong>성실한 성격 방지</strong>
+        <p>
+          성실한 성격이 발현 가능 성격에서 배제되도록 훈련을 분산시킵니다.
+        </p>
+        </div>
+        <div>
+          <input id="noserious" type="checkbox"> <label for="noserious">성실 방지하기</label>
+        </div>
+      </div>
+      <hr>
+      <div class="checkbox-option">
         <div>
           <strong>선호 훈련 지정</strong>
           <p>
@@ -75,12 +86,25 @@ const ModalView = {
     `;
 
     container.append(modalWindow);
-    container.append(modalBackground);
-    document.body.append(container);
+
+    // container.append(modalBackground);
+
+    // modalBackground.append(modalWindow);
+    // container.append(modalBackground)
+    $("#main-content").append(container);
+
+    container.addEventListener("click", (e) => {
+      if (e.target === container) {
+        container.classList.add("modal__inactive");
+        $("#fav-selector").selectedIndex = 0;
+        document.body.removeAttribute("style");
+      }
+    });
 
     $("#close-modal").addEventListener("click", () => {
       container.classList.add("modal__inactive");
       $("#fav-selector").selectedIndex = 0;
+      document.body.removeAttribute("style");
     });
   },
 };

@@ -42,7 +42,6 @@ span#settings {
 #main-box {
   display: flex;
   justify-content: center;
-  padding: 12px;
 }
 
 #main-content {
