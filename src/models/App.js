@@ -125,6 +125,13 @@ class App {
       this.calculator.updateSettings(this.settings.getCurrentSettings());
     });
 
+    const serious = $("#noserious");
+    serious.addEventListener("change", (e) => {
+      const seriousStatus = e.target.checked;
+      this.settings.updateSerious(seriousStatus);
+      this.calculator.updateSettings(this.settings.getCurrentSettings());
+    });
+
     const pref = $("#preferences");
     const prefOptions = pref.firstElementChild.children;
     for (const child of prefOptions) {

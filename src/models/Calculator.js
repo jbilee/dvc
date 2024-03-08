@@ -20,14 +20,14 @@ class Calculator {
   constructor(settings) {
     this.poisonedValue = null;
     this.updateSettings(settings);
-
     this.addListeners();
     this.temp(); // Remove later
   }
 
-  updateSettings({ priorityOn, prefStat }) {
+  updateSettings({ priorityOn, prefStat, noSerious }) {
     this.highestFirst = priorityOn;
     this.preference = prefStat;
+    this.noSerious = noSerious;
   }
 
   addListeners() {
@@ -158,8 +158,22 @@ class Calculator {
         const goal = this.copyStats(base);
         const startSum = base.getTotal();
         const reqSum = 100 - startSum;
-        if (this.preference !== "none") goal[this.preference] += reqSum;
-        else goal.agility += reqSum;
+
+        if (this.noSerious) {
+          const adjustedSum = reqSum - 9;
+          if (this.preference !== "none") {
+            goal[this.preference] += adjustedSum;
+            if (this.preference === "intellect") goal.strength += 9;
+            else goal.intellect += 9;
+          } else {
+            goal.intellect += adjustedSum;
+            goal.strength += 9;
+          }
+        } else {
+          if (this.preference !== "none") goal[this.preference] += reqSum;
+          else goal.intellect += reqSum;
+        }
+
         return this.printStatFields(goal, "#end-");
       }
 
@@ -492,6 +506,12 @@ class Calculator {
         let goalValue = this.getOptimizedValue(150 - base[maxStatKey]);
         if (this.highestFirst) goalValue = this.replaceWithNine(goalValue);
         goal[maxStatKey] = base[maxStatKey] + goalValue;
+        if (this.noSerious) {
+          if (this.preference !== "none" && this.preference !== maxStatKey)
+            goal[this.preference] += 9;
+          else if (maxStatKey !== "intellect") goal.intellect += 9;
+          else goal.strength += 9;
+        }
         return this.printStatFields(goal, "#end-");
       }
 
@@ -649,10 +669,6 @@ class Calculator {
       $(`${prefix}${stat}`).value = stats[stat];
     }
   }
-
-  // getFirstKeyByValue(obj, value) {
-  //   return Object.keys(obj).find((key) => obj[key] === value) || null;
-  // }
 
   // Print recommended end stats for selected normal trait
   selectNormalTrait(e) {
@@ -819,14 +835,17 @@ class Calculator {
   }
 
   checkViability(statType) {
-    const reqStat = $(`#end-${statType}`).value - $(`#start-${statType}`).value;
+    const endValue = $(`#end-${statType}`).value;
+    const startValue = $(`#start-${statType}`).value;
+    const reqStat = endValue - startValue;
+
     if (reqStat < 0)
       throw new Error(
-        `목표치가 기본치보다 낮습니다. 더 높은 목표치를 설정해주세요!`
+        `목표치(${endValue})가 기본치(${startValue})보다 낮습니다. 더 높은 목표치를 설정해주세요!`
       );
     if (EXCLUDED_VALUES.includes(reqStat)) {
       throw new Error(
-        `조합할 수 없는 숫자가 있습니다 (${reqStat}). 다른 목표치를 설정해주세요!`
+        `조합할 수 없는 숫자가 있습니다(${reqStat}). 다른 목표치를 설정해주세요!`
       );
     }
   }

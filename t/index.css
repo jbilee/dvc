@@ -181,6 +181,15 @@ p {
   cursor: pointer;
 }
 
+.helper {
+  font-size: 0.8rem;
+  color: #bbbbbb;
+}
+
+.warning {
+  color: #FF5733;
+}
+
 @media (min-width: 600px) {
   #preferences > div {
     max-width: calc(85px * 5 + 6px * 4);

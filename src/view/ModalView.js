@@ -17,6 +17,9 @@ const ModalView = {
       <div id="close-modal"><img src="../img/close.png" width="18px"></div>
     </div>
     <div class="modal-option">
+      <span class="helper warning">*설정은 기기 또는 브라우저별로 저장됩니다. 캐시를 삭제하면 설정도 초기화됩니다.</span>
+    </div>
+    <div class="modal-option">
       <h3>즐겨찾기</h3>
       즐겨찾기에 추가한 드래곤이 자동완성 목록의 최상단에 노출됩니다.
       <div class="fav-selector-container">
@@ -40,7 +43,7 @@ const ModalView = {
         </p>
         </div>
         <div>
-          <input id="priority" type="checkbox"> <label for="priority">높은 점수 위주로 훈련하기</label>
+          <input id="priority" type="checkbox" checked> <label for="priority">높은 점수 위주로 훈련하기</label>
         </div>
       </div>
       <hr>
@@ -51,7 +54,7 @@ const ModalView = {
         </p>
         </div>
         <div>
-          <input id="noserious" type="checkbox"> <label for="noserious">성실 방지하기</label>
+          <input id="noserious" type="checkbox" checked> <label for="noserious">성실 방지하기</label>
         </div>
       </div>
       <hr>
