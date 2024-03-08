@@ -77,9 +77,10 @@ class App {
 
   addListeners() {
     const settingsBtn = $("#settings");
-    settingsBtn.addEventListener("click", () =>
-      $(".modal").classList.remove("modal__inactive")
-    );
+    settingsBtn.addEventListener("click", () => {
+      $(".modal").classList.remove("modal__inactive");
+      document.body.setAttribute("style", "overflow: hidden;");
+    });
 
     const select = $("#fav-selector");
     dragonList.forEach(({ name: [, name] }) => {
