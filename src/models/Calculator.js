@@ -669,8 +669,34 @@ class Calculator {
           const goal = new Stats(30, 30, 30, 30);
           return this.printStatFields(goal, "#end-");
         }
-        const recommendedStats = specialTraits[traitIndex].stats;
-        const goal = new Stats(...recommendedStats);
+        const recommendedValues = specialTraits[traitIndex].stats;
+        const goal = new Stats(...recommendedValues);
+
+        if (this.highestFirst) {
+          const containsFive = STAT_LISTS.base.map((stat) => {
+            const trainingCounts = getTargetSum(
+              goal[stat] - base[stat],
+              TRAIN_VALUES
+            );
+            return trainingCounts.includes(5) ? true : false;
+          });
+          const containsFiveSet = new Set(containsFive);
+          if (containsFiveSet.size === 1) {
+            STAT_LISTS.base.forEach((stat) => (goal[stat] += 4));
+          }
+          const containsThree = STAT_LISTS.base.map((stat) => {
+            const trainingCounts = getTargetSum(
+              goal[stat] - base[stat],
+              TRAIN_VALUES
+            );
+            return trainingCounts.includes(3) ? true : false;
+          });
+          const containsThreeSet = new Set(containsThree);
+          if (containsThreeSet.size === 1) {
+            STAT_LISTS.base.forEach((stat) => (goal[stat] += 6));
+          }
+        }
+
         return this.printStatFields(goal, "#end-");
       }
 
