@@ -43,7 +43,7 @@ const ModalView = {
         </p>
         </div>
         <div>
-          <input id="priority" type="checkbox" checked> <label for="priority">높은 점수 위주로 훈련하기</label>
+          <input id="priority" type="checkbox"> <label for="priority">높은 점수 위주로 훈련하기</label>
         </div>
       </div>
       <hr>
@@ -54,7 +54,7 @@ const ModalView = {
         </p>
         </div>
         <div>
-          <input id="noserious" type="checkbox" checked> <label for="noserious">성실 방지하기</label>
+          <input id="noserious" type="checkbox"> <label for="noserious">성실 방지하기</label>
         </div>
       </div>
       <hr>

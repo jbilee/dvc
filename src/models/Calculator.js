@@ -206,6 +206,20 @@ class Calculator {
           if (goal[highestGoal] === 46 && thirtyRemains) {
             goal[thirtyRemains] = 31;
           }
+
+          const [currentHighestStat] = goal.getMaxStatName();
+          goal[currentHighestStat] =
+            this.getOptimizedValue(
+              goal[currentHighestStat] - base[currentHighestStat]
+            ) + base[currentHighestStat];
+
+          if (this.highestFirst) {
+            goal[currentHighestStat] =
+              this.replaceWithNine(
+                goal[currentHighestStat] - base[currentHighestStat]
+              ) + base[currentHighestStat];
+          }
+
           return this.printStatFields(goal, "#end-");
         }
 
@@ -231,6 +245,20 @@ class Calculator {
             this.replaceWithNine(optimizedMaxGoal - base[maxGoalStat]) +
             base[maxGoalStat];
           goal[maxGoalStat] = finalMaxGoal;
+
+          const [currentHighestStat] = goal.getMaxStatName();
+          goal[currentHighestStat] =
+            this.getOptimizedValue(
+              goal[currentHighestStat] - base[currentHighestStat]
+            ) + base[currentHighestStat];
+
+          if (this.highestFirst) {
+            goal[currentHighestStat] =
+              this.replaceWithNine(
+                goal[currentHighestStat] - base[currentHighestStat]
+              ) + base[currentHighestStat];
+          }
+
           return this.printStatFields(goal, "#end-");
         }
 
@@ -354,6 +382,20 @@ class Calculator {
               this.replaceWithNine(optimizedMaxGoal - base[maxGoalStat]) +
               base[maxGoalStat];
             goal[maxGoalStat] = finalMaxGoal;
+
+            const [currentHighestStat] = goal.getMaxStatName();
+            goal[currentHighestStat] =
+              this.getOptimizedValue(
+                goal[currentHighestStat] - base[currentHighestStat]
+              ) + base[currentHighestStat];
+
+            if (this.highestFirst) {
+              goal[currentHighestStat] =
+                this.replaceWithNine(
+                  goal[currentHighestStat] - base[currentHighestStat]
+                ) + base[currentHighestStat];
+            }
+
             return this.printStatFields(goal, "#end-");
           }
           if (remainingStats.length === 2) {
@@ -373,6 +415,20 @@ class Calculator {
               this.replaceWithNine(optimizedMaxGoal - base[maxGoalStat]) +
               base[maxGoalStat];
             goal[maxGoalStat] = finalMaxGoal;
+
+            const [currentHighestStat] = goal.getMaxStatName();
+            goal[currentHighestStat] =
+              this.getOptimizedValue(
+                goal[currentHighestStat] - base[currentHighestStat]
+              ) + base[currentHighestStat];
+
+            if (this.highestFirst) {
+              goal[currentHighestStat] =
+                this.replaceWithNine(
+                  goal[currentHighestStat] - base[currentHighestStat]
+                ) + base[currentHighestStat];
+            }
+
             return this.printStatFields(goal, "#end-");
           }
 
@@ -418,7 +474,21 @@ class Calculator {
             changesToMake.forEach((change) => {
               goal[change.statName] = change.value;
             });
-            this.printStatFields(goal, "#end-");
+
+            const [currentHighestStat] = goal.getMaxStatName();
+            goal[currentHighestStat] =
+              this.getOptimizedValue(
+                goal[currentHighestStat] - base[currentHighestStat]
+              ) + base[currentHighestStat];
+
+            if (this.highestFirst) {
+              goal[currentHighestStat] =
+                this.replaceWithNine(
+                  goal[currentHighestStat] - base[currentHighestStat]
+                ) + base[currentHighestStat];
+            }
+
+            return this.printStatFields(goal, "#end-");
           } else {
             const changesToMake = this.compareTrainingCounts(
               base,
@@ -428,7 +498,21 @@ class Calculator {
             changesToMake.forEach((change) => {
               goal[change.statName] = change.value;
             });
-            this.printStatFields(goal, "#end-");
+
+            const [currentHighestStat] = goal.getMaxStatName();
+            goal[currentHighestStat] =
+              this.getOptimizedValue(
+                goal[currentHighestStat] - base[currentHighestStat]
+              ) + base[currentHighestStat];
+
+            if (this.highestFirst) {
+              goal[currentHighestStat] =
+                this.replaceWithNine(
+                  goal[currentHighestStat] - base[currentHighestStat]
+                ) + base[currentHighestStat];
+            }
+
+            return this.printStatFields(goal, "#end-");
           }
         }
         if (curFocus > 15 && curFocus < 30) {
@@ -494,6 +578,20 @@ class Calculator {
                 goal[thirtyFive] = 36;
               }
             }
+
+            const [currentHighestStat] = goal.getMaxStatName();
+            goal[currentHighestStat] =
+              this.getOptimizedValue(
+                goal[currentHighestStat] - base[currentHighestStat]
+              ) + base[currentHighestStat];
+
+            if (this.highestFirst) {
+              goal[currentHighestStat] =
+                this.replaceWithNine(
+                  goal[currentHighestStat] - base[currentHighestStat]
+                ) + base[currentHighestStat];
+            }
+
             this.printStatFields(goal, "#end-");
           }
         }
@@ -690,69 +788,119 @@ class Calculator {
     this.printStatFields(req, "#end-");
   }
 
-  doubleTraining(base, highest) {
-    let req = this.calcSingleHighest(base, highest);
-    const sortedArr = req.sortByIncreasing();
+  doubleTraining(base, highestReqStat) {
+    const goal = this.copyStats(base);
+    const highestStats = goal.getMaxStatName();
+    const highestValue = goal.getMaxStatValue();
 
-    if (sortedArr[0] !== sortedArr[1])
-      req = this.calcDoubleLowest(req, sortedArr);
-
-    const diff = this.getStatDifference(base, req);
-    const optimized = this.optimizeHighest(diff, highest);
-    const final = this.getStatSum(base, optimized);
-
-    return final;
-  }
-
-  singleTraining(base, highest, lowest) {
-    // Determine lowest required state
-    let req = this.calcSingleLowest(base, lowest);
-
-    // Determine highest required stat
-    req = this.calcSingleHighest(req, highest);
-
-    const diff = this.getStatDifference(base, req);
+    if (
+      !highestStats.includes(highestReqStat) ||
+      (highestStats.includes(highestReqStat) && highestStats.length > 1)
+    )
+      goal[highestReqStat] = highestValue + 1;
 
     // Optimization
-    const optimized = this.optimizeAll(base, diff, highest, lowest);
-    const final = this.getStatSum(base, optimized);
+    goal[highestReqStat] =
+      this.getOptimizedValue(goal[highestReqStat] - base[highestReqStat]) +
+      base[highestReqStat];
 
-    return final;
+    if (this.highestFirst) {
+      goal[highestReqStat] =
+        this.replaceWithNine(goal[highestReqStat] - base[highestReqStat]) +
+        base[highestReqStat];
+    }
+
+    // Balance out lowest stat
+    const [lowest1, lowest2] = goal.sortByIncreasing();
+    if (lowest1 !== lowest2) {
+      const lowest1Name = getFirstKeyByValue(goal, lowest1);
+      goal[lowest1Name] = lowest2;
+    }
+
+    return goal;
   }
 
-  optimizeAll(base, change, highest, lowest) {
-    const newStats = this.copyStats(change);
-    for (const stat in newStats) {
-      const curValue = newStats[stat];
-      if (ADJUSTMENTS.regular.has(curValue)) {
-        // try inserting new value
-        newStats[stat] = ADJUSTMENTS.regular.get(curValue);
-        // replace value and see if highest of stats and lowest of stats changed (compare newStats highest and lowest using getMax and getMin)
+  singleTraining(base, highestReqStat, lowestReqStat) {
+    const goal = this.copyStats(base);
+    const targetStats = Object.keys(goal).filter(
+      (key) => key !== highestReqStat && key !== lowestReqStat
+    );
+
+    targetStats.forEach((stat) => {
+      if (goal[stat] <= goal[lowestReqStat]) {
+        goal[stat] = goal[lowestReqStat] + 1;
       }
-    }
-    const application = this.getStatSum(base, newStats);
-    const newMax = application.getMaxStatName();
-    const newMin = application.getMinStatName();
+    });
+
+    STAT_LISTS.base.forEach((stat) => {
+      if (goal[stat] - base[stat] === 0) return;
+      while (EXCLUDED_VALUES.includes(goal[stat] - base[stat])) {
+        goal[stat] += 1;
+      }
+
+      // Optimization
+      goal[stat] = this.getOptimizedValue(goal[stat] - base[stat]) + base[stat];
+      if (this.highestFirst) {
+        goal[stat] = this.replaceWithNine(goal[stat] - base[stat]) + base[stat];
+      }
+    });
+
+    const highestStats = goal.getMaxStatName();
+    const highestValue = goal.getMaxStatValue();
+
     if (
-      newMax.length === 1 &&
-      newMin.length === 1 &&
-      newMax.includes(highest) &&
-      newMin.includes(lowest)
+      !highestStats.includes(highestReqStat) ||
+      (highestStats.includes(highestReqStat) && highestStats.length > 1)
     )
-      return newStats;
-    return change;
-  }
+      goal[highestReqStat] = highestValue + 1;
 
-  optimizeHighest(change, targetStat) {
-    const newStats = this.copyStats(change);
-    const targetValue = newStats[targetStat];
+    // Optimization
+    goal[highestReqStat] =
+      this.getOptimizedValue(goal[highestReqStat] - base[highestReqStat]) +
+      base[highestReqStat];
 
-    if (ADJUSTMENTS.regular.has(targetValue)) {
-      newStats[targetStat] = ADJUSTMENTS.regular.get(targetValue);
+    if (this.highestFirst) {
+      goal[highestReqStat] =
+        this.replaceWithNine(goal[highestReqStat] - base[highestReqStat]) +
+        base[highestReqStat];
     }
 
-    return newStats;
+    return goal;
   }
+
+  // optimizeAll(base, change, highest, lowest) {
+  //   const newStats = this.copyStats(change);
+  //   for (const stat in newStats) {
+  //     const curValue = newStats[stat];
+  //     if (ADJUSTMENTS.regular.has(curValue)) {
+  //       // try inserting new value
+  //       newStats[stat] = ADJUSTMENTS.regular.get(curValue);
+  //       // replace value and see if highest of stats and lowest of stats changed (compare newStats highest and lowest using getMax and getMin)
+  //     }
+  //   }
+  //   const application = this.getStatSum(base, newStats);
+  //   const newMax = application.getMaxStatName();
+  //   const newMin = application.getMinStatName();
+  //   if (
+  //     newMax.length === 1 &&
+  //     newMin.length === 1 &&
+  //     newMax.includes(highest) &&
+  //     newMin.includes(lowest)
+  //   )
+  //     return newStats;
+  //   return change;
+  // }
+
+  // optimizeHighest(change, targetStat) {
+  //   const newStats = this.copyStats(change);
+  //   const targetValue = newStats[targetStat];
+
+  //   if (ADJUSTMENTS.regular.has(targetValue)) {
+  //     newStats[targetStat] = ADJUSTMENTS.regular.get(targetValue);
+  //   }
+
+  //   return newStats;
+  // }
 
   copyStats(object) {
     const newAgility = Number(object.agility);
@@ -768,62 +916,81 @@ class Calculator {
     return newObject;
   }
 
-  getStatDifference(a, b) {
-    const sub = new Stats();
-    for (const stat of STAT_LISTS.base) {
-      sub[stat] = Math.abs(a[stat] - b[stat]);
-    }
-    return sub;
-  }
+  // getStatDifference(a, b) {
+  //   const sub = new Stats();
+  //   for (const stat of STAT_LISTS.base) {
+  //     sub[stat] = Math.abs(a[stat] - b[stat]);
+  //   }
+  //   return sub;
+  // }
 
-  getStatSum(a, b) {
-    const sum = new Stats();
-    for (const stat of STAT_LISTS.base) {
-      sum[stat] = a[stat] + b[stat];
-    }
-    return sum;
-  }
+  // getStatSum(a, b) {
+  //   const sum = new Stats();
+  //   for (const stat of STAT_LISTS.base) {
+  //     sum[stat] = a[stat] + b[stat];
+  //   }
+  //   return sum;
+  // }
 
   // Will always return one lowest stat
-  calcSingleLowest(curStats, lowestReqStat) {
-    const newStats = this.copyStats(curStats);
-    const baseMinStat = curStats.getMinStatName();
-    const reqVal = curStats[lowestReqStat];
+  // calcSingleLowest(curStats, lowestReqStat) {
+  //   const newStats = this.copyStats(curStats);
+  //   const baseMinStat = curStats.getMinStatName();
+  //   const reqVal = curStats[lowestReqStat];
 
-    if (baseMinStat.length === 1 && baseMinStat[0] === lowestReqStat)
-      return newStats;
-    for (const stat in curStats) {
-      if (stat === lowestReqStat) continue;
-      if (curStats[stat] <= reqVal) newStats[stat] = reqVal + BASE_INCREMENT;
-    }
-    return newStats;
-  }
+  //   if (baseMinStat.length === 1 && baseMinStat[0] === lowestReqStat)
+  //     return newStats;
+  //   for (const stat in curStats) {
+  //     if (stat === lowestReqStat) continue;
+  //     if (curStats[stat] <= reqVal) newStats[stat] = reqVal + BASE_INCREMENT;
+  //   }
+  //   return newStats;
+  // }
 
-  calcDoubleLowest(curStats, array) {
-    const newStats = this.copyStats(curStats);
-    const lowestValue = array[0];
-    const adjustmentValue = array[1];
-    const adjustmentKey = getFirstKeyByValue(newStats, lowestValue);
+  // calcDoubleLowest(curStats, array) {
+  //   const newStats = this.copyStats(curStats);
+  //   const lowestValue = array[0];
+  //   const adjustmentValue = array[1];
+  //   const adjustmentKey = getFirstKeyByValue(newStats, lowestValue);
 
-    newStats[adjustmentKey] = adjustmentValue;
-    return newStats;
-  }
+  //   newStats[adjustmentKey] = adjustmentValue;
+  //   return newStats;
+  // }
 
-  // Always returns one highest stat
-  calcSingleHighest(curStats, highestReqStat) {
-    const newStats = this.copyStats(curStats);
-    const baseMaxStat = curStats.getMaxStatName();
-    const baseMaxValue = curStats.getMaxStatValue();
-    const includesReq = baseMaxStat.includes(highestReqStat);
+  // // Always returns one highest stat
+  // calcSingleHighest(curStats, highestReqStat) {
+  //   console.log(curStats);
+  //   const newStats = this.copyStats(curStats);
+  //   const baseMaxStat = curStats.getMaxStatName();
+  //   const baseMaxValue = curStats.getMaxStatValue();
+  //   const includesReq = baseMaxStat.includes(highestReqStat);
+  //   console.log(baseMaxStat);
+  //   console.log(baseMaxValue);
 
-    if (baseMaxStat.length === 1 && includesReq) return newStats;
-    if (
-      (baseMaxStat.length > 1 && includesReq) ||
-      baseMaxStat[0] !== highestReqStat
-    )
-      newStats[highestReqStat] = baseMaxValue + BASE_INCREMENT;
-    return newStats;
-  }
+  //   if (baseMaxStat.length === 1 && includesReq) return newStats;
+  //   if (
+  //     (baseMaxStat.length > 1 && includesReq) ||
+  //     baseMaxStat[0] !== highestReqStat
+  //   ) {
+  //     newStats[highestReqStat] = baseMaxValue + 1;
+  //   }
+
+  //   console.log(newStats);
+  //   console.log(newStats[highestReqStat]);
+  //   console.log(curStats[highestReqStat]);
+
+  //   newStats[highestReqStat] = this.getOptimizedValue(
+  //     newStats[highestReqStat] - curStats[highestReqStat]
+  //   );
+
+  //   if (this.highestFirst) {
+  //     newStats[highestReqStat] = this.replaceWithNine(
+  //       newStats[highestReqStat] - curStats[highestReqStat]
+  //     );
+  //   }
+
+  //   return newStats;
+  // }
 
   calculate() {
     try {
@@ -952,28 +1119,28 @@ class Calculator {
     $("#normal-trait-selector").selectedIndex = 0;
   }
 
-  filteredAdjustment(base, goal) {
-    STAT_LISTS.base.forEach((stat) => {
-      if ((goal[stat] - base[stat]) % 9 !== 0) {
-        while ((goal[stat] - base[stat]) % 9 !== 0) {
-          goal[stat] += 1;
-        }
-      }
-    });
+  // filteredAdjustment(base, goal) {
+  //   STAT_LISTS.base.forEach((stat) => {
+  //     if ((goal[stat] - base[stat]) % 9 !== 0) {
+  //       while ((goal[stat] - base[stat]) % 9 !== 0) {
+  //         goal[stat] += 1;
+  //       }
+  //     }
+  //   });
 
-    console.log(goal);
-  }
+  //   console.log(goal);
+  // }
 
-  adjustOneStat(base, goal) {
-    let adjusted = goal;
-    if ((goal - base) % 9 !== 0) {
-      while ((goal - base) % 9 !== 0) {
-        adjusted += 1;
-      }
-    }
+  // adjustOneStat(base, goal) {
+  //   let adjusted = goal;
+  //   if ((goal - base) % 9 !== 0) {
+  //     while ((goal - base) % 9 !== 0) {
+  //       adjusted += 1;
+  //     }
+  //   }
 
-    return adjusted;
-  }
+  //   return adjusted;
+  // }
 
   // apply dev controls
   temp() {
