@@ -205,6 +205,7 @@ const dragonList = [
     { name: ["Azak", "아자크"], traitsEn: ["Careful", "Smart"], traitsKo: ["신중한", "똑똑한"], Careful: [5, 5, 20, 0], Smart: [0, 0, 10, 30] },
     { name: ["Aqua Dragon", "아쿠아 드래곤"], traitsEn: ["QuickWitted", "Bashful"], traitsKo: ["눈치빠른", "수줍은"], QuickWitted: [20, 5, 0, 0], Bashful: [10, 0, 10, 25] },
     { name: ["Afrit", "아프리트"], traitsEn: ["Quiet", "QuickWitted"], traitsKo: ["냉정한", "눈치빠른"], Quiet: [0, 10, 25, 10], QuickWitted: [30, 10, 0, 0] },
+    { name: ["Amdusias", "암두시아스"], traitsEn: ["Smart", "QuickWitted"], traitsKo: ["똑똑한", "눈치빠른"], Smart: [0, 0, 10, 20], QuickWitted: [30, 0, 0, 5] },
     { name: ["Angra", "앙그라"], traitsEn: ["Hasty", "Adamant"], traitsKo: ["성급한", "고집있는"], Hasty: [25, 10, 10, 0], Adamant: [10, 30, 10, 0] },
     { name: ["Animala", "애니마라"], traitsEn: ["Quiet", "Adamant"], traitsKo: ["냉정한", "고집있는"], Quiet: [0, 10, 25, 10], Adamant: [10, 30, 10, 0] },
     { name: ["Applecheek", "애플칙"], traitsEn: ["QuickWitted", "Bashful"], traitsKo: ["눈치빠른", "수줍은"], QuickWitted: [20, 5, 0, 0], Bashful: [10, 0, 10, 20] },
