@@ -15,7 +15,7 @@ class App {
     this.init(initialSettings);
   }
 
-  init({ priorityOn, prefStat }) {
+  init({ priorityOn, noSerious, prefStat }) {
     // Calculator controls
     const loadedFavs = this.favorites.getFavorites("name");
     this.renderDragonOptions(loadedFavs);
@@ -24,6 +24,7 @@ class App {
     // Modal
     ModalView.render();
     if (priorityOn) $("#priority").checked = true;
+    if (noSerious) $("#noserious").checked = true;
     if (prefStat !== "none") $(`#pref-${prefStat}`).checked = true;
     this.favorites.render();
     this.addListeners();
@@ -122,6 +123,13 @@ class App {
     priority.addEventListener("change", (e) => {
       const priorityStatus = e.target.checked;
       this.settings.updatePriority(priorityStatus);
+      this.calculator.updateSettings(this.settings.getCurrentSettings());
+    });
+
+    const serious = $("#noserious");
+    serious.addEventListener("change", (e) => {
+      const seriousStatus = e.target.checked;
+      this.settings.updateSerious(seriousStatus);
       this.calculator.updateSettings(this.settings.getCurrentSettings());
     });
 

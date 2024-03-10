@@ -5,6 +5,7 @@ class Settings {
 
   constructor() {
     this.#settings = this.getFromStorage() || {
+      noSerious: true,
       priorityOn: true,
       prefStat: "none",
     };
@@ -21,6 +22,12 @@ class Settings {
 
   updatePriority(selection) {
     this.#settings.priorityOn = selection;
+    localStorage.setItem("dvct_d", JSON.stringify(this.#settings));
+    displayToast("설정이 저장됐습니다.", 2000);
+  }
+
+  updateSerious(selection) {
+    this.#settings.noSerious = selection;
     localStorage.setItem("dvct_d", JSON.stringify(this.#settings));
     displayToast("설정이 저장됐습니다.", 2000);
   }
