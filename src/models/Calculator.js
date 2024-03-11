@@ -6,13 +6,7 @@ import {
   getFirstKeyByValue,
   getTargetSum,
 } from "../utilities.js";
-import {
-  BASE_INCREMENT,
-  TRAIN_VALUES,
-  EXCLUDED_VALUES,
-  STAT_LISTS,
-  ADJUSTMENTS,
-} from "../constants.js";
+import { TRAIN_VALUES, EXCLUDED_VALUES, STAT_LISTS } from "../constants.js";
 import { dragonList } from "../dd.js";
 import { normalTraits, specialTraits } from "../td.js";
 
@@ -21,7 +15,6 @@ class Calculator {
     this.poisonedValue = null;
     this.updateSettings(settings);
     this.addListeners();
-    this.temp(); // Remove later
   }
 
   updateSettings({ priorityOn, prefStat, noSerious }) {
@@ -894,40 +887,6 @@ class Calculator {
     return goal;
   }
 
-  // optimizeAll(base, change, highest, lowest) {
-  //   const newStats = this.copyStats(change);
-  //   for (const stat in newStats) {
-  //     const curValue = newStats[stat];
-  //     if (ADJUSTMENTS.regular.has(curValue)) {
-  //       // try inserting new value
-  //       newStats[stat] = ADJUSTMENTS.regular.get(curValue);
-  //       // replace value and see if highest of stats and lowest of stats changed (compare newStats highest and lowest using getMax and getMin)
-  //     }
-  //   }
-  //   const application = this.getStatSum(base, newStats);
-  //   const newMax = application.getMaxStatName();
-  //   const newMin = application.getMinStatName();
-  //   if (
-  //     newMax.length === 1 &&
-  //     newMin.length === 1 &&
-  //     newMax.includes(highest) &&
-  //     newMin.includes(lowest)
-  //   )
-  //     return newStats;
-  //   return change;
-  // }
-
-  // optimizeHighest(change, targetStat) {
-  //   const newStats = this.copyStats(change);
-  //   const targetValue = newStats[targetStat];
-
-  //   if (ADJUSTMENTS.regular.has(targetValue)) {
-  //     newStats[targetStat] = ADJUSTMENTS.regular.get(targetValue);
-  //   }
-
-  //   return newStats;
-  // }
-
   copyStats(object) {
     const newAgility = Number(object.agility);
     const newStrength = Number(object.strength);
@@ -941,82 +900,6 @@ class Calculator {
     );
     return newObject;
   }
-
-  // getStatDifference(a, b) {
-  //   const sub = new Stats();
-  //   for (const stat of STAT_LISTS.base) {
-  //     sub[stat] = Math.abs(a[stat] - b[stat]);
-  //   }
-  //   return sub;
-  // }
-
-  // getStatSum(a, b) {
-  //   const sum = new Stats();
-  //   for (const stat of STAT_LISTS.base) {
-  //     sum[stat] = a[stat] + b[stat];
-  //   }
-  //   return sum;
-  // }
-
-  // Will always return one lowest stat
-  // calcSingleLowest(curStats, lowestReqStat) {
-  //   const newStats = this.copyStats(curStats);
-  //   const baseMinStat = curStats.getMinStatName();
-  //   const reqVal = curStats[lowestReqStat];
-
-  //   if (baseMinStat.length === 1 && baseMinStat[0] === lowestReqStat)
-  //     return newStats;
-  //   for (const stat in curStats) {
-  //     if (stat === lowestReqStat) continue;
-  //     if (curStats[stat] <= reqVal) newStats[stat] = reqVal + BASE_INCREMENT;
-  //   }
-  //   return newStats;
-  // }
-
-  // calcDoubleLowest(curStats, array) {
-  //   const newStats = this.copyStats(curStats);
-  //   const lowestValue = array[0];
-  //   const adjustmentValue = array[1];
-  //   const adjustmentKey = getFirstKeyByValue(newStats, lowestValue);
-
-  //   newStats[adjustmentKey] = adjustmentValue;
-  //   return newStats;
-  // }
-
-  // // Always returns one highest stat
-  // calcSingleHighest(curStats, highestReqStat) {
-  //   console.log(curStats);
-  //   const newStats = this.copyStats(curStats);
-  //   const baseMaxStat = curStats.getMaxStatName();
-  //   const baseMaxValue = curStats.getMaxStatValue();
-  //   const includesReq = baseMaxStat.includes(highestReqStat);
-  //   console.log(baseMaxStat);
-  //   console.log(baseMaxValue);
-
-  //   if (baseMaxStat.length === 1 && includesReq) return newStats;
-  //   if (
-  //     (baseMaxStat.length > 1 && includesReq) ||
-  //     baseMaxStat[0] !== highestReqStat
-  //   ) {
-  //     newStats[highestReqStat] = baseMaxValue + 1;
-  //   }
-
-  //   console.log(newStats);
-  //   console.log(newStats[highestReqStat]);
-  //   console.log(curStats[highestReqStat]);
-
-  //   newStats[highestReqStat] = this.getOptimizedValue(
-  //     newStats[highestReqStat] - curStats[highestReqStat]
-  //   );
-
-  //   if (this.highestFirst) {
-  //     newStats[highestReqStat] = this.replaceWithNine(
-  //       newStats[highestReqStat] - curStats[highestReqStat]
-  //     );
-  //   }
-
-  //   return newStats;
-  // }
 
   calculate() {
     try {
@@ -1144,44 +1027,6 @@ class Calculator {
     $("#special-trait-selector").selectedIndex = 0;
     $("#normal-trait-selector").selectedIndex = 0;
   }
-
-  // filteredAdjustment(base, goal) {
-  //   STAT_LISTS.base.forEach((stat) => {
-  //     if ((goal[stat] - base[stat]) % 9 !== 0) {
-  //       while ((goal[stat] - base[stat]) % 9 !== 0) {
-  //         goal[stat] += 1;
-  //       }
-  //     }
-  //   });
-
-  //   console.log(goal);
-  // }
-
-  // adjustOneStat(base, goal) {
-  //   let adjusted = goal;
-  //   if ((goal - base) % 9 !== 0) {
-  //     while ((goal - base) % 9 !== 0) {
-  //       adjusted += 1;
-  //     }
-  //   }
-
-  //   return adjusted;
-  // }
-
-  // apply dev controls
-  temp() {
-    $("#dev-increase").addEventListener("click", () => {
-      STAT_LISTS.end.forEach(
-        (stat) => ($(stat).value = Number($(stat).value) + 1)
-      );
-    });
-    $("#dev-decrease").addEventListener("click", () => {
-      STAT_LISTS.end.forEach(
-        (stat) => ($(stat).value = Number($(stat).value) - 1)
-      );
-    });
-  }
-  // delete later
 }
 
 export default Calculator;
