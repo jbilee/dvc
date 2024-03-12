@@ -101,7 +101,7 @@ p {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  min-width: calc(85px * 4 + 6px * 3);
+  min-width: calc(85px * 3 + 6px * 2);
   max-width: calc(85px * 4 + 6px * 3);
 }
 
@@ -145,6 +145,7 @@ p {
   flex-direction: column;
   gap: 22px;
   margin: auto;
+  margin-bottom: 70px;
 }
 
 .modal-header {
@@ -214,6 +215,7 @@ p {
 
   .modal-foreground {
     width: 500px;
+    margin: auto;
   }
 
   #preferences > div {
