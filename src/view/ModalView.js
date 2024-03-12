@@ -17,7 +17,7 @@ const ModalView = {
       <div id="close-modal"><img src="../img/close.png" width="18px"></div>
     </div>
     <div class="modal-option">
-      <span class="helper warning">*설정은 기기 또는 브라우저별로 저장됩니다. 캐시를 삭제하면 설정도 초기화됩니다.</span>
+      <span class="helper warning">*설정은 기기 또는 브라우저별로 저장됩니다. 기기를 변경하거나 캐시를 삭제하면 설정도 초기화됩니다.</span>
     </div>
     <div class="modal-option">
       <h3>즐겨찾기</h3>

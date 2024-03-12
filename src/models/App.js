@@ -32,7 +32,7 @@ class App {
 
   renderDragonOptions(favorites) {
     favorites.forEach((fav) => {
-      const newOption = document.createElement("option");
+      const newOption = newElem("option");
       const {
         name: [nameEn, nameKo],
       } = dragonList.find(({ name: [, nameKo] }) => nameKo === fav);
@@ -43,7 +43,7 @@ class App {
 
     dragonList.forEach(({ name: [nameEn, nameKo] }) => {
       if (favorites.includes(nameKo)) return;
-      const newOption = document.createElement("option");
+      const newOption = newElem("option");
       newOption.setAttribute("value", nameEn);
       newOption.textContent = nameKo;
       $("#dragon-selector").append(newOption);
@@ -52,14 +52,14 @@ class App {
 
   renderTraitOptions() {
     normalTraits.forEach(({ nameEn, nameKo }) => {
-      const newOption = document.createElement("option");
+      const newOption = newElem("option");
       newOption.setAttribute("value", nameEn);
       newOption.textContent = nameKo;
       $("#normal-trait-selector").append(newOption);
     });
 
     specialTraits.forEach(({ nameEn, nameKo }) => {
-      const newOption = document.createElement("option");
+      const newOption = newElem("option");
       newOption.setAttribute("value", nameEn);
       if (newOption.value === "Dull") newOption.setAttribute("id", nameEn);
       newOption.textContent = nameKo;

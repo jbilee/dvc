@@ -43,19 +43,6 @@ export const validateInput = (value, limit) => {
   return Number(value);
 };
 
-export const popValues = (array, ...targets) => {
-  const newArray = [...array];
-
-  while (targets.length > 0) {
-    const targetValue = targets.shift();
-    const targetIndex = newArray.indexOf(targetValue);
-    if (targetIndex < 0) continue;
-    newArray.splice(targetIndex, 1);
-  }
-
-  return newArray;
-};
-
 export const handleIncreaseButton = (targetElem, max) => {
   if (Number(targetElem.value) + 1 > max) return;
   targetElem.value = Number(targetElem.value) + 1;
