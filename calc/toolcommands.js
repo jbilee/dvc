@@ -1,5 +1,10 @@
 import { $, displayToast } from "../src/utilities.js";
-import { STAT_LISTS, COUNT_PREFIX, CLIP_TEXT } from "../src/constants.js";
+import {
+  STAT_LISTS,
+  COUNT_PREFIX,
+  CLIP_TEXT,
+  NUMBER_REGEX,
+} from "../src/constants.js";
 
 $("#btn-clipboard").addEventListener("click", copyResults);
 
@@ -11,9 +16,20 @@ function copyResults() {
       const counts = field.childNodes;
       let spanText = "";
       counts.forEach((child) => {
-        if (child.innerText) spanText += child.innerText;
+        if (child.innerText) {
+          if (!NUMBER_REGEX.test(child.innerText)) {
+            const numberText = child.innerText
+              .replace("(x", "")
+              .replace(")", "");
+            const lastText = spanText.slice(-1);
+            spanText += lastText.repeat(Number(numberText) - 1);
+          } else {
+            spanText += child.innerText;
+          }
+        }
       });
-      text.push(`${CLIP_TEXT[stat]}${spanText}`);
+      const req = $(`#required-${stat}`).textContent;
+      text.push(`${CLIP_TEXT[stat](req)}${spanText}`);
     }
   });
 
