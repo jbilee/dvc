@@ -266,6 +266,19 @@ class Calculator {
               (stat) => goal[stat] === 10 && stat !== "focus"
             );
             goal[leftoverKey] = 42;
+
+            const [currentHighestStat] = goal.getMaxStatName();
+            goal[currentHighestStat] =
+              this.getOptimizedValue(
+                goal[currentHighestStat] - base[currentHighestStat]
+              ) + base[currentHighestStat];
+            if (this.highestFirst) {
+              goal[currentHighestStat] =
+                this.replaceWithNine(
+                  goal[currentHighestStat] - base[currentHighestStat]
+                ) + base[currentHighestStat];
+            }
+
             return this.printStatFields(goal, "#end-");
           } else if (allValues.indexOf(0) !== allValues.lastIndexOf(0)) {
             const [zero1, zero2] = STAT_LISTS.base.filter(
@@ -275,6 +288,19 @@ class Calculator {
             goal[zero2] = 27;
             const maxKey = getFirstKeyByValue(goal, 30);
             goal[maxKey] = 42;
+
+            const [currentHighestStat] = goal.getMaxStatName();
+            goal[currentHighestStat] =
+              this.getOptimizedValue(
+                goal[currentHighestStat] - base[currentHighestStat]
+              ) + base[currentHighestStat];
+            if (this.highestFirst) {
+              goal[currentHighestStat] =
+                this.replaceWithNine(
+                  goal[currentHighestStat] - base[currentHighestStat]
+                ) + base[currentHighestStat];
+            }
+
             return this.printStatFields(goal, "#end-");
           }
         }
@@ -519,36 +545,49 @@ class Calculator {
             base[remainingStats[0]] === base[remainingStats[1]]
           ) {
             const targetValue = base[remainingStats[0]];
+            let goal;
             switch (targetValue) {
               case 0: {
-                const goal = new Stats(54, 36, 20, 0);
-                return this.printStatFields(goal, "#end-");
+                goal = new Stats(54, 36, 20, 0);
+                break;
               }
               case 5: {
-                const goal = new Stats(0, 0, 20, 0);
+                goal = new Stats(0, 0, 20, 0);
                 const remainingValues = [50, 35];
                 remainingStats.forEach(
                   (stat, i) => (goal[stat] = remainingValues[i])
                 );
-                return this.printStatFields(goal, "#end-");
+                break;
               }
               case 10: {
-                const goal = new Stats(0, 0, 20, 0);
+                goal = new Stats(0, 0, 20, 0);
                 const remainingValues = [55, 37];
                 remainingStats.forEach(
                   (stat, i) => (goal[stat] = remainingValues[i])
                 );
-                return this.printStatFields(goal, "#end-");
+                break;
               }
               case 15: {
-                const goal = new Stats(0, 0, 20, 0);
+                goal = new Stats(0, 0, 20, 0);
                 const remainingValues = [51, 36];
                 remainingStats.forEach(
                   (stat, i) => (goal[stat] = remainingValues[i])
                 );
-                return this.printStatFields(goal, "#end-");
+                break;
               }
             }
+            const [currentHighestStat] = goal.getMaxStatName();
+            goal[currentHighestStat] =
+              this.getOptimizedValue(
+                goal[currentHighestStat] - base[currentHighestStat]
+              ) + base[currentHighestStat];
+            if (this.highestFirst) {
+              goal[currentHighestStat] =
+                this.replaceWithNine(
+                  goal[currentHighestStat] - base[currentHighestStat]
+                ) + base[currentHighestStat];
+            }
+            return this.printStatFields(goal, "#end-");
           } else {
             const goals = [curFocus + 15, curFocus + 30];
 
