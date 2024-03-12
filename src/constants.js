@@ -3,6 +3,7 @@ export const STAT_COUNT = 4;
 export const TRAIN_VALUES = [3, 5, 9];
 export const COUNT_PREFIX = "train-count-";
 export const EXCLUDED_VALUES = [1, 2, 4, 7];
+export const NUMBER_REGEX = /^[0-9]*$/;
 
 export const STAT_LISTS = {
   base: ["agility", "strength", "focus", "intellect"],
@@ -16,10 +17,10 @@ export const STAT_LISTS = {
 };
 
 export const CLIP_TEXT = {
-  agility: "순발력: ",
-  strength: "근력: ",
-  focus: "집중력: ",
-  intellect: "지력: ",
+  agility: (input) => `순발력(${input}): `,
+  strength: (input) => `근력(${input}): `,
+  focus: (input) => `집중력(${input}): `,
+  intellect: (input) => `지력(${input}): `,
 };
 
 export const ADJUSTMENTS = {
