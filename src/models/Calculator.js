@@ -52,7 +52,7 @@ class Calculator {
 
     // Display warning if highest value is more than one
     if (!this.poisonedValue && maxStatNames.length > 1)
-      displayToast("맹독은 한 가지 노력치에만 적용할 수 있습니다.", 2700);
+      displayToast("맹독은 한 가지 노력치에만 적용할 수 있습니다.", 3700);
 
     const maxStatName = maxStatNames[0];
     const maxStatValue = currentStats.getMaxStatValue();
@@ -266,6 +266,19 @@ class Calculator {
               (stat) => goal[stat] === 10 && stat !== "focus"
             );
             goal[leftoverKey] = 42;
+
+            const [currentHighestStat] = goal.getMaxStatName();
+            goal[currentHighestStat] =
+              this.getOptimizedValue(
+                goal[currentHighestStat] - base[currentHighestStat]
+              ) + base[currentHighestStat];
+            if (this.highestFirst) {
+              goal[currentHighestStat] =
+                this.replaceWithNine(
+                  goal[currentHighestStat] - base[currentHighestStat]
+                ) + base[currentHighestStat];
+            }
+
             return this.printStatFields(goal, "#end-");
           } else if (allValues.indexOf(0) !== allValues.lastIndexOf(0)) {
             const [zero1, zero2] = STAT_LISTS.base.filter(
@@ -275,6 +288,19 @@ class Calculator {
             goal[zero2] = 27;
             const maxKey = getFirstKeyByValue(goal, 30);
             goal[maxKey] = 42;
+
+            const [currentHighestStat] = goal.getMaxStatName();
+            goal[currentHighestStat] =
+              this.getOptimizedValue(
+                goal[currentHighestStat] - base[currentHighestStat]
+              ) + base[currentHighestStat];
+            if (this.highestFirst) {
+              goal[currentHighestStat] =
+                this.replaceWithNine(
+                  goal[currentHighestStat] - base[currentHighestStat]
+                ) + base[currentHighestStat];
+            }
+
             return this.printStatFields(goal, "#end-");
           }
         }
@@ -519,36 +545,49 @@ class Calculator {
             base[remainingStats[0]] === base[remainingStats[1]]
           ) {
             const targetValue = base[remainingStats[0]];
+            let goal;
             switch (targetValue) {
               case 0: {
-                const goal = new Stats(54, 36, 20, 0);
-                return this.printStatFields(goal, "#end-");
+                goal = new Stats(54, 36, 20, 0);
+                break;
               }
               case 5: {
-                const goal = new Stats(0, 0, 20, 0);
+                goal = new Stats(0, 0, 20, 0);
                 const remainingValues = [50, 35];
                 remainingStats.forEach(
                   (stat, i) => (goal[stat] = remainingValues[i])
                 );
-                return this.printStatFields(goal, "#end-");
+                break;
               }
               case 10: {
-                const goal = new Stats(0, 0, 20, 0);
+                goal = new Stats(0, 0, 20, 0);
                 const remainingValues = [55, 37];
                 remainingStats.forEach(
                   (stat, i) => (goal[stat] = remainingValues[i])
                 );
-                return this.printStatFields(goal, "#end-");
+                break;
               }
               case 15: {
-                const goal = new Stats(0, 0, 20, 0);
+                goal = new Stats(0, 0, 20, 0);
                 const remainingValues = [51, 36];
                 remainingStats.forEach(
                   (stat, i) => (goal[stat] = remainingValues[i])
                 );
-                return this.printStatFields(goal, "#end-");
+                break;
               }
             }
+            const [currentHighestStat] = goal.getMaxStatName();
+            goal[currentHighestStat] =
+              this.getOptimizedValue(
+                goal[currentHighestStat] - base[currentHighestStat]
+              ) + base[currentHighestStat];
+            if (this.highestFirst) {
+              goal[currentHighestStat] =
+                this.replaceWithNine(
+                  goal[currentHighestStat] - base[currentHighestStat]
+                ) + base[currentHighestStat];
+            }
+            return this.printStatFields(goal, "#end-");
           } else {
             const goals = [curFocus + 15, curFocus + 30];
 
@@ -665,17 +704,55 @@ class Calculator {
         const recommendedValues = specialTraits[traitIndex].stats;
         const goal = new Stats(...recommendedValues);
 
-        if (this.highestFirst) {
-          const containsFive = STAT_LISTS.base.map((stat) => {
-            const trainingCounts = getTargetSum(
-              goal[stat] - base[stat],
-              TRAIN_VALUES
-            );
-            return trainingCounts.includes(5) ? true : false;
+        const containsEight = STAT_LISTS.base.map((stat) => {
+          const trainingCounts = getTargetSum(
+            goal[stat] - base[stat],
+            TRAIN_VALUES
+          );
+          return trainingCounts.includes(5) && trainingCounts.includes(3)
+            ? true
+            : false;
+        });
+        const containsEightSet = new Set(containsEight);
+        if (containsEightSet.size === 1 && containsEightSet.has(true)) {
+          STAT_LISTS.base.forEach((stat) => {
+            goal[stat] += 1;
           });
-          const containsFiveSet = new Set(containsFive);
-          if (containsFiveSet.size === 1) {
-            STAT_LISTS.base.forEach((stat) => (goal[stat] += 4));
+        }
+
+        const containsSix = STAT_LISTS.base.map((stat) => {
+          const trainingCounts = getTargetSum(
+            goal[stat] - base[stat],
+            TRAIN_VALUES
+          );
+          return trainingCounts.indexOf(3) !== trainingCounts.lastIndexOf(3)
+            ? true
+            : false;
+        });
+        const containsSixSet = new Set(containsSix);
+        if (
+          containsSixSet.size === 1 &&
+          containsSixSet.has(true) &&
+          goal.getMaxStatValue() >= 27
+        ) {
+          STAT_LISTS.base.forEach((stat) => {
+            goal[stat] -= 1;
+          });
+        }
+
+        if (this.highestFirst) {
+          for (let i = 0; i < 2; i++) {
+            const containsFive = STAT_LISTS.base.map((stat) => {
+              const trainingCounts = getTargetSum(
+                goal[stat] - base[stat],
+                TRAIN_VALUES
+              );
+              return trainingCounts.includes(5) ? true : false;
+            });
+            const containsFiveSet = new Set(containsFive);
+            if (containsFiveSet.size === 1 && containsFiveSet.has(true)) {
+              STAT_LISTS.base.forEach((stat) => (goal[stat] += 4));
+            }
           }
           const containsThree = STAT_LISTS.base.map((stat) => {
             const trainingCounts = getTargetSum(
@@ -685,7 +762,7 @@ class Calculator {
             return trainingCounts.includes(3) ? true : false;
           });
           const containsThreeSet = new Set(containsThree);
-          if (containsThreeSet.size === 1) {
+          if (containsThreeSet.size === 1 && containsThreeSet.has(true)) {
             STAT_LISTS.base.forEach((stat) => (goal[stat] += 6));
           }
         }

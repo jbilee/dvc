@@ -1,20 +1,38 @@
-const STAT_LISTS = {
-  base: ["agility", "strength", "focus", "intellect"],
-  dom: ["start-agility", "start-strength", "start-focus", "start-intellect"],
-};
+import Stats from "../src/Stats.js";
+import { $, newElem } from "../src/utilities.js";
+import { STAT_LISTS } from "../src/constants.js";
+import { dragonList } from "../src/dd.js";
+import { normalTraits } from "../src/td.js";
+
+dragonList.forEach(({ name: [nameEn, nameKo] }) => {
+  const newOption = newElem("option");
+  newOption.setAttribute("value", nameEn);
+  newOption.textContent = nameKo;
+  $("#dragon-selector").append(newOption);
+});
+
+normalTraits.forEach(({ nameEn, nameKo }) => {
+  const newOption = newElem("option");
+  newOption.setAttribute("value", nameEn);
+  newOption.textContent = nameKo;
+  $("#trait-selector").append(newOption);
+});
+
+$("#btn-find").addEventListener("click", getChangedFields);
+$("#btn-reset").addEventListener("click", reset);
 
 function getChangedFields() {
   // read DOM fields
   const fields = [];
-  STAT_LISTS.dom.forEach((selector) => {
-    const field = Number(document.getElementById(selector).value);
+  STAT_LISTS.start.forEach((stat) => {
+    const field = Number($(stat).value);
     fields.push(field);
   });
   const requirements = {};
   // read dragon name field
-  const dragonName = document.getElementById("dragon-selector").value;
+  const dragonName = $("#dragon-selector").value;
   const checkedHighest = getCheckedTraits();
-  const currentTrait = document.getElementById("trait-selector").value;
+  const currentTrait = $("#trait-selector").value;
   requirements.lowest = normalTraits
     .filter((trait) => trait.nameEn === currentTrait)
     .map((trait) => trait.lowestStat)
@@ -26,8 +44,8 @@ function getChangedFields() {
 
   // Early return 1: no data (user did not provide required information)
   if (
-    document.getElementById("dragon-selector").selectedIndex === 0 ||
-    document.getElementById("trait-selector").selectedIndex === 0
+    $("#dragon-selector").selectedIndex === 0 ||
+    $("#trait-selector").selectedIndex === 0
   ) {
     alert("드래곤과 드래곤의 현재 성격을 선택해주세요!");
     return;
@@ -79,7 +97,7 @@ function getChangedFields() {
     }
   }
 
-  const resultDiv = document.getElementById("find-result");
+  const resultDiv = $("#find-result");
 
   if (
     dragonTraits.firstTrait.trainedHighest.includes(requirements.highest) &&
@@ -97,16 +115,6 @@ function getChangedFields() {
       "입력하신 정보로는 드래곤의 초기 성격을 예측할 수 없습니다.\n입력값에 오류가 없는지 확인해주세요."
     );
   }
-}
-
-function findLowestStatName(stats) {
-  const lowestStatList = stats.getMinStatName();
-
-  if (lowestStatList.length >= 2) {
-    return "none";
-  }
-
-  return lowestStatList;
 }
 
 function findTraitData(traitName) {
@@ -129,7 +137,7 @@ function getCheckedTraits() {
   const checked = [];
 
   STAT_LISTS.base.forEach((stat) => {
-    if (document.getElementById(`checkbox-${stat}`).checked) {
+    if ($(`#checkbox-${stat}`).checked) {
       checked.push(stat);
     }
   });
@@ -138,31 +146,20 @@ function getCheckedTraits() {
 }
 
 function reset() {
-  STAT_LISTS.dom.forEach((selector) => {
-    const field = document.getElementById(selector);
+  STAT_LISTS.start.forEach((stat) => {
+    const field = $(stat);
     field.value = 0;
   });
 
-  const nameSelector = document.getElementById("dragon-selector");
+  const nameSelector = $("#dragon-selector");
   nameSelector.selectedIndex = 0;
-  const traitSelector = document.getElementById("trait-selector");
+  const traitSelector = $("#trait-selector");
   traitSelector.selectedIndex = 0;
 
-  STAT_LISTS.base.forEach(
-    (stat) => (document.getElementById(`checkbox-${stat}`).checked = false)
-  );
+  STAT_LISTS.base.forEach((stat) => ($(`#checkbox-${stat}`).checked = false));
 
-  const resultDiv = document.getElementById("find-result");
+  const resultDiv = $("#find-result");
   resultDiv.innerText = "";
-}
-
-// separate as utilities later
-function getStatDifference(a, b) {
-  const sub = new Stats();
-  for (const stat of STAT_LISTS.base) {
-    sub[stat] = Math.abs(a[stat] - b[stat]);
-  }
-  return sub;
 }
 
 function getStatSum(a, b) {
@@ -171,58 +168,4 @@ function getStatSum(a, b) {
     sum[stat] = a[stat] + b[stat];
   }
   return sum;
-}
-
-// delete later
-class Stats {
-  constructor(agility = 0, strength = 0, focus = 0, intellect = 0) {
-    this.agility = agility;
-    this.strength = strength;
-    this.focus = focus;
-    this.intellect = intellect;
-  }
-
-  getMaxStatName() {
-    const maxVal = this.getMaxStatValue();
-    const maxTraits = [];
-    if (this.agility === maxVal) maxTraits.push("agility");
-    if (this.strength === maxVal) maxTraits.push("strength");
-    if (this.focus === maxVal) maxTraits.push("focus");
-    if (this.intellect === maxVal) maxTraits.push("intellect");
-    return maxTraits;
-  }
-
-  getMinStatName() {
-    const minVal = this.getMinStatValue();
-    const minTraits = [];
-    if (this.agility === minVal) minTraits.push("agility");
-    if (this.strength === minVal) minTraits.push("strength");
-    if (this.focus === minVal) minTraits.push("focus");
-    if (this.intellect === minVal) minTraits.push("intellect");
-    return minTraits;
-  }
-
-  getMaxStatValue() {
-    return Math.max(this.agility, this.strength, this.focus, this.intellect);
-  }
-
-  getMinStatValue() {
-    return Math.min(this.agility, this.strength, this.focus, this.intellect);
-  }
-
-  getTotal() {
-    return this.agility + this.strength + this.focus + this.intellect;
-  }
-
-  sortInc() {
-    const cur = [this.agility, this.strength, this.focus, this.intellect];
-    return cur.sort((a, b) => a - b);
-  }
-
-  getTraitsByValue(value) {
-    const traits = [];
-    if (this.agility === value) {
-      traits.push("agility");
-    }
-  }
 }

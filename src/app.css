@@ -1,19 +1,17 @@
 * {
   font-family: "Noto Sans KR", sans-serif;
   font-size: 16px;
+  box-sizing: border-box;
 }
 
 body {
   margin: 0;
 }
 
-main {
-  text-align: center;
-}
-
-h1 {
-  font-size: 20px;
-  display: inline-block;
+input[type="text"] {
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: 0;
 }
 
 h2 {
@@ -30,18 +28,32 @@ sub {
 }
 
 li {
-  margin: 1.1rem 0;
+  margin: 1rem 0;
 }
 
 span#settings {
   position: absolute;
-  right: 10px;
   cursor: pointer;
+  top: 0;
+  right: 0;
+}
+
+#root {
+  display: flex;
+  justify-content: center;
+  padding: 18px;
 }
 
 #main-box {
+  position: relative;
   display: flex;
   justify-content: center;
+  flex-direction: column;
+}
+
+#header {
+  text-align: center;
+  padding-bottom: 12px;
 }
 
 #main-content {
@@ -49,16 +61,15 @@ span#settings {
   flex-direction: column;
   align-items: center;
   gap: 10px;
+  width: 100%;
 }
 
-#main-content #tips {
-  padding: 20px;
-}
-
-#calculator-body {
+#calculations {
+  width: 100%;
   display: flex;
-  padding: 2%;
-  flex-flow: column wrap;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
 }
 
 #controls {
@@ -66,6 +77,11 @@ span#settings {
   flex-flow: column wrap;
   align-self: flex-start;
   gap: 5px;
+  margin-top: 12px;
+}
+
+button {
+  cursor: pointer;
 }
 
 .menu-button {
@@ -99,29 +115,15 @@ span#settings {
   padding: 8px 14px;
 }
 
-div.agility,
-div.strength,
-div.focus,
-div.intellect {
+button.primary {
+  background: rgb(19, 93, 213);
+}
+
+.stat-label {
   border-radius: 6px;
   padding: 3px;
   font-weight: bold;
-}
-
-div.agility {
-  background-color: rgb(170, 222, 255);
-}
-
-div.strength {
-  background-color: rgb(255, 176, 176);
-}
-
-div.focus {
-  background-color: rgb(217, 171, 255);
-}
-
-div.intellect {
-  background-color: rgb(199, 255, 110);
+  background: rgb(155, 232, 255);
 }
 
 span.nine,
@@ -146,49 +148,51 @@ span.three {
   background-color: rgb(99, 169, 0);
 }
 
-.version * {
-  font-family: Tahoma;
-  font-size: 11px;
+.version {
+  margin-top: 50px;
   text-align: end;
+  width: 100%;
+}
+
+.version * {
+  font-family: Arial;
+  font-size: 0.8rem;
+}
+
+a {
+  text-decoration: none;
+  color: rgb(19, 93, 213);
+}
+
+a:hover,
+a:visited {
+  text-decoration: underline;
 }
 
 @media (min-width: 800px) {
-  h1 {
-    font-size: 32px;
+  span#settings {
+    top: 43px;
   }
 
   #header {
     text-align: center;
-    padding: 50px 0px;
-  }
-
-  .menu-button {
-    font-size: 18px;
-    margin: 0px 8px;
-    padding: 8px 14px;
-    width: 200px;
+    padding: 35px 0px;
   }
 
   .stat-mobile-view {
     display: none;
   }
 
-  #main-content {
-    max-width: 900px;
-  }
-
   #controls {
-    flex-flow: row;
+    flex-direction: row;
     align-self: center;
-    justify-content: space-between;
-    gap: 50px;
+    gap: 20px;
   }
 
   #calculations {
-    width: 80%;
-    display: flex;
     flex-direction: row;
     justify-content: center;
+    gap: 6px;
   }
 
   #start-trait-selector {
@@ -200,8 +204,11 @@ span.three {
     width: 135px;
   }
 
-  .stat-field {
-    width: 50px;
+  .menu-button {
+    font-size: 18px;
+    margin: 0px 8px;
+    padding: 8px 14px;
+    width: 200px;
   }
 
   .buttons > button {
