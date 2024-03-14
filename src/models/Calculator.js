@@ -775,7 +775,14 @@ class Calculator {
 
       case "Immersed": {
         const goal = this.copyStats(base);
-        const maxStatKey = base.getMaxStatName()[0];
+        const highestStats = base.getMaxStatName();
+        const maxStatKey = highestStats.includes(this.preference)
+          ? this.preference
+          : highestStats.includes("strength")
+          ? "strength"
+          : highestStats.includes("intellect")
+          ? "intellect"
+          : highestStats[0];
         let goalValue = this.getOptimizedValue(150 - base[maxStatKey]);
         if (this.highestFirst) goalValue = this.replaceWithNine(goalValue);
         goal[maxStatKey] = base[maxStatKey] + goalValue;
