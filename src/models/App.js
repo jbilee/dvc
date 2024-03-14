@@ -10,6 +10,7 @@ import { normalTraits, specialTraits } from "../td.js";
 
 class App {
   constructor() {
+    this.fixUserData();
     this.settings = new Settings();
     const initialSettings = this.settings.getCurrentSettings();
     this.language = initialSettings.language;
@@ -20,9 +21,26 @@ class App {
     console.log(window.navigator.language);
   }
 
+  fixUserData() {
+    console.log("Fixing existing data...");
+    const REGEX = /^[a-zA-Z]*$/;
+    const storageData = JSON.parse(localStorage.getItem("dvcfvs"));
+    if (!storageData) return;
+    if (!REGEX.test(storageData[0].name)) {
+      const fixedData = storageData.map((data) => {
+        const searchName = data.name;
+        const dragon = dragonList.find(
+          ({ name: [, nameKo] }) => searchName === nameKo
+        );
+        return { nameEn: dragon.name[0], nameKo: dragon.name[1], id: data.id };
+      });
+      localStorage.setItem("dvcfvs", JSON.stringify(fixedData));
+    }
+  }
+
   init({ priorityOn, noSerious, prefStat, language }) {
     // Calculator controls
-    const loadedFavs = this.favorites.getFavorites("name");
+    const loadedFavs = this.favorites.getFavorites(language);
     this.renderDragonOptions(loadedFavs);
     this.renderTraitOptions();
 
@@ -60,11 +78,8 @@ class App {
   }
 
   renderDragonOptions(favorites) {
-    favorites.forEach((fav) => {
+    favorites.forEach(({ nameEn, nameKo }) => {
       const newOption = newElem("option");
-      const {
-        name: [nameEn, nameKo],
-      } = dragonList.find(({ name: [nameEn] }) => nameEn === fav);
       newOption.setAttribute("value", nameEn);
       newOption.textContent = `★ ${this.language === "ko" ? nameKo : nameEn}`;
       $("#dragon-selector").append(newOption);
@@ -163,22 +178,22 @@ class App {
       const newRowBtn = newRow.querySelector("button");
       newRowBtn.addEventListener("click", () => {
         this.favorites.removeFavorites(newRow, this.language);
-        const newFavs = this.favorites.getFavorites("name");
+        const newFavs = this.favorites.getFavorites(this.language);
         this.resetDragonOptions();
         this.renderDragonOptions(newFavs);
       });
-      const newFavs = this.favorites.getFavorites("name");
+      const newFavs = this.favorites.getFavorites(this.language);
       this.resetDragonOptions();
       this.renderDragonOptions(newFavs);
     });
 
-    const currentFavIds = this.favorites.getFavorites("id");
+    const currentFavIds = this.favorites.getFavoriteIds("id");
     currentFavIds.forEach((id) => {
       const elem = $(`div[data-id="${id}"]`);
       const deleteBtn = elem.querySelector("button");
       deleteBtn.addEventListener("click", () => {
         this.favorites.removeFavorites(elem);
-        const newFavs = this.favorites.getFavorites("name");
+        const newFavs = this.favorites.getFavorites(this.language);
         this.resetDragonOptions();
         this.renderDragonOptions(newFavs);
       });

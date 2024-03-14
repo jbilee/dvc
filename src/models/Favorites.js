@@ -1,4 +1,5 @@
 import { $, displayToast, newElem } from "../utilities.js";
+import { dragonList } from "../dd.js";
 
 class Favorites {
   #favorites;
@@ -12,9 +13,24 @@ class Favorites {
     return JSON.parse(storedItem);
   }
 
-  getFavorites(key) {
-    const favorites = this.#favorites.map((favorite) => favorite[key]);
-    if (key === "name") return favorites.sort((a, b) => a.localeCompare(b));
+  getFavorites(lang) {
+    const favorites = this.#favorites.map(({ nameEn, nameKo }) => ({
+      nameEn,
+      nameKo,
+    }));
+    if (lang === "ko") {
+      const names = favorites.map(({ nameKo }) => nameKo);
+      names.sort((a, b) => a.localeCompare(b));
+      return names.map((name) => favorites.find((fav) => fav.nameKo === name));
+    } else {
+      const names = favorites.map(({ nameEn }) => nameEn);
+      names.sort((a, b) => a.localeCompare(b));
+      return names.map((name) => favorites.find((fav) => fav.nameEn === name));
+    }
+  }
+
+  getFavoriteIds() {
+    const favorites = this.#favorites.map((fav) => fav.id);
     return favorites;
   }
 
@@ -23,13 +39,15 @@ class Favorites {
   }
 
   addFavorites(name, lang) {
-    const existingData = this.#favorites.find((obj) => obj.name === name);
+    const existingData = this.#favorites.find(({ nameEn }) => nameEn === name);
     if (existingData) return this.renderMessage(lang);
 
     const id = Date.now().toString();
-    this.#favorites.push({ name, id });
+    const nameEn = name;
+    const nameKo = dragonList.find(({ name }) => name.includes(nameEn)).name[1];
+    this.#favorites.push({ nameEn, nameKo, id });
     if (this.#favorites.length === 1) $("#favorites").innerHTML = "";
-    const newRow = this.renderNewFav(name, id, lang);
+    const newRow = this.renderNewFav({ nameEn, nameKo, id }, lang);
     this.saveToStorage();
     displayToast(
       lang === "ko" ? "설정이 저장됐습니다." : "Saved changes.",
@@ -64,12 +82,12 @@ class Favorites {
     );
   }
 
-  renderNewFav(fav, id, lang) {
+  renderNewFav({ nameEn, nameKo, id }, lang) {
     const newRow = newElem("div");
     newRow.classList.add("favorites-row");
     newRow.dataset.id = id;
     const rowText = newElem("span");
-    rowText.textContent = fav;
+    rowText.textContent = lang === "ko" ? nameKo : nameEn;
     const rowBtn = newElem("button");
     rowBtn.textContent = lang === "ko" ? "삭제" : "Remove";
     newRow.append(rowText, rowBtn);
@@ -81,9 +99,7 @@ class Favorites {
     if (this.#favorites.length <= 0) return;
 
     $("#favorites").innerHTML = "";
-    this.#favorites.forEach(({ name, id }) =>
-      this.renderNewFav(name, id, lang)
-    );
+    this.#favorites.forEach((fav) => this.renderNewFav(fav, lang));
   }
 }
 
