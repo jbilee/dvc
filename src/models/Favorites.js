@@ -62,11 +62,11 @@ class Favorites {
     targetElem.remove();
     if (this.#favorites.length === 0) {
       const parentElem = $("#favorites");
-      const newElem = newElem("div");
-      newElem.id = "fav-default";
-      newElem.textContent =
+      const defaultElem = newElem("div");
+      defaultElem.id = "fav-default";
+      defaultElem.textContent =
         lang === "ko" ? "즐겨찾기한 드래곤이 없습니다." : "No Favorites";
-      parentElem.append(newElem);
+      parentElem.append(defaultElem);
     }
     this.saveToStorage();
     displayToast(
