@@ -22,68 +22,54 @@ class Favorites {
     localStorage.setItem("dvcfvs", JSON.stringify(this.#favorites));
   }
 
-  addFavorites(name, lang) {
+  addFavorites(name) {
     const existingData = this.#favorites.find((obj) => obj.name === name);
-    if (existingData) return this.renderMessage(lang);
+    if (existingData) return this.renderMessage();
 
     const id = Date.now().toString();
     this.#favorites.push({ name, id });
     if (this.#favorites.length === 1) $("#favorites").innerHTML = "";
-    const newRow = this.renderNewFav(name, id, lang);
+    const newRow = this.renderNewFav(name, id);
     this.saveToStorage();
-    displayToast(
-      lang === "ko" ? "설정이 저장됐습니다." : "Saved changes.",
-      2000
-    );
+    displayToast("설정이 저장됐습니다.", 2000);
+
     return newRow;
   }
 
-  removeFavorites(targetElem, lang) {
+  removeFavorites(targetElem) {
     const targetId = targetElem.dataset.id;
     this.#favorites = this.#favorites.filter(({ id }) => id !== targetId);
     targetElem.remove();
-    if (this.#favorites.length === 0) {
-      const parentElem = $("#favorites");
-      const newElem = newElem("div");
-      newElem.id = "fav-default";
-      newElem.textContent =
-        lang === "ko" ? "즐겨찾기한 드래곤이 없습니다." : "No Favorites";
-      parentElem.append(newElem);
-    }
+    if (this.#favorites.length === 0)
+      $(
+        "#favorites"
+      ).innerHTML = `<div id="fav-default">즐겨찾기한 드래곤이 없습니다.</div>`;
     this.saveToStorage();
-    displayToast(
-      lang === "ko" ? "설정이 저장됐습니다." : "Saved changes.",
-      2000
-    );
+    displayToast("설정이 저장됐습니다.", 2000);
   }
 
-  renderMessage(lang) {
-    displayToast(
-      lang === "ko" ? "이미 추가한 드래곤입니다." : "Already in Favorites.",
-      2000
-    );
+  renderMessage() {
+    displayToast("이미 추가한 드래곤입니다.", 2000);
   }
 
-  renderNewFav(fav, id, lang) {
+  renderNewFav(fav, id) {
     const newRow = newElem("div");
     newRow.classList.add("favorites-row");
     newRow.dataset.id = id;
     const rowText = newElem("span");
     rowText.textContent = fav;
     const rowBtn = newElem("button");
-    rowBtn.textContent = lang === "ko" ? "삭제" : "Remove";
+    rowBtn.textContent = "삭제";
     newRow.append(rowText, rowBtn);
     $("#favorites").append(newRow);
     return newRow;
   }
 
-  render(lang) {
+  render() {
     if (this.#favorites.length <= 0) return;
 
     $("#favorites").innerHTML = "";
-    this.#favorites.forEach(({ name, id }) =>
-      this.renderNewFav(name, id, lang)
-    );
+    this.#favorites.forEach(({ name, id }) => this.renderNewFav(name, id));
   }
 }
 
