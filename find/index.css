@@ -1,3 +1,9 @@
+#calculations {
+  flex-direction: column;
+  max-width: 470px;
+  gap: 16px;
+}
+
 .grid-container {
   box-sizing: border-box;
   display: grid;
@@ -31,30 +37,38 @@
 
 #result {
   display: flex;
+  flex-direction: column;
+  gap: 12px;
   border-radius: 6px;
   padding: 20px 24px;
   margin-top: 16px;
   background-color: rgb(221, 221, 221);
 }
 
-#find-result {
+.result-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#result__trait, #result__stats {
+  padding: 2px 6px;
   width: 120px;
-  text-align: center;
-}
-
-.sel2 > div {
-  display: inline-block;
-  width: 80px;
-}
-
-.sel2 input,
-.sel2 label {
-  cursor: pointer;
+  height: 35px;
+  background: rgb(247, 247, 247);
+  border-radius: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 @media (min-width: 800px) {
   .grid-container {
     grid-template-columns: 90px 90px 90px 90px;
     gap: 10px;
+  }
+
+  #main-box {
+    max-width: 650px;
   }
 }
