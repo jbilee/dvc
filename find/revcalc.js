@@ -8,7 +8,6 @@ import { normalTraits } from "../src/td.js";
 let lang;
 
 lang = localStorage.getItem("dvct_f") || getLanguage();
-// lang = "ko";
 // render
 lang === "ko" ? FinderView.renderKo() : FinderView.renderEn();
 

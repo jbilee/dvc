@@ -1038,6 +1038,11 @@ class Calculator {
     const highestStats = goal.getMaxStatName();
     const highestValue = goal.getMaxStatValue();
 
+    if (highestValue === 0) {
+      goal[highestReqStat] = this.highestFirst ? 9 : 3;
+      return goal;
+    }
+
     if (
       !highestStats.includes(highestReqStat) ||
       (highestStats.includes(highestReqStat) && highestStats.length > 1)
@@ -1070,6 +1075,12 @@ class Calculator {
     const targetStats = Object.keys(goal).filter(
       (key) => key !== highestReqStat && key !== lowestReqStat
     );
+
+    if (goal.getMaxStatValue() === 0) {
+      goal[highestReqStat] = this.highestFirst ? 9 : 5;
+      targetStats.forEach((stat) => (goal[stat] = this.highestFirst ? 5 : 3));
+      return goal;
+    }
 
     targetStats.forEach((stat) => {
       if (goal[stat] <= goal[lowestReqStat]) {
