@@ -13,6 +13,8 @@ class App {
     this.calculator = new Calculator(initialSettings);
     this.favorites = new Favorites();
     this.init(initialSettings);
+    console.log(window.navigator.language);
+    console.log(window.navigator.languages);
   }
 
   init({ priorityOn, noSerious, prefStat }) {
