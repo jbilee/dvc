@@ -548,31 +548,173 @@ class Calculator {
             let goal;
             switch (targetValue) {
               case 0: {
-                goal = new Stats(54, 36, 20, 0);
+                if (curFocus === 20) {
+                  goal = new Stats(0, 0, 20, 0);
+                  const remainingValues = this.highestFirst
+                    ? [54, 36]
+                    : [50, 36];
+                  if (
+                    this.preference !== "none" &&
+                    this.preference !== "focus"
+                  ) {
+                    goal[this.preference] = remainingValues.shift();
+                    const lastStat = remainingStats.filter(
+                      (stat) => stat !== this.preference
+                    );
+                    goal[lastStat] = remainingValues[0];
+                  } else {
+                    goal.strength = remainingValues.shift();
+                    goal.intellect = remainingValues[0];
+                  }
+                }
+                if (curFocus === 25) {
+                  goal = new Stats(0, 0, 25, 0);
+                  const remainingValues = this.highestFirst
+                    ? [63, 41]
+                    : [57, 41];
+                  if (
+                    this.preference !== "none" &&
+                    this.preference !== "focus"
+                  ) {
+                    goal[this.preference] = remainingValues.shift();
+                    const lastStat = remainingStats.filter(
+                      (stat) => stat !== this.preference
+                    );
+                    goal[lastStat] = remainingValues[0];
+                  } else {
+                    goal.strength = remainingValues.shift();
+                    goal.intellect = remainingValues[0];
+                  }
+                }
                 break;
               }
               case 5: {
-                goal = new Stats(0, 0, 20, 0);
-                const remainingValues = [50, 35];
-                remainingStats.forEach(
-                  (stat, i) => (goal[stat] = remainingValues[i])
-                );
+                if (curFocus === 20) {
+                  goal = new Stats(0, 0, 20, 0);
+                  const remainingValues = [50, 35];
+                  if (remainingStats.includes(this.preference)) {
+                    goal[this.preference] = remainingValues.shift();
+                    const lastStat = remainingStats.filter(
+                      (stat) => stat !== this.preference
+                    );
+                    goal[lastStat] = remainingValues[0];
+                  } else {
+                    const prefStat = remainingStats.includes("strength")
+                      ? "strength"
+                      : "intellect";
+                    goal[prefStat] = remainingValues.shift();
+                    const lastStat = remainingStats.filter(
+                      (stat) => stat !== prefStat
+                    );
+                    goal[lastStat] = remainingValues[0];
+                  }
+                }
+                if (curFocus === 25) {
+                  goal = new Stats(0, 0, 25, 0);
+                  const remainingValues = [59, 41];
+                  if (remainingStats.includes(this.preference)) {
+                    goal[this.preference] = remainingValues.shift();
+                    const lastStat = remainingStats.filter(
+                      (stat) => stat !== this.preference
+                    );
+                    goal[lastStat] = remainingValues[0];
+                  } else {
+                    const prefStat = remainingStats.includes("strength")
+                      ? "strength"
+                      : "intellect";
+                    goal[prefStat] = remainingValues.shift();
+                    const lastStat = remainingStats.filter(
+                      (stat) => stat !== prefStat
+                    );
+                    goal[lastStat] = remainingValues[0];
+                  }
+                }
                 break;
               }
               case 10: {
-                goal = new Stats(0, 0, 20, 0);
-                const remainingValues = [55, 37];
-                remainingStats.forEach(
-                  (stat, i) => (goal[stat] = remainingValues[i])
-                );
+                if (curFocus === 20) {
+                  goal = new Stats(0, 0, 20, 0);
+                  const remainingValues = [55, 37];
+                  if (remainingStats.includes(this.preference)) {
+                    goal[this.preference] = remainingValues.shift();
+                    const lastStat = remainingStats.filter(
+                      (stat) => stat !== this.preference
+                    );
+                    goal[lastStat] = remainingValues[0];
+                  } else {
+                    const prefStat = remainingStats.includes("strength")
+                      ? "strength"
+                      : "intellect";
+                    goal[prefStat] = remainingValues.shift();
+                    const lastStat = remainingStats.filter(
+                      (stat) => stat !== prefStat
+                    );
+                    goal[lastStat] = remainingValues[0];
+                  }
+                }
+                if (curFocus === 25) {
+                  goal = new Stats(0, 0, 25, 0);
+                  const remainingValues = [55, 40];
+                  if (remainingStats.includes(this.preference)) {
+                    goal[this.preference] = remainingValues.shift();
+                    const lastStat = remainingStats.filter(
+                      (stat) => stat !== this.preference
+                    );
+                    goal[lastStat] = remainingValues[0];
+                  } else {
+                    const prefStat = remainingStats.includes("strength")
+                      ? "strength"
+                      : "intellect";
+                    goal[prefStat] = remainingValues.shift();
+                    const lastStat = remainingStats.filter(
+                      (stat) => stat !== prefStat
+                    );
+                    goal[lastStat] = remainingValues[0];
+                  }
+                }
                 break;
               }
               case 15: {
-                goal = new Stats(0, 0, 20, 0);
-                const remainingValues = [51, 36];
-                remainingStats.forEach(
-                  (stat, i) => (goal[stat] = remainingValues[i])
-                );
+                if (curFocus === 20) {
+                  goal = new Stats(0, 0, 20, 0);
+                  const remainingValues = [51, 36];
+                  if (remainingStats.includes(this.preference)) {
+                    goal[this.preference] = remainingValues.shift();
+                    const lastStat = remainingStats.filter(
+                      (stat) => stat !== this.preference
+                    );
+                    goal[lastStat] = remainingValues[0];
+                  } else {
+                    const prefStat = remainingStats.includes("strength")
+                      ? "strength"
+                      : "intellect";
+                    goal[prefStat] = remainingValues.shift();
+                    const lastStat = remainingStats.filter(
+                      (stat) => stat !== prefStat
+                    );
+                    goal[lastStat] = remainingValues[0];
+                  }
+                }
+                if (curFocus === 25) {
+                  goal = new Stats(0, 0, 25, 0);
+                  const remainingValues = [60, 42];
+                  if (remainingStats.includes(this.preference)) {
+                    goal[this.preference] = remainingValues.shift();
+                    const lastStat = remainingStats.filter(
+                      (stat) => stat !== this.preference
+                    );
+                    goal[lastStat] = remainingValues[0];
+                  } else {
+                    const prefStat = remainingStats.includes("strength")
+                      ? "strength"
+                      : "intellect";
+                    goal[prefStat] = remainingValues.shift();
+                    const lastStat = remainingStats.filter(
+                      (stat) => stat !== prefStat
+                    );
+                    goal[lastStat] = remainingValues[0];
+                  }
+                }
                 break;
               }
             }
@@ -697,6 +839,10 @@ class Calculator {
 
       case "Capable": {
         const maxValue = base.getMaxStatValue();
+        if (maxValue === 0) {
+          const goal = new Stats(27, 27, 27, 27);
+          return this.printStatFields(goal, "#end-");
+        }
         if (maxValue === 30) {
           const goal = new Stats(30, 30, 30, 30);
           return this.printStatFields(goal, "#end-");
