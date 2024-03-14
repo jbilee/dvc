@@ -25,7 +25,7 @@ class App {
     console.log("Fixing existing data...");
     const REGEX = /^[a-zA-Z]*$/;
     const storageData = JSON.parse(localStorage.getItem("dvcfvs"));
-    if (!storageData) return;
+    if (!storageData || storageData.length <= 0) return;
     if (!REGEX.test(storageData[0].name)) {
       const fixedData = storageData.map((data) => {
         const searchName = data.name;
