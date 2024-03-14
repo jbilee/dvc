@@ -1,7 +1,7 @@
 import { $, newElem } from "../utilities.js";
 
 const ModalView = {
-  renderKo() {
+  render() {
     const container = newElem("div");
     container.classList.add("modal");
     container.classList.add("modal__inactive");
@@ -86,127 +86,14 @@ const ModalView = {
         </div>
       </div>
     </div>
-    <div class="modal-option">
-      <h3>언어</h3>
-      <div class="lang-selector">
-        <div id="lang-ko" class="lang__default">한국어</div>
-        <div id="lang-en" class="lang__default">English</div>
-      </div>
-    </div>
     `;
 
     container.append(modalWindow);
-    $("#main-content").append(container);
 
-    container.addEventListener("click", (e) => {
-      if (e.target === container) {
-        container.classList.add("modal__inactive");
-        $("#fav-selector").selectedIndex = 0;
-        document.body.removeAttribute("style");
-      }
-    });
+    // container.append(modalBackground);
 
-    $("#close-modal").addEventListener("click", () => {
-      container.classList.add("modal__inactive");
-      $("#fav-selector").selectedIndex = 0;
-      document.body.removeAttribute("style");
-    });
-  },
-  renderEn() {
-    const container = newElem("div");
-    container.classList.add("modal");
-    container.classList.add("modal__inactive");
-
-    const modalBackground = newElem("div");
-    modalBackground.classList.add("modal-background");
-
-    const modalWindow = newElem("div");
-    modalWindow.classList.add("modal-foreground");
-    modalWindow.innerHTML = `
-    <div class="modal-header">
-      <h2>Settings</h2>
-      <div id="close-modal"><img src="../img/close.png" width="18px"></div>
-    </div>
-    <div class="modal-option">
-      <span class="helper warning">*Settings are unique to each device or browser. If you change devices or delete your browser's cache, any saved settings will be reset as well.</span>
-    </div>
-    <div class="modal-option">
-      <h3>Favorites</h3>
-      Dragons in the Favorites list appear at the top of the dropdown menu.
-      <div class="fav-selector-container">
-        <select id="fav-selector"></select>
-        <button id="add-fav">Add</button>
-      </div>
-      <div class="favorites-container">
-        <div id="favorites">
-          <div id="fav-default">
-            No Favorites
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="modal-option">
-      <h3>Calculations</h3>
-      <div class="checkbox-option">
-        <div><strong>Train Value Priority</strong>
-        <p>
-          Do Perfect training whenever possible. The app ignores this setting if you end up doing more training than necessary.
-        </p>
-        </div>
-        <div>
-          <input id="priority" type="checkbox"> <label for="priority">Prioritize higher train values</label>
-        </div>
-      </div>
-      <hr>
-      <div class="checkbox-option">
-        <div><strong>No Serious</strong>
-        <p>
-          Split the training to prevent Serious from possibly appearing.
-        </p>
-        </div>
-        <div>
-          <input id="noserious" type="checkbox"> <label for="noserious">Avoid Serious personality</label>
-        </div>
-      </div>
-      <hr>
-      <div class="checkbox-option">
-        <div>
-          <strong>Preferred Training</strong>
-          <p>
-            Focus most of the training on your preferred stat whenever possible.
-          </p>
-          <div id="preferences">
-            <div>
-              <div>
-                <input type="radio" name="preference" id="pref-none" value="none" checked><label for="pref-none">None</label>
-              </div>
-              <div>
-                <input type="radio" name="preference" id="pref-agility" value="agility"><label for="pref-agility">Agility</label>
-              </div>
-              <div>
-                <input type="radio" name="preference" id="pref-strength" value="strength"><label for="pref-strength">Strength</label>
-              </div>
-              <div>
-                <input type="radio" name="preference" id="pref-focus" value="focus"><label for="pref-focus">Focus</label>
-              </div>
-              <div>
-                <input type="radio" name="preference" id="pref-intellect" value="intellect"><label for="pref-intellect">Intellect</label>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="modal-option">
-      <h3>Language</h3>
-      <div class="lang-selector">
-        <div id="lang-ko" class="lang__default">한국어</div>
-        <div id="lang-en" class="lang__default">English</div>
-      </div>
-    </div>
-    `;
-
-    container.append(modalWindow);
+    // modalBackground.append(modalWindow);
+    // container.append(modalBackground)
     $("#main-content").append(container);
 
     container.addEventListener("click", (e) => {

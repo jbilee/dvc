@@ -14,16 +14,9 @@ export const STAT_LISTS = {
   end: ["#end-agility", "#end-strength", "#end-focus", "#end-intellect"],
 };
 
-export const CLIP_TEXT_KO = {
+export const CLIP_TEXT = {
   agility: (input) => `순발력(${input}): `,
   strength: (input) => `근력(${input}): `,
   focus: (input) => `집중력(${input}): `,
   intellect: (input) => `지력(${input}): `,
-};
-
-export const CLIP_TEXT_EN = {
-  agility: (input) => `Agility(${input}): `,
-  strength: (input) => `Strength(${input}): `,
-  focus: (input) => `Focus(${input}): `,
-  intellect: (input) => `Intellect(${input}): `,
 };

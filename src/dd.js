@@ -106,7 +106,7 @@ export const dragonList = [
   { name: ["Metis", "메티스"], traitsEn: ["Smart", "Naive"], traitsKo: ["똑똑한", "천진난만한"], Smart: [0, 0, 5, 20], Naive: [30, 0, 10, 10] },
   { name: ["Mellow", "멜로우"], traitsEn: ["Smart", "Rash"], traitsKo: ["똑똑한", "덜렁대는"], Smart: [5, 0, 0, 30], Rash: [20, 10, 0, 10] },
   { name: ["Hourglass Dragon", "모래시계 드래곤"], traitsEn: ["Smart", "Calm"], traitsKo: ["똑똑한", "차분한"], Smart: [0, 5, 0, 20], Calm: [10, 0, 25, 10] },
-  { name: ["Mongsuryong", "몽수룡"], traitsEn: ["Calm", "Smart"], traitsKo: ["차분한", "똑똑한"], Calm: [10, 0, 20, 10], Smart: [10, 0, 0, 20] },
+  { name: ["mongsuryong", "몽수룡"], traitsEn: ["Calm", "Smart"], traitsKo: ["차분한", "똑똑한"], Calm: [10, 0, 20, 10], Smart: [10, 0, 0, 20] },
   { name: ["Minas", "미나스"], traitsEn: ["Quiet", "Calm"], traitsKo: ["냉정한", "차분한"], Quiet: [0, 10, 20, 10], Calm: [10, 0, 25, 10] },
   { name: ["Mist Dragon", "미스트 드래곤"], traitsEn: ["Quirky", "Rash"], traitsKo: ["변덕쟁이", "덜렁대는"], Quirky: [5, 20, 0, 5], Rash: [30, 15, 0, 15] },
   { name: ["Mystictiny", "미스틱티니"], traitsEn: ["Smart", "Rash"], traitsKo: ["똑똑한", "덜렁대는"], Smart: [0, 0, 10, 20], Rash: [25, 10, 0, 10] },
