@@ -301,10 +301,10 @@ const CalculatorView = {
         <div class="sel1">
           <h3>Dragon's base stats:</h3>
           <select name="dragon-selector" id="dragon-selector">
-            <option selected disabled>Select dragon</option>
+            <option selected disabled>Dragon</option>
           </select>
           <select name="trait-selector" id="start-trait-selector" disabled>
-            <option selected disabled>Select personality</option>
+            <option selected disabled>Personality</option>
             <option value="" id="trait1">-</option>
             <option value="" id="trait2">-</option>
           </select>
@@ -313,10 +313,10 @@ const CalculatorView = {
         <div class="sel2">
           <h3>Target personality:</h3>
           <select name="trait-selector" id="normal-trait-selector">
-            <option selected disabled>Basic personality</option>
+            <option selected disabled>Basic</option>
           </select>
           <select name="trait-selector" id="special-trait-selector">
-            <option selected disabled>Special personality</option>
+            <option selected disabled>Special</option>
           </select>
         </div>
       </div>
@@ -346,7 +346,7 @@ const CalculatorView = {
 
     <div class="version">
       <p>
-        version 1.3.0 (24-03-15)<br>
+        version 1.2.0 (24-03-15)<br>
         <strong>DVC Calculator by <a href="https://github.com/jbilee">jbilee</a></strong>
       </p>
       <p>

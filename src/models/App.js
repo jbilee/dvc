@@ -27,7 +27,7 @@ class App {
     this.renderTraitOptions();
 
     // Modal
-    if (this.language === "ko") {
+    if (language === "ko") {
       ModalView.renderKo();
       $("#lang-ko").classList.add("lang__selected");
     } else {
@@ -37,18 +37,26 @@ class App {
     if (priorityOn) $("#priority").checked = true;
     if (noSerious) $("#noserious").checked = true;
     if (prefStat !== "none") $(`#pref-${prefStat}`).checked = true;
-    this.favorites.render(this.language);
+    this.favorites.render(language);
     this.addListeners();
 
     // Clipboard
-    $("#btn-clipboard").addEventListener("click", () =>
-      copyResults(this.language)
-    );
+    $("#btn-clipboard").addEventListener("click", () => copyResults(language));
   }
 
   renderApp() {
-    if (this.language === "ko") return CalculatorView.renderKo();
-    else return CalculatorView.renderEn();
+    if (this.language === "ko") {
+      const css = newElem("link");
+      css.rel = "stylesheet";
+      css.href = "./index.css";
+      document.head.append(css);
+      return CalculatorView.renderKo();
+    }
+    const css = newElem("link");
+    css.rel = "stylesheet";
+    css.href = "./en.css";
+    document.head.append(css);
+    return CalculatorView.renderEn();
   }
 
   renderDragonOptions(favorites) {
