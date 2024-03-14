@@ -192,6 +192,25 @@ p {
   color: #ff5733;
 }
 
+.lang-selector {
+  display: flex;
+  gap: 12px;
+}
+
+.lang__default {
+  border-radius: 4px;
+  padding: 6px 12px;
+  background: #4f4f4f;
+  color: white;
+  text-align: center;
+  flex: 1 0 0;
+  cursor: pointer;
+}
+
+.lang__selected {
+  background: rgb(19, 93, 213);
+}
+
 @media (min-width: 600px) {
   #preferences > div {
     max-width: calc(85px * 5 + 6px * 4);
