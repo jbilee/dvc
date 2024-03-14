@@ -84,7 +84,7 @@ const FinderView = {
 
   <div class="version">
     <p>
-      version 1.3.0 (24-03-15)<br>
+      version 1.2.0 (24-03-15)<br>
       <strong>DVC Calculator by <a href="https://github.com/jbilee">jbilee</a></strong>
     </p>
     <p>
@@ -185,7 +185,7 @@ const FinderView = {
 
   <div class="version">
       <p>
-        version 1.3.0 (24-03-15)<br>
+        version 1.2.0 (24-03-15)<br>
         <strong>DVC Calculator by <a href="https://github.com/jbilee">jbilee</a></strong>
       </p>
       <p>
