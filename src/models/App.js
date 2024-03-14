@@ -187,7 +187,7 @@ class App {
       this.renderDragonOptions(newFavs);
     });
 
-    const currentFavIds = this.favorites.getFavoriteIds("id");
+    const currentFavIds = this.favorites.getFavoriteIds();
     currentFavIds.forEach((id) => {
       const elem = $(`div[data-id="${id}"]`);
       const deleteBtn = elem.querySelector("button");
