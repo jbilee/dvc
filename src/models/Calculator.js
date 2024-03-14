@@ -17,10 +17,11 @@ class Calculator {
     this.addListeners();
   }
 
-  updateSettings({ priorityOn, prefStat, noSerious }) {
+  updateSettings({ priorityOn, prefStat, noSerious, language }) {
     this.highestFirst = priorityOn;
     this.preference = prefStat;
     this.noSerious = noSerious;
+    this.language = language;
   }
 
   addListeners() {
@@ -52,16 +53,15 @@ class Calculator {
 
     // Display warning if highest value is more than one
     if (!this.poisonedValue && maxStatNames.length > 1)
-      displayToast("맹독은 한 가지 노력치에만 적용할 수 있습니다.", 3700);
+      displayToast(
+        this.language === "ko"
+          ? "맹독은 한 가지 노력치에만 적용할 수 있습니다."
+          : "Venom applies to only one stat.",
+        3700
+      );
 
     const maxStatName = maxStatNames[0];
     const maxStatValue = currentStats.getMaxStatValue();
-
-    // Turn off check if highest starting value is 0
-    if (!this.poisonedValue && maxStatValue === 0) {
-      e.target.checked = false;
-      return displayToast("맹독을 적용할 대상이 없습니다.", 1700);
-    }
 
     if (e.target.checked) {
       $(`#start-${maxStatName}`).value =
@@ -98,7 +98,7 @@ class Calculator {
     // Initialize variables
     const dragonName = e.target.value;
     const { traitsEn, traitsKo } = dragonList.find(
-      (data) => data.name[0] === dragonName
+      ({ name }) => name[0] === dragonName
     );
     const firstTrait = $("#trait1");
     const secondTrait = $("#trait2");
@@ -112,9 +112,10 @@ class Calculator {
     this.resetCheckboxes();
 
     // Fill in trait dropdown choices
-    firstTrait.textContent = traitsKo[0];
+    firstTrait.textContent = this.language === "ko" ? traitsKo[0] : traitsEn[0];
     firstTrait.value = traitsEn[0];
-    secondTrait.textContent = traitsKo[1];
+    secondTrait.textContent =
+      this.language === "ko" ? traitsKo[1] : traitsEn[1];
     secondTrait.value = traitsEn[1];
   }
 
@@ -774,7 +775,14 @@ class Calculator {
 
       case "Immersed": {
         const goal = this.copyStats(base);
-        const maxStatKey = base.getMaxStatName()[0];
+        const highestStats = base.getMaxStatName();
+        const maxStatKey = highestStats.includes(this.preference)
+          ? this.preference
+          : highestStats.includes("strength")
+          ? "strength"
+          : highestStats.includes("intellect")
+          ? "intellect"
+          : highestStats[0];
         let goalValue = this.getOptimizedValue(150 - base[maxStatKey]);
         if (this.highestFirst) goalValue = this.replaceWithNine(goalValue);
         goal[maxStatKey] = base[maxStatKey] + goalValue;
@@ -807,7 +815,9 @@ class Calculator {
 
             if (goal.getMaxStatValue() > 25)
               throw new Error(
-                "현재 기본치로는 평범한 성격을 만들 수 없습니다."
+                this.language === "ko"
+                  ? "현재 기본치로는 평범한 성격을 만들 수 없습니다."
+                  : "It's not possible to train for Dull with current Base stats."
               );
 
             const currentTrainingCounts = countsArray.reduce((sum, cur) => {
@@ -1035,6 +1045,11 @@ class Calculator {
     const highestStats = goal.getMaxStatName();
     const highestValue = goal.getMaxStatValue();
 
+    if (highestValue === 0) {
+      goal[highestReqStat] = this.highestFirst ? 9 : 3;
+      return goal;
+    }
+
     if (
       !highestStats.includes(highestReqStat) ||
       (highestStats.includes(highestReqStat) && highestStats.length > 1)
@@ -1067,6 +1082,12 @@ class Calculator {
     const targetStats = Object.keys(goal).filter(
       (key) => key !== highestReqStat && key !== lowestReqStat
     );
+
+    if (goal.getMaxStatValue() === 0) {
+      goal[highestReqStat] = this.highestFirst ? 9 : 5;
+      targetStats.forEach((stat) => (goal[stat] = this.highestFirst ? 5 : 3));
+      return goal;
+    }
 
     targetStats.forEach((stat) => {
       if (goal[stat] <= goal[lowestReqStat]) {
@@ -1140,11 +1161,15 @@ class Calculator {
 
     if (reqStat < 0)
       throw new Error(
-        `목표치(${endValue})가 기본치(${startValue})보다 낮습니다. 더 높은 목표치를 설정해주세요!`
+        this.language === "ko"
+          ? `목표치(${endValue})가 기본치(${startValue})보다 낮습니다. 더 높은 목표치를 설정해주세요!`
+          : `The Goal(${endValue}) is lower than the Base(${startValue}). Try setting a higher goal!`
       );
     if (EXCLUDED_VALUES.includes(reqStat)) {
       throw new Error(
-        `조합할 수 없는 숫자가 있습니다(${reqStat}). 다른 목표치를 설정해주세요!`
+        this.language === "ko"
+          ? `조합할 수 없는 숫자가 있습니다(${reqStat}). 다른 목표치를 설정해주세요!`
+          : `Impossible to gain ${reqStat} Effort Values by training. Try setting a different goal!`
       );
     }
   }

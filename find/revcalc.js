@@ -1,25 +1,77 @@
 import Stats from "../src/Stats.js";
+import FinderView from "../src/view/FinderView.js";
 import { $, newElem } from "../src/utilities.js";
 import { STAT_LISTS } from "../src/constants.js";
 import { dragonList } from "../src/dd.js";
 import { normalTraits } from "../src/td.js";
 
-dragonList.forEach(({ name: [nameEn, nameKo] }) => {
-  const newOption = newElem("option");
-  newOption.setAttribute("value", nameEn);
-  newOption.textContent = nameKo;
-  $("#dragon-selector").append(newOption);
-});
+let lang;
 
-normalTraits.forEach(({ nameEn, nameKo }) => {
-  const newOption = newElem("option");
-  newOption.setAttribute("value", nameEn);
-  newOption.textContent = nameKo;
-  $("#trait-selector").append(newOption);
-});
+lang = localStorage.getItem("dvct_f") || getLanguage();
+// render
+lang === "ko" ? FinderView.renderKo() : FinderView.renderEn();
+
+if (lang === "ko") {
+  dragonList.forEach(({ name: [nameEn, nameKo] }) => {
+    const newOption = newElem("option");
+    newOption.setAttribute("value", nameEn);
+    newOption.textContent = nameKo;
+    $("#dragon-selector").append(newOption);
+  });
+
+  normalTraits.forEach(({ nameEn, nameKo }) => {
+    const newOption = newElem("option");
+    newOption.setAttribute("value", nameEn);
+    newOption.textContent = nameKo;
+    $("#trait-selector").append(newOption);
+  });
+
+  $("#settings").addEventListener("click", () => {
+    localStorage.setItem("dvct_f", "en-US");
+    location.reload();
+  });
+} else {
+  const sortedDragonNames = dragonList
+    .map(({ name }) => name[0])
+    .sort((a, b) => (a > b ? 1 : -1));
+  const sortedDragons = sortedDragonNames.map((nameEn) =>
+    dragonList.find(({ name }) => name.includes(nameEn))
+  );
+  sortedDragons.forEach(({ name: [nameEn] }) => {
+    const newOption = newElem("option");
+    newOption.setAttribute("value", nameEn);
+    newOption.textContent = nameEn;
+    $("#dragon-selector").append(newOption);
+  });
+
+  const sortedTraitNames = normalTraits
+    .map((item) => item.nameEn)
+    .sort((a, b) => (a > b ? 1 : -1));
+  const sortedTraits = sortedTraitNames.map((name) =>
+    normalTraits.find(({ nameEn }) => nameEn === name)
+  );
+  sortedTraits.forEach(({ nameEn, nameKo }) => {
+    const newOption = newElem("option");
+    newOption.setAttribute("value", nameEn);
+    if (newOption.value === "Dull") newOption.setAttribute("id", nameEn);
+    newOption.textContent = lang === "ko" ? nameKo : nameEn;
+    $("#trait-selector").append(newOption);
+  });
+
+  $("#settings").addEventListener("click", () => {
+    localStorage.setItem("dvct_f", "ko");
+    location.reload();
+  });
+}
 
 $("#btn-find").addEventListener("click", getChangedFields);
 $("#btn-reset").addEventListener("click", reset);
+
+function getLanguage() {
+  const userLanguage = window.navigator.language;
+  if (userLanguage === "ko") return "ko";
+  else return "en-US";
+}
 
 function getChangedFields() {
   // read DOM fields
@@ -31,7 +83,6 @@ function getChangedFields() {
   const requirements = {};
   // read dragon name field
   const dragonName = $("#dragon-selector").value;
-  const checkedHighest = getCheckedTraits();
   const currentTrait = $("#trait-selector").value;
   requirements.lowest = normalTraits
     .filter((trait) => trait.nameEn === currentTrait)
@@ -47,14 +98,10 @@ function getChangedFields() {
     $("#dragon-selector").selectedIndex === 0 ||
     $("#trait-selector").selectedIndex === 0
   ) {
-    alert("드래곤과 드래곤의 현재 성격을 선택해주세요!");
-    return;
-  }
-
-  // Early return 2: user input error (personality user selected and checkboxes don't match)
-  if (!checkedHighest.includes(requirements.highest)) {
     alert(
-      "입력하신 정보로는 드래곤의 초기 성격을 예측할 수 없습니다.\n입력값에 오류가 없는지 확인해주세요."
+      lang === "ko"
+        ? "드래곤과 드래곤의 현재 일반 성격을 선택해주세요!"
+        : "Please select a dragon and its current Basic Personality!"
     );
     return;
   }
@@ -63,9 +110,13 @@ function getChangedFields() {
   const dragonTraits = {};
   dragonList.forEach((data) => {
     if (data.name.includes(dragonName)) {
-      dragonTraits.firstTrait = findTraitData(data.traitsKo[0]);
+      dragonTraits.firstTrait = findTraitData(
+        lang === "ko" ? data.traitsKo[0] : data.traitsEn[0]
+      );
       dragonTraits.firstTrait.baseStats = new Stats(...data[data.traitsEn[0]]);
-      dragonTraits.secondTrait = findTraitData(data.traitsKo[1]);
+      dragonTraits.secondTrait = findTraitData(
+        lang === "ko" ? data.traitsKo[1] : data.traitsEn[1]
+      );
       dragonTraits.secondTrait.baseStats = new Stats(...data[data.traitsEn[1]]);
     }
   });
@@ -97,33 +148,52 @@ function getChangedFields() {
     }
   }
 
-  const resultDiv = $("#find-result");
-
   if (
     dragonTraits.firstTrait.trainedHighest.includes(requirements.highest) &&
     dragonTraits.firstTrait.trainedLowest === requirements.lowest
   ) {
-    resultDiv.innerText = dragonTraits.firstTrait.trait;
+    $("#result__trait").innerText = dragonTraits.firstTrait.trait;
+    $("#result__stats").innerText = getStatsString(
+      dragonTraits.firstTrait.baseStats
+    );
   } else if (
     dragonTraits.secondTrait.trainedHighest.includes(requirements.highest) &&
     dragonTraits.secondTrait.trainedLowest === requirements.lowest
   ) {
-    resultDiv.innerText = dragonTraits.secondTrait.trait;
+    $("#result__trait").innerText = dragonTraits.secondTrait.trait;
+    $("#result__stats").innerText = getStatsString(
+      dragonTraits.secondTrait.baseStats
+    );
   } else {
     // exception handling
     alert(
-      "입력하신 정보로는 드래곤의 초기 성격을 예측할 수 없습니다.\n입력값에 오류가 없는지 확인해주세요."
+      lang === "ko"
+        ? "입력하신 정보로는 드래곤의 초기 성격을 예측할 수 없습니다.\n입력값에 오류가 없는지 확인해주세요."
+        : "Couldn't determine the dragon's starting personality.\nPlease check for any errors in the input fields."
     );
   }
 }
 
+function getStatsString(stats) {
+  const values = STAT_LISTS.base.map((stat) => stats[stat]);
+  return values.join(" ");
+}
+
 function findTraitData(traitName) {
   const statInfo = normalTraits.reduce((final, cur) => {
-    if (cur.nameKo === traitName) {
-      final.highest = cur.highestStat;
-      final.lowest = cur.lowestStat;
+    if (lang === "ko") {
+      if (cur.nameKo === traitName) {
+        final.highest = cur.highestStat;
+        final.lowest = cur.lowestStat;
+      }
+      return final;
+    } else {
+      if (cur.nameEn === traitName) {
+        final.highest = cur.highestStat;
+        final.lowest = cur.lowestStat;
+      }
+      return final;
     }
-    return final;
   }, {});
 
   return {
@@ -131,18 +201,6 @@ function findTraitData(traitName) {
     highestStat: statInfo.highest,
     lowestStat: statInfo.lowest,
   };
-}
-
-function getCheckedTraits() {
-  const checked = [];
-
-  STAT_LISTS.base.forEach((stat) => {
-    if ($(`#checkbox-${stat}`).checked) {
-      checked.push(stat);
-    }
-  });
-
-  return checked;
 }
 
 function reset() {
@@ -156,10 +214,8 @@ function reset() {
   const traitSelector = $("#trait-selector");
   traitSelector.selectedIndex = 0;
 
-  STAT_LISTS.base.forEach((stat) => ($(`#checkbox-${stat}`).checked = false));
-
-  const resultDiv = $("#find-result");
-  resultDiv.innerText = "";
+  $("#result__trait").innerText = "";
+  $("#result__stats").innerText = "";
 }
 
 function getStatSum(a, b) {
