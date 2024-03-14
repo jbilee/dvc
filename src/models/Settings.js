@@ -13,7 +13,7 @@ class Settings {
   }
 
   getLanguage() {
-    const userLanguage = window.navigator.language
+    const userLanguage = window.navigator.language;
     if (userLanguage === "ko") return "ko";
     else return "en-US";
   }
