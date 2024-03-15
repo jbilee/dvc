@@ -157,15 +157,15 @@ class Calculator {
           const adjustedSum = reqSum - 9;
           if (this.preference !== "none") {
             goal[this.preference] += adjustedSum;
-            if (this.preference === "intellect") goal.strength += 9;
-            else goal.intellect += 9;
+            if (this.preference === "strength") goal.intellect += 9;
+            else goal.strength += 9;
           } else {
-            goal.intellect += adjustedSum;
-            goal.strength += 9;
+            goal.strength += adjustedSum;
+            goal.intellect += 9;
           }
         } else {
           if (this.preference !== "none") goal[this.preference] += reqSum;
-          else goal.intellect += reqSum;
+          else goal.strength += reqSum;
         }
 
         return this.printStatFields(goal, "#end-");
@@ -1022,10 +1022,15 @@ class Calculator {
 
   // Print recommended end stats for selected normal trait
   selectNormalTrait(e) {
+    const startingTrait = $("#start-trait-selector").value;
+    const traitSelected = e.target.value;
+
     // Store dragon's base stats
     const base = this.getStatFields("#start-");
 
-    const traitSelected = e.target.value;
+    if (startingTrait === traitSelected)
+      return this.printStatFields(base, "#end-");
+
     const traitIndex = normalTraits.findIndex((trait) => {
       return trait.nameEn === traitSelected;
     });
@@ -1093,31 +1098,15 @@ class Calculator {
       if (goal[stat] <= goal[lowestReqStat]) {
         goal[stat] = goal[lowestReqStat] + 1;
       }
-    });
-
-    STAT_LISTS.base.forEach((stat) => {
-      if (goal[stat] - base[stat] === 0) return;
       while (EXCLUDED_VALUES.includes(goal[stat] - base[stat])) {
         goal[stat] += 1;
       }
-
-      // Optimization
       goal[stat] = this.getOptimizedValue(goal[stat] - base[stat]) + base[stat];
-      if (this.highestFirst) {
-        goal[stat] = this.replaceWithNine(goal[stat] - base[stat]) + base[stat];
-      }
     });
 
-    const highestStats = goal.getMaxStatName();
-    const highestValue = goal.getMaxStatValue();
-
-    if (
-      !highestStats.includes(highestReqStat) ||
-      (highestStats.includes(highestReqStat) && highestStats.length > 1)
-    )
-      goal[highestReqStat] = highestValue + 1;
-
-    // Optimization
+    if (!goal.getMaxStatName().includes(highestReqStat)) {
+      goal[highestReqStat] = goal.getMaxStatValue() + 1;
+    }
     goal[highestReqStat] =
       this.getOptimizedValue(goal[highestReqStat] - base[highestReqStat]) +
       base[highestReqStat];
@@ -1126,6 +1115,19 @@ class Calculator {
       goal[highestReqStat] =
         this.replaceWithNine(goal[highestReqStat] - base[highestReqStat]) +
         base[highestReqStat];
+      targetStats.forEach((stat) => {
+        if (goal[highestReqStat] - goal[stat] > 6) {
+          goal[stat] =
+            this.replaceWithNine(goal[stat] - base[stat]) + base[stat];
+        } else if (goal[highestReqStat] - goal[stat] > 4) {
+          const trainingCounts = getTargetSum(
+            goal[stat] - base[stat],
+            TRAIN_VALUES
+          );
+          if (trainingCounts.includes(5)) goal[stat] += 4;
+          if (trainingCounts.includes(3)) goal[stat] += 2;
+        }
+      });
     }
 
     return goal;

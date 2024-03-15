@@ -32,6 +32,10 @@
   cursor: pointer;
 }
 
+.conditions {
+  display: flex;
+}
+
 .conditions input,
 .conditions label {
   cursor: pointer;
