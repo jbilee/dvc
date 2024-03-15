@@ -18,7 +18,6 @@ class App {
     this.calculator = new Calculator(initialSettings);
     this.favorites = new Favorites();
     this.init(initialSettings);
-    console.log(window.navigator.language);
   }
 
   fixUserData() {

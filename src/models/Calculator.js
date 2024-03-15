@@ -789,8 +789,8 @@ class Calculator {
         if (this.noSerious) {
           if (this.preference !== "none" && this.preference !== maxStatKey)
             goal[this.preference] += 9;
-          else if (maxStatKey !== "intellect") goal.intellect += 9;
-          else goal.strength += 9;
+          else if (maxStatKey !== "strength") goal.strength += 9;
+          else goal.intellect += 9;
         }
         return this.printStatFields(goal, "#end-");
       }
