@@ -1061,6 +1061,12 @@ class Calculator {
     )
       goal[highestReqStat] = highestValue + 1;
 
+    while (
+      EXCLUDED_VALUES.includes(goal[highestReqStat] - base[highestReqStat])
+    ) {
+      goal[highestReqStat] += 1;
+    }
+
     // Optimization
     goal[highestReqStat] =
       this.getOptimizedValue(goal[highestReqStat] - base[highestReqStat]) +
@@ -1104,8 +1110,16 @@ class Calculator {
       goal[stat] = this.getOptimizedValue(goal[stat] - base[stat]) + base[stat];
     });
 
-    if (!goal.getMaxStatName().includes(highestReqStat)) {
+    if (
+      !goal.getMaxStatName().includes(highestReqStat) ||
+      goal.getMaxStatName().length > 1
+    ) {
       goal[highestReqStat] = goal.getMaxStatValue() + 1;
+    }
+    while (
+      EXCLUDED_VALUES.includes(goal[highestReqStat] - base[highestReqStat])
+    ) {
+      goal[highestReqStat] += 1;
     }
     goal[highestReqStat] =
       this.getOptimizedValue(goal[highestReqStat] - base[highestReqStat]) +
