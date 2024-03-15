@@ -161,12 +161,27 @@ class App {
     });
 
     const select = $("#fav-selector");
-    dragonList.forEach(({ name: [nameEn, nameKo] }) => {
-      const newOption = newElem("option");
-      newOption.setAttribute("value", nameEn);
-      newOption.textContent = this.language === "ko" ? nameKo : nameEn;
-      select.append(newOption);
-    });
+    if (this.language === "ko") {
+      dragonList.forEach(({ name: [nameEn, nameKo] }) => {
+        const newOption = newElem("option");
+        newOption.setAttribute("value", nameEn);
+        newOption.textContent = nameKo;
+        select.append(newOption);
+      });
+    } else {
+      const sortedNames = dragonList
+        .map(({ name }) => name[0])
+        .sort((a, b) => (a > b ? 1 : -1));
+      const sortedDragons = sortedNames.map((nameEn) =>
+        dragonList.find(({ name }) => name.includes(nameEn))
+      );
+      sortedDragons.forEach(({ name: [nameEn] }) => {
+        const newOption = newElem("option");
+        newOption.setAttribute("value", nameEn);
+        newOption.textContent = nameEn;
+        select.append(newOption);
+      });
+    }
 
     const btn = $("#add-fav");
     btn.addEventListener("click", () => {
