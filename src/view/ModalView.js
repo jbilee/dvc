@@ -102,14 +102,16 @@ const ModalView = {
       if (e.target === container) {
         container.classList.add("modal__inactive");
         $("#fav-selector").selectedIndex = 0;
-        document.body.removeAttribute("style");
+        $("body").removeAttribute("style");
+        $("html").removeAttribute("style");
       }
     });
 
     $("#close-modal").addEventListener("click", () => {
       container.classList.add("modal__inactive");
       $("#fav-selector").selectedIndex = 0;
-      document.body.removeAttribute("style");
+      $("body").removeAttribute("style");
+      $("html").removeAttribute("style");
     });
   },
   renderEn() {
@@ -213,14 +215,16 @@ const ModalView = {
       if (e.target === container) {
         container.classList.add("modal__inactive");
         $("#fav-selector").selectedIndex = 0;
-        document.body.removeAttribute("style");
+        $("body").removeAttribute("style");
+        $("html").removeAttribute("style");
       }
     });
 
     $("#close-modal").addEventListener("click", () => {
       container.classList.add("modal__inactive");
       $("#fav-selector").selectedIndex = 0;
-      document.body.removeAttribute("style");
+      $("body").removeAttribute("style");
+      $("html").removeAttribute("style");
     });
   },
 };

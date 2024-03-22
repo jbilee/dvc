@@ -165,7 +165,7 @@ const CalculatorView = {
 
       <div class="version">
         <p>
-          version 1.2.5 (24-03-15)<br>
+          version 1.3.0 (24-03-22)<br>
           <strong>DVC Calculator by <a href="https://github.com/jbilee">jbilee</a></strong>
         </p>
         <p>
@@ -176,6 +176,8 @@ const CalculatorView = {
             target="_blank">앙그라님의 일반성격 계산법</a><br>
           <a href="https://community.withhive.com/dvc/ko/board/22/113031"
             target="_blank">순대국밥할매님의 성격 정리</a><br>
+          <a href="https://dragon-village-collection.fandom.com/wiki/Dragon_Village_Collection_Wiki"
+            target="_blank">Fandom 위키</a><br>
         </p>
         <p>
           <strong>버그/데이터 오류 제보:</strong> <a href="https://open.kakao.com/o/stYLmUCf">오픈카톡</a>
@@ -346,7 +348,7 @@ const CalculatorView = {
 
       <div class="version">
         <p>
-          version 1.2.5 (24-03-15)<br>
+        version 1.3.0 (24-03-22)<br>
           <strong>DVC Calculator by <a href="https://github.com/jbilee">jbilee</a></strong>
         </p>
         <p>
@@ -357,6 +359,8 @@ const CalculatorView = {
             target="_blank">Normal personality calculations by 앙그라</a><br>
           <a href="https://community.withhive.com/dvc/ko/board/22/113031"
             target="_blank">Personality requirements by 순대국밥할매</a><br>
+          <a href="https://dragon-village-collection.fandom.com/wiki/Dragon_Village_Collection_Wiki"
+            target="_blank">Fandom Wiki</a><br>
         </p>
         <p>
           If you come across any bugs or other issues, please DM me on <a href="https://twitter.com/horocol">Twitter</a>!
