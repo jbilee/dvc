@@ -148,6 +148,42 @@ class Calculator {
     const base = this.getStatFields("#start-");
 
     switch (traitSelected) {
+      case "Mischievous": {
+        const goal = this.copyStats(base);
+        STAT_LISTS.base.forEach((stat) => {
+          const valueString = goal[stat].toString();
+          if (valueString.endsWith("0")) {
+            goal[stat] += 9;
+          }
+          if (valueString.endsWith("5")) {
+            goal[stat] += 14;
+          } else {
+            while (!goal[stat].toString().endsWith("9")) {
+              goal[stat] += 1;
+            }
+          }
+        });
+        // Needs to be refactored to consider the shortest training path IF HB releases stat values other than 0s, 5s and 10s
+        while (goal.hasSameStats()) {
+          const allValues = Object.values(goal);
+          const duplicateValues = STAT_LISTS.base.filter(
+            (stat) =>
+              allValues.indexOf(goal[stat]) !==
+              allValues.lastIndexOf(goal[stat])
+          );
+          const targetStat = duplicateValues.includes(this.preference)
+            ? this.preference
+            : duplicateValues.includes("strength")
+            ? "strength"
+            : duplicateValues.includes("intellect")
+            ? "intellect"
+            : "agility";
+          goal[targetStat] += 10;
+        }
+
+        return this.printStatFields(goal, "#end-");
+      }
+
       case "Meticulous": {
         const goal = this.copyStats(base);
         const startSum = base.getTotal();

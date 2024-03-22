@@ -69,7 +69,7 @@ $("#btn-reset").addEventListener("click", reset);
 
 function getLanguage() {
   const userLanguage = window.navigator.language;
-  if (userLanguage === "ko") return "ko";
+  if (userLanguage === "ko" || userLanguage === "ko-KR") return "ko";
   else return "en-US";
 }
 

@@ -156,7 +156,8 @@ class App {
     const settingsBtn = $("#settings");
     settingsBtn.addEventListener("click", () => {
       $(".modal").classList.remove("modal__inactive");
-      document.body.setAttribute("style", "overflow: hidden;");
+      $("body").style.overflow = "hidden";
+      $("html").style.paddingRight = "17px";
     });
 
     const select = $("#fav-selector");
