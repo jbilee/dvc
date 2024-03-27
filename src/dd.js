@@ -328,6 +328,7 @@ export const dragonList = [
   { name: ["Petra", "페트라"], traitsEn: ["Calm", "Quiet"], traitsKo: ["차분한", "냉정한"], Calm: [15, 0, 30, 15], Quiet: [0, 5, 20, 5] },
   { name: ["Penguingon", "펭귄곤"], traitsEn: ["Docile", "Hardy"], traitsKo: ["온순한", "노력하는"], Docile: [0, 10, 10, 20], Hardy: [0, 5, 25, 0] },
   { name: ["Porta", "포르타"], traitsEn: ["Calm", "Brave"], traitsKo: ["차분한", "용감한"], Calm: [10, 0, 25, 10], Brave: [0, 30, 10, 10] },
+  { name: ["Poseidon", "포세이돈"], traitsEn: ["Careful", "Quiet"], traitsKo: ["신중한", "냉정한"], Careful: [10, 10, 20, 0], Quiet: [0, 15, 30, 15] },
   { name: ["Poison River", "포이즌 리버"], traitsEn: ["Hasty", "QuickWitted"], traitsKo: ["성급한", "눈치빠른"], Hasty: [25, 10, 10, 0], QuickWitted: [30, 5, 0, 0] },
   { name: ["Popomo", "포포모"], traitsEn: ["Naive", "Lax"], traitsKo: ["천진난만한", "촐랑대는"], Naive: [20, 0, 10, 10], Lax: [10, 10, 0, 30] },
   { name: ["Popon", "포폰"], traitsEn: ["Bashful", "Lax"], traitsKo: ["수줍은", "촐랑대는"], Bashful: [10, 0, 10, 20], Lax: [5, 5, 0, 20] },
