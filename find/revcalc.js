@@ -1,5 +1,5 @@
 import Stats from "../src/Stats.js";
-import FinderView from "../src/view/FinderView.js";
+import FinderView from "../src/views/FinderView.js";
 import { $, newElem } from "../src/utilities.js";
 import { STAT_LISTS } from "../src/constants.js";
 import { dragonList } from "../src/dd.js";

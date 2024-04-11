@@ -3,8 +3,8 @@ import copyResults from "../../calc/toolcommands.js";
 import Calculator from "./Calculator.js";
 import Favorites from "./Favorites.js";
 import Settings from "./Settings.js";
-import ModalView from "../view/ModalView.js";
-import CalculatorView from "../view/CalculatorView.js";
+import ModalView from "../views/ModalView.js";
+import CalculatorView from "../views/CalculatorView.js";
 import { dragonList } from "../dd.js";
 import { normalTraits, specialTraits } from "../td.js";
 
