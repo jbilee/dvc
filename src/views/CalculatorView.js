@@ -29,7 +29,7 @@ const CalculatorView = {
               <div class="stat-label">순발력</div>
             </div>
             <div class="input-container">
-              <input type="number" inputmode="numeric" min="0" max="30" value="0" id="start-agility"
+              <input type="number" inputmode="numeric" min="0" max="999" value="0" id="start-agility"
                 class="stat-field agility">
             </div>
             <div>
@@ -43,7 +43,7 @@ const CalculatorView = {
               <div class="stat-label">근력</div>
             </div>
             <div class="input-container">
-              <input type="number" inputmode="numeric" min="0" max="30" value="0" id="start-strength"
+              <input type="number" inputmode="numeric" min="0" max="999" value="0" id="start-strength"
                 class="stat-field strength">
             </div>
             <div>
@@ -57,7 +57,7 @@ const CalculatorView = {
               <div class="stat-label">집중력</div>
             </div>
             <div class="input-container">
-              <input type="number" inputmode="numeric" min="0" max="30" value="0" id="start-focus"
+              <input type="number" inputmode="numeric" min="0" max="999" value="0" id="start-focus"
                 class="stat-field focus">
             </div>
             <div>
@@ -71,7 +71,7 @@ const CalculatorView = {
               <div class="stat-label">지력</div>
             </div>
             <div class="input-container">
-              <input type="number" inputmode="numeric" min="0" max="30" value="0" id="start-intellect"
+              <input type="number" inputmode="numeric" min="0" max="999" value="0" id="start-intellect"
                 class="stat-field intellect">
             </div>
             <div>
@@ -217,7 +217,7 @@ const CalculatorView = {
               <div class="stat-label">Agility</div>
             </div>
             <div class="input-container">
-              <input type="number" inputmode="numeric" min="0" max="30" value="0" id="start-agility"
+              <input type="number" inputmode="numeric" min="0" max="999" value="0" id="start-agility"
                 class="stat-field agility">
             </div>
             <div>
@@ -231,7 +231,7 @@ const CalculatorView = {
               <div class="stat-label">Strength</div>
             </div>
             <div class="input-container">
-              <input type="number" inputmode="numeric" min="0" max="30" value="0" id="start-strength"
+              <input type="number" inputmode="numeric" min="0" max="999" value="0" id="start-strength"
                 class="stat-field strength">
             </div>
             <div>
@@ -245,7 +245,7 @@ const CalculatorView = {
               <div class="stat-label">Focus</div>
             </div>
             <div class="input-container">
-              <input type="number" inputmode="numeric" min="0" max="30" value="0" id="start-focus"
+              <input type="number" inputmode="numeric" min="0" max="999" value="0" id="start-focus"
                 class="stat-field focus">
             </div>
             <div>
@@ -259,7 +259,7 @@ const CalculatorView = {
               <div class="stat-label">Intellect</div>
             </div>
             <div class="input-container">
-              <input type="number" inputmode="numeric" min="0" max="30" value="0" id="start-intellect"
+              <input type="number" inputmode="numeric" min="0" max="999" value="0" id="start-intellect"
                 class="stat-field intellect">
             </div>
             <div>
