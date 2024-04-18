@@ -1,11 +1,12 @@
 import Stats from "../Stats.js";
-import { $, displayToast, getArraySum, getFirstKeyByValue, getTargetSum } from "../utilities.js";
+import { $, displayToast, getArraySum, getFirstKeyByValue, getTargetSum, isShallowCopy } from "../utilities.js";
 import { TRAIN_VALUES, EXCLUDED_VALUES, STAT_LISTS } from "../constants.js";
 import { dragonList } from "../dd.js";
 import { normalTraits, specialTraits } from "../td.js";
 
 class Calculator {
   constructor(settings) {
+    this.selectedDragonStats = null;
     this.poisonedValue = null;
     this.updateSettings(settings);
     this.addListeners();
@@ -100,6 +101,7 @@ class Calculator {
     const dragonName = $("#dragon-selector").value;
     const dragonData = dragonList.find((data) => data.name[0] === dragonName);
     const dragonStats = dragonData[traitSelected];
+    this.selectedDragonStats = new Stats(...dragonStats);
 
     // Fill in base stats
     STAT_LISTS.start.forEach((stat, i) => ($(stat).value = dragonStats[i]));
@@ -185,11 +187,11 @@ class Calculator {
         const goal = this.copyStats(base);
         const baseStatValues = Object.values(base);
         const valueSet = new Set(baseStatValues);
-
+        
         if (valueSet.size === 1) {
           const increments = this.highestFirst
-            ? [curFocus + 54, curFocus + 36, curFocus + 18]
-            : [curFocus + 45, curFocus + 30, curFocus + 15];
+          ? [curFocus + 54, curFocus + 36, curFocus + 18]
+          : [curFocus + 45, curFocus + 30, curFocus + 15];
           if (this.preference !== "none" && this.preference !== "focus") {
             goal[this.preference] = increments.shift();
             const remainingStats = STAT_LISTS.base.filter((stat) => stat !== "focus" && stat !== this.preference);
@@ -204,34 +206,145 @@ class Calculator {
           }
           return this.printStatFields(goal, "#end-");
         }
+        
+        if (isShallowCopy(this.selectedDragonStats, base)) {
 
-        if (curFocus === 15) {
-          const zeroStat = getFirstKeyByValue(base, 0); // Will cause error if lowest stat isn't 0 (such as when user enters values themselves)
-          const remainingStats = STAT_LISTS.base.filter((x) => x !== zeroStat && x !== "focus");
-          const changesToMake = this.compareTrainingCounts(base, remainingStats, [30, 45]);
-          changesToMake.forEach((change) => {
-            goal[change.statName] = change.value;
-          });
-          const highestGoal = goal.getMaxStatName();
-          if (goal[highestGoal] - base[highestGoal] > 30 && goal[highestGoal] - base[highestGoal] !== 45) {
-            goal[highestGoal] = 46;
-          }
-          const thirtyRemains = getFirstKeyByValue(goal, 30);
-          if (goal[highestGoal] === 46 && thirtyRemains) {
-            goal[thirtyRemains] = 31;
-          }
+        } else {
 
-          const [currentHighestStat] = goal.getMaxStatName();
-          goal[currentHighestStat] =
-            this.getOptimizedValue(goal[currentHighestStat] - base[currentHighestStat]) + base[currentHighestStat];
-
-          if (this.highestFirst) {
-            goal[currentHighestStat] =
-              this.replaceWithNine(goal[currentHighestStat] - base[currentHighestStat]) + base[currentHighestStat];
-          }
-
-          return this.printStatFields(goal, "#end-");
         }
+
+        // if (curFocus === 15) {
+        //   const lowestStatValue = Math.min(...Object.values(base));
+        //   if (lowestStatValue === 0) {
+        //     const remainingStats = STAT_LISTS.base.filter((stat) => {
+        //       const lowestStats = STAT_LISTS.base.filter((stat) => goal[stat] === lowestStatValue);
+        //       if (lowestStats.length > 1) {
+        //         const [filteredStat] = lowestStats.includes(this.preference)
+        //           ? lowestStats.filter((stat) => stat !== this.preference)
+        //           : lowestStats.includes("strength")
+        //           ? lowestStats.filter((stat) => stat !== "strength")
+        //           : lowestStats.filter((stat) => stat !== "intellect");
+        //         return stat !== filteredStat && stat !== "focus";
+        //       } else return stat !== getFirstKeyByValue(base, lowestStatValue) && stat !== "focus";
+        //     });
+
+        //     const remainingValues = remainingStats.map((stat) => goal[stat]);
+        //     const lowestRemainingStat =
+        //       new Set(remainingValues).size === 1
+        //         ? remainingStats.includes(this.preference)
+        //           ? remainingStats.filter((stat) => stat !== this.preference)[0]
+        //           : remainingStats.filter((stat) => stat !== "intellect")[0]
+        //         : Math.max(...remainingValues) === 36 || Math.max(...remainingValues) >= 40
+        //         ? remainingStats.filter((stat) => goal[stat] === Math.min(...remainingValues))[0]
+        //         : remainingStats.filter((stat) => goal[stat] === Math.max(...remainingValues))[0];
+        //     const highestRemainingStat = remainingStats.filter((stat) => stat !== lowestRemainingStat)[0];
+
+        //     while (
+        //       goal[lowestRemainingStat] < curFocus ||
+        //       Math.abs(goal[lowestRemainingStat] - curFocus) < 15 ||
+        //       EXCLUDED_VALUES.includes(goal[lowestRemainingStat] - base[lowestRemainingStat])
+        //     ) {
+        //       goal[lowestRemainingStat] += 1;
+        //     }
+        //     goal[lowestRemainingStat] =
+        //       this.getOptimizedValue(goal[lowestRemainingStat] - base[lowestRemainingStat]) + base[lowestRemainingStat];
+
+        //     while (
+        //       goal[highestRemainingStat] < goal[lowestRemainingStat] ||
+        //       Math.abs(goal[highestRemainingStat] - goal[lowestRemainingStat]) < 15 ||
+        //       EXCLUDED_VALUES.includes(goal[highestRemainingStat] - base[highestRemainingStat])
+        //     ) {
+        //       goal[highestRemainingStat] += 1;
+        //     }
+        //     goal[highestRemainingStat] =
+        //       this.getOptimizedValue(goal[highestRemainingStat] - base[highestRemainingStat]) +
+        //       base[highestRemainingStat];
+        //     if (this.highestFirst) {
+        //       goal[highestRemainingStat] =
+        //         this.replaceWithNine(goal[highestRemainingStat] - base[highestRemainingStat]) +
+        //         base[highestRemainingStat];
+        //     }
+        //     return this.printStatFields(goal, "#end-");
+        //   } else {
+        //     let remainingStats = ["agility", "strength", "intellect"];
+        //     let reservedStat = null;
+        //     if (Object.values(base).includes(30)) {
+        //       const thirties = remainingStats.filter((stat) => goal[stat] === 30);
+        //       if (thirties.length > 1) {
+        //         const remainingThirty = thirties.includes("agility")
+        //           ? "agility"
+        //           : thirties.includes(this.preference)
+        //           ? thirties.filter((stat) => stat !== this.preference)[0]
+        //           : thirties.includes("strength")
+        //           ? thirties.filter((stat) => stat !== "strength")[0]
+        //           : "intellect";
+        //         remainingStats = remainingStats.filter((stat) => stat !== remainingThirty);
+        //       } else {
+        //         remainingStats = remainingStats.filter((stat) => stat !== thirties[0]);
+        //       }
+        //     }
+        //     console.log(remainingStats)
+        //     const remainingValues = remainingStats.map((stat) => goal[stat]);
+        //     const [highestRemainingStat] =
+        //       new Set(remainingValues).size === 1
+        //         ? remainingStats.includes(this.preference)
+        //           ? this.preference
+        //           : "strength"
+        //         : remainingStats.filter((stat) => {
+        //             const maxValue = Math.max(...remainingValues);
+        //             const maxStats = remainingStats.filter((stat) => goal[stat] === maxValue);
+        //             if (maxStats.length === 1) return goal[stat] === Math.max(...remainingValues);
+        //             return maxStats.includes(this.preference)
+        //               ? stat === this.preference
+        //               : maxStats.includes("strength")
+        //               ? stat === "strength"
+        //               : maxStats.includes("intellect")
+        //               ? stat === "intellect"
+        //               : goal[stat] === Math.max(...remainingValues);
+        //           });
+        //     const lowestRemainingStat = remainingStats.filter((stat) => stat !== highestRemainingStat)[0];
+        //     const middleRemainingStat = remainingStats.filter(
+        //       (stat) => stat !== highestRemainingStat && stat !== lowestRemainingStat
+        //     )[0];
+
+        //     while (
+        //       goal[lowestRemainingStat] < curFocus ||
+        //       Math.abs(goal[lowestRemainingStat] - curFocus) < 15 ||
+        //       EXCLUDED_VALUES.includes(goal[lowestRemainingStat] - base[lowestRemainingStat])
+        //     ) {
+        //       goal[lowestRemainingStat] += 1;
+        //     }
+        //     goal[lowestRemainingStat] =
+        //       this.getOptimizedValue(goal[lowestRemainingStat] - base[lowestRemainingStat]) + base[lowestRemainingStat];
+
+        //     while (
+        //       goal[middleRemainingStat] < goal[lowestRemainingStat] ||
+        //       Math.abs(goal[middleRemainingStat] - goal[lowestRemainingStat]) < 15 ||
+        //       EXCLUDED_VALUES.includes(goal[middleRemainingStat] - base[middleRemainingStat])
+        //     ) {
+        //       goal[middleRemainingStat] += 1;
+        //     }
+        //     goal[middleRemainingStat] =
+        //       this.getOptimizedValue(goal[middleRemainingStat] - base[middleRemainingStat]) + base[middleRemainingStat];
+
+        //     while (
+        //       goal[highestRemainingStat] < goal[middleRemainingStat] ||
+        //       Math.abs(goal[highestRemainingStat] - goal[middleRemainingStat]) < 15 ||
+        //       EXCLUDED_VALUES.includes(goal[highestRemainingStat] - base[highestRemainingStat])
+        //     ) {
+        //       goal[highestRemainingStat] += 1;
+        //     }
+        //     goal[highestRemainingStat] =
+        //       this.getOptimizedValue(goal[highestRemainingStat] - base[highestRemainingStat]) +
+        //       base[highestRemainingStat];
+        //     if (this.highestFirst) {
+        //       goal[highestRemainingStat] =
+        //         this.replaceWithNine(goal[highestRemainingStat] - base[highestRemainingStat]) +
+        //         base[highestRemainingStat];
+        //     }
+        //     return this.printStatFields(goal, "#end-");
+        //   }
+        // }
 
         if (curFocus === 30) {
           const zeroStat = getFirstKeyByValue(base, 0);
