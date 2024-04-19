@@ -16,7 +16,7 @@ export const isShallowCopy = (obj1, obj2) => {
     if (obj1[stat] === obj2[stat]) checks.push(true);
     else checks.push(false);
   }
-  return checks.includes(false) ? false : true;
+  return checks.length < 1 ? false : checks.includes(false) ? false : true;
 };
 
 export const getTargetSum = (targetSum, numbers, memo = {}) => {

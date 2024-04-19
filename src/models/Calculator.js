@@ -187,11 +187,11 @@ class Calculator {
         const goal = this.copyStats(base);
         const baseStatValues = Object.values(base);
         const valueSet = new Set(baseStatValues);
-        
+
         if (valueSet.size === 1) {
           const increments = this.highestFirst
-          ? [curFocus + 54, curFocus + 36, curFocus + 18]
-          : [curFocus + 45, curFocus + 30, curFocus + 15];
+            ? [curFocus + 54, curFocus + 36, curFocus + 18]
+            : [curFocus + 45, curFocus + 30, curFocus + 15];
           if (this.preference !== "none" && this.preference !== "focus") {
             goal[this.preference] = increments.shift();
             const remainingStats = STAT_LISTS.base.filter((stat) => stat !== "focus" && stat !== this.preference);
@@ -206,11 +206,20 @@ class Calculator {
           }
           return this.printStatFields(goal, "#end-");
         }
-        
-        if (isShallowCopy(this.selectedDragonStats, base)) {
 
-        } else {
-
+        // at what value of focus can we consider checking for a lowest that satisfies the 15-point gap between that lowest and focus?
+        // at what value of focus do we need to consider keeping focus as the lowest? at: < 15
+        // if focus < 15, look for next lowest number at least 15 apart from focus
+        // if already 15 apart from focus, keep that as the next lowest
+        // then continue on -- except 
+        if (!isShallowCopy(this.selectedDragonStats, base)) {
+          const lowestValue = Math.min(...baseStatValues);
+          console.log(lowestValue)
+          if (curFocus < 15) {
+            const curStats = [base.agility, base.strength, base.intellect];
+            const secondLowest = curFocus + 15
+          }
+          return this.printStatFields(goal, "#end-");
         }
 
         // if (curFocus === 15) {
@@ -347,6 +356,18 @@ class Calculator {
         // }
 
         if (curFocus === 30) {
+          const zeroStats = STAT_LISTS.base.filter((stat) => base[stat] === 0);
+          console.log(zeroStats);
+          const excludedZero =
+            zeroStats.length === 1
+              ? zeroStats[0]
+              : zeroStats.includes(this.preference)
+              ? zeroStats.filter((stat) => stat !== this.preference)[0]
+              : zeroStats.includes("strength")
+              ? zeroStats.filter((stat) => stat !== "strength")
+              : zeroStats[1];
+          console.log(excludedZero);
+
           const zeroStat = getFirstKeyByValue(base, 0);
           const remainingStats = STAT_LISTS.base.filter((x) => x !== zeroStat && x !== "focus");
           const changesToMake = this.compareTrainingCounts(base, remainingStats, [15, 45]); // This line needs to be refactored if any of the other stats is bigger than 15
