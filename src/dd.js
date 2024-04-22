@@ -356,7 +356,7 @@ export const dragonList = [
   { name: ["Poison River", "포이즌 리버"], traitsEn: ["Hasty", "QuickWitted"], traitsKo: ["성급한", "눈치빠른"], Hasty: [25, 10, 10, 0], QuickWitted: [30, 5, 0, 0] },
   { name: ["Popomo", "포포모"], traitsEn: ["Naive", "Lax"], traitsKo: ["천진난만한", "촐랑대는"], Naive: [20, 0, 10, 10], Lax: [10, 10, 0, 30] },
   { name: ["Popon", "포폰"], traitsEn: ["Bashful", "Lax"], traitsKo: ["수줍은", "촐랑대는"], Bashful: [10, 0, 10, 20], Lax: [5, 5, 0, 20] },
-  // { name: ["Portunus", "폴투누스"], traitsEn: ["TraitA", "TraitB"], traitsKo: ["", ""], TraitA: [0, 0, 0, 0], TraitB: [0, 0, 0, 0] },
+  { name: ["Portunus", "폴투누스"], traitsEn: ["Brave", "Docile"], traitsKo: ["용감한", "온순한"], Brave: [0, 25, 10, 10], Docile: [0, 10, 10, 30] },
   { name: ["Frankenstein Dragon", "프랑켄슈타곤"], traitsEn: ["Docile", "Hardy"], traitsKo: ["온순한", "노력하는"], Docile: [0, 5, 5, 20], Hardy: [5, 0, 25, 0] },
   { name: ["Frame", "프레임"], traitsEn: ["Hardy", "Docile"], traitsKo: ["노력하는", "온순한"], Hardy: [0, 10, 20, 0], Docile: [0, 10, 10, 30] },
   { name: ["Frog Dragon", "프로그"], traitsEn: ["Quirky", "Calm"], traitsKo: ["변덕쟁이", "차분한"], Quirky: [10, 25, 0, 10], Calm: [10, 0, 20, 10] },
