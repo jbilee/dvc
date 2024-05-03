@@ -328,6 +328,7 @@ export const dragonList = [
   { name: ["Tail Dragon", "테일 드래곤"], traitsEn: ["QuickWitted", "Naive"], traitsKo: ["눈치빠른", "천진난만한"], QuickWitted: [20, 5, 0, 0], Naive: [30, 0, 10, 10] },
   { name: ["Toarnesce", "토네스"], traitsEn: ["Careful", "Quiet"], traitsKo: ["신중한", "냉정한"], Careful: [10, 10, 25, 0], Quiet: [0, 15, 30, 15] },
   { name: ["Totem Dragon", "토템"], traitsEn: ["Careful", "Calm"], traitsKo: ["신중한", "차분한"], Careful: [10, 10, 25, 0], Calm: [5, 0, 20, 5] },
+  { name: ["Tonton", "톤톤"], traitsEn: ["QuickWitted", "Lax"], traitsKo: ["눈치빠른", "촐랑대는"], QuickWitted: [20, 5, 0, 0], Lax: [10, 10, 0, 20] },
   { name: ["Tutankhagon", "투탕카곤"], traitsEn: ["Calm", "Careful"], traitsKo: ["차분한", "신중한"], Calm: [10, 0, 30, 10], Careful: [10, 10, 30, 0] },
   { name: ["Tropheus", "트로페우스"], traitsEn: ["Bold", "Quiet"], traitsKo: ["대담한", "냉정한"], Bold: [10, 20, 0, 0], Quiet: [0, 15, 30, 15] },
   { name: ["T-Rex Dragon", "티라노 드래곤"], traitsEn: ["Hasty", "Quirky"], traitsKo: ["성급한", "변덕쟁이"], Hasty: [30, 15, 15, 0], Quirky: [15, 30, 0, 15] },
