@@ -49,10 +49,7 @@ class Favorites {
     if (this.#favorites.length === 1) $("#favorites").innerHTML = "";
     const newRow = this.renderNewFav({ nameEn, nameKo, id }, lang);
     this.saveToStorage();
-    displayToast(
-      lang === "ko" ? "설정이 저장됐습니다." : "Saved changes.",
-      2000
-    );
+    displayToast(lang === "ko" ? "설정이 저장됐습니다." : "Saved changes.", 2000);
     return newRow;
   }
 
@@ -64,22 +61,15 @@ class Favorites {
       const parentElem = $("#favorites");
       const defaultElem = newElem("div");
       defaultElem.id = "fav-default";
-      defaultElem.textContent =
-        lang === "ko" ? "즐겨찾기한 드래곤이 없습니다." : "No Favorites";
+      defaultElem.textContent = lang === "ko" ? "즐겨찾기한 드래곤이 없습니다." : "No Favorites";
       parentElem.append(defaultElem);
     }
     this.saveToStorage();
-    displayToast(
-      lang === "ko" ? "설정이 저장됐습니다." : "Saved changes.",
-      2000
-    );
+    displayToast(lang === "ko" ? "설정이 저장됐습니다." : "Saved changes.", 2000);
   }
 
   renderMessage(lang) {
-    displayToast(
-      lang === "ko" ? "이미 추가한 드래곤입니다." : "Already in Favorites.",
-      2000
-    );
+    displayToast(lang === "ko" ? "이미 추가한 드래곤입니다." : "Already in Favorites.", 2000);
   }
 
   renderNewFav({ nameEn, nameKo, id }, lang) {
