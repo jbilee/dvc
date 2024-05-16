@@ -188,6 +188,18 @@ class Calculator {
         const baseStatValues = Object.values(base);
         const valueSet = new Set(baseStatValues);
 
+        if (goal.agility === 0 && goal.strength === 10 && goal.focus === 10 && goal.intellect === 0) {
+          goal.strength = 64;
+          if (this.preference === "agility") {
+            goal.agility = 45;
+            goal.intellect = 27;
+          } else {
+            goal.intellect = 45;
+            goal.agility = 27;
+          }
+          return this.printStatFields(goal, "#end-");
+        }
+
         if (valueSet.size === 1) {
           const increments = this.highestFirst
             ? [curFocus + 54, curFocus + 36, curFocus + 18]

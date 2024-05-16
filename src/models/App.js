@@ -21,20 +21,14 @@ class App {
   }
 
   fixUserData() {
-    console.log("Fixing existing data...");
-    const REGEX = /^[a-zA-Z]*$/;
     const storageData = JSON.parse(localStorage.getItem("dvcfvs"));
     if (!storageData || storageData.length <= 0) return;
-    if (!REGEX.test(storageData[0].name)) {
-      const fixedData = storageData.map((data) => {
-        const searchName = data.name;
-        const dragon = dragonList.find(
-          ({ name: [, nameKo] }) => searchName === nameKo
-        );
-        return { nameEn: dragon.name[0], nameKo: dragon.name[1], id: data.id };
-      });
-      localStorage.setItem("dvcfvs", JSON.stringify(fixedData));
-    }
+    const faultyData = storageData.find((obj) => obj.nameKo === "페이몬");
+    if (!faultyData) return;
+    console.log("Fixing Paimon data...");
+    const index = storageData.findIndex((obj) => obj.nameKo === "페이몬");
+    storageData[index].nameKo = "파이몬";
+    localStorage.setItem("dvcfvs", JSON.stringify(storageData));
   }
 
   init({ priorityOn, noSerious, prefStat, language }) {
@@ -93,12 +87,8 @@ class App {
         $("#dragon-selector").append(newOption);
       });
     } else {
-      const sortedNames = dragonList
-        .map(({ name }) => name[0])
-        .sort((a, b) => (a > b ? 1 : -1));
-      const sortedDragons = sortedNames.map((nameEn) =>
-        dragonList.find(({ name }) => name.includes(nameEn))
-      );
+      const sortedNames = dragonList.map(({ name }) => name[0]).sort((a, b) => (a > b ? 1 : -1));
+      const sortedDragons = sortedNames.map((nameEn) => dragonList.find(({ name }) => name.includes(nameEn)));
       sortedDragons.forEach(({ name: [nameEn] }) => {
         if (favorites.includes(nameEn)) return;
         const newOption = newElem("option");
@@ -126,12 +116,8 @@ class App {
         $("#special-trait-selector").append(newOption);
       });
     } else {
-      const sortedNames = specialTraits
-        .map((item) => item.nameEn)
-        .sort((a, b) => (a > b ? 1 : -1));
-      const sortedTraits = sortedNames.map((name) =>
-        specialTraits.find(({ nameEn }) => nameEn === name)
-      );
+      const sortedNames = specialTraits.map((item) => item.nameEn).sort((a, b) => (a > b ? 1 : -1));
+      const sortedTraits = sortedNames.map((name) => specialTraits.find(({ nameEn }) => nameEn === name));
       sortedTraits.forEach(({ nameEn, nameKo }) => {
         const newOption = newElem("option");
         newOption.setAttribute("value", nameEn);
@@ -145,8 +131,7 @@ class App {
   resetDragonOptions() {
     $("#dragon-selector").innerHTML = "";
     const defaultOption = newElem("option");
-    defaultOption.textContent =
-      this.language === "ko" ? "드래곤 선택" : "Select dragon";
+    defaultOption.textContent = this.language === "ko" ? "드래곤 선택" : "Select dragon";
     defaultOption.setAttribute("disabled", true);
     defaultOption.setAttribute("selected", true);
     $("#dragon-selector").append(defaultOption);
@@ -169,12 +154,8 @@ class App {
         select.append(newOption);
       });
     } else {
-      const sortedNames = dragonList
-        .map(({ name }) => name[0])
-        .sort((a, b) => (a > b ? 1 : -1));
-      const sortedDragons = sortedNames.map((nameEn) =>
-        dragonList.find(({ name }) => name.includes(nameEn))
-      );
+      const sortedNames = dragonList.map(({ name }) => name[0]).sort((a, b) => (a > b ? 1 : -1));
+      const sortedDragons = sortedNames.map((nameEn) => dragonList.find(({ name }) => name.includes(nameEn)));
       sortedDragons.forEach(({ name: [nameEn] }) => {
         const newOption = newElem("option");
         newOption.setAttribute("value", nameEn);
@@ -185,10 +166,7 @@ class App {
 
     const btn = $("#add-fav");
     btn.addEventListener("click", () => {
-      const newRow = this.favorites.addFavorites(
-        $("#fav-selector").value,
-        this.language
-      );
+      const newRow = this.favorites.addFavorites($("#fav-selector").value, this.language);
       if (!newRow) return;
       const newRowBtn = newRow.querySelector("button");
       newRowBtn.addEventListener("click", () => {

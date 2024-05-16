@@ -5,12 +5,7 @@ export const COUNT_PREFIX = "train-count-";
 
 export const STAT_LISTS = {
   base: ["agility", "strength", "focus", "intellect"],
-  start: [
-    "#start-agility",
-    "#start-strength",
-    "#start-focus",
-    "#start-intellect",
-  ],
+  start: ["#start-agility", "#start-strength", "#start-focus", "#start-intellect"],
   end: ["#end-agility", "#end-strength", "#end-focus", "#end-intellect"],
 };
 
