@@ -1,11 +1,5 @@
 import { $, displayToast } from "../src/utilities.js";
-import {
-  STAT_LISTS,
-  COUNT_PREFIX,
-  CLIP_TEXT_KO,
-  CLIP_TEXT_EN,
-  NUMBER_REGEX,
-} from "../src/constants.js";
+import { STAT_LISTS, COUNT_PREFIX, CLIP_TEXT_KO, CLIP_TEXT_EN, NUMBER_REGEX } from "../src/constants.js";
 
 export default function copyResults(lang) {
   const text = [];
@@ -17,9 +11,7 @@ export default function copyResults(lang) {
       counts.forEach((child) => {
         if (child.innerText) {
           if (!NUMBER_REGEX.test(child.innerText)) {
-            const numberText = child.innerText
-              .replace("(x", "")
-              .replace(")", "");
+            const numberText = child.innerText.replace("(x", "").replace(")", "");
             const lastText = spanText.slice(-1);
             spanText += lastText.repeat(Number(numberText) - 1);
           } else {
@@ -41,10 +33,7 @@ export default function copyResults(lang) {
       displayToast(lang === "ko" ? "복사되었습니다." : "Copied!", 1200);
     },
     () => {
-      displayToast(
-        lang === "ko" ? "복사에 실패했습니다." : "Failed to copy.",
-        1200
-      );
+      displayToast(lang === "ko" ? "복사에 실패했습니다." : "Failed to copy.", 1200);
     }
   );
 }

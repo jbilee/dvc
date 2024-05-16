@@ -22,10 +22,7 @@ export const getTargetSum = (targetSum, numbers, memo = {}) => {
     const remainderResult = getTargetSum(remainder, numbers, memo);
     if (remainderResult !== null) {
       const combination = [...remainderResult, num];
-      if (
-        shortestCombination === null ||
-        combination.length < shortestCombination.length
-      ) {
+      if (shortestCombination === null || combination.length < shortestCombination.length) {
         shortestCombination = combination;
       }
     }

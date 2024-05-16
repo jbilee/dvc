@@ -30,34 +30,19 @@ class Settings {
   updatePriority(selection) {
     this.#settings.priorityOn = selection;
     localStorage.setItem("dvct_d", JSON.stringify(this.#settings));
-    displayToast(
-      this.#settings.language === "ko"
-        ? "설정이 저장됐습니다."
-        : "Saved changes.",
-      2000
-    );
+    displayToast(this.#settings.language === "ko" ? "설정이 저장됐습니다." : "Saved changes.", 2000);
   }
 
   updateSerious(selection) {
     this.#settings.noSerious = selection;
     localStorage.setItem("dvct_d", JSON.stringify(this.#settings));
-    displayToast(
-      this.#settings.language === "ko"
-        ? "설정이 저장됐습니다."
-        : "Saved changes.",
-      2000
-    );
+    displayToast(this.#settings.language === "ko" ? "설정이 저장됐습니다." : "Saved changes.", 2000);
   }
 
   updatePreference(selection) {
     this.#settings.prefStat = selection;
     localStorage.setItem("dvct_d", JSON.stringify(this.#settings));
-    displayToast(
-      this.#settings.language === "ko"
-        ? "설정이 저장됐습니다."
-        : "Saved changes.",
-      2000
-    );
+    displayToast(this.#settings.language === "ko" ? "설정이 저장됐습니다." : "Saved changes.", 2000);
   }
 
   updateLanguage(language) {
