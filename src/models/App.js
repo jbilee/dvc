@@ -23,12 +23,19 @@ class App {
   fixUserData() {
     const storageData = JSON.parse(localStorage.getItem("dvcfvs"));
     if (!storageData || storageData.length <= 0) return;
-    const faultyData = storageData.find((obj) => obj.nameKo === "페이몬");
-    if (!faultyData) return;
-    console.log("Fixing Paimon data...");
-    const index = storageData.findIndex((obj) => obj.nameKo === "페이몬");
-    storageData[index].nameKo = "파이몬";
-    localStorage.setItem("dvcfvs", JSON.stringify(storageData));
+    const faultyData1 = storageData.find((obj) => obj.nameKo === "페이몬");
+    const faultyData2 = storageData.find((obj) => obj.nameEn === "Haemagon");
+    if (faultyData1) {
+      console.log("Fixing 페이몬...");
+      const index = storageData.findIndex((obj) => obj.nameKo === "페이몬");
+      storageData[index].nameKo = "파이몬";
+      localStorage.setItem("dvcfvs", JSON.stringify(storageData));
+    } else if (faultyData2) {
+      console.log("Fixing Haemagon...");
+      const index = storageData.findIndex((obj) => obj.nameEn === "Haemagon");
+      storageData[index].nameEn = "Seahorse Dragon";
+      localStorage.setItem("dvcfvs", JSON.stringify(storageData));
+    }
   }
 
   init({ priorityOn, noSerious, prefStat, language }) {
