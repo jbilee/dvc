@@ -364,11 +364,11 @@ class Calculator {
             goal[remainingZero] = 21;
           } else if (zeroes.includes("intellect")) {
             const remainingZero = zeroes.filter((stat) => stat !== "intellect");
-            goal.intellect = 54;
+            goal.strength = 54;
             goal[remainingZero] = 21;
           } else {
             const remainingZero = zeroes.filter((stat) => stat !== "agility");
-            goal.agility = 54;
+            goal.strength = 54;
             goal[remainingZero] = 21;
           }
           return this.printStatFields(goal, "#end-");
