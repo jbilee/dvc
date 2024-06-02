@@ -346,6 +346,34 @@ class Calculator {
           return this.printStatFields(goal, "#end-");
         }
 
+        if (
+          curFocus === 5 &&
+          goal.getMaxStatValue() === 25 &&
+          baseStatValues.indexOf(0) !== baseStatValues.lastIndexOf(0)
+        ) {
+          const zeroes = STAT_LISTS.base.filter((stat) => base[stat] === 0);
+          const highestStat = goal.getMaxStatName();
+          goal[highestStat] = 37;
+          if (this.preference !== "none" && zeroes.includes(this.preference)) {
+            const remainingZero = zeroes.filter((stat) => stat !== this.preference);
+            goal[this.preference] = 54;
+            goal[remainingZero] = 21;
+          } else if (zeroes.includes("strength")) {
+            const remainingZero = zeroes.filter((stat) => stat !== "strength");
+            goal.strength = 54;
+            goal[remainingZero] = 21;
+          } else if (zeroes.includes("intellect")) {
+            const remainingZero = zeroes.filter((stat) => stat !== "intellect");
+            goal.intellect = 54;
+            goal[remainingZero] = 21;
+          } else {
+            const remainingZero = zeroes.filter((stat) => stat !== "agility");
+            goal.agility = 54;
+            goal[remainingZero] = 21;
+          }
+          return this.printStatFields(goal, "#end-");
+        }
+
         if (curFocus < 15) {
           const goals = [curFocus + 15, curFocus + 30, curFocus + 45];
           const excludedValues = [];
