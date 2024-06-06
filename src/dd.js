@@ -347,7 +347,7 @@ export const dragonList = [
   { name: ["Tutankhagon", "투탕카곤"], traitsEn: ["Calm", "Careful"], traitsKo: ["차분한", "신중한"], Calm: [10, 0, 30, 10], Careful: [10, 10, 30, 0] },
   { name: ["Tropheus", "트로페우스"], traitsEn: ["Bold", "Quiet"], traitsKo: ["대담한", "냉정한"], Bold: [10, 20, 0, 0], Quiet: [0, 15, 30, 15] },
   { name: ["T-Rex Dragon", "티라노 드래곤"], traitsEn: ["Hasty", "Quirky"], traitsKo: ["성급한", "변덕쟁이"], Hasty: [30, 15, 15, 0], Quirky: [15, 30, 0, 15] },
-  { name: ["Tiamat", "티아매트"], traitsEn: ["Quick Witted", "Quirky"], traitsKo: ["눈치빠른", "변덕쟁이"], "Quick Witted": [0, 0, 0, 0], Quirky: [10, 25, 0, 10] },
+  { name: ["Tiamat", "티아매트"], traitsEn: ["Quick Witted", "Quirky"], traitsKo: ["눈치빠른", "변덕쟁이"], "Quick Witted": [30, 10, 0, 0], Quirky: [10, 25, 0, 10] },
   { name: ["Tilki", "틸키"], traitsEn: ["Naive", "Docile"], traitsKo: ["천진난만한", "온순한"], Naive: [30, 0, 15, 15], Docile: [0, 15, 15, 30] },
   { name: ["Timber Dragon", "팀버"], traitsEn: ["Docile", "Adamant"], traitsKo: ["온순한", "고집있는"], Docile: [0, 10, 10, 25], Adamant: [10, 30, 10, 0] },
   { name: ["Pharaogon", "파라오곤"], traitsEn: ["Quiet", "Careful"], traitsKo: ["냉정한", "신중한"], Quiet: [0, 10, 30, 10], Careful: [10, 10, 30, 0] },
