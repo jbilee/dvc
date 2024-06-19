@@ -1,3 +1,5 @@
+@import url("../src/app.css");
+
 .grid-container {
   box-sizing: border-box;
   display: grid;
@@ -27,7 +29,7 @@
   border-radius: 4px;
   font-size: 0.8rem;
   color: white;
-  background-color: #4f4f4f;
+  background-color: var(--secondary-color);
   padding: 4px 8px;
   width: 50px;
   cursor: pointer;
@@ -79,7 +81,8 @@ p {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  height: 200px;
+  min-height: 60px;
+  max-height: 200px;
   overflow: auto;
   text-align: center;
   font-weight: 700;
@@ -91,7 +94,7 @@ p {
   align-items: center;
   border-radius: 6px;
   background: rgba(19, 93, 213, 0.2);
-  border: 1px dashed rgb(19, 93, 213);
+  border: 1px dashed var(--primary-color);
   padding: 6px 18px;
   font-weight: 700;
 }
@@ -115,7 +118,7 @@ p {
 
 .notice {
   font-weight: 700;
-  color: #ff5733;
+  color: var(--warning-color);
 }
 
 .modal {
@@ -193,7 +196,7 @@ p {
 }
 
 .warning {
-  color: #ff5733;
+  color: var(--warning-color);
 }
 
 .lang-selector {
@@ -204,7 +207,7 @@ p {
 .lang__default {
   border-radius: 4px;
   padding: 6px 12px;
-  background: #4f4f4f;
+  background: var(--secondary-color);
   color: white;
   text-align: center;
   flex: 1 0 0;
@@ -212,7 +215,7 @@ p {
 }
 
 .lang__selected {
-  background: rgb(19, 93, 213);
+  background: var(--primary-color);
 }
 
 @media (min-width: 600px) {

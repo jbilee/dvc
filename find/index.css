@@ -68,7 +68,7 @@
     gap: 10px;
   }
 
-  #main-box {
+  .main {
     max-width: 650px;
   }
 }

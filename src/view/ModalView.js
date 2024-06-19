@@ -96,7 +96,7 @@ const ModalView = {
     `;
 
     container.append(modalWindow);
-    $("#main-content").append(container);
+    $(".main__content").append(container);
 
     container.addEventListener("click", (e) => {
       if (e.target === container) {
@@ -209,7 +209,7 @@ const ModalView = {
     `;
 
     container.append(modalWindow);
-    $("#main-content").append(container);
+    $(".main__content").append(container);
 
     container.addEventListener("click", (e) => {
       if (e.target === container) {
