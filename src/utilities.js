@@ -51,13 +51,13 @@ export const handleDecreaseButton = (targetElem, min) => {
 };
 
 export const displayToast = (message, timeout) => {
-  const container = $("#main-content");
+  const container = $(".main__content");
   if (container.lastElementChild.id === "toast") {
     container.lastElementChild.remove();
   }
 
   const newToast = document.createElement("div");
-  newToast.id = "toast";
+  newToast.classList.add("toast");
   newToast.innerText = message;
 
   container.appendChild(newToast);

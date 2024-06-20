@@ -2,14 +2,14 @@ import { $ } from "../utilities.js";
 
 const FinderView = {
   renderKo() {
-    $("#main-box").innerHTML = `
+    $(".main").innerHTML = `
       <span id="settings"><img src="../img/langko.png" width="24"></span>
-      <div id="header">
-        <button class="menu-button" onclick="location.href='https://jbilee.github.io/dvc/calc/'">노력치 계산기</button>
-        <button class="menu-button" disabled>성격 탐색기</button>
+      <div class="main__header">
+        <button class="header__button" onclick="location.href='https://jbilee.github.io/dvc/calc/'">노력치 계산기</button>
+        <button class="header__button" disabled>성격 탐색기</button>
       </div>
 
-      <div id="main-content">
+      <div class="main__content">
         <div id="result">
         <div class="result-row">
           <strong>시작 성격:</strong> <div id="result__trait"></div>
@@ -73,7 +73,7 @@ const FinderView = {
           <button id="btn-reset">입력 초기화</button> <br>
         </div>
 
-        <div id="tips">
+        <div>
           <h2>[툴 이용가이드]</h2>
           <ul>
             <li>드래곤의 현재 예상 성격 중 일반 성격과 괄호 안에 있는 훈련된 수치를 입력합니다.</li>
@@ -82,7 +82,7 @@ const FinderView = {
         </div>
       </div>
 
-      <div class="version">
+      <div class="main__version">
         <p>
         version 1.3.0 (24-03-22)<br>
           <strong>DVC Calculator by <a href="https://github.com/jbilee">jbilee</a></strong>
@@ -105,14 +105,14 @@ const FinderView = {
     `;
   },
   renderEn() {
-    $("#main-box").innerHTML = `
+    $(".main").innerHTML = `
       <span id="settings"><img src="../img/langen.png" width="24"></span>
-      <div id="header">
-        <button class="menu-button" onclick="location.href='https://jbilee.github.io/dvc/calc/'">Calculator</button>
-        <button class="menu-button" disabled>Finder</button>
+      <div class="main__header">
+        <button class="header__button" onclick="location.href='https://jbilee.github.io/dvc/calc/'">Calculator</button>
+        <button class="header__button" disabled>Finder</button>
       </div>
 
-      <div id="main-content">
+      <div class="main__content">
         <div id="result">
           <div class="result-row">
             <strong>Starting Personality:</strong> <div id="result__trait"></div>
@@ -176,7 +176,7 @@ const FinderView = {
           <button id="btn-reset">Reset</button> <br>
         </div>
 
-        <div id="tips">
+        <div>
           <h2>[Tips]</h2>
           <ul>
             <li>Enter the Basic Personality from one of the dragon's current expected personalities, along with the trained Effort Values.</li>
@@ -185,7 +185,7 @@ const FinderView = {
         </div>
       </div>
 
-      <div class="version">
+      <div class="main__version">
         <p>
         version 1.3.0 (24-03-22)<br>
           <strong>DVC Calculator by <a href="https://github.com/jbilee">jbilee</a></strong>

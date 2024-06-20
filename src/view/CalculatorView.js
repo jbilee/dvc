@@ -2,15 +2,15 @@ import { $ } from "../utilities.js";
 
 const CalculatorView = {
   renderKo() {
-    $("#main-box").innerHTML = `
+    $(".main").innerHTML = `
       <span id="settings"><img src="../img/settings.png" width="24"></span>
 
-      <div id="header">
-        <button class="menu-button" disabled>노력치 계산기</button>
-        <button class="menu-button" onclick="location.href='https://jbilee.github.io/dvc/find/'">성격 탐색기</button>
+      <div class="main__header">
+        <button class="header__button" disabled>노력치 계산기</button>
+        <button class="header__button" onclick="location.href='https://jbilee.github.io/dvc/find/'">성격 탐색기</button>
       </div>
 
-      <div id="main-content">
+      <div class="main__content">
         <div id="calculations">
           <div class="grid-container">
             <div></div>
@@ -151,7 +151,7 @@ const CalculatorView = {
           </div>
         </div>
 
-        <div id="tips">
+        <div>
           <h2>[툴 이용가이드]</h2>
           <ul>
             <li><b>결과 복사</b> 버튼으로 훈련 횟수를 텍스트 형식으로 복사할 수 있습니다.</li>
@@ -163,7 +163,7 @@ const CalculatorView = {
         </div>
       </div>
 
-      <div class="version">
+      <div class="main__version">
         <p>
           version 1.3.0 (24-03-22)<br>
           <strong>DVC Calculator by <a href="https://github.com/jbilee">jbilee</a></strong>
@@ -186,15 +186,15 @@ const CalculatorView = {
     `;
   },
   renderEn() {
-    $("#main-box").innerHTML = `
+    $(".main").innerHTML = `
       <span id="settings"><img src="../img/settings.png" width="24"></span>
 
-      <div id="header">
-        <button class="menu-button" disabled>Calculator</button>
-        <button class="menu-button" onclick="location.href='https://jbilee.github.io/dvc/find/'">Finder</button>
+      <div class="main__header">
+        <button class="header__button" disabled>Calculator</button>
+        <button class="header__button" onclick="location.href='https://jbilee.github.io/dvc/find/'">Finder</button>
       </div>
 
-      <div id="main-content">
+      <div class="main__content">
         <div id="calculations">
           <div class="grid-container">
             <div></div>
@@ -335,7 +335,7 @@ const CalculatorView = {
           </div>
         </div>
 
-        <div id="tips">
+        <div>
           <h2>[Tips]</h2>
           <ul>
             <li>Use the <b>Copy</b> button to copy the recommended training sessions to clipboard.</li>
@@ -346,7 +346,7 @@ const CalculatorView = {
         </div>
       </div>
 
-      <div class="version">
+      <div class="main__version">
         <p>
         version 1.3.0 (24-03-22)<br>
           <strong>DVC Calculator by <a href="https://github.com/jbilee">jbilee</a></strong>

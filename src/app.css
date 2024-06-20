@@ -1,3 +1,11 @@
+:root {
+  --primary-color: rgb(19, 93, 213);
+  --primary-color-light: rgb(155, 232, 255);
+  --secondary-color: #4f4f4f;
+  --secondary-color-light: rgb(152, 152, 152);
+  --warning-color: #ff5733;
+}
+
 * {
   font-family: "Noto Sans KR", sans-serif;
   font-size: 16px;
@@ -44,19 +52,19 @@ span#settings {
   padding: 18px;
 }
 
-#main-box {
+.main {
   position: relative;
   display: flex;
   justify-content: center;
   flex-direction: column;
 }
 
-#header {
+.main__header {
   text-align: center;
   padding-bottom: 12px;
 }
 
-#main-content {
+.main__content {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -84,7 +92,7 @@ button {
   cursor: pointer;
 }
 
-.menu-button {
+.header__button {
   border: none;
   border-radius: 6px;
   color: white;
@@ -95,7 +103,7 @@ button {
   cursor: pointer;
 }
 
-.menu-button:disabled {
+.header__button:disabled {
   background-color: rgb(152, 152, 152);
   cursor: default;
 }
@@ -148,13 +156,12 @@ span.three {
   background-color: rgb(99, 169, 0);
 }
 
-.version {
+.main__version {
   margin-top: 50px;
   text-align: end;
-  width: 100%;
 }
 
-.version * {
+.main__version * {
   font-family: Arial;
   font-size: 0.8rem;
 }
@@ -174,7 +181,7 @@ a:visited {
     top: 43px;
   }
 
-  #header {
+  .main__header {
     text-align: center;
     padding: 35px 0px;
   }
@@ -204,7 +211,7 @@ a:visited {
     width: 135px;
   }
 
-  .menu-button {
+  .header__button {
     font-size: 18px;
     margin: 0px 8px;
     padding: 8px 14px;
@@ -218,7 +225,7 @@ a:visited {
   }
 }
 
-#toast {
+.toast {
   position: fixed;
   z-index: 5;
   border-radius: 8px;
@@ -229,7 +236,7 @@ a:visited {
   transition: opacity 2s;
 }
 
-#toast.active {
+.toast.active {
   opacity: 0.7;
   bottom: 2.2rem;
 }

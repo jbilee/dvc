@@ -1,3 +1,5 @@
+@import url("../src/app.css");
+
 .grid-container {
   box-sizing: border-box;
   display: grid;
@@ -78,7 +80,8 @@ p {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  height: 200px;
+  min-height: 60px;
+  max-height: 200px;
   overflow: auto;
   text-align: center;
   font-weight: 700;
