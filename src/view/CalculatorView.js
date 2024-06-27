@@ -3,7 +3,7 @@ import { $ } from "../utilities.js";
 const CalculatorView = {
   renderKo() {
     $(".main").innerHTML = `
-      <span id="settings"><img src="../img/settings.png" width="24"></span>
+      <span id="settings"><img src="../img/settings.svg" width="24"></span>
 
       <div class="main__header">
         <button class="header__button" disabled>노력치 계산기</button>
@@ -187,7 +187,7 @@ const CalculatorView = {
   },
   renderEn() {
     $(".main").innerHTML = `
-      <span id="settings"><img src="../img/settings.png" width="24"></span>
+      <span id="settings"><img src="../img/settings.svg" width="24"></span>
 
       <div class="main__header">
         <button class="header__button" disabled>Calculator</button>

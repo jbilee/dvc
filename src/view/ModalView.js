@@ -14,7 +14,7 @@ const ModalView = {
     modalWindow.innerHTML = `
     <div class="modal-header">
       <h2>설정</h2>
-      <div id="close-modal"><img src="../img/close.png" width="18px"></div>
+      <div id="close-modal"><img src="../img/close.svg" width="18px"></div>
     </div>
     <div class="modal-option">
       <span class="helper warning">*설정은 기기 또는 브라우저별로 저장됩니다. 기기를 변경하거나 캐시를 삭제하면 설정도 초기화됩니다.</span>
@@ -127,7 +127,7 @@ const ModalView = {
     modalWindow.innerHTML = `
     <div class="modal-header">
       <h2>Settings</h2>
-      <div id="close-modal"><img src="../img/close.png" width="18px"></div>
+      <div id="close-modal"><img src="../img/close.svg" width="18px"></div>
     </div>
     <div class="modal-option">
       <span class="helper warning">*Settings are unique to each device or browser. If you change devices or delete your browser's cache, any saved settings will be reset as well.</span>
