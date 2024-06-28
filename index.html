@@ -21,13 +21,41 @@
 
   <title>DVC툴</title>
   <link rel="icon" href="./img/favicon.png">
-  <link rel="stylesheet" href="./src/index.css">
+  <link rel="stylesheet" href="./src/app.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
   <main>
-    <button class="header__button" onclick="location.href='https://jbilee.github.io/dvc/calc/'">노력치 계산기</button>
-    <button class="header__button" onclick="location.href='https://jbilee.github.io/dvc/find/'">성격 탐색기</button>
+    <div class="main-body">
+      <h1>DVC툴</h1>
+      <p>DVC툴은 모바일게임 드래곤빌리지 컬렉션 유저를 위한 편의성 툴입니다.</p>
+      <div class="card-container">
+        <div class="card">
+          <div class="card__title">
+            노력치 계산기
+          </div>
+          <div class="card__content">
+            <p>드래곤 성격작에 필요한 훈련치를 계산해주는 툴입니다.</p>
+            <p>특정 성격을 만들 때 필요한 노력치의 추천 훈련 루트를 찾아줍니다.</p>
+          </div>
+          <div class="card__link"><a href="./calc/index.html">→ 계산기로 이동</a></div>
+        </div>
+        <div class="card">
+          <div class="card__title">
+            성격 탐색기
+          </div>
+          <div class="card__content">
+            <p>이미 훈련된 드래곤의 초기 성격을 찾아주는 툴입니다.</p>
+            <p>현재 성격과 훈련되어 있는 수치를 입력하면 초기 성격을 알 수 있습니다.</p>
+
+          </div>
+          <div class="card__link"><a href="./find/index.html">→ 탐색기로 이동</a></div>
+        </div>
+      </div>
+    </div>
   </main>
 </body>
 
