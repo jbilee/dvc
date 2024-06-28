@@ -67,11 +67,6 @@ span#settings {
   flex-direction: column;
 }
 
-.main__header {
-  text-align: center;
-  padding-bottom: 12px;
-}
-
 .main__content {
   display: flex;
   flex-direction: column;
@@ -84,6 +79,22 @@ span#settings {
   display: grid;
   grid-template-columns: 1fr;
   gap: 2rem;
+}
+
+.info {
+  margin-top: 40px;
+  border: 2px dashed var(--primary-color);
+  border-radius: 0.75rem;
+  padding: 1rem 2rem;
+}
+
+.info__icon {
+  width: 48px;
+  height: 48px;
+}
+
+.info p:first-of-type {
+  margin-top: 0;
 }
 
 @media (min-width: 600px) {
@@ -100,6 +111,9 @@ span#settings {
   }
   .card {
     max-width: 320px;
+  }
+  .info {
+    max-width: 656px;
   }
 }
 
@@ -122,13 +136,13 @@ span#settings {
   color: var(--primary-color);
 }
 
-.card__link a,
-.card__link a:hover {
+.main-body a,
+.main-body a:hover {
   text-decoration: none;
 }
 
-.card__link a:active,
-.card__link a:hover {
+.main-body a:active,
+.main-body a:hover {
   color: var(--secondary-color-light);
 }
 
@@ -150,22 +164,6 @@ span#settings {
 
 button {
   cursor: pointer;
-}
-
-.header__button {
-  border: none;
-  border-radius: 6px;
-  color: white;
-  background-color: rgb(19, 93, 213);
-  margin: 0px 8px;
-  padding: 6px 10px;
-  width: 120px;
-  cursor: pointer;
-}
-
-.header__button:disabled {
-  background-color: rgb(152, 152, 152);
-  cursor: default;
 }
 
 .buttons {
@@ -237,15 +235,6 @@ a:visited {
 }
 
 @media (min-width: 800px) {
-  span#settings {
-    top: 43px;
-  }
-
-  .main__header {
-    text-align: center;
-    padding: 35px 0px;
-  }
-
   .stat-mobile-view {
     display: none;
   }
@@ -269,13 +258,6 @@ a:visited {
   #normal-trait-selector,
   #special-trait-selector {
     width: 135px;
-  }
-
-  .header__button {
-    font-size: 18px;
-    margin: 0px 8px;
-    padding: 8px 14px;
-    width: 200px;
   }
 
   .buttons > button {

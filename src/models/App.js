@@ -192,7 +192,7 @@ class App {
       const elem = $(`div[data-id="${id}"]`);
       const deleteBtn = elem.querySelector("button");
       deleteBtn.addEventListener("click", () => {
-        this.favorites.removeFavorites(elem);
+        this.favorites.removeFavorites(elem, this.language);
         const newFavs = this.favorites.getFavorites(this.language);
         this.resetDragonOptions();
         this.renderDragonOptions(newFavs);

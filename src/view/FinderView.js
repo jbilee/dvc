@@ -4,10 +4,6 @@ const FinderView = {
   renderKo() {
     $(".main").innerHTML = `
       <span id="settings"><img src="../img/langko.png" width="24"></span>
-      <div class="main__header">
-        <button class="header__button" onclick="location.href='https://jbilee.github.io/dvc/calc/'">노력치 계산기</button>
-        <button class="header__button" disabled>성격 탐색기</button>
-      </div>
 
       <div class="main__content">
         <div id="result">
@@ -84,7 +80,7 @@ const FinderView = {
 
       <div class="main__version">
         <p>
-        version 1.3.0 (24-03-22)<br>
+        version 1.3.1 (24-06-28)<br>
           <strong>DVC Calculator by <a href="https://github.com/jbilee">jbilee</a></strong>
         </p>
         <p>
@@ -107,10 +103,6 @@ const FinderView = {
   renderEn() {
     $(".main").innerHTML = `
       <span id="settings"><img src="../img/langen.png" width="24"></span>
-      <div class="main__header">
-        <button class="header__button" onclick="location.href='https://jbilee.github.io/dvc/calc/'">Calculator</button>
-        <button class="header__button" disabled>Finder</button>
-      </div>
 
       <div class="main__content">
         <div id="result">
@@ -187,7 +179,7 @@ const FinderView = {
 
       <div class="main__version">
         <p>
-        version 1.3.0 (24-03-22)<br>
+        version 1.3.1 (24-06-28)<br>
           <strong>DVC Calculator by <a href="https://github.com/jbilee">jbilee</a></strong>
         </p>
         <p>
