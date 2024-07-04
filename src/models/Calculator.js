@@ -180,6 +180,29 @@ class Calculator {
         return this.printStatFields(goal, "#end-");
       }
 
+      case "Cute": {
+        const goal = this.copyStats(base);
+        const startSum = base.getTotal();
+        const reqSum = 99 - startSum;
+
+        if (this.noSerious) {
+          const adjustedSum = reqSum - 9;
+          if (this.preference !== "none" && this.preference !== "strength") {
+            goal[this.preference] += adjustedSum;
+            if (this.preference === "agility") goal.intellect += 9;
+            else goal.agility += 9;
+          } else {
+            goal.intellect += adjustedSum;
+            goal.agility += 9;
+          }
+        } else {
+          if (this.preference !== "none" && this.preference !== "strength") goal[this.preference] += reqSum;
+          else goal.intellect += reqSum;
+        }
+
+        return this.printStatFields(goal, "#end-");
+      }
+
       case "Distracted": {
         const curFocus = base.focus;
         const goal = this.copyStats(base);
