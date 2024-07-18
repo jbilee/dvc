@@ -135,6 +135,7 @@ export const dragonList = [
   { name: ["Varunas", "바루나스"], traitsEn: ["Calm", "Quiet"], traitsKo: ["차분한", "냉정한"], Calm: [10, 0, 30, 10], Quiet: [0, 10, 30, 10] },
   { name: ["Vargr", "바르그"], traitsEn: ["Quiet", "Adamant"], traitsKo: ["냉정한", "고집있는"], Quiet: [0, 5, 20, 5], Adamant: [10, 25, 10, 0] },
   { name: ["Barian", "바리안"], traitsEn: ["Quiet", "Careful"], traitsKo: ["냉정한", "신중한"], Quiet: [0, 10, 30, 10], Careful: [10, 10, 30, 0] },
+  { name: ["Baba", "바바"], traitsEn: ["Bashful", "Calm"], traitsKo: ["수줍은", "차분한"], Bashful: [10, 0, 10, 30], Calm: [10, 0, 30, 10] },
   { name: ["Dumb Blue Dragon", "바부 청룡"], traitsEn: ["Docile", "Rash"], traitsKo: ["온순한", "덜렁대는"], Docile: [0, 15, 15, 30], Rash: [30, 10, 0, 10] },
   { name: ["Vaska", "바스카"], traitsEn: ["Quiet", "Careful"], traitsKo: ["냉정한", "신중한"], Quiet: [0, 5, 20, 5], Careful: [5, 5, 20, 0] },
   { name: ["Baskerville", "바스커빌"], traitsEn: ["Adamant", "Quick Witted"], traitsKo: ["고집있는", "눈치빠른"], Adamant: [10, 25, 10, 0], "Quick Witted": [30, 0, 0, 10] },
