@@ -38,7 +38,7 @@ export const dragonList = [
   { name: ["Noah", "노아"], traitsEn: ["Calm", "Docile"], traitsKo: ["차분한", "온순한"], Calm: [10, 0, 25, 10], Docile: [0, 10, 10, 25] },
   { name: ["Nox", "녹스"], traitsEn: ["Brave", "Quiet"], traitsKo: ["용감한", "냉정한"], Brave: [0, 20, 10, 10], Quiet: [0, 10, 20, 10] },
   { name: ["Non", "논"], traitsEn: ["Quick Witted", "Quiet"], traitsKo: ["눈치빠른", "냉정한"], "Quick Witted": [30, 10, 0, 0], Quiet: [0, 15, 30, 15] },
-  { name: ["Nubestella", "누베스텔라"], traitsEn: ["Quick Witted", "Docile"], traitsKo: ["눈치빠른", "온순한"], "Quick Witted": [20, 0, 10, 0], Docile: [0, 10, 10, 25] },
+  { name: ["Nubestella", "누베스텔라"], traitsEn: ["Quick Witted", "Docile"], traitsKo: ["눈치빠른", "온순한"], "Quick Witted": [30, 0, 0, 0], Docile: [0, 10, 10, 25] },
   { name: ["Snow Flower Popomo", "눈꽃 포포모"], traitsEn: ["Docile", "Naive"], traitsKo: ["온순한", "천진난만한"], Docile: [0, 10, 10, 20], Naive: [25, 0, 10, 10] },
   { name: ["Nidhogg", "니드호그"], traitsEn: ["Quick Witted", "Bold"], traitsKo: ["눈치빠른", "대담한"], "Quick Witted": [25, 5, 0, 0], Bold: [0, 30, 0, 5] },
   { name: ["Ninmunia", "닌므니아"], traitsEn: ["Hardy", "Quick Witted"], traitsKo: ["노력하는", "눈치빠른"], Hardy: [5, 0, 20, 0], "Quick Witted": [20, 10, 0, 0] },
