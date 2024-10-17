@@ -372,6 +372,7 @@ export const dragonList = [
   { name: ["Caleuche", "칼레슈"], traitsEn: ["Adamant", "Careful"], traitsKo: ["고집있는", "신중한"], Adamant: [10, 30, 10, 0], Careful: [10, 10, 30, 0] },
   { name: ["Catsgon", "캣츠곤"], traitsEn: ["Quick Witted", "Quirky"], traitsKo: ["눈치빠른", "변덕쟁이"], "Quick Witted": [30, 10, 0, 0], Quirky: [10, 20, 0, 10] },
   { name: ["Kangarabbit", "캥거래빗"], traitsEn: ["Hasty", "Hardy"], traitsKo: ["성급한", "노력하는"], Hasty: [30, 10, 10, 0], Hardy: [0, 0, 30, 5] },
+  { name: ["Curse Reaper", "커스리퍼"], traitsEn: ["Careful", "Quiet"], traitsKo: ["신중한", "냉정한"], Careful: [10, 10, 30, 0], Quiet: [0, 10, 20, 10] },
   { name: ["Cherubim", "케루빔"], traitsEn: ["Quiet", "Careful"], traitsKo: ["냉정한", "신중한"], Quiet: [0, 10, 25, 10], Careful: [15, 15, 30, 0] },
   { name: ["Cortus", "코르투스"], traitsEn: ["Quiet", "Bold"], traitsKo: ["냉정한", "대담한"], Quiet: [0, 5, 20, 5], Bold: [0, 30, 0, 10] },
   { name: ["Comet Dragon", "코멧 드래곤"], traitsEn: ["Docile", "Naive"], traitsKo: ["온순한", "천진난만한"], Docile: [0, 10, 10, 30], Naive: [30, 0, 10, 10] },
