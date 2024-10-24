@@ -313,6 +313,7 @@ export const dragonList = [
   { name: ["Eos", "에오스"], traitsEn: ["Bashful", "Bold"], traitsKo: ["수줍은", "대담한"], Bashful: [15, 0, 15, 30], Bold: [5, 30, 0, 0] },
   { name: ["Aila", "에이라"], traitsEn: ["Careful", "Quick Witted"], traitsKo: ["신중한", "눈치빠른"], Careful: [15, 15, 30, 0], "Quick Witted": [30, 0, 5, 0] },
   { name: ["Alien Dragon", "에일리언"], traitsEn: ["Docile", "Smart"], traitsKo: ["온순한", "똑똑한"], Docile: [0, 15, 15, 30], Smart: [0, 0, 0, 25] },
+  { name: ["Epit", "에피트"], traitsEn: ["Adamant", "Smart"], traitsKo: ["고집있는", "똑똑한"], Adamant: [15, 30, 15, 0], Smart: [0, 0, 5, 20] },
   { name: ["Angel Dragon", "엔젤"], traitsEn: ["Docile", "Calm"], traitsKo: ["온순한", "차분한"], Docile: [0, 10, 10, 30], Calm: [10, 0, 30, 10] },
   { name: ["Angel Jr", "엔젤주니어"], traitsEn: ["Calm", "Smart"], traitsKo: ["차분한", "똑똑한"], Calm: [10, 0, 30, 10], Smart: [0, 5, 0, 30] },
   { name: ["Angel Cat", "엔젤캣"], traitsEn: ["Docile", "Brave"], traitsKo: ["온순한", "용감한"], Docile: [0, 10, 10, 25], Brave: [0, 20, 10, 10] },
