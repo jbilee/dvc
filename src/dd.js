@@ -299,6 +299,7 @@ export const dragonList = [
   { name: ["Angra", "앙그라"], traitsEn: ["Hasty", "Adamant"], traitsKo: ["성급한", "고집있는"], Hasty: [25, 10, 10, 0], Adamant: [10, 30, 10, 0] },
   { name: ["Animala", "애니마라"], traitsEn: ["Quiet", "Adamant"], traitsKo: ["냉정한", "고집있는"], Quiet: [0, 10, 25, 10], Adamant: [10, 30, 10, 0] },
   { name: ["Avernale", "애버네일"], traitsEn: ["Calm", "Careful"], traitsKo: ["차분한", "신중한"], Calm: [10, 0, 25, 10], Careful: [15, 15, 30, 0] },
+  { name: ["Aftea", "애프티"], traitsEn: ["Docile", "Naive"], traitsKo: ["온순한", "천진난만한"], Docile: [0, 10, 10, 25], Naive: [20, 0, 10, 10] },
   { name: ["Applecheek", "애플칙"], traitsEn: ["Quick Witted", "Bashful"], traitsKo: ["눈치빠른", "수줍은"], "Quick Witted": [20, 5, 0, 0], Bashful: [10, 0, 10, 20] },
   { name: ["Janus", "야누스"], traitsEn: ["Bold", "Smart"], traitsKo: ["대담한", "똑똑한"], Bold: [5, 25, 0, 0], Smart: [0, 0, 10, 30] },
   { name: ["Fleecy Cloud Dragon", "양떼 클라우드"], traitsEn: ["Quirky", "Hasty"], traitsKo: ["변덕쟁이", "성급한"], Quirky: [10, 20, 0, 10], Hasty: [25, 10, 10, 0] },
