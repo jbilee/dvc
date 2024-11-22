@@ -220,7 +220,7 @@ export const dragonList = [
   { name: ["Circle Dragon", "서클 드래곤"], traitsEn: ["Bold", "Adamant"], traitsKo: ["대담한", "고집있는"], Bold: [0, 20, 0, 10], Adamant: [10, 30, 10, 0] },
   { name: ["Serpent Dragon", "서펀트"], traitsEn: ["Hardy", "Lax"], traitsKo: ["노력하는", "촐랑대는"], Hardy: [0, 0, 25, 0], Lax: [10, 10, 0, 20] },
   { name: ["Serpent Flower", "서펀트플라워"], traitsEn: ["Quick Witted", "Quirky"], traitsKo: ["눈치빠른", "변덕쟁이"], "Quick Witted": [30, 10, 0, 0], Quirky: [10, 20, 0, 10] },
-  // { name: ["Surprise Dragon", "서프라이곤"], traitsEn: ["Naive", "TraitB"], traitsKo: ["천진난만한", ""], Naive: [30, 0, 15, 15], TraitB: [0, 0, 0, 0] },
+  { name: ["Surprise Dragon", "서프라이곤"], traitsEn: ["Naive", "Quick Witted"], traitsKo: ["천진난만한", "눈치빠른"], Naive: [30, 0, 15, 15], "Quick Witted": [25, 0, 5, 0] },
   { name: ["Cactus Dragon", "선인장 드래곤"], traitsEn: ["Calm", "Docile"], traitsKo: ["차분한", "온순한"], Calm: [10, 0, 20, 10], Docile: [0, 5, 5, 20] },
   { name: ["Seraphim", "세라핌"], traitsEn: ["Quiet", "Calm"], traitsKo: ["냉정한", "차분한"], Quiet: [0, 10, 25, 10], Calm: [15, 0, 30, 15] },
   { name: ["Semilla", "세밀라"], traitsEn: ["Docile", "Naive"], traitsKo: ["온순한", "천진난만한"], Docile: [0, 10, 10, 20], Naive: [30, 0, 10, 10] },
