@@ -185,6 +185,7 @@ export const dragonList = [
   { name: ["Vetala", "베타라"], traitsEn: ["Quick Witted", "Adamant"], traitsKo: ["눈치빠른", "고집있는"], "Quick Witted": [20, 5, 0, 0], Adamant: [5, 20, 5, 0] },
   { name: ["Vefal", "베팔"], traitsEn: ["Quick Witted", "Smart"], traitsKo: ["눈치빠른", "똑똑한"], "Quick Witted": [30, 0, 5, 0], Smart: [5, 0, 0, 20] },
   { name: ["Beleth", "벨레드"], traitsEn: ["Hasty", "Adamant"], traitsKo: ["성급한", "고집있는"], Hasty: [25, 10, 10, 0], Adamant: [10, 25, 10, 0] },
+  { name: ["Disguise Chameleon Dragon", "변장 카멜레용"], traitsEn: ["Quirky", "Naive"], traitsKo: ["변덕쟁이", "천진난만한"], Quirky: [10, 25, 0, 10], Naive: [30, 0, 10, 10] },
   { name: ["Blowfish Goldie", "복어 골디"], traitsEn: ["Adamant", "Bold"], traitsKo: ["고집있는", "대담한"], Adamant: [5, 20, 5, 0], Bold: [0, 20, 10, 0] },
   { name: ["Voncias", "본샤스"], traitsEn: ["Docile", "Naive"], traitsKo: ["온순한", "천진난만한"], Docile: [0, 10, 10, 30], Naive: [30, 0, 10, 10] },
   { name: ["Vonsharkgon", "본샤크곤"], traitsEn: ["Rash", "Bashful"], traitsKo: ["덜렁대는", "수줍은"], Rash: [30, 15, 0, 15], Bashful: [10, 0, 10, 30] },
