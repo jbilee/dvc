@@ -27,7 +27,7 @@ export const dragonList = [
   { name: ["Goblin Dragon", "깨비곤"], traitsEn: ["Naive", "Brave"], traitsKo: ["천진난만한", "용감한"], Naive: [25, 0, 10, 10], Brave: [0, 25, 10, 10] },
   { name: ["Brrry", "꽁꽁이"], traitsEn: ["Naive", "Docile"], traitsKo: ["천진난만한", "온순한"], Naive: [20, 0, 5, 5], Docile: [0, 15, 15, 30] },
   { name: ["Dreamweaver Lamb Dragon", "꿈결의 램곤"], traitsEn: ["Docile", "Calm"], traitsKo: ["온순한", "차분한"], Docile: [0, 10, 10, 20], Calm: [10, 0, 20, 10] },
-  // { name: ["Dream World Libera", "꿈세계의 리베라"], traitsEn: ["Adamant", "Careful"], traitsKo: ["고집있는", "신중한"], Adamant: [5, 20, 5, 0], Careful: [0, 0, 0, 0] },
+  { name: ["Dream World Libera", "꿈세계의 리베라"], traitsEn: ["Adamant", "Careful"], traitsKo: ["고집있는", "신중한"], Adamant: [5, 20, 5, 0], Careful: [10, 10, 25, 0] },
   { name: ["Dream World Beleth", "꿈세계의 벨레드"], traitsEn: ["Hasty", "Adamant"], traitsKo: ["성급한", "고집있는"], Hasty: [25, 10, 10, 0], Adamant: [5, 20, 5, 0] },
   { name: ["Dream World Crookers", "꿈세계의 크룩커스"], traitsEn: ["Quick Witted", "Docile"], traitsKo: ["눈치빠른", "온순한"], "Quick Witted": [20, 0, 5, 0], Docile: [0, 10, 10, 25] },
   // { name: ["", ""], traitsEn: ["TraitA", "TraitB"], traitsKo: ["", ""], TraitA: [0, 0, 0, 0], TraitB: [0, 0, 0, 0] },
