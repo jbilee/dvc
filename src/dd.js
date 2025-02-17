@@ -214,7 +214,7 @@ export const dragonList = [
   { name: ["Black Armor", "블랙아머"], traitsEn: ["Bold", "Adamant"], traitsKo: ["대담한", "고집있는"], Bold: [0, 30, 0, 10], Adamant: [15, 30, 15, 0] },
   { name: ["Black Armor Sword", "블랙아머소드"], traitsEn: ["Brave", "Hardy"], traitsKo: ["용감한", "노력하는"], Brave: [0, 30, 15, 15], Hardy: [5, 0, 30, 0] },
   { name: ["Black Armor Spear", "블랙아머스피어"], traitsEn: ["Quick Witted", "Careful"], traitsKo: ["눈치빠른", "신중한"], "Quick Witted": [20, 5, 0, 0], Careful: [10, 10, 30, 0] },
-  { name: ["Blackhole Dragon", "블랙홀 드래곤"], traitsEn: ["Calm", "Unknown"], traitsKo: ["차분한", "불명"], Calm: [15, 0, 30, 15], Unknown: [0, 0, 0, 0] },
+  { name: ["Blackhole Dragon", "블랙홀 드래곤"], traitsEn: ["Calm", "Smart"], traitsKo: ["차분한", "똑똑한"], Calm: [15, 0, 30, 15], Smart: [0, 0, 10, 30] },
   { name: ["Blade Dragon", "블레이드"], traitsEn: ["Brave", "Quiet"], traitsKo: ["용감한", "냉정한"], Brave: [0, 20, 10, 10], Quiet: [0, 10, 20, 10] },
   { name: ["Blue Lightning Dragon", "블루라이트닝"], traitsEn: ["Hasty", "Naive"], traitsKo: ["성급한", "천진난만한"], Hasty: [20, 5, 5, 0], Naive: [30, 0, 15, 15] },
   { name: ["Blue Thunder", "블루썬더"], traitsEn: ["Careful", "Docile"], traitsKo: ["신중한", "온순한"], Careful: [5, 5, 20, 0], Docile: [0, 10, 10, 20] },
