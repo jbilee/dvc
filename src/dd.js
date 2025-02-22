@@ -149,6 +149,7 @@ export const dragonList = [
   { name: ["Mushroom Knight", "머쉬룸나이트"], traitsEn: ["Calm", "Brave"], traitsKo: ["차분한", "용감한"], Calm: [5, 0, 20, 5], Brave: [0, 20, 10, 10] },
   { name: ["Mustard Hammer", "머스타드해머"], traitsEn: ["Naive", "Docile"], traitsKo: ["천진난만한", "온순한"], Naive: [25, 0, 10, 10], Docile: [0, 10, 10, 20] },
   { name: ["Megalodon", "메갈로돈"], traitsEn: ["Quirky", "Hasty"], traitsKo: ["변덕쟁이", "성급한"], Quirky: [10, 20, 0, 10], Hasty: [20, 10, 10, 0] },
+  { name: ["Merak", "메라크"], traitsEn: ["Adamant", "Unknown"], traitsKo: ["고집있는", "불명"], Adamant: [10, 30, 10, 0], Unknown: [0, 0, 0, 0] },
   { name: ["Maple Dragon", "메이플 드래곤"], traitsEn: ["Naive", "Docile"], traitsKo: ["천진난만한", "온순한"], Naive: [20, 0, 5, 5], Docile: [0, 10, 10, 30] },
   { name: ["Metal Dragon", "메탈"], traitsEn: ["Calm", "Docile"], traitsKo: ["차분한", "온순한"], Calm: [10, 0, 25, 10], Docile: [0, 5, 5, 20] },
   { name: ["Metis", "메티스"], traitsEn: ["Smart", "Naive"], traitsKo: ["똑똑한", "천진난만한"], Smart: [0, 0, 5, 20], Naive: [30, 0, 10, 10] },
