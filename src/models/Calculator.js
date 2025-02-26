@@ -157,6 +157,7 @@ class Calculator {
         return this.printStatFields(goal, "#end-");
       }
 
+      case "Prestigious":
       case "Longing":
       case "Meticulous": {
         const goal = this.copyStats(base);
