@@ -6,6 +6,7 @@ export const specialTraits = [
   { nameEn: "Aristocratic", nameKo: "명문가의", stats: [0, 0, 0, 0], optimizable: false },
   { nameEn: "Immersed", nameKo: "몰입하는", stats: [0, 0, 0, 0], optimizable: true },
   { nameEn: "Distracted", nameKo: "산만한", stats: [0, 0, 0, 0], optimizable: true },
+  { nameEn: "Iridescent", nameKo: "영롱한", stats: [0, 0, 0, 0], optimizable: false },
   { nameEn: "Arrogant", nameKo: "오만한", stats: [25, 25, 25, 25], optimizable: true },
   { nameEn: "Perfectionist", nameKo: "완벽주의자", stats: [20, 20, 20, 20], optimizable: true },
   { nameEn: "Capable", nameKo: "유능한", stats: [28, 28, 28, 28], optimizable: false },
