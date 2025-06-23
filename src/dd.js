@@ -42,7 +42,7 @@ export const dragonList = [
   { name: ["Nessie", "네시"], traitsEn: ["Smart", "Hardy"], traitsKo: ["똑똑한", "노력하는"], Smart: [0, 0, 10, 30], Hardy: [5, 0, 20, 0] },
   { name: ["Nessiebig", "네시빅"], traitsEn: ["Quiet", "Hasty"], traitsKo: ["냉정한", "성급한"], Quiet: [0, 15, 30, 15], Hasty: [20, 10, 10, 0] },
   { name: ["Neon Dragon", "네온 드래곤"], traitsEn: ["Calm", "Docile"], traitsKo: ["차분한", "온순한"], Calm: [5, 0, 20, 5], Docile: [0, 10, 10, 25] },
-  // { name: ["Necros", "네크로스"], traitsEn: ["Quiet", "TraitB"], traitsKo: ["", ""], Quiet: [0, 0, 0, 0], TraitB: [0, 0, 0, 0] },
+  { name: ["Necros", "네크로스"], traitsEn: ["Unknown", "Careful"], traitsKo: ["불명", "신중한"], Unknown: [0, 0, 0, 0], Careful: [10, 10, 25, 0] },
   { name: ["Nello", "넬로"], traitsEn: ["Quiet", "Brave"], traitsKo: ["냉정한", "용감한"], Quiet: [0, 10, 20, 10], Brave: [0, 25, 10, 10] },
   { name: ["Neptune", "넵튠"], traitsEn: ["Calm", "Quiet"], traitsKo: ["차분한", "냉정한"], Calm: [10, 0, 30, 10], Quiet: [0, 15, 30, 15] },
   { name: ["Novella", "노벨라"], traitsEn: ["Calm", "Bold"], traitsKo: ["차분한", "대담한"], Calm: [15, 0, 30, 15], Bold: [0, 30, 5, 0] },
