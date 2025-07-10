@@ -512,7 +512,7 @@ export const dragonList = [
   { name: ["Party Dragon", "파티"], traitsEn: ["Lax", "Naive"], traitsKo: ["촐랑대는", "천진난만한"], Lax: [15, 15, 0, 30], Naive: [30, 0, 10, 10] },
   { name: ["Paprion", "파프리온"], traitsEn: ["Naive", "Docile"], traitsKo: ["천진난만한", "온순한"], Naive: [25, 0, 10, 10], Docile: [0, 15, 15, 30] },
   { name: ["Panmunia", "판므니아"], traitsEn: ["Naive", "Docile"], traitsKo: ["천진난만한", "온순한"], Naive: [20, 0, 10, 10], Docile: [0, 15, 15, 30] },
-  { name: ["Palagon", "팔라곤"], traitsEn: ["Careful", "Unknown"], traitsKo: ["신중한", "불명"], Careful: [15, 15, 30, 0], Unknown: [0, 0, 0, 0] },
+  { name: ["Palagon", "팔라곤"], traitsEn: ["Careful", "Adamant"], traitsKo: ["신중한", "고집있는"], Careful: [15, 15, 30, 0], Adamant: [10, 30, 10, 0] },
   { name: ["Pangpang", "팡팡"], traitsEn: ["Hardy", "Quick Witted"], traitsKo: ["노력하는", "눈치빠른"], Hardy: [0, 10, 10, 0], "Quick Witted": [30, 0, 10, 0] },
   { name: ["Fat", "패트"], traitsEn: ["Calm", "Docile"], traitsKo: ["신중한", "온순한"], Calm: [10, 0, 25, 10], Docile: [0, 10, 10, 20] },
   { name: ["Patroa", "패트로아"], traitsEn: ["Naive", "Hardy"], traitsKo: ["천진난만한", "노력하는"], Naive: [20, 0, 5, 5], Hardy: [0, 0, 25, 0] },
