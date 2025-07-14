@@ -73,7 +73,7 @@ export const dragonList = [
   { name: ["Dragonoid", "드라고노이드"], traitsEn: ["Quick Witted", "Smart"], traitsKo: ["눈치빠른", "똑똑한"], "Quick Witted": [20, 10, 0, 0], Smart: [10, 0, 0, 30] },
   { name: ["Dragonoid Soul", "드라고노이드소울"], traitsEn: ["Quiet", "Smart"], traitsKo: ["냉정한", "똑똑한"], Quiet: [0, 10, 20, 10], Smart: [0, 0, 5, 30] },
   { name: ["Dragon Slayer", "드래곤 슬레이어"], traitsEn: ["Quirky", "Careful"], traitsKo: ["변덕쟁이", "신중한"], Quirky: [10, 25, 0, 10], Careful: [15, 15, 30, 0] },
-  { name: ["Dreaden", "드래든"], traitsEn: ["Quirky", "Unknown"], traitsKo: ["변덕쟁이", "불명"], Quirky: [10, 30, 0, 10], Unknown: [0, 0, 0, 0] },
+  { name: ["Dreaden", "드래든"], traitsEn: ["Quirky", "Quick Witted"], traitsKo: ["변덕쟁이", "눈치빠른"], Quirky: [10, 30, 0, 10], "Quick Witted": [20, 0, 5, 0] },
   { name: ["Dream Cat Dragon", "드림 캣츠곤"], traitsEn: ["Calm", "Quick Witted"], traitsKo: ["차분한", "눈치빠른"], Calm: [10, 0, 30, 10], "Quick Witted": [20, 0, 5, 0] },
   { name: ["Dimension Dragon", "디멘션"], traitsEn: ["Smart", "Bold"], traitsKo: ["똑똑한", "대담한"], Smart: [10, 0, 0, 30], Bold: [0, 30, 5, 0] },
   { name: ["Dianu", "디아누"], traitsEn: ["Quiet", "Adamant"], traitsKo: ["냉정한", "고집있는"], Quiet: [0, 10, 30, 10], Adamant: [10, 25, 10, 0] },
