@@ -284,7 +284,7 @@ export const dragonList = [
   { name: ["Sky Lancer", "스카이랜서"], traitsEn: ["Quiet", "Brave"], traitsKo: ["냉정한", "용감한"], Quiet: [0, 10, 20, 10], Brave: [0, 30, 15, 15] },
   { name: ["Sky Cuanade", "스카이 큐아네드"], traitsEn: ["Smart", "Docile"], traitsKo: ["똑똑한", "온순한"], Smart: [10, 0, 0, 20], Docile: [0, 10, 10, 25] },
   { name: ["Scartooth", "스카투스"], traitsEn: ["Bold", "Adamant"], traitsKo: ["대담한", "고집있는"], Bold: [0, 30, 5, 0], Adamant: [10, 30, 10, 0] },
-  { name: ["Skat", "스카트"], traitsEn: ["Docile", "Unknown"], traitsKo: ["온순한", "불명"], Docile: [0, 10, 10, 30], Unknown: [0, 0, 0, 0] },
+  { name: ["Skat", "스카트"], traitsEn: ["Docile", "Calm"], traitsKo: ["온순한", "차분한"], Docile: [0, 10, 10, 30], Calm: [10, 0, 30, 10] },
   { name: ["Scarlet", "스칼렛"], traitsEn: ["Bashful", "Careful"], traitsKo: ["수줍은", "신중한"], Bashful: [10, 0, 10, 20], Careful: [10, 10, 20, 0] },
   { name: ["Skeleton Dragon", "스켈레곤"], traitsEn: ["Quick Witted", "Rash"], traitsKo: ["눈치빠른", "덜렁대는"], "Quick Witted": [20, 10, 0, 0], Rash: [25, 10, 0, 10] },
   { name: ["Scorchmilla", "스코치밀라"], traitsEn: ["Quiet", "Adamant"], traitsKo: ["냉정한", "고집있는"], Quiet: [0, 10, 20, 10], Adamant: [15, 30, 15, 0] },
