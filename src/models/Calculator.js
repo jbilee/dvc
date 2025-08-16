@@ -205,6 +205,48 @@ class Calculator {
         return this.printStatFields(goal, "#end-");
       }
 
+      case "Soft": {
+        const recommendedValues = specialTraits[traitIndex].stats;
+        const goal = new Stats(...recommendedValues);
+        const nonDupValues = [];
+        const dups = [];
+
+        STAT_LISTS.base.forEach((stat) => {
+          goal[stat] = this.getOptimizedValue(goal[stat] - base[stat]) + base[stat];
+          goal[stat] = this.replaceWithNine(goal[stat] - base[stat]) + base[stat];
+          if (!nonDupValues.includes(goal[stat])) {
+            nonDupValues.push(goal[stat]);
+          } else {
+            dups.push(stat);
+          }
+        });
+
+        if (dups.size === 0) return this.printStatFields(goal, "#end-");
+
+        while (dups.length > 0) {
+          const dupStat = dups.shift();
+          const dupValue = goal[dupStat];
+          if (dupValue - 4 >= 30 && !nonDupValues.includes(dupValue - 4)) {
+            const adjustedValue = dupValue - 4;
+            goal[dupStat] = adjustedValue;
+            nonDupValues.push(adjustedValue);
+          } else if (dupValue - 6 >= 30 && !nonDupValues.includes(dupValue - 6)) {
+            const adjustedValue = dupValue - 6;
+            goal[dupStat] = adjustedValue;
+            nonDupValues.push(adjustedValue);
+          } else {
+            let adjustedValue = dupValue + 9;
+            while (nonDupValues.includes(adjustedValue)) {
+              adjustedValue += 9;
+            }
+            goal[dupStat] = adjustedValue;
+            nonDupValues.push(adjustedValue);
+          }
+        }
+
+        return this.printStatFields(goal, "#end-");
+      }
+
       case "Distracted": {
         const curFocus = base.focus;
         const goal = this.copyStats(base);
