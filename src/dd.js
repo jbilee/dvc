@@ -167,7 +167,7 @@ export const dragonList = [
   { name: ["Metal Dragon", "메탈"], traitsEn: ["Calm", "Docile"], traitsKo: ["차분한", "온순한"], Calm: [10, 0, 25, 10], Docile: [0, 5, 5, 20] },
   { name: ["Metis", "메티스"], traitsEn: ["Smart", "Naive"], traitsKo: ["똑똑한", "천진난만한"], Smart: [0, 0, 5, 20], Naive: [30, 0, 10, 10] },
   { name: ["Mellow", "멜로우"], traitsEn: ["Smart", "Rash"], traitsKo: ["똑똑한", "덜렁대는"], Smart: [5, 0, 0, 30], Rash: [20, 10, 0, 10] },
-  { name: ["Monimo", "모니모"], traitsEn: ["대담한", "불명"], traitsKo: ["Bold", "Unknown"], Bold: [0, 20, 5, 0], Unknown: [0, 0, 0, 0] },
+  { name: ["Monimo", "모니모"], traitsEn: ["대담한", "똑똑한"], traitsKo: ["Bold", "Smart"], Bold: [0, 20, 5, 0], Smart: [0, 0, 10, 30] },
   { name: ["Hourglass Dragon", "모래시계 드래곤"], traitsEn: ["Smart", "Calm"], traitsKo: ["똑똑한", "차분한"], Smart: [0, 5, 0, 20], Calm: [10, 0, 25, 10] },
   { name: ["Moros", "모로스"], traitsEn: ["Quiet", "Bold"], traitsKo: ["냉정한", "대담한"], Quiet: [0, 10, 20, 10], Bold: [0, 30, 5, 0] },
   { name: ["Dream Water Dragon", "몽수룡"], traitsEn: ["Calm", "Smart"], traitsKo: ["차분한", "똑똑한"], Calm: [10, 0, 20, 10], Smart: [10, 0, 0, 20] },
