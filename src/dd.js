@@ -65,6 +65,7 @@ export const dragonList = [
   { name: ["Devil Dragon", "데빌곤"], traitsEn: ["Quiet", "Adamant"], traitsKo: ["냉정한", "고집있는"], Quiet: [0, 10, 20, 10], Adamant: [10, 25, 10, 0] },
   // { name: ["Deathlock", "데스락"], traitsEn: ["TraitA", "TraitB"], traitsKo: ["", ""], TraitA: [0, 0, 0, 0], TraitB: [0, 0, 0, 0] },
   { name: ["Death River", "데스리버"], traitsEn: ["Quiet", "Adamant"], traitsKo: ["냉정한", "고집있는"], Quiet: [0, 10, 25, 10], Adamant: [15, 30, 15, 0] },
+  { name: ["Death Reaper Dragon", "데스리퍼 드래곤"], traitsEn: ["Quick Witted", "Unknown"], traitsKo: ["눈치빠른", "불명"], "Quick Witted": [30, 0, 5, 0], Unknown: [0, 0, 0, 0] },
   { name: ["Deserti", "데저티"], traitsEn: ["Hardy", "Adamant"], traitsKo: ["노력하는", "고집있는"], Hardy: [0, 0, 25, 0], Adamant: [10, 30, 10, 0] },
   { name: ["Caretaker God Dragon", "돌보미 고대신룡"], traitsEn: ["Brave", "Docile"], traitsKo: ["용감한", "온순한"], Brave: [0, 25, 10, 10], Docile: [0, 10, 10, 30] },
   { name: ["Caretaker Darknix", "돌보미 다크닉스"], traitsEn: ["Quiet", "Careful"], traitsKo: ["냉정한", "신중한"], Quiet: [0, 10, 25, 10], Careful: [10, 10, 20, 0] },
