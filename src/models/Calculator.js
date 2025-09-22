@@ -794,44 +794,37 @@ class Calculator {
 
       case "Iridescent": {
         if (base.getMinStatValue() === 1 && base.getMaxStatValue() === 1) {
-          const goal = new Stats(55, 55, 55, 55);
+          const goal = new Stats(25, 25, 25, 25);
+          if (this.preference !== "none") {
+            goal[this.preference] = this.highestFirst ? 55 : 35;
+          } else {
+            goal.strength = this.highestFirst ? 55 : 35;
+          }
           return this.printStatFields(goal, "#end-");
         }
 
         const recommendedValues = specialTraits[traitIndex].stats;
         const goal = new Stats(...recommendedValues);
-        const statSet = new Set();
-        const optimizable = [];
 
         STAT_LISTS.base.forEach((stat) => {
-          const diff = goal[stat] - base[stat];
-
-          if (this.highestFirst) {
-            if (diff === 20) {
-              goal[stat] += 10;
-            } else if (diff === 25) {
-              goal[stat] += 10;
-            }
+          if (goal[stat] < base[stat]) {
+            goal[stat] = 35;
           }
 
-          statSet.add(goal[stat]);
-
-          const newDiff = goal[stat] - base[stat];
-
-          if (newDiff == 20 || newDiff == 25 || newDiff == 35) {
-            optimizable.push(stat);
+          const diff = goal[stat] - base[stat];
+          if (diff === 20) {
+            goal[stat] += 10;
+          }
+          if (diff === 25) {
+            goal[stat] += 20;
           }
         });
 
-        if (statSet.size === 1) {
-          if (optimizable.includes(this.preference)) {
-            goal[this.preference] += 10;
-          } else if (optimizable.includes("strength")) {
+        if (goal.getMinStatValue() === goal.getMaxStatValue()) {
+          if (this.preference !== "none") {
             goal.strength += 10;
-          } else if (optimizable.includes("intellect")) {
-            goal.intellect += 10;
           } else {
-            goal[optimizable[0]] += 10;
+            goal[this.preference] += 10;
           }
         }
 
