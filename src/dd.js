@@ -104,6 +104,7 @@ export const dragonList = [
   { name: ["Regnator", "레그나토르"], traitsEn: ["Adamant", "Careful"], traitsKo: ["고집있는", "신중한"], Adamant: [10, 20, 10, 0], Careful: [10, 10, 25, 0] },
   { name: ["Leglien", "레그리언"], traitsEn: ["Hardy", "Careful"], traitsKo: ["노력하는", "신중한"], Hardy: [10, 0, 30, 0], Careful: [10, 10, 25, 0] },
   { name: ["Reghi", "레기"], traitsEn: ["Bashful", "Docile"], traitsKo: ["수줍은", "온순한"], Bashful: [15, 0, 15, 30], Docile: [0, 5, 5, 20] },
+  { name: ["Renavia", "레나비아"], traitsEn: ["Docile", "TraitB"], traitsKo: ["온순한", ""], Docile: [0, 10, 10, 30], TraitB: [0, 0, 0, 0] },
   { name: ["Redbull Dragon", "레드불"], traitsEn: ["Adamant", "Quiet"], traitsKo: ["고집있는", "냉정한"], Adamant: [10, 25, 10, 0], Quiet: [0, 5, 20, 5] },
   { name: ["Red Wyvern", "레드와이번"], traitsEn: ["Hasty", "Quirky"], traitsKo: ["성급한", "변덕쟁이"], Hasty: [20, 10, 10, 0], Quirky: [5, 20, 0, 5] },
   { name: ["Red Taabire", "레드타아비레"], traitsEn: ["Hasty", "Quirky"], traitsKo: ["성급한", "변덕쟁이"], Hasty: [30, 15, 15, 0], Quirky: [10, 25, 0, 10] },
