@@ -144,7 +144,7 @@ export const dragonList = [
   { name: ["Leaf Dragon", "리프"], traitsEn: ["Naive", "Rash"], traitsKo: ["천진난만한", "덜렁대는"], Naive: [25, 0, 10, 10], Rash: [20, 10, 0, 10] },
   { name: ["Maga", "마가"], traitsEn: ["Bold", "Naive"], traitsKo: ["대담한", "천진난만한"], Bold: [0, 30, 10, 0], Naive: [20, 0, 10, 10] },
   { name: ["Mago", "마고"], traitsEn: ["Quirky", "Lax"], traitsKo: ["변덕쟁이", "촐랑대는"], Quirky: [15, 30, 0, 15], Lax: [15, 15, 0, 30] },
-  { name: ["Magnas", "마그나스"], traitsEn: ["Unknown", "Hasty"], traitsKo: ["불명", "성급한"], Unknown: [0, 0, 0, 0], Hasty: [30, 10, 10, 0] },
+  { name: ["Magnas", "마그나스"], traitsEn: ["Bold", "Hasty"], traitsKo: ["대담한", "성급한"], Bold: [0, 30, 5, 0], Hasty: [30, 10, 10, 0] },
   { name: ["Magnello", "마그넬로"], traitsEn: ["Rash", "Hasty"], traitsKo: ["덜렁대는", "성급한"], Rash: [20, 10, 0, 10], Hasty: [30, 10, 10, 0] },
   { name: ["Manus", "마누스"], traitsEn: ["Quiet", "Careful"], traitsKo: ["냉정한", "신중한"], Quiet: [0, 15, 30, 15], Careful: [10, 10, 20, 0] },
   { name: ["Manimekhala", "마니메칼라"], traitsEn: ["Naive", "Bold"], traitsKo: ["천진난만한", "대담한"], Naive: [20, 0, 10, 10], Bold: [5, 30, 0, 0] },
