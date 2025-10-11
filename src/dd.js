@@ -470,7 +470,7 @@ export const dragonList = [
   { name: ["Kanga & Rano", "캥거와 라노"], traitsEn: ["Hardy", "Adamant"], traitsKo: ["노력하는", "고집있는"], Hardy: [0, 0, 30, 0], Adamant: [15, 30, 15, 0] },
   { name: ["Curse Reaper", "커스리퍼"], traitsEn: ["Careful", "Quiet"], traitsKo: ["신중한", "냉정한"], Careful: [10, 10, 30, 0], Quiet: [0, 10, 20, 10] },
   { name: ["Cherubim", "케루빔"], traitsEn: ["Quiet", "Careful"], traitsKo: ["냉정한", "신중한"], Quiet: [0, 10, 25, 10], Careful: [15, 15, 30, 0] },
-  { name: ["Kesha", "케샤"], traitsEn: ["Bashful", "Unknown"], traitsKo: ["수줍은", "불명"], Bashful: [15, 0, 15, 30], Unknown: [0, 0, 0, 0] },
+  { name: ["Kesha", "케샤"], traitsEn: ["Bashful", "Adamant"], traitsKo: ["수줍은", "고집있는"], Bashful: [15, 0, 15, 30], Adamant: [5, 20, 5, 0] },
   { name: ["Cortus", "코르투스"], traitsEn: ["Quiet", "Bold"], traitsKo: ["냉정한", "대담한"], Quiet: [0, 5, 20, 5], Bold: [0, 30, 0, 10] },
   { name: ["Comet Dragon", "코멧 드래곤"], traitsEn: ["Docile", "Naive"], traitsKo: ["온순한", "천진난만한"], Docile: [0, 10, 10, 30], Naive: [30, 0, 10, 10] },
   { name: ["Cobra Dragon", "코브라곤"], traitsEn: ["Quirky", "Adamant"], traitsKo: ["변덕쟁이", "고집있는"], Quirky: [10, 30, 0, 10], Adamant: [10, 25, 10, 0] },
