@@ -822,9 +822,9 @@ class Calculator {
 
         if (goal.getMinStatValue() === goal.getMaxStatValue()) {
           if (this.preference !== "none") {
-            goal.strength += 10;
-          } else {
             goal[this.preference] += 10;
+          } else {
+            goal.strength += 10;
           }
         }
 
