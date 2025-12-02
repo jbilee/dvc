@@ -451,7 +451,7 @@ export const dragonList = [
   { name: ["Jimon", "즈믄"], traitsEn: ["Quick Witted", "Smart"], traitsKo: ["눈치빠른", "똑똑한"], "Quick Witted": [25, 0, 0, 0], Smart: [10, 0, 0, 20] },
   { name: ["Centipede Dragon", "G네"], traitsEn: ["Quirky", "Careful"], traitsKo: ["변덕쟁이", "신중한"], Quirky: [15, 30, 0, 15], Careful: [10, 10, 25, 0] },
   { name: ["Jima", "지마"], traitsEn: ["Smart", "Calm"], traitsKo: ["똑똑한", "차분한"], Smart: [0, 0, 5, 25], Calm: [10, 0, 30, 10] },
-  { name: ["Jwibul", "지부룡"], traitsEn: ["Naive", "Unknown"], traitsKo: ["천진난만한", "불명"], Naive: [20, 0, 10, 10], Unknown: [0, 0, 0, 0] },
+  { name: ["Jwibul", "지부룡"], traitsEn: ["Naive", "Hasty"], traitsKo: ["천진난만한", "성급한"], Naive: [20, 0, 10, 10], Hasty: [30, 10, 10, 0] },
   { name: ["Zithakula", "지타쿨라"], traitsEn: ["Bold", "Adamant"], traitsKo: ["대담한", "고집있는"], Bold: [5, 20, 0, 0], Adamant: [10, 25, 10, 0] },
   { name: ["Underground Dragon", "지하땅굴"], traitsEn: ["Quiet", "Bashful"], traitsKo: ["냉정한", "수줍은"], Quiet: [0, 10, 25, 10], Bashful: [10, 0, 10, 20] },
   { name: ["Chachawung", "차차웅"], traitsEn: ["Bold", "Calm"], traitsKo: ["대담한", "차분한"], Bold: [5, 30, 0, 5], Calm: [10, 0, 20, 10] },
