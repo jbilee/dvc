@@ -217,7 +217,7 @@ export const dragonList = [
   { name: ["Bandage Dragon", "밴드곤"], traitsEn: ["Quick Witted", "Bold"], traitsKo: ["눈치빠른", "대담한"], "Quick Witted": [30, 0, 10, 0], Bold: [0, 25, 5, 0] },
   { name: ["Banshee", "밴시"], traitsEn: ["Quiet", "Quirky"], traitsKo: ["냉정한", "변덕쟁이"], Quiet: [0, 10, 20, 10], Quirky: [10, 25, 0, 10] },
   { name: ["Hedgebat Dragon", "뱃도치"], traitsEn: ["Quiet", "Careful"], traitsKo: ["냉정한", "신중한"], Quiet: [0, 5, 20, 5], Careful: [15, 15, 30, 0] },
-  { name: ["Burret", "버렛"], traitsEn: ["Naive", "Unknown"], traitsKo: ["천진난만한", "불명"], Naive: [30, 0, 15, 15], Unknown: [0, 0, 0, 0] },
+  { name: ["Burret", "버렛"], traitsEn: ["Naive", "Docile"], traitsKo: ["천진난만한", "온순한"], Naive: [30, 0, 15, 15], Docile: [0, 10, 10, 30] },
   { name: ["Bubble Dragon", "버블 드래곤"], traitsEn: ["Quiet", "Adamant"], traitsKo: ["냉정한", "고집있는"], Quiet: [0, 10, 20, 10], Adamant: [10, 25, 10, 0] },
   { name: ["Lightning Dragon", "번개고룡"], traitsEn: ["Brave", "Bold"], traitsKo: ["용감한", "대담한"], Brave: [0, 30, 10, 10], Bold: [0, 30, 5, 0] },
   { name: ["Burnesce", "번네스"], traitsEn: ["Hasty", "Brave"], traitsKo: ["성급한", "용감한"], Hasty: [30, 15, 15, 0], Brave: [0, 30, 15, 15] },
