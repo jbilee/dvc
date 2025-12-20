@@ -123,6 +123,80 @@ class Calculator {
     const base = this.getStatFields("#start-");
 
     switch (traitSelected) {
+      case "Sparkling": {
+        const goal = this.copyStats(base);
+
+        if (goal.getMaxStatValue() === goal.getMinStatValue()) {
+          if (this.preference !== "none") {
+            goal[this.preference] = this.getOptimizedValue(70 - base[this.preference]) + base[this.preference];
+            const remainingStatNames = STAT_LISTS.base.filter(stat => stat !== this.preference && stat !== "focus");
+            if (remainingStatNames.length > 2) {
+              goal.agility = base.agility + 9;
+              goal.intellect = base.intellect + 18;
+            } else {
+              goal[remainingStatNames[0]] = base[remainingStatNames[0]] + 9;
+              goal[remainingStatNames[1]] = base[remainingStatNames[1]] + 18;
+            }
+          } else {
+            goal.strength = this.getOptimizedValue(70 - base.strength) + base.strength;
+            goal.agility = base.agility + 9;
+            goal.intellect = base.intellect + 18;
+          }
+          return this.printStatFields(goal, "#end-");
+        }
+
+        const highestStatNames = base.getMaxStatName();
+        let remainingStatNames;
+
+        if (highestStatNames.includes(this.preference)) {
+          goal[this.preference] = this.getOptimizedValue(70 - base[this.preference]) + base[this.preference];
+          goal[this.preference] = this.replaceWithNine(goal[this.preference] - base[this.preference]) + base[this.preference];
+          remainingStatNames = STAT_LISTS.base.filter((stat) => stat !== this.preference);
+        } else {
+          goal[highestStatNames[0]] = this.getOptimizedValue(70 - base[highestStatNames[0]]) + base[highestStatNames[0]];
+          goal[highestStatNames[0]] = this.replaceWithNine(goal[highestStatNames[0]] - base[highestStatNames[0]]) + base[highestStatNames[0]];
+          remainingStatNames = STAT_LISTS.base.filter((stat) => stat !== highestStatNames[0]);
+        }
+
+        const sortedRemainingStatNames = remainingStatNames.sort((a, b) => {
+          if (goal[a] === goal[b]) {
+            if (a === "focus") return -1;
+            if (b === "focus") return 1;
+          }
+          return goal[a] - goal[b];
+        });
+
+        let prevValue = goal[sortedRemainingStatNames[0]];
+        let idxPointer = 1;
+
+        while (idxPointer < sortedRemainingStatNames.length) {
+          const currentStat = sortedRemainingStatNames[idxPointer];
+          let valueDifference = goal[currentStat] - prevValue;
+          if (valueDifference >= 8) {
+            prevValue = goal[currentStat];
+            idxPointer++;
+            continue;
+          }
+          if (valueDifference >= 5) {
+            goal[currentStat] = currentStat === "focus" ? goal[currentStat] + 3 : goal[currentStat] + 9;
+            if (idxPointer === sortedRemainingStatNames.length - 1) {
+              goal[currentStat] = this.replaceWithNine(goal[currentStat] - base[currentStat]) + base[currentStat];
+            }
+            prevValue = goal[currentStat];
+            idxPointer++;
+            continue;
+          }
+          while (valueDifference < 8) {
+            goal[currentStat] += 9;
+            valueDifference = goal[currentStat] - prevValue;
+          }
+          prevValue = goal[currentStat];
+          idxPointer++;
+        }
+
+        return this.printStatFields(goal, "#end-");
+      }
+
       case "Mischievous": {
         const goal = this.copyStats(base);
         STAT_LISTS.base.forEach((stat) => {
@@ -147,10 +221,10 @@ class Calculator {
           const targetStat = duplicateValues.includes(this.preference)
             ? this.preference
             : duplicateValues.includes("strength")
-            ? "strength"
-            : duplicateValues.includes("intellect")
-            ? "intellect"
-            : "agility";
+              ? "strength"
+              : duplicateValues.includes("intellect")
+                ? "intellect"
+                : "agility";
           goal[targetStat] += 10;
         }
 
@@ -734,10 +808,10 @@ class Calculator {
         const maxStatKey = highestStats.includes(this.preference)
           ? this.preference
           : highestStats.includes("strength")
-          ? "strength"
-          : highestStats.includes("intellect")
-          ? "intellect"
-          : highestStats[0];
+            ? "strength"
+            : highestStats.includes("intellect")
+              ? "intellect"
+              : highestStats[0];
         let goalValue = this.getOptimizedValue(150 - base[maxStatKey]);
         if (this.highestFirst) goalValue = this.replaceWithNine(goalValue);
         goal[maxStatKey] = base[maxStatKey] + goalValue;
@@ -1132,8 +1206,8 @@ class Calculator {
           return e === 9
             ? `<span class="nine">${e}</span>`
             : e === 5
-            ? `<span class="five">${e}</span>`
-            : `<span class="three">${e}</span>`;
+              ? `<span class="five">${e}</span>`
+              : `<span class="three">${e}</span>`;
         })
         .join(" ");
     }
