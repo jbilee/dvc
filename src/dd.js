@@ -626,7 +626,7 @@ export const dragonList = [
   { name: ["Hod", "호드"], traitsEn: ["Bold", "Smart"], traitsKo: ["대담한", "똑똑한"], Bold: [0, 30, 5, 0], Smart: [0, 0, 5, 30] },
   { name: ["Hosiery", "호저리"], traitsEn: ["Naive", "Docile"], traitsKo: ["천진난만한", "온순한"], Naive: [30, 0, 15, 15], Docile: [0, 15, 15, 30] },
   { name: ["Fire Ghost Dragon", "화귀 드래곤"], traitsEn: ["Quirky", "Adamant"], traitsKo: ["변덕쟁이", "고집있는"], Quirky: [10, 30, 0, 10], Adamant: [15, 30, 15, 0] },
-  // { name: ["Hwaong", "화옹"], traitsEn: ["TraitA", "Unknown"], traitsKo: ["", "불명"], TraitA: [0, 0, 0, 0], Unknown: [0, 0, 0, 0] },
+  { name: ["Hwaong", "화옹"], traitsEn: ["Adamant", "Careful"], traitsKo: ["고집있는", "신중한"], Adamant: [10, 30, 10, 0], Careful: [15, 15, 30, 0] },
   { name: ["White Gold Dragon", "화이트골드"], traitsEn: ["Bold", "Calm"], traitsKo: ["대담한", "차분한"], Bold: [10, 20, 0, 0], Calm: [15, 0, 30, 15] },
   { name: ["White Thunder Dragon", "화이트썬더"], traitsEn: ["Hasty", "Bold"], traitsKo: ["성급한", "대담한"], Hasty: [30, 10, 10, 0], Bold: [0, 30, 5, 0] },
   { name: ["White Applecheek", "화이트애플칙"], traitsEn: ["Quiet", "Rash"], traitsKo: ["냉정한", "덜렁대는"], Quiet: [0, 10, 20, 10], Rash: [30, 10, 0, 10] },
