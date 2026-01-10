@@ -123,6 +123,32 @@ class Calculator {
     const base = this.getStatFields("#start-");
 
     switch (traitSelected) {
+      case "Passionate": {
+        const goal = this.copyStats(base);
+
+        STAT_LISTS.base.forEach((stat) => {
+          const valueString = goal[stat].toString();
+          if (valueString.endsWith("0")) {
+            goal[stat] += 9;
+          }
+          if (valueString.endsWith("5")) {
+            goal[stat] += 14;
+          } else {
+            while (!goal[stat].toString().endsWith("9")) {
+              goal[stat] += 1;
+            }
+          }
+        });
+
+        const highestStatName = base.getMaxStatName()[0];
+
+        while (goal[highestStatName] < 70) {
+          goal[highestStatName] += 10;
+        }
+
+        return this.printStatFields(goal, "#end-");
+      }
+
       case "Sparkling": {
         const goal = this.copyStats(base);
 
