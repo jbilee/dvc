@@ -638,6 +638,7 @@ export const dragonList = [
   { name: ["White Applecheek", "화이트애플칙"], traitsEn: ["Quiet", "Rash"], traitsKo: ["냉정한", "덜렁대는"], Quiet: [0, 10, 20, 10], Rash: [30, 10, 0, 10] },
   { name: ["Golden Azak", "황금 아자크"], traitsEn: ["Smart", "Careful"], traitsKo: ["똑똑한", "신중한"], Smart: [0, 0, 5, 30], Careful: [15, 15, 30, 0] },
   { name: ["Golden Angel Dragon", "황금 엔젤 드래곤"], traitsEn: ["Calm", "Docile"], traitsKo: ["차분한", "온순한"], Calm: [10, 0, 30, 10], Docile: [0, 10, 10, 30] },
+  { name: ["Paper Roll Dragon", "휴지곤"], traitsEn: ["Docile", "Unknown"], traitsKo: ["온순한", "불명"], Docile: [0, 10, 10, 30], Unknown: [0, 0, 0, 0] },
   { name: ["Hresvelgr", "흐레스벨그"], traitsEn: ["Careful", "Calm"], traitsKo: ["신중한", "차분한"], Careful: [10, 10, 30, 0], Calm: [15, 0, 30, 15] },
   { name: ["Black Goblin Dragon", "흑깨비곤"], traitsEn: ["Brave", "Adamant"], traitsKo: ["용감한", "고집있는"], Brave: [0, 20, 10, 10], Adamant: [15, 30, 15, 0] },
   { name: ["Black Dragon", "흑룡"], traitsEn: ["Quiet", "Careful"], traitsKo: ["냉정한", "신중한"], Quiet: [0, 5, 20, 5], Careful: [5, 5, 20, 0] },
