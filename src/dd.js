@@ -201,7 +201,7 @@ export const dragonList = [
   { name: ["Varunas", "바루나스"], traitsEn: ["Calm", "Quiet"], traitsKo: ["차분한", "냉정한"], Calm: [10, 0, 30, 10], Quiet: [0, 10, 30, 10] },
   { name: ["Vargr", "바르그"], traitsEn: ["Quiet", "Adamant"], traitsKo: ["냉정한", "고집있는"], Quiet: [0, 5, 20, 5], Adamant: [10, 25, 10, 0] },
   { name: ["Barian", "바리안"], traitsEn: ["Quiet", "Careful"], traitsKo: ["냉정한", "신중한"], Quiet: [0, 10, 30, 10], Careful: [10, 10, 30, 0] },
-  // { name: ["Barito", "바리토"], traitsEn: ["TraitA", "TraitB"], traitsKo: ["", ""], TraitA: [0, 0, 0, 0], TraitB: [0, 0, 0, 0] },
+  { name: ["Barito", "바리토"], traitsEn: ["Adamant", "Docile"], traitsKo: ["고집있는", "온순한"], Adamant: [5, 20, 5, 0], Docile: [0, 15, 15, 30] },
   { name: ["Baba", "바바"], traitsEn: ["Bashful", "Calm"], traitsKo: ["수줍은", "차분한"], Bashful: [10, 0, 10, 30], Calm: [10, 0, 30, 10] },
   { name: ["Dumbo Blue Dragon", "바부 청룡"], traitsEn: ["Docile", "Rash"], traitsKo: ["온순한", "덜렁대는"], Docile: [0, 15, 15, 30], Rash: [30, 10, 0, 10] },
   { name: ["Vaska", "바스카"], traitsEn: ["Quiet", "Careful"], traitsKo: ["냉정한", "신중한"], Quiet: [0, 5, 20, 5], Careful: [5, 5, 20, 0] },
