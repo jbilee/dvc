@@ -23,6 +23,7 @@ export const dragonList = [
   { name: ["Goldie", "골디"], traitsEn: ["Bold", "Lax"], traitsKo: ["대담한", "촐랑대는"], Bold: [0, 30, 10, 0], Lax: [15, 15, 0, 30] },
   { name: ["Symbiotic Murger", "공생의 머거용"], traitsEn: ["Quick Witted", "Brave"], traitsKo: ["눈치빠른", "용감한"], "Quick Witted": [20, 0, 5, 0], Brave: [0, 20, 10, 10] },
   // { name: ["Maniacal Power Dragon", "광기의 파워 드래곤"], traitsEn: ["Quick Witted", ""], traitsKo: ["눈치빠른", ""], "Quick Witted": [1, 1, 1, 1], "": [0, 0, 0, 0] },
+  { name: ["Nine-Tailed Fox", "구미호"], traitsEn: ["Quirky", "Naive"], traitsKo: ["변덕쟁이", "천진난만한"], Quirky: [10, 20, 0, 10], Naive: [30, 0, 15, 15] },
   { name: ["Granos", "그라노스"], traitsEn: ["Smart", "Careful"], traitsKo: ["똑똑한", "신중한"], Smart: [5, 0, 0, 20], Careful: [10, 10, 30, 0] },
   { name: ["Gracia", "그라치아"], traitsEn: ["Brave", "Quick Witted"], traitsKo: ["용감한", "눈치빠른"], Brave: [0, 20, 10, 10], "Quick Witted": [20, 10, 0, 0] },
   { name: ["Griffar", "그리파르"], traitsEn: ["Bold", "Quiet"], traitsKo: ["대담한", "냉정한"], Bold: [0, 30, 5, 0], Quiet: [0, 10, 30, 10] },
