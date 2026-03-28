@@ -132,7 +132,11 @@ class Calculator {
             goal[stat] += 9;
           }
           if (valueString.endsWith("5")) {
-            goal[stat] += 14;
+            if (valueString === "5") {
+              goal[stat] += 14;
+            } else {
+              goal[stat] += 4;
+            }
           } else {
             while (!goal[stat].toString().endsWith("9")) {
               goal[stat] += 1;
@@ -140,10 +144,25 @@ class Calculator {
           }
         });
 
-        const highestStatName = base.getMaxStatName()[0];
+        const highestStatName = goal.hasSameStats() ? "strength" : base.getMaxStatName()[0];
 
-        while (goal[highestStatName] < 70) {
+        while (goal[highestStatName] < 50) {
           goal[highestStatName] += 10;
+        }
+
+        if (!this.highestFirst) {
+          return this.printStatFields(goal, "#end-");
+        }
+
+        const nextGoal = goal[highestStatName] + 10;
+        const currentTrainingCounts = getTargetSum(goal[highestStatName] - base[highestStatName], TRAIN_VALUES);
+        const nextTrainingCounts = getTargetSum(nextGoal - base[highestStatName], TRAIN_VALUES);
+
+        const currentNines = currentTrainingCounts.filter(x => x === 9).length;
+        const nextNines = nextTrainingCounts.filter(x => x === 9).length;
+
+        if (nextNines > currentNines & nextTrainingCounts.length <= currentTrainingCounts.length) {
+          goal[highestStatName] = nextGoal;
         }
 
         return this.printStatFields(goal, "#end-");
