@@ -195,6 +195,7 @@ export const dragonList = [
   { name: ["Music Dragon", "뮤직 드래곤"], traitsEn: ["Hardy", "Docile"], traitsKo: ["노력하는", "온순한"], Hardy: [0, 0, 20, 10], Docile: [0, 10, 10, 25] },
   { name: ["Minas", "미나스"], traitsEn: ["Quiet", "Calm"], traitsKo: ["냉정한", "차분한"], Quiet: [0, 10, 20, 10], Calm: [10, 0, 25, 10] },
   { name: ["Mirinae", "미리내"], traitsEn: ["Smart", "Bold"], traitsKo: ["똑똑한", "대담한"], Smart: [0, 0, 5, 25], Bold: [0, 30, 0, 0] },
+  { name: ["Mimir", "미미르"], traitsEn: ["Smart", "Docile"], traitsKo: ["똑똑한", "온순한"], Smart: [0, 0, 10, 30], Docile: [0, 10, 10, 30] },
   { name: ["Mist Dragon", "미스트 드래곤"], traitsEn: ["Quirky", "Rash"], traitsKo: ["변덕쟁이", "덜렁대는"], Quirky: [5, 20, 0, 5], Rash: [30, 15, 0, 15] },
   { name: ["Mystic Arts", "미스틱아츠"], traitsEn: ["Adamant", "Hasty"], traitsKo: ["고집있는", "성급한"], Adamant: [10, 30, 10, 0], Hasty: [30, 15, 15, 0] },
   { name: ["Mystic Tiny", "미스틱티니"], traitsEn: ["Smart", "Rash"], traitsKo: ["똑똑한", "덜렁대는"], Smart: [0, 0, 10, 20], Rash: [25, 10, 0, 10] },
