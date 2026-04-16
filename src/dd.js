@@ -237,6 +237,7 @@ export const dragonList = [
   { name: ["Vegabond", "베가본드"], traitsEn: ["Bold", "Quiet"], traitsKo: ["대담한", "냉정한"], Bold: [10, 30, 0, 0], Quiet: [0, 5, 20, 5] },
   { name: ["Venom Dragon", "베놈"], traitsEn: ["Smart", "Careful"], traitsKo: ["똑똑한", "신중한"], Smart: [0, 5, 0, 30], Careful: [15, 15, 30, 0] },
   { name: ["Vera", "베라"], traitsEn: ["Quiet", "Adamant"], traitsKo: ["냉정한", "고집있는"], Quiet: [0, 5, 20, 5], Adamant: [10, 20, 10, 0] },
+  { name: ["Berna", "베르나"], traitsEn: ["Docile", "Calm"], traitsKo: ["온순한", "차분한"], Docile: [0, 10, 10, 30], Calm: [10, 0, 25, 10] },
   { name: ["Berris", "베리스"], traitsEn: ["Docile", "Smart"], traitsKo: ["온순한", "똑똑한"], Docile: [0, 10, 10, 25], Smart: [10, 0, 0, 30] },
   { name: ["Vetala", "베타라"], traitsEn: ["Quick Witted", "Adamant"], traitsKo: ["눈치빠른", "고집있는"], "Quick Witted": [20, 5, 0, 0], Adamant: [5, 20, 5, 0] },
   { name: ["Vefal", "베팔"], traitsEn: ["Quick Witted", "Smart"], traitsKo: ["눈치빠른", "똑똑한"], "Quick Witted": [30, 0, 5, 0], Smart: [5, 0, 0, 20] },
