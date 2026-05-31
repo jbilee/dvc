@@ -336,6 +336,7 @@ export const dragonList = [
   { name: ["Spike Dragon", "스파이크"], traitsEn: ["Careful", "Calm"], traitsKo: ["신중한", "차분한"], Careful: [10, 10, 25, 0], Calm: [10, 0, 20, 10] },
   { name: ["Spine Dragon", "스파인 드래곤"], traitsEn: ["Naive", "Lax"], traitsKo: ["천진난만한", "촐랑대는"], Naive: [20, 0, 5, 5], Lax: [10, 10, 0, 20] },
   { name: ["Splender", "스플렌더"], traitsEn: ["Quick Witted", "Careful"], traitsKo: ["눈치빠른", "신중한"], "Quick Witted": [20, 5, 0, 0], Careful: [10, 10, 20, 0] },
+  { name: ["Spearrow", "스피로우"], traitsEn: ["Adamant", "Unknown"], traitsKo: ["고집있는", "불명"], Adamant: [5, 20, 5, 0], Unknown: [0, 0, 0, 0] },
   { name: ["Spica", "스피카"], traitsEn: ["Hardy", "Docile"], traitsKo: ["노력하는", "온순한"], Hardy: [0, 5, 20, 0], Docile: [0, 10, 10, 30] },
   { name: ["Slime Dragon", "슬라임"], traitsEn: ["Quirky", "Lax"], traitsKo: ["변덕쟁이", "촐랑대는"], Quirky: [15, 30, 0, 15], Lax: [15, 15, 0, 30] },
   { name: ["Sleipnir", "슬레이프니르"], traitsEn: ["Adamant", "Quiet"], traitsKo: ["고집있는", "냉정한"], Adamant: [10, 30, 10, 0], Quiet: [0, 10, 25, 10] },
