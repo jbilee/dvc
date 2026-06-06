@@ -142,6 +142,40 @@ class Calculator {
         return this.printStatFields(goal, "#end-");
       }
 
+      case "Philosophical": {
+        const goal = this.copyStats(base);
+
+        STAT_LISTS.base.forEach((stat) => {
+          const valueString = goal[stat].toString();
+          if (valueString.endsWith("0")) {
+            goal[stat] += 9;
+            return;
+          }
+          if (valueString.endsWith("5")) {
+            if (valueString === "5") {
+              goal[stat] += 14;
+            } else {
+              goal[stat] += 4;
+            }
+          }
+
+          while (!goal[stat].toString().endsWith("9")) {
+            goal[stat] += 1;
+          }
+          while (EXCLUDED_VALUES.includes(goal[stat] - base[stat])) {
+            goal[stat] += 10;
+          }
+        });
+
+        const maxStatNames = goal.getMaxStatName();
+
+        if (maxStatNames.length > 1) {
+          goal[maxStatNames[0]] += 10;
+        }
+
+        return this.printStatFields(goal, "#end-");
+      }
+
       case "Passionate": {
         const goal = this.copyStats(base);
 
