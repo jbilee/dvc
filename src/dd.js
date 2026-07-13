@@ -175,7 +175,7 @@ export const dragonList = [
   { name: ["Myosotis", "마소티스"], traitsEn: ["Quick Witted", "Careful"], traitsKo: ["눈치빠른", "신중한"], "Quick Witted": [20, 0, 5, 0], Careful: [10, 10, 30, 0] },
   { name: ["Makara", "마카라"], traitsEn: ["Bold", "Quiet"], traitsKo: ["대담한", "냉정한"], Bold: [0, 20, 5, 0], Quiet: [0, 10, 30, 10] },
   { name: ["Macaron Dragon", "마카롱 드래곤"], traitsEn: ["Naive", "Bashful"], traitsKo: ["천진난만한", "수줍은"], Naive: [20, 0, 10, 10], Bashful: [10, 0, 10, 30] },
-  { name: ["Makoa", "마코아"], traitsEn: ["Bold", "Unknown"], traitsKo: ["대담한", "불명"], Bold: [0, 30, 5, 0], Unknown: [0, 0, 0, 0] },
+  { name: ["Makoa", "마코아"], traitsEn: ["Bold", "Naive"], traitsKo: ["대담한", "천진난만한"], Bold: [0, 30, 5, 0], Naive: [20, 0, 10, 10] },
   { name: ["Maldek", "말덱"], traitsEn: ["Rash", "Lax"], traitsKo: ["덜렁대는", "촐랑대는"], Rash: [20, 10, 0, 10], Lax: [15, 15, 0, 30] },
   { name: ["Maloden", "말로단"], traitsEn: ["Quiet", "Bold"], traitsKo: ["냉정한", "대담한"], Quiet: [0, 5, 20, 5], Bold: [0, 20, 0, 5] },
   { name: ["Malcartis", "말카르티스"], traitsEn: ["Quiet", "Adamant"], traitsKo: ["냉정한", "고집있는"], Quiet: [0, 10, 25, 10], Adamant: [10, 25, 10, 0] },
