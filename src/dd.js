@@ -461,7 +461,7 @@ export const dragonList = [
   { name: ["Ginkgo Dragon", "은행 드래곤"], traitsEn: ["Calm", "Docile"], traitsKo: ["차분한", "온순한"], Calm: [15, 0, 30, 15], Docile: [0, 15, 15, 30] },
   { name: ["Iguana Dragon", "이구아곤"], traitsEn: ["Quick Witted", "Smart"], traitsKo: ["눈치빠른", "똑똑한"], "Quick Witted": [25, 0, 0, 5], Smart: [0, 5, 0, 25] },
   { name: ["Ignis", "이그니스"], traitsEn: ["Calm", "Docile"], traitsKo: ["차분한", "온순한"], Calm: [10, 0, 20, 10], Docile: [0, 10, 10, 25] },
-  { name: ["Evildawn", "이블던"], traitsEn: ["Quick Witted", "Unknown"], traitsKo: ["눈치빠른", "불명"], "Quick Witted": [30, 0, 5, 0], Unknown: [0, 0, 0, 0] },
+  { name: ["Evildawn", "이블던"], traitsEn: ["Quick Witted", "Careful"], traitsKo: ["눈치빠른", "신중한"], "Quick Witted": [30, 0, 5, 0], Careful: [10, 10, 20, 0] },
   { name: ["Evil Lady", "이블 레이디"], traitsEn: ["Quick Witted", "Quirky"], traitsKo: ["눈치빠른", "변덕쟁이"], "Quick Witted": [30, 0, 15, 0], Quirky: [5, 20, 0, 5] },
   { name: ["Aegis", "이지스"], traitsEn: ["Bold", "Calm"], traitsKo: ["대담한", "차분한"], Bold: [0, 25, 0, 5], Calm: [10, 0, 30, 10] },
   { name: ["Icarus", "이카로스"], traitsEn: ["Quick Witted", "Naive"], traitsKo: ["눈치빠른", "천진난만한"], "Quick Witted": [25, 0, 0, 5], Naive: [30, 0, 10, 10] },
