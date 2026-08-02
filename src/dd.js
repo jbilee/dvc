@@ -350,7 +350,7 @@ export const dragonList = [
   { name: ["Sluha", "슬루하"], traitsEn: ["Quick Witted", "Bold"], traitsKo: ["눈치빠른", "대담한"], "Quick Witted": [20, 0, 0, 5], Bold: [0, 30, 5, 0] },
   { name: ["Sleeze", "슬리즈"], traitsEn: ["Bold", "Quirky"], traitsKo: ["대담한", "변덕쟁이"], Bold: [5, 20, 0, 0], Quirky: [10, 20, 0, 10] },
   { name: ["Sigma", "시그마"], traitsEn: ["Bold", "Adamant"], traitsKo: ["대담한", "고집있는"], Bold: [0, 20, 5, 0], Adamant: [10, 30, 10, 0] },
-  { name: ["Sirius", "시리우스"], traitsEn: ["Calm", "Unknown"], traitsKo: ["차분한", "불명"], Calm: [15, 0, 30, 15], Unknown: [0, 0, 0, 0] },
+  { name: ["Sirius", "시리우스"], traitsEn: ["Calm", "Hardy"], traitsKo: ["차분한", "노력하는"], Calm: [15, 0, 30, 15], Hardy: [0, 0, 20, 0] },
   { name: ["Sion", "시온"], traitsEn: ["Docile", "Bashful"], traitsKo: ["온순한", "수줍은"], Docile: [0, 5, 5, 20], Bashful: [10, 0, 10, 20] },
   { name: ["Citael", "시타엘"], traitsEn: ["Calm", "Docile"], traitsKo: ["차분한", "온순한"], Calm: [15, 0, 30, 15], Docile: [0, 10, 10, 20] },
   { name: ["Six-Leg Horn", "식스레그혼"], traitsEn: ["Careful", "Docile"], traitsKo: ["신중한", "온순한"], Careful: [10, 10, 20, 0], Docile: [0, 15, 15, 30] },
