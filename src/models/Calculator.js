@@ -123,6 +123,27 @@ class Calculator {
     const base = this.getStatFields("#start-");
 
     switch (traitSelected) {
+      case "Earnest": {
+        const goal = this.copyStats(base);
+        const highestStats = base.getMaxStatName();
+        const maxStatKey = highestStats.includes(this.preference)
+          ? this.preference
+          : highestStats.includes("strength")
+            ? "strength"
+            : highestStats.includes("intellect")
+              ? "intellect"
+              : highestStats[0];
+        let goalValue = this.getOptimizedValue(100 - base[maxStatKey]);
+        if (this.highestFirst) goalValue = this.replaceWithNine(goalValue);
+        goal[maxStatKey] = base[maxStatKey] + goalValue;
+        if (this.noSerious) {
+          if (this.preference !== "none" && this.preference !== maxStatKey) goal[this.preference] += 9;
+          else if (maxStatKey !== "strength") goal.strength += 9;
+          else goal.intellect += 9;
+        }
+        return this.printStatFields(goal, "#end-");
+      }
+
       case "Refined": {
         const goal = this.copyStats(base);
         const highestStatName = goal.getMaxStatName();
