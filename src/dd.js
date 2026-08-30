@@ -640,6 +640,7 @@ export const dragonList = [
   { name: ["Flower Dragon", "플라워"], traitsEn: ["Bashful", "Rash"], traitsKo: ["수줍은", "덜렁대는"], Bashful: [10, 0, 10, 30], Rash: [20, 10, 0, 10] },
   { name: ["Phlegon", "플레곤"], traitsEn: ["Adamant", "Brave"], traitsKo: ["고집있는", "용감한"], Adamant: [10, 25, 10, 0], Brave: [0, 30, 15, 15] },
   { name: ["Flame Dragon", "플레임"], traitsEn: ["Careful", "Calm"], traitsKo: ["신중한", "차분한"], Careful: [5, 5, 20, 0], Calm: [10, 0, 20, 10] },
+  { name: ["Flamber", "플렘버"], traitsEn: ["Calm", "Unknown"], traitsKo: ["차분한", "불명"], Calm: [10, 0, 25, 10], Unknown: [0, 0, 0, 0] },
   { name: ["Florea", "플로레"], traitsEn: ["Careful", "Smart"], traitsKo: ["신중한", "똑똑한"], Careful: [10, 10, 25, 0], Smart: [5, 0, 0, 30] },
   { name: ["Plumos", "플루모스"], traitsEn: ["Hardy", "Calm"], traitsKo: ["노력하는", "차분한"], Hardy: [0, 0, 20, 5], Calm: [10, 0, 25, 10] },
   { name: ["Plutino", "플루티노"], traitsEn: ["Docile", "Quirky"], traitsKo: ["온순한", "변덕쟁이"], Docile: [0, 10, 10, 25], Quirky: [10, 25, 0, 10] },
