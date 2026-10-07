@@ -477,7 +477,7 @@ export const dragonList = [
   { name: ["Insect Dragon", "인섹트"], traitsEn: ["Naive", "Bashful"], traitsKo: ["천진난만한", "수줍은"], Naive: [20, 0, 5, 5], Bashful: [15, 0, 15, 30] },
   { name: ["Insect Queen", "인섹트퀸"], traitsEn: ["Quick Witted", "Smart"], traitsKo: ["눈치빠른", "똑똑한"], "Quick Witted": [30, 0, 5, 0], Smart: [0, 10, 0, 30] },
   { name: ["Eelos", "일로스"], traitsEn: ["Lax", "Naive"], traitsKo: ["촐랑대는", "천진난만한"], Lax: [10, 10, 0, 30], Naive: [30, 0, 10, 10] },
-  { name: ["Illuid", "일루이드"], traitsEn: ["Naive", "Unknown"], traitsKo: ["천진난만한", "불명"], Naive: [20, 0, 5, 5], Unknown: [0, 0, 0, 0] },
+  { name: ["Illuid", "일루이드"], traitsEn: ["Naive", "Quiet"], traitsKo: ["천진난만한", "냉정한"], Naive: [20, 0, 5, 5], Quiet: [0, 15, 30, 15] },
   { name: ["Ilios", "일리오스"], traitsEn: ["Brave", "Smart"], traitsKo: ["용감한", "똑똑한"], Brave: [0, 20, 10, 10], Smart: [0, 0, 0, 30] },
   { name: ["Jaryong", "자룡"], traitsEn: ["Brave", "Bold"], traitsKo: ["용감한", "대담한"], Brave: [0, 20, 10, 10], Bold: [0, 30, 10, 0] },
   { name: ["Jarukah", "자루카"], traitsEn: ["Naive", "Quick Witted"], traitsKo: ["천진난만한", "눈치빠른"], Naive: [20, 0, 10, 10], "Quick Witted": [25, 0, 5, 0] },
