@@ -582,6 +582,7 @@ export const dragonList = [
   { name: ["Tail Dragon", "테일 드래곤"], traitsEn: ["Quick Witted", "Naive"], traitsKo: ["눈치빠른", "천진난만한"], "Quick Witted": [20, 5, 0, 0], Naive: [30, 0, 10, 10] },
   { name: ["Tekanupe", "테카누프"], traitsEn: ["Quiet", "Careful"], traitsKo: ["냉정한", "신중한"], Quiet: [0, 10, 25, 10], Careful: [10, 10, 30, 0] },
   { name: ["Telos Gamma", "텔로스 감마"], traitsEn: ["Quiet", "Smart"], traitsKo: ["냉정한", "똑똑한"], Quiet: [0, 15, 30, 15], Smart: [0, 0, 5, 25] },
+  { name: ["Tellus", "텔루스"], traitsEn: ["Quick Witted", "Unknown"], traitsKo: ["눈치빠른", "불명"], "Quick Witted": [30, 0, 5, 0], Unknown: [0, 0, 0, 0] },
   { name: ["Tempios", "템피오스"], traitsEn: ["Careful", "Quiet"], traitsKo: ["신중한", "냉정한"], Careful: [10, 10, 30, 0], Quiet: [0, 15, 30, 15] },
   { name: ["Toarnesce", "토네스"], traitsEn: ["Careful", "Quiet"], traitsKo: ["신중한", "냉정한"], Careful: [10, 10, 25, 0], Quiet: [0, 15, 30, 15] },
   { name: ["Totem Dragon", "토템"], traitsEn: ["Careful", "Calm"], traitsKo: ["신중한", "차분한"], Careful: [10, 10, 25, 0], Calm: [5, 0, 20, 5] },
